@@ -6,10 +6,13 @@
 #include "Agent/Agent.hpp"
 
 class UserAgent : public Agent {
-    public:
+    protected:
+
         UserAgent(const std::string& t_id) : Agent(t_id) {};
 
-        virtual ~UserAgent() = 0;
+    public:
+
+        virtual ~UserAgent() {};
 };
 
 #endif

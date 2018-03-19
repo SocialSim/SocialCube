@@ -6,10 +6,12 @@
 #include "Agent/Agent.hpp"
 
 class ObjectAgent : public Agent {
-    public:
-        ObjectAgent(const std::string& t_id) : Agent(t_id);
+    protected:
+        ObjectAgent(const std::string& t_id) : Agent(t_id) {};
 
-        virtual ~ObjectAgent() = 0;
+    public:
+
+        virtual ~ObjectAgent() {};
 };
 
 #endif

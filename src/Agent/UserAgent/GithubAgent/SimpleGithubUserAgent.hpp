@@ -7,6 +7,7 @@
 #include <cstdint>
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "StatisticProxy/StatisticProxy.hpp"
+#include "BehaviorModel/SimpleBehaviorModel.hpp"
 #include "common/Event.hpp"
 
 class SimpleGithubUserAgent : public UserAgent {
@@ -19,9 +20,9 @@ class SimpleGithubUserAgent : public UserAgent {
         const ObjectPreference& m_objectPreference;
 
     public:
-        SimpleGithubAgent(const std::string& t_id);
+        SimpleGithubUserAgent(const std::string& t_id);
 
-        ~SimpleGithubAgent();
+        ~SimpleGithubUserAgent();
 
         std::vector<Event> step(uint64_t t_currentTime, uint64_t t_unitTime);
 };

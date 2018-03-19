@@ -8,7 +8,7 @@
 #include "StatisticProxy/StatisticProxy.hpp"
 #include "common/Event.hpp"
 
-class SimpleGithubObjectAgent : public ObjectAgent{
+class SimpleGithubObjectAgent : public ObjectAgent {
     private:
 
         const StatisticProxy& m_statProxy;
@@ -22,3 +22,4 @@ class SimpleGithubObjectAgent : public ObjectAgent{
 };
 
 #endif
+

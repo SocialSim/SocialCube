@@ -2,6 +2,9 @@
 #define __SIMPLE_BEHAVIOR_MODEL__
 
 #include <vector>
+#include "common/Event.hpp"
+#include "Dependency/HourlyActionRate.hpp"
+#include "Dependency/ObjectPreference.hpp"
 
 class SimpleBehaviorModel {
     private:

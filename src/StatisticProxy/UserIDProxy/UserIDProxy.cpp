@@ -14,14 +14,12 @@ UserIDProxy::~UserIDProxy() {
 }
 
 void UserIDProxy::parse() {
-    cout << "parse" << endl;
     string userID;
     while (m_userIDStatisticsFile >> userID)
         m_userIDs.push_back(userID);
 }
 
 vector<string>& UserIDProxy::get() {
-    cout << "hei" << endl;
     return m_userIDs;
 }
 

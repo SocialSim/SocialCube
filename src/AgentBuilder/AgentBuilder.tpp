@@ -17,29 +17,29 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
 }
 
 template<class TUserAgent, class TObjectAgent>
-std::vector<unique_ptr<TUserAgent>>& AgentBuilder<TUserAgent, TObjectAgent>::getUserAgentList() {
+std::vector<std::unique_ptr<TUserAgent>>& AgentBuilder<TUserAgent, TObjectAgent>::getUserAgentList() {
     return m_userAgents;
 }
 
 template<class TUserAgent, class TObjectAgent>
-std::vector<unique_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgent>::getObjectAgentList() {
+std::vector<std::unique_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgent>::getObjectAgentList() {
     return m_objectAgents;
 }
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
-    const std::vector<string>& userIDs = m_statProxy->getUserIDs();
+    const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
     for(auto& userID : userIDs) {
-        unique_ptr<TUserAgent> agent(new TUserAgent(userID));
+        std::unique_ptr<TUserAgent> agent(new TUserAgent(userID));
         m_userAgents.push_back(move(agent));
     }
 }
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
-    const std::vector<string>& objectIDs = m_statProxy->getObjectIDs();
+    const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        unique_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
+        std::unique_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }
 }

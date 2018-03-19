@@ -25,18 +25,18 @@ StatisticProxy::~StatisticProxy() {
     return;
 }
 
-vector<string>& StatisticProxy::getUserIds() {
+vector<string>& StatisticProxy::getUserIDs() const {
     return m_userIDProxy->get();
 }
 
-vector<string>& StatisticProxy::getObjectIds() {
+vector<string>& StatisticProxy::getObjectIDs() const {
     return m_objectIDProxy->get();
 }
 
-HourlyActionRate& StatisticProxy::getUserHourlyActionRate(const string &userID) {
+HourlyActionRate& StatisticProxy::getUserHourlyActionRate(const string &userID) const {
     return m_hourlyActionRateProxy->get(userID);
 }
 
-ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) {
+ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) const {
     return m_objectPreferenceProxy->get(userID);
 }

@@ -7,12 +7,12 @@
 #include "common/Event.hpp"
 
 class Agent {
-    private:
+    protected:
         std::string m_id;
     public:
-        Agent(const string& t_id) : m_id(t_id) {};
+        Agent(const std::string& t_id) : m_id(t_id) {};
 
-        virtual ~Agent();
+        virtual ~Agent() {};
 
         virtual std::vector<Event> step(uint64_t t_currentTime, uint64_t t_unitTime) = 0;
 

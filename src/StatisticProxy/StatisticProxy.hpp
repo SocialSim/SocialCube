@@ -31,13 +31,13 @@ class StatisticProxy {
 
         void retrieveStatistics();
 
-        std::vector<std::string>& getUserIds();
+        std::vector<std::string>& getUserIDs() const;
 
-        std::vector<std::string>& getObjectIds(); 
+        std::vector<std::string>& getObjectIDs() const; 
 
-        HourlyActionRate& getUserHourlyActionRate(const std::string &userID);
+        HourlyActionRate& getUserHourlyActionRate(const std::string &userID) const;
 
-        ObjectPreference& getUserObjectPreference(const std::string &userID); 
+        ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
 };
 
 #endif
