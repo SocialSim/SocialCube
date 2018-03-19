@@ -1,4 +1,4 @@
-#include "SimplyBehaviorModel.hpp"
+#include "SimpleBehaviorModel.hpp"
 
 SimpleBehaviorModel::SimpleBehaviorModel() {
     return;

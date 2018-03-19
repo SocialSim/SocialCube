@@ -1,18 +1,14 @@
 #include "SimpleGithubObjectAgent.hpp"
 
-SimpleGithubObjectAgent::SimpleGithubObjectAgent(string t_id) : m_id(t_id) {
-    build();
-}
+using namespace std;
 
-SimpleGithubObjectAgent::~SimpleGithubObjectAgent() {
+SimpleGithubObjectAgent::SimpleGithubObjectAgent(const string& t_id) : ObjectAgent(t_id), 
+    m_statProxy(StatisticProxy::getInstance())
+{
     return;
 }
 
-void SimpleGithubObjectAgent::setStatisticProxy(shared_ptr<StatisticProxy> t_statProxy) {
-    m_statProxy = t_statProxy;
-}
-
-void SimpleGithubObjectAgent::build() {
+SimpleGithubObjectAgent::~SimpleGithubObjectAgent() {
     return;
 }
 

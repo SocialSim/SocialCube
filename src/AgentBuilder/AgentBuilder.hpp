@@ -9,11 +9,11 @@ template<class TUserAgent, class TObjectAgent>
 class AgentBuilder {
 
 private:
-    shared_ptr<StatisticProxy> m_statProxy;
+    const StatisticProxy& m_statProxy;
 
-    std::vector<shared_ptr<TUserAgent>> m_userAgents; 
+    std::vector<unique_ptr<TUserAgent>> m_userAgents; 
 
-    std::vector<shared_ptr<TObjectAgent>> m_objectAgents; 
+    std::vector<unique_ptr<TObjectAgent>> m_objectAgents; 
 
     void buildUsers();
 
@@ -25,13 +25,11 @@ public:
 
     ~AgentBuilder();
 
-    void setStatisticProxy(shared_ptr<StatisticProxy> t_statProxy);
-
     void build();
 
-    std::vector<shared_ptr<TUserAgent>> getUserAgentList();
+    std::vector<unique_ptr<TUserAgent>>& getUserAgentList();
 
-    std::vector<shared_ptr<TObjectAgent>> getObjectAgentList();
+    std::vector<unique_ptr<TObjectAgent>>& getObjectAgentList();
 };
 
 #include "AgentBuilder.tpp"

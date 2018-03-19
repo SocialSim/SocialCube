@@ -28,3 +28,6 @@ string Event::getTimestamp() {
     return m_timestamp;
 }
 
+void Event::show() {
+    cout << m_userID << " " << m_objectID << " " << m_eventType << " " << m_timestamp << "\n";
+}

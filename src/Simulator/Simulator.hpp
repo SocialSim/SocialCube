@@ -3,21 +3,24 @@
 
 #include <vector>
 #include <string>
+#include <memory>
+#include <cassert>
 
-#include "common/Event"
+#include "common/Event.hpp"
+#include "Agent/UserAgent/UserAgent.hpp"
+#include "Agent/ObjectAgent/ObjectAgent.hpp"
+#include "DependentEventLogger/DependentEventLogger.hpp"
 
 using namespace std;
 
 class Simulator {
 
 private:
-    vector<UserAgent*> m_userAgents;
+    vector<unique_ptr<UserAgent>> m_userAgents;
 
-    vector<ObjectAgent*> m_objectAgents;
+    vector<unique_ptr<ObjectAgent>> m_objectAgents;
 
     vector<Event> m_eventHistory;
-
-    DepdendentEventLogger *m_dependentEventLogger;
 
     uint64_t m_currentTime;
 
@@ -26,6 +29,12 @@ private:
     uint64_t m_endTime;
 
     uint64_t m_unitTime;
+
+    unique_ptr<DependentEventLogger> m_dependentEventLogger;
+
+    void simulationCheck();
+
+    void step();
 
 public:
 
@@ -41,15 +50,13 @@ public:
 
     void setUnitTime(uint64_t t_unitTime);
 
-    void setDependentEventLogger(DepdendentEventLogger *t_dependentEventLogger);
+    void setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger);
 
-    void addUserAgent(UserAgent *t_agent);
+    void addUserAgent(unique_ptr<UserAgent>& t_agent);
 
-    void addObjectAgent(ObjectAgent *t_agent);
+    void addObjectAgent(unique_ptr<ObjectAgent>& t_agent);
 
     void simulate();
-
-    void step();
 
     void logEventInDependentEventLogger(const vector<Event> &t_events);
 

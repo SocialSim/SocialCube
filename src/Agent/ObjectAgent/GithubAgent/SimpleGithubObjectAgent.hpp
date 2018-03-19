@@ -11,22 +11,12 @@
 class SimpleGithubObjectAgent : public ObjectAgent{
     private:
 
-        string m_id;
-
-        shared_ptr<StatisticProxy> m_statProxy;
-
-        HourlyActionRates m_hourlyActionRates;
-
-        ObjectPreference m_objectPreference;
+        const StatisticProxy& m_statProxy;
 
     public:
-        SimpleGithubObjectAgent(string t_id);
+        SimpleGithubObjectAgent(const std::string& t_id);
 
         ~SimpleGithubObjectAgent();
-
-        void setStatisticProxy(shared_ptr<StatisticProxy> t_statProxy);
-
-        void build();
 
         std::vector<Event> step(uint64_t t_currentTime, uint64_t t_unitTime);
 };

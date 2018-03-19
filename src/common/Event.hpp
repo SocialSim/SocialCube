@@ -2,6 +2,7 @@
 #define __EVENT__
 
 #include <string>
+#include <iostream>
 
 class Event {
 private:
@@ -25,6 +26,8 @@ public:
     std::string getEventType();
 
     std::string getTimestamp();
+
+    void show();
 };
 
 #endif
