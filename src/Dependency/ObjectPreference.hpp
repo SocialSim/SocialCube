@@ -26,11 +26,13 @@ class ObjectPreference {
 
         void increment(const std::string &t_objectID, double t_delta);
 
-        bool exist(const std::string &t_objectID);
+        bool exist(const std::string &t_objectID) const;
 
         std::vector<std::string> getPreferedObjectIDs();
 
-        void show();
+        void show() const;
+
+        std::string chooseTarget(double d) const;
 };
 
 #endif

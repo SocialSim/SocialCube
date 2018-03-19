@@ -29,12 +29,16 @@ void Simulator::setDependentEventLogger(unique_ptr<DependentEventLogger>& t_depe
     m_dependentEventLogger = move(t_dependentEventLogger);
 }
 
-void Simulator::addUserAgent(unique_ptr<UserAgent>& t_agent) {
+void Simulator::addUserAgent(unique_ptr<UserAgent> t_agent) {
     m_userAgents.push_back(move(t_agent));
 }
 
-void Simulator::addObjectAgent(unique_ptr<ObjectAgent>& t_agent) {
+void Simulator::addObjectAgent(unique_ptr<ObjectAgent> t_agent) {
     m_objectAgents.push_back(move(t_agent));
+}
+
+void Simulator::transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList) {
+    m_userAgents = (move(t_agentList));
 }
 
 void Simulator::simulate() {
@@ -60,7 +64,7 @@ void Simulator::logEventInDependentEventLogger(const vector<Event> &events) {
     for(auto event : events) {
         string userId = event.getUserID();
         string eventType = event.getEventType();
-        string timeStamp = event.getTimestamp();
+        uint64_t timeStamp = event.getTimestamp();
         m_dependentEventLogger->logUserEventAtTime(userId, eventType, timeStamp);
     }
 }

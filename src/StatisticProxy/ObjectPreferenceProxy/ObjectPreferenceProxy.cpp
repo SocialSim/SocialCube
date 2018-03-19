@@ -27,6 +27,7 @@ void ObjectPreferenceProxy::parse() {
         }
         m_objectPreference[userID] = move(objectPreference);
     }
+    cout << "Object Preference has " << m_objectPreference.size() << endl;
 }
 
 void ObjectPreferenceProxy::show() {

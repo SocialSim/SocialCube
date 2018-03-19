@@ -14,6 +14,7 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     buildUsers();
     buildObjects();
+    std::cout << "User counts " << m_userAgents.size() << std::endl;
 }
 
 template<class TUserAgent, class TObjectAgent>

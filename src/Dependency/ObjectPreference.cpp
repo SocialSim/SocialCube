@@ -23,7 +23,7 @@ void ObjectPreference::increment(const std::string &t_objectID, double t_delta) 
     m_preference[t_objectID] += t_delta;
 }
 
-bool ObjectPreference::exist(const std::string &t_objectID) {
+bool ObjectPreference::exist(const std::string &t_objectID) const {
     return m_preference.find(t_objectID) != m_preference.end();
 }
 
@@ -37,9 +37,22 @@ std::vector<std::string> ObjectPreference::getPreferedObjectIDs() {
     return objectIDs;
 }
 
-void ObjectPreference::show() {
+void ObjectPreference::show() const {
     cout << m_userID << endl;
     for(auto iter : m_preference) {
         cout << iter.first << " " << iter.second << endl; 
     }
+}
+
+string ObjectPreference::chooseTarget(double d) const {
+    double sum = 0.0;
+    string target;
+    for(auto& iter : m_preference){
+        sum += iter.second;
+        if(sum > d) {
+            target = iter.first;
+            break;
+        }
+    }
+    return target;
 }

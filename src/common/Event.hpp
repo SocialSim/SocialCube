@@ -2,6 +2,7 @@
 #define __EVENT__
 
 #include <string>
+#include <cstdint>
 #include <iostream>
 
 class Event {
@@ -12,22 +13,22 @@ private:
 
     std::string m_eventType;
 
-    std::string m_timestamp;
+    uint64_t m_timestamp;
 public:
     Event(std::string t_userID, std::string t_objectID, std::string t_eventType, 
-            std::string m_timestamp);
+            uint64_t m_timestamp);
 
     ~Event();
 
-    std::string getUserID();
+    std::string getUserID() const;
 
-    std::string getObjectID();
+    std::string getObjectID() const;
 
-    std::string getEventType();
+    std::string getEventType() const;
 
-    std::string getTimestamp();
+    uint64_t getTimestamp() const;
 
-    void show();
+    void show() const;
 };
 
 #endif

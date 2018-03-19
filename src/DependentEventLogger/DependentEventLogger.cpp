@@ -12,6 +12,6 @@ void DependentEventLogger::step() {
 
 }
 
-void DependentEventLogger::logUserEventAtTime(const std::string& userID, const std::string& eventType, const std::string& timestamp) {
+void DependentEventLogger::logUserEventAtTime(const std::string& userID, const std::string& eventType, uint64_t timestamp) {
 
 }

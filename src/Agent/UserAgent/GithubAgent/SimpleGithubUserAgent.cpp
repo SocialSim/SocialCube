@@ -7,6 +7,9 @@ SimpleGithubUserAgent::SimpleGithubUserAgent(const string& t_id) : UserAgent(t_i
     m_hourlyActionRate(m_statProxy.getUserHourlyActionRate(m_id)), 
     m_objectPreference(m_statProxy.getUserObjectPreference(m_id))
 {
+    assert(&m_hourlyActionRate != 0);
+    assert(&m_objectPreference != 0);
+    assert(&m_hourlyActionRate != 0);
     return;
 }
 

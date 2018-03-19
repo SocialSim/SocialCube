@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 #include "StatisticProxy/StatisticProxy.hpp"
 
 template<class TUserAgent, class TObjectAgent>

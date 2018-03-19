@@ -33,6 +33,7 @@ void HourlyActionRateProxy::parse() {
         }
         m_hourlyActionRate[userID] = move(hourlyActionRate);
     }
+    cout << "Hourly Action Rate has " << m_hourlyActionRate.size() << endl;
 }
 
 void HourlyActionRateProxy::show() {
@@ -43,5 +44,10 @@ void HourlyActionRateProxy::show() {
 }
 
 HourlyActionRate& HourlyActionRateProxy::get(const std::string& userID) {
-    return *(m_hourlyActionRate[userID]);
+    if(m_hourlyActionRate.find(userID) == m_hourlyActionRate.end()) {
+        return *(m_hourlyActionRate["-1"]);
+    } else {
+        assert(m_hourlyActionRate.find(userID) != m_hourlyActionRate.end());
+        return *(m_hourlyActionRate[userID]);
+    }
 }

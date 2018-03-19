@@ -36,6 +36,10 @@ private:
 
     void step();
 
+    void logEventInDependentEventLogger(const vector<Event> &t_events);
+
+    void appendEventInEventHistory(const vector<Event> &t_events);
+
 public:
 
     Simulator();
@@ -52,15 +56,13 @@ public:
 
     void setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger);
 
-    void addUserAgent(unique_ptr<UserAgent>& t_agent);
+    void addUserAgent(unique_ptr<UserAgent> t_agent);
 
-    void addObjectAgent(unique_ptr<ObjectAgent>& t_agent);
+    void addObjectAgent(unique_ptr<ObjectAgent> t_agent);
+
+    void transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList);
 
     void simulate();
-
-    void logEventInDependentEventLogger(const vector<Event> &t_events);
-
-    void appendEventInEventHistory(const vector<Event> &t_events);
 
     void showEvent();
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <cstdint>
+#include <cassert>
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "StatisticProxy/StatisticProxy.hpp"
 #include "BehaviorModel/SimpleBehaviorModel.hpp"
@@ -15,9 +16,9 @@ class SimpleGithubUserAgent : public UserAgent {
 
         const StatisticProxy& m_statProxy;
 
-        const HourlyActionRate& m_hourlyActionRate;
+        HourlyActionRate& m_hourlyActionRate;
 
-        const ObjectPreference& m_objectPreference;
+        ObjectPreference& m_objectPreference;
 
     public:
         SimpleGithubUserAgent(const std::string& t_id);

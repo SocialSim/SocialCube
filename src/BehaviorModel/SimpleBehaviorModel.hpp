@@ -2,6 +2,7 @@
 #define __SIMPLE_BEHAVIOR_MODEL__
 
 #include <vector>
+#include <iostream>
 #include "common/Event.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
@@ -13,10 +14,12 @@ class SimpleBehaviorModel {
 
         ~SimpleBehaviorModel();
 
+        static std::string chooseTarget(const ObjectPreference& t_objectPreference);
+
     public:
 
-    static std::vector<Event> evaluate(const HourlyActionRate& t_hourlyActionRate,
-            const ObjectPreference &t_objectPreference,
+    static std::vector<Event> evaluate(HourlyActionRate& t_hourlyActionRate,
+            ObjectPreference &t_objectPreference,
             uint64_t t_currentTime,
             uint64_t t_unitTime
             );

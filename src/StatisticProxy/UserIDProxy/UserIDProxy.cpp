@@ -17,6 +17,7 @@ void UserIDProxy::parse() {
     string userID;
     while (m_userIDStatisticsFile >> userID)
         m_userIDs.push_back(userID);
+    cout << "User ID has " << m_userIDs.size() << endl;
 }
 
 vector<string>& UserIDProxy::get() {

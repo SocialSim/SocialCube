@@ -19,6 +19,13 @@ double EventHourlyActionRate::getProb(int t_hour) {
     return m_prob[t_hour];
 }
 
+double EventHourlyActionRate::getProbSum() {
+    double sum;
+    for (auto n : m_prob)
+        sum += n;
+    return sum;
+}
+
 uint64_t EventHourlyActionRate::getActivityLevel() {
     return m_activityLevel;
 }

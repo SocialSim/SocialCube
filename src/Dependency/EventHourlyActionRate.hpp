@@ -25,6 +25,8 @@ class EventHourlyActionRate {
 
         double getProb(int t_hour);
 
+        double getProbSum();
+
         uint64_t getActivityLevel();
 
         void show();

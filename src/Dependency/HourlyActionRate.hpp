@@ -29,7 +29,11 @@ class HourlyActionRate {
 
         uint64_t getActionActivityLevel(const std::string &t_eventType);
 
-        void show();
+        void show() const;
+
+        std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>>& getRate(); 
+
+        std::string getUserID() const;
 };
 
 #endif
