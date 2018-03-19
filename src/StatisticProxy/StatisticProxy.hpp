@@ -4,34 +4,24 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <memory>
+#include "Dependency/HourlyActionRate.hpp"
+#include "Dependency/ObjectPreference.hpp"
+#include "StatisticProxy/UserIDProxy/UserIDProxy.hpp"
+#include "StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp"
+#include "StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp"
+#include "StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp"
 
 class StatisticProxy {
 
     private:
-
-        // Private member variables
-        std::vector<std::string> m_userIDs;
-
-        std::vector<std::string> m_objectIDs;
-
-        std::unordered_map<std::string, HourlyActionRate> m_allUserActionRate;
-
-        std::unordered_map<std::string, ObjectPreference> m_allObjectPreference;
-
-        std::unordered_map<std::string, UserDependency> m_allUserDependency;
+        std::unique_ptr<UserIDProxy> m_userIDProxy;
+        std::unique_ptr<ObjectIDProxy> m_objectIDProxy;
+        std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
+        std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
 
         // Private member functions
         StatisticProxy();
-
-        void retrieveUserIDs();
-
-        void retrieveObjIDs();
-
-        void retrieveUserActionRate();
-
-        void retrieveObjectPreference(); 
-
-        void retrieveUserDependency();
 
     public:
 
@@ -45,11 +35,9 @@ class StatisticProxy {
 
         std::vector<std::string>& getObjectIds(); 
 
-        UserActionRate& getUserHourlyActionRate(const std::string &userID);
+        HourlyActionRate& getUserHourlyActionRate(const std::string &userID);
 
         ObjectPreference& getUserObjectPreference(const std::string &userID); 
-
-        UserDependency& getUserDependency(const std::string &userID);
 };
 
 #endif

@@ -7,7 +7,17 @@ StatisticProxy& StatisticProxy::getInstance() {
     return instance;
 }
 
-StatisticProxy::StatisticProxy() {
+StatisticProxy::StatisticProxy() :
+    m_userIDProxy(new UserIDProxy),
+    m_objectIDProxy(new ObjectIDProxy),
+    m_objectPreferenceProxy(new ObjectPreferenceProxy),
+    m_hourlyActionRateProxy(new HourlyActionRateProxy) {
+
+    m_userIDProxy->parse();
+    m_objectIDProxy->parse();
+    m_objectPreferenceProxy->parse();
+    m_hourlyActionRateProxy->parse();
+
     return;
 }
 
@@ -15,45 +25,18 @@ StatisticProxy::~StatisticProxy() {
     return;
 }
 
-void StatisticProxy::retrieveStatistics() {
-    retrieveUserIDs();
-    retrieveObjIDs();
-    retrieveUserActionRate();
-    retrieveObjectPreference();
-    retrieveUserDependency();
-}
-
-void StatisticProxy::retrieveUserIDs() {
-}
-
-void StatisticProxy::retrieveObjIDs() {
-}
-
-void StatisticProxy::retrieveUserActionRate() {
-}
-
-void StatisticProxy::retrieveObjectPreference() {
-}
-
-void StatisticProxy::retrieveUserDependency() {
-}
-
 vector<string>& StatisticProxy::getUserIds() {
-    return m_userIDs;
+    return m_userIDProxy->get();
 }
 
 vector<string>& StatisticProxy::getObjectIds() {
-    return m_objectIDs;
+    return m_objectIDProxy->get();
 }
 
-UserActionRate& StatisticProxy::getUserHourlyActionRate(const string &userID) {
-    return m_allUserActionRate[userID];
+HourlyActionRate& StatisticProxy::getUserHourlyActionRate(const string &userID) {
+    return m_hourlyActionRateProxy->get(userID);
 }
 
 ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) {
-    return m_allObjectPreference[userID];
-}
-
-UserDependency& StatisticProxy::getUserDependency(const string &userID) {
-    return m_allUserDepency[userID];
+    return m_objectPreferenceProxy->get(userID);
 }

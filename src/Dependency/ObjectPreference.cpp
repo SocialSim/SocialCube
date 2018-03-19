@@ -1,5 +1,7 @@
 #include "ObjectPreference.hpp"
 
+using namespace std;
+
 ObjectPreference::ObjectPreference(const std::string &t_userID) :
     m_userID(t_userID) {
     return;
@@ -33,4 +35,11 @@ std::vector<std::string> ObjectPreference::getPreferedObjectIDs() {
     }
 
     return objectIDs;
+}
+
+void ObjectPreference::show() {
+    cout << m_userID << endl;
+    for(auto iter : m_preference) {
+        cout << iter.first << " " << iter.second << endl; 
+    }
 }

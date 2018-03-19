@@ -3,13 +3,17 @@
 
 #include <unordered_map>
 #include <string>
+#include <memory>
+#include <cstdint>
+#include <iostream>
+#include <cassert>
 #include "EventHourlyActionRate.hpp"
 
 class HourlyActionRate {
     private:
 
         // eventType -> action rate in 24 hours
-        std::unordered_map<std::string, EventHourlyActionRate> m_rate;
+        std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>> m_rate;
     
         std::string m_userID;
 
@@ -21,9 +25,11 @@ class HourlyActionRate {
 
         double getHourlyActionRate(const std::string &t_eventType, int t_hour);
 
-        void setHourlyActionRate(const std::string &t_eventType, int t_hour, double t_rate);
+        void setHourlyActionRate(const std::string &t_eventType, int t_hour, double t_rate, uint64_t t_activityLevel);
 
         uint64_t getActionActivityLevel(const std::string &t_eventType);
+
+        void show();
 };
 
 #endif

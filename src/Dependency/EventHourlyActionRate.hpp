@@ -2,6 +2,9 @@
 #define __EVENT_HOURLY_ACTION_RATE__
 
 #include <vector>
+#include <cstdint>
+#include <iostream>
+#include <cassert>
 
 class EventHourlyActionRate {
 
@@ -23,6 +26,8 @@ class EventHourlyActionRate {
         double getProb(int t_hour);
 
         uint64_t getActivityLevel();
+
+        void show();
 };
 
 #endif

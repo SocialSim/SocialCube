@@ -2,6 +2,7 @@
 #define __OBJECT_PREFERENCE__
 
 #include <unordered_map>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -28,6 +29,8 @@ class ObjectPreference {
         bool exist(const std::string &t_objectID);
 
         std::vector<std::string> getPreferedObjectIDs();
+
+        void show();
 };
 
 #endif
