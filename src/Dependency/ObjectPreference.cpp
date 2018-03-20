@@ -44,7 +44,8 @@ void ObjectPreference::show() const {
     }
 }
 
-string ObjectPreference::chooseTarget(double d) const {
+string ObjectPreference::randomChooseTarget() const {
+    double d = ((double)rand()) / RAND_MAX;
     double sum = 0.0;
     string target;
     for(auto& iter : m_preference){

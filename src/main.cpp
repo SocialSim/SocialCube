@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <memory>
 #include "AgentBuilder/AgentBuilder.hpp"
 #include "Simulator/Simulator.hpp"
@@ -8,8 +7,6 @@
 
 
 int main() {
-    srand(time(NULL));
-
     AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
     

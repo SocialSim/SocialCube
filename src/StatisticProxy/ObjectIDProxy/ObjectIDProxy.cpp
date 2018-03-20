@@ -2,10 +2,15 @@
 
 using namespace std;
 
-ObjectIDProxy::ObjectIDProxy(){
-    string filePath(getenv("SOCIALCUBEPATH"));
-    filePath += "/statistics/obj_id.json";
-    m_objectIDStatisticsFile.open (filePath);
+ObjectIDProxy::ObjectIDProxy() throw() {
+    try{
+        string filePath(getenv("SOCIALCUBEPATH"));
+        filePath += "/statistics/obj_id.json";
+        m_objectIDStatisticsFile.open (filePath);
+    } catch(exception& e) {
+        ObjectIDProxyException o_e;
+        throw o_e;
+    }
     assert(m_objectIDStatisticsFile.is_open());
     return;
 }

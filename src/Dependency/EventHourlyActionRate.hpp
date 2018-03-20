@@ -15,6 +15,8 @@ class EventHourlyActionRate {
 
         uint64_t m_activityLevel;
 
+        double m_probSum;
+
     public:
 
         EventHourlyActionRate(uint64_t t_activityLevel);

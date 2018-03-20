@@ -32,7 +32,7 @@ class ObjectPreference {
 
         void show() const;
 
-        std::string chooseTarget(double d) const;
+        std::string randomChooseTarget() const;
 };
 
 #endif

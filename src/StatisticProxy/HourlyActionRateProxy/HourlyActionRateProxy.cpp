@@ -2,10 +2,15 @@
 
 using namespace std;
 
-HourlyActionRateProxy::HourlyActionRateProxy() {
-    string filePath(getenv("SOCIALCUBEPATH"));
-    filePath += "/statistics/user_action_rate.json";
-    m_hourlyActionRateStatisticFile.open (filePath);
+HourlyActionRateProxy::HourlyActionRateProxy() throw() {
+    try {
+        string filePath(getenv("SOCIALCUBEPATH"));
+        filePath += "/statistics/user_action_rate.json";
+        m_hourlyActionRateStatisticFile.open (filePath);
+    } catch (exception &e) {
+        HourlyActionRateProxyException h_e;
+        throw h_e;
+    }
     assert(m_hourlyActionRateStatisticFile.is_open());
     return;
 }

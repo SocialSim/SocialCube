@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include "Dependency/HourlyActionRate.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
+#include "common/Exception.hpp"
 
 class HourlyActionRateProxy : public ProxyModule {
 private:
@@ -20,7 +21,7 @@ private:
     std::ifstream m_hourlyActionRateStatisticFile;
 
 public:
-    HourlyActionRateProxy();
+    HourlyActionRateProxy() throw();
 
     virtual ~HourlyActionRateProxy();
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <cassert>
+#include <cstdint>
 
 #include "common/Event.hpp"
 #include "Agent/UserAgent/UserAgent.hpp"

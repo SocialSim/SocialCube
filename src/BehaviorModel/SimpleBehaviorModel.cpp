@@ -18,8 +18,7 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
         ) {
     vector<unique_ptr<Event>> events;
 
-    const std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>>& m_rate = 
-    t_hourlyActionRate.getRate();
+    const std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>>& m_rate = t_hourlyActionRate.getRate();
 
     for(auto& hourlyActionRateIter : m_rate) {
         uint64_t activityLevel = hourlyActionRateIter.second->getActivityLevel();
@@ -46,7 +45,6 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
 }
 
 std::string SimpleBehaviorModel::chooseTarget(const ObjectPreference& t_objectPreference) {
-    double d = ((double)rand()) / RAND_MAX;
-    string target = t_objectPreference.chooseTarget(d);
+    string target = t_objectPreference.randomChooseTarget();
     return target;
 }

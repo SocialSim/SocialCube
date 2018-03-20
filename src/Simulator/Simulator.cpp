@@ -2,6 +2,8 @@
 
 Simulator::Simulator() : m_currentTime (0), m_startTime (0), m_endTime (0),
     m_unitTime (1), m_dependentEventLogger(nullptr) {
+
+    srand(time(NULL));
     return;
 }
 

@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cstdlib>
 #include "StatisticProxy/ProxyModule.hpp"
+#include "common/Exception.hpp"
 
 class ObjectIDProxy : public ProxyModule {
 private:
@@ -15,7 +16,7 @@ private:
 
     std::ifstream m_objectIDStatisticsFile;
 public:
-    ObjectIDProxy();
+    ObjectIDProxy() throw();
 
     virtual ~ObjectIDProxy();
 

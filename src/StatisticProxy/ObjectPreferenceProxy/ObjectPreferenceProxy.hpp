@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include "Dependency/ObjectPreference.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
+#include "common/Exception.hpp"
 
 class ObjectPreferenceProxy : public ProxyModule {
 private:
@@ -18,7 +19,7 @@ private:
     std::ifstream m_objectPreferenceStatisticsFile;
 
 public:
-    ObjectPreferenceProxy();
+    ObjectPreferenceProxy() throw();
 
     virtual ~ObjectPreferenceProxy();
 

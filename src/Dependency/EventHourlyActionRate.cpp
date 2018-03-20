@@ -13,6 +13,7 @@ EventHourlyActionRate::~EventHourlyActionRate() {
 
 void EventHourlyActionRate::setProb(int t_hour, double t_rate) {
     m_prob[t_hour] = t_rate;
+    m_probSum += t_rate;
 }
 
 double EventHourlyActionRate::getProb(int t_hour) {
@@ -20,10 +21,7 @@ double EventHourlyActionRate::getProb(int t_hour) {
 }
 
 double EventHourlyActionRate::getProbSum() {
-    double sum = 0;
-    for (auto n : m_prob)
-        sum += n;
-    return sum;
+    return m_probSum;
 }
 
 uint64_t EventHourlyActionRate::getActivityLevel() {
