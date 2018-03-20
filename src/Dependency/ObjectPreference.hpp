@@ -33,6 +33,8 @@ class ObjectPreference {
         void show() const;
 
         std::string randomChooseTarget() const;
+
+        std::string getUserID() const;
 };
 
 #endif

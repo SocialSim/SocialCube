@@ -57,3 +57,8 @@ string ObjectPreference::randomChooseTarget() const {
     }
     return target;
 }
+
+std::string ObjectPreference::getUserID() const {
+    string id = m_userID;
+    return id;
+}

@@ -32,7 +32,7 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
 
         for(uint64_t i = 0; i < activityLevel; ++i) {
             if(((double)rand() / RAND_MAX) < prob) {
-                string userID = t_hourlyActionRate.getUserID();
+                string userID = t_objectPreference.getUserID();
                 string objectID = SimpleBehaviorModel::chooseTarget(t_objectPreference);
                 string actionType = hourlyActionRateIter.first;
                 unique_ptr<Event> event(new Event(userID, objectID, actionType, t_currentTime));
