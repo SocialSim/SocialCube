@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <cassert>
+#include <cstdlib>
 #include "StatisticProxy/ProxyModule.hpp"
 
 class ObjectIDProxy : public ProxyModule {

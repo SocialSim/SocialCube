@@ -3,7 +3,9 @@
 using namespace std;
 
 ObjectIDProxy::ObjectIDProxy(){
-    m_objectIDStatisticsFile.open ("/home/parallels/Desktop/SocialCube/statistics/obj_id.json");
+    string filePath(getenv("SOCIALCUBEPATH"));
+    filePath += "/statistics/obj_id.json";
+    m_objectIDStatisticsFile.open (filePath);
     assert(m_objectIDStatisticsFile.is_open());
     return;
 }

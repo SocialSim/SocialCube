@@ -8,6 +8,7 @@
 #include <memory>
 #include <fstream>
 #include <cassert>
+#include <cstdlib>
 #include "Dependency/HourlyActionRate.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <memory>
 #include <cassert>
+#include <cstdlib>
 #include "Dependency/ObjectPreference.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 

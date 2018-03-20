@@ -3,7 +3,9 @@
 using namespace std;
 
 HourlyActionRateProxy::HourlyActionRateProxy() {
-    m_hourlyActionRateStatisticFile.open ("/home/parallels/Desktop/SocialCube/statistics/user_action_rate.json");
+    string filePath(getenv("SOCIALCUBEPATH"));
+    filePath += "/statistics/user_action_rate.json";
+    m_hourlyActionRateStatisticFile.open (filePath);
     assert(m_hourlyActionRateStatisticFile.is_open());
     return;
 }

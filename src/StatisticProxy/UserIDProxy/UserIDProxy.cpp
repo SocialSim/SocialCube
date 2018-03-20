@@ -3,7 +3,9 @@
 using namespace std;
 
 UserIDProxy::UserIDProxy() {
-    m_userIDStatisticsFile.open ("/home/parallels/Desktop/SocialCube/statistics/user_id.json");
+    string filePath(getenv("SOCIALCUBEPATH"));
+    filePath += "/statistics/user_id.json";
+    m_userIDStatisticsFile.open(filePath.c_str());
     assert(m_userIDStatisticsFile.is_open());
     return;
 }

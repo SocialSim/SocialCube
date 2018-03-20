@@ -3,7 +3,9 @@
 using namespace std;
 
 ObjectPreferenceProxy::ObjectPreferenceProxy() {
-    m_objectPreferenceStatisticsFile.open ("/home/parallels/Desktop/SocialCube/statistics/object_preference.json");
+    string filePath(getenv("SOCIALCUBEPATH"));
+    filePath += "/statistics/object_preference.json";
+    m_objectPreferenceStatisticsFile.open(filePath);
     assert(m_objectPreferenceStatisticsFile.is_open());
     return;
 }

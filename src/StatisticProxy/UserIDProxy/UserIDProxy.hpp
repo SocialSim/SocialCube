@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
 #include <cassert>
 #include "StatisticProxy/ProxyModule.hpp"
 
