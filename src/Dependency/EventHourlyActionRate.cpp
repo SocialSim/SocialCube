@@ -20,7 +20,7 @@ double EventHourlyActionRate::getProb(int t_hour) {
 }
 
 double EventHourlyActionRate::getProbSum() {
-    double sum;
+    double sum = 0;
     for (auto n : m_prob)
         sum += n;
     return sum;

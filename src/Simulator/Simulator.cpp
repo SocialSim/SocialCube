@@ -54,30 +54,30 @@ void Simulator::step() {
         m_dependentEventLogger->step();
 
     for(auto& agent : m_userAgents) {
-        vector<Event> events = agent->step(m_currentTime, m_unitTime);
+        vector<unique_ptr<Event>> events = agent->step(m_currentTime, m_unitTime);
         logEventInDependentEventLogger(events);
         appendEventInEventHistory(events);
     }
 }
 
-void Simulator::logEventInDependentEventLogger(const vector<Event> &events) {
-    for(auto event : events) {
-        string userId = event.getUserID();
-        string eventType = event.getEventType();
-        uint64_t timeStamp = event.getTimestamp();
+void Simulator::logEventInDependentEventLogger(const vector<unique_ptr<Event>>& events) {
+    for(auto& event : events) {
+        string userId = event->getUserID();
+        string eventType = event->getEventType();
+        uint64_t timeStamp = event->getTimestamp();
         m_dependentEventLogger->logUserEventAtTime(userId, eventType, timeStamp);
     }
 }
 
-void Simulator::appendEventInEventHistory(const vector<Event> &events) {
-    for(auto event : events) {
-        m_eventHistory.push_back(event);
+void Simulator::appendEventInEventHistory(vector<unique_ptr<Event>>& events) {
+    for(auto& event : events) {
+        m_eventHistory.push_back(move(event));
     }
 }
 
 void Simulator::showEvent(){
-    for(auto event : m_eventHistory) {
-        event.show();
+    for(auto& event : m_eventHistory) {
+        event->show();
     }
 }
 

@@ -20,7 +20,7 @@ private:
 
     vector<unique_ptr<ObjectAgent>> m_objectAgents;
 
-    vector<Event> m_eventHistory;
+    vector<unique_ptr<Event>> m_eventHistory;
 
     uint64_t m_currentTime;
 
@@ -36,9 +36,9 @@ private:
 
     void step();
 
-    void logEventInDependentEventLogger(const vector<Event> &t_events);
+    void logEventInDependentEventLogger(const vector<unique_ptr<Event>>& t_events);
 
-    void appendEventInEventHistory(const vector<Event> &t_events);
+    void appendEventInEventHistory(vector<unique_ptr<Event>>& t_events);
 
 public:
 

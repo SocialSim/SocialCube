@@ -25,7 +25,7 @@ class SimpleGithubUserAgent : public UserAgent {
 
         ~SimpleGithubUserAgent();
 
-        std::vector<Event> step(uint64_t t_currentTime, uint64_t t_unitTime);
+        std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime);
 };
 
 #endif

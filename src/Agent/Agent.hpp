@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <cstdint>
+#include <memory>
 #include "common/Event.hpp"
 
 class Agent {
@@ -14,7 +15,7 @@ class Agent {
 
         virtual ~Agent() {};
 
-        virtual std::vector<Event> step(uint64_t t_currentTime, uint64_t t_unitTime) = 0;
+        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) = 0;
 
         std::string getID() { return m_id; }
 };

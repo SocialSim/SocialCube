@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Event::Event(string t_userID, string t_objectID, string t_eventType, uint64_t t_timestamp) :
+Event::Event(const string& t_userID, const string& t_objectID, const string& t_eventType, uint64_t t_timestamp) :
     m_userID(t_userID), m_objectID(t_objectID), m_eventType(t_eventType), 
     m_timestamp(t_timestamp) {
     return;

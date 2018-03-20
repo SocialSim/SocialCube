@@ -12,7 +12,7 @@ SimpleGithubObjectAgent::~SimpleGithubObjectAgent() {
     return;
 }
 
-vector<Event> SimpleGithubObjectAgent::step(uint64_t t_currentTime, uint64_t t_unitTime) {
-    vector<Event> events;
+vector<unique_ptr<Event>> SimpleGithubObjectAgent::step(uint64_t t_currentTime, uint64_t t_unitTime) {
+    vector<unique_ptr<Event>> events;
     return events;
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "common/Event.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
@@ -18,7 +19,7 @@ class SimpleBehaviorModel {
 
     public:
 
-    static std::vector<Event> evaluate(HourlyActionRate& t_hourlyActionRate,
+    static std::vector<std::unique_ptr<Event>> evaluate(HourlyActionRate& t_hourlyActionRate,
             ObjectPreference &t_objectPreference,
             uint64_t t_currentTime,
             uint64_t t_unitTime

@@ -14,8 +14,9 @@ private:
     std::string m_eventType;
 
     uint64_t m_timestamp;
+
 public:
-    Event(std::string t_userID, std::string t_objectID, std::string t_eventType, 
+    Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType, 
             uint64_t m_timestamp);
 
     ~Event();
