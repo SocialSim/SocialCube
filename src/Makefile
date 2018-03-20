@@ -1,10 +1,10 @@
-BASEDIR := $(HOME)/Desktop/SocialCube
+BASEDIR := $(SOCIALCUBEPATH)
 SRCDIR := $(BASEDIR)/src
 
 TARGET := simulator
 
 CXX := g++
-CXX_FLAGS := -O2 -pthread
+CXX_FLAGS := -O3
 #CXX_FLAGS := -g3 -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CXX_FLAGS := $(CXX_FLAGS) -Wpadded -Winline -Wpointer-arith -Wsign-compare -Wendif-labels
