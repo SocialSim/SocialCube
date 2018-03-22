@@ -1,7 +1,7 @@
 BASEDIR := $(SOCIALCUBEPATH)
 SRCDIR := $(BASEDIR)/src
 
-TARGET := simulator
+TARGET := socialcube
 
 CXX := g++
 CXX_FLAGS := -O3
@@ -18,7 +18,6 @@ OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
-OBJS := $(OBJS) UserDependency.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
