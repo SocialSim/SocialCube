@@ -27,15 +27,14 @@ void HourlyActionRateProxy::parse() {
         string eventTypeCount = tmp.substr(tmp.find(" ") + 1);
         unique_ptr<HourlyActionRate> hourlyActionRate(new HourlyActionRate(userID));
         for(int i = 0; i < stoi(eventTypeCount); ++i) {
-            uint64_t activityLevel;
-            string eventType;
+            double activityLevel;
             getline(m_hourlyActionRateStatisticFile, tmp);
             istringstream in(tmp);
-            in >> userID >> activityLevel >> eventType;
+            in >> userID >> activityLevel;
             for(int j = 0; j < 24; ++j) {
                 double prob;
                 in >> prob;
-                hourlyActionRate->setHourlyActionRate(eventType, j, prob, activityLevel);
+                hourlyActionRate->setHourlyActionRate(j, prob, activityLevel);
             }
         }
         m_hourlyActionRate[userID] = move(hourlyActionRate);

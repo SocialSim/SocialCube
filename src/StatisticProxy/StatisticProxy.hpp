@@ -11,6 +11,7 @@
 #include "StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp"
 #include "StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp"
 #include "StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp"
+#include "StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp"
 
 class StatisticProxy {
 
@@ -19,6 +20,7 @@ class StatisticProxy {
         std::unique_ptr<ObjectIDProxy> m_objectIDProxy;
         std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
         std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
+        std::unique_ptr<TypeDistributionProxy> m_typeDistributionProxy;
 
         // Private member functions
         StatisticProxy();
@@ -38,6 +40,8 @@ class StatisticProxy {
         HourlyActionRate& getUserHourlyActionRate(const std::string &userID) const;
 
         ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
+
+        TypeDistribution& getUserTypeDistribution(const std::string &userID) const; 
 };
 
 #endif

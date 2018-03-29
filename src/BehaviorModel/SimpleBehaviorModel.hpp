@@ -17,6 +17,8 @@ class SimpleBehaviorModel {
 
         static std::string chooseTarget(const ObjectPreference& t_objectPreference);
 
+        static std::string chooseAction();
+
     public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(HourlyActionRate& t_hourlyActionRate,

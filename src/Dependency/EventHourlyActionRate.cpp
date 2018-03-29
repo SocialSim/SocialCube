@@ -2,7 +2,7 @@
 
 using namespace std;
 
-EventHourlyActionRate::EventHourlyActionRate(uint64_t t_activityLevel) :
+EventHourlyActionRate::EventHourlyActionRate(double t_activityLevel) :
     m_prob(24, 0.0), m_activityLevel(t_activityLevel) {
     return;
 }

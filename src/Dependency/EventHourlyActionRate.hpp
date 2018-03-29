@@ -13,13 +13,13 @@ class EventHourlyActionRate {
         // hour -> action rate of that hour
         std::vector<double> m_prob;
 
-        uint64_t m_activityLevel;
+        double m_activityLevel;
 
         double m_probSum;
 
     public:
 
-        EventHourlyActionRate(uint64_t t_activityLevel);
+        EventHourlyActionRate(double t_activityLevel);
 
         ~EventHourlyActionRate();
 

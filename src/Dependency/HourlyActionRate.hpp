@@ -12,8 +12,7 @@
 class HourlyActionRate {
     private:
 
-        // eventType -> action rate in 24 hours
-        std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>> m_rate;
+        std::unique_ptr<EventHourlyActionRate> m_rate;
     
         std::string m_userID;
 
@@ -23,15 +22,15 @@ class HourlyActionRate {
 
         ~HourlyActionRate();
 
-        double getHourlyActionRate(const std::string &t_eventType, int t_hour);
+        double getHourlyActionRate(int t_hour);
 
-        void setHourlyActionRate(const std::string &t_eventType, int t_hour, double t_rate, uint64_t t_activityLevel);
+        void setHourlyActionRate(int t_hour, double t_rate, double t_activityLevel);
 
-        uint64_t getActionActivityLevel(const std::string &t_eventType);
+        double getActionActivityLevel();
 
         void show() const;
 
-        std::unordered_map<std::string, std::unique_ptr<EventHourlyActionRate>>& getRate(); 
+        std::unique_ptr<EventHourlyActionRate>& getRate(); 
 
         std::string getUserID() const;
 };
