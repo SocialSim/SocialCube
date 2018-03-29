@@ -20,6 +20,8 @@ class SimpleGithubUserAgent : public UserAgent {
 
         ObjectPreference& m_objectPreference;
 
+        TypeDistribution& m_typeDistribution;
+
     public:
         SimpleGithubUserAgent(const std::string& t_id);
 

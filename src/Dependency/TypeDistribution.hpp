@@ -17,7 +17,7 @@ class TypeDistribution {
 
         std::string m_userID;
 
-        static const std::unordered_map<std::string, int> m_actions;
+        static const std::unordered_map<int, std::string> m_actions;
 
     public:
 
@@ -30,6 +30,8 @@ class TypeDistribution {
         void pushDist(double t_dist);
 
         double getDist(int t_actionIndex);
+
+        std::string randomChooseAction() const;
 
         void show();
 };

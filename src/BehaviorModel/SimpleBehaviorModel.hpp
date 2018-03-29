@@ -7,6 +7,7 @@
 #include "common/Event.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
+#include "Dependency/TypeDistribution.hpp"
 
 class SimpleBehaviorModel {
     private:
@@ -17,12 +18,13 @@ class SimpleBehaviorModel {
 
         static std::string chooseTarget(const ObjectPreference& t_objectPreference);
 
-        static std::string chooseAction();
+        static std::string chooseAction(const TypeDistribution& t_typeDistribution);
 
     public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(HourlyActionRate& t_hourlyActionRate,
             ObjectPreference &t_objectPreference,
+            TypeDistribution &t_typeDistribution,
             uint64_t t_currentTime,
             uint64_t t_unitTime
             );

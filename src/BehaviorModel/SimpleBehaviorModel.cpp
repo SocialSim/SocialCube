@@ -13,6 +13,7 @@ SimpleBehaviorModel::~SimpleBehaviorModel() {
 std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
         HourlyActionRate& t_hourlyActionRate,
         ObjectPreference& t_objectPreference,
+        TypeDistribution& t_typeDistribution,
         uint64_t t_currentTime,
         uint64_t t_unitTime
         ) {
@@ -29,7 +30,7 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
         if(((double)rand() / RAND_MAX) < prob) {
             string userID = t_objectPreference.getUserID();
             string objectID = SimpleBehaviorModel::chooseTarget(t_objectPreference);
-            string actionType = SimpleBehaviorModel::chooseAction();
+            string actionType = SimpleBehaviorModel::chooseAction(t_typeDistribution);
             unique_ptr<Event> event(new Event(userID, objectID, actionType, t_currentTime));
             events.push_back(move(event));
         }
@@ -44,6 +45,7 @@ string SimpleBehaviorModel::chooseTarget(const ObjectPreference& t_objectPrefere
     return target;
 }
 
-string SimpleBehaviorModel::chooseAction() {
-    return "ha?";
+string SimpleBehaviorModel::chooseAction(const TypeDistribution& t_typeDistribution) {
+    string action = t_typeDistribution.randomChooseAction();
+    return action;
 }

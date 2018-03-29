@@ -2,13 +2,14 @@
 
 using namespace std;
 
-const std::unordered_map<std::string, int> TypeDistribution::m_actions{{"CreateEvent", 0}, 
-          {"DeleteEvent", 1},
-          {"ForkEvent", 2}, 
-          {"IssuesEvent", 3}, 
-          {"PullRequestEvent", 4}, 
-          {"PushEvent", 5}, 
-          {"WatchEvent", 6}};
+const std::unordered_map<int, std::string> TypeDistribution::m_actions{
+    {0, "CreateEvent"}, 
+    {1, "DeleteEvent"},
+    {2, "ForkEvent", }, 
+    {3, "IssuesEvent"}, 
+    {4, "PullRequestE"}, 
+    {5, "PushEvent", }, 
+    {6, "WatchEvent",}};
 
 TypeDistribution::TypeDistribution(std::string t_userID) : m_userID(t_userID) {
     return;
@@ -36,4 +37,18 @@ void TypeDistribution::show() {
 
 size_t TypeDistribution::getActionCount() {
     return m_actions.size();
+}
+
+string TypeDistribution::randomChooseAction() const {
+    double d = ((double)rand()) / RAND_MAX;
+    double sum = 0.0;
+    string action;
+    for(int action_index = 0; action_index < m_dist.size(); ++action_index){
+        sum += m_dist[action_index];
+        if(sum > d) {
+            action = TypeDistribution::m_actions.find(action_index)->second;
+            break;
+        }
+    }
+    return action;
 }

@@ -13,7 +13,7 @@ int main() {
     Simulator s;
     s.setCurrentTime(0);
     s.setStartTime(0);
-    s.setEndTime(8760);
+    s.setEndTime(24);
     s.setUnitTime(1);
 
     std::vector<std::unique_ptr<SimpleGithubUserAgent>>& agentList = builder.getUserAgentList();
