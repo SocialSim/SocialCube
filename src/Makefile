@@ -12,6 +12,7 @@ CXX_FLAGS := $(CXX_FLAGS) -std=c++11
 CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 
 OBJS := Simulator.o
+OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) BehaviorModel.o
@@ -36,6 +37,9 @@ $(TARGET):	$(OBJS)
 	rm *.o
 
 Simulator.o:	./Simulator/Simulator.cpp ./Simulator/Simulator.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CacheAwareSimulator.o:	./Simulator/CacheAwareSimulator.cpp ./Simulator/CacheAwareSimulator.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp

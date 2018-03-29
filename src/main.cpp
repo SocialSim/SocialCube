@@ -1,6 +1,7 @@
 #include <memory>
 #include "AgentBuilder/AgentBuilder.hpp"
 #include "Simulator/Simulator.hpp"
+#include "Simulator/CacheAwareSimulator.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
@@ -10,7 +11,7 @@ int main() {
     AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
     
-    Simulator s;
+    CacheAwareSimulator s;
     s.setCurrentTime(0);
     s.setStartTime(0);
     s.setEndTime(24);

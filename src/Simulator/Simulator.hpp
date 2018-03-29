@@ -16,7 +16,7 @@ using namespace std;
 
 class Simulator {
 
-private:
+protected:
     vector<unique_ptr<UserAgent>> m_userAgents;
 
     vector<unique_ptr<ObjectAgent>> m_objectAgents;
@@ -45,7 +45,7 @@ public:
 
     Simulator();
 
-    ~Simulator();
+    virtual ~Simulator();
 
     void setCurrentTime(uint64_t t_currentTime);
 
@@ -63,7 +63,7 @@ public:
 
     void transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList);
 
-    void simulate();
+    virtual void simulate();
 
     void showEvent();
 
