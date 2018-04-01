@@ -5,17 +5,20 @@
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
+#include "ArgParser/ArgParser.hpp"
 
 
-int main() {
+int main(int argc, const char* argv[]) {
+    ArgParser args(argc, argv);
+
     AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
     
     Simulator s;
-    s.setCurrentTime(0);
-    s.setStartTime(0);
-    s.setEndTime(24);
-    s.setUnitTime(1);
+    s.setCurrentTime(args.getSimulationCurrentTime());
+    s.setStartTime(args.getSimulationStartTime());
+    s.setEndTime(args.getSimulationEndTime());
+    s.setUnitTime(args.getSimulationUnitTime());
 
     std::vector<std::unique_ptr<SimpleGithubUserAgent>>& agentList = builder.getUserAgentList();
     for(auto& iter : agentList)

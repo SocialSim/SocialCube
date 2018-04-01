@@ -4,10 +4,10 @@ SRCDIR := $(BASEDIR)/src
 TARGET := socialcube
 
 CXX := g++
-CXX_FLAGS := -O3
+CXX_FLAGS := -O3 -g
 #CXX_FLAGS := -g3 -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
-CXX_FLAGS := $(CXX_FLAGS) -Wpadded -Winline -Wpointer-arith -Wsign-compare -Wendif-labels
+CXX_FLAGS := $(CXX_FLAGS) -Wpointer-arith -Wsign-compare -Wendif-labels
 CXX_FLAGS := $(CXX_FLAGS) -std=c++11
 CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 
@@ -28,6 +28,7 @@ OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) DependentEventLogger.o
+OBJS := $(OBJS) ArgParser.o
 OBJS := $(OBJS) main.o
 
 all:	$(TARGET)
@@ -88,6 +89,9 @@ Event.o:	./common/Event.cpp ./common/Event.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 DependentEventLogger.o:	./DependentEventLogger/DependentEventLogger.cpp ./DependentEventLogger/DependentEventLogger.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ArgParser.o:	./ArgParser/ArgParser.cpp ./ArgParser/ArgParser.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp
