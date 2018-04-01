@@ -42,6 +42,8 @@ void LOGW(const string& tag, const string& log, bool preamble = true);
 
 void LOGIMPL(const string& tag, const string& log, const char* color, bool preamble = true);
 
+size_t getSpaceCnt(const string& tag);
+
 extern stringstream ss;
 template<typename  T>
 string stringfy(T x)

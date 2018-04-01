@@ -2,6 +2,7 @@
 #define __ARG_PARSER__
 
 #include <iostream>
+#include <cstdlib>
 #include <string>
 #include "cxxopts.hpp"
 
@@ -18,7 +19,11 @@ class ArgParser {
 
         uint64_t simulator_unitTime;
 
-        bool simulator_profile;
+        bool simulator_profileShow;
+
+        bool simulator_eventShow;
+
+        std::string simulator_eventFileName;
 
         bool readFromFile;
 
@@ -42,7 +47,11 @@ class ArgParser {
 
         uint64_t getSimulationCurrentTime();
 
-        bool getSimulationProfileStatus();
+        bool getSimulationShowProfileStatus();
+
+        bool getSimulationShowEventStatus();
+
+        std::string getSimulationEventFileName();
 
 };
 

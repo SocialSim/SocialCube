@@ -52,11 +52,11 @@ TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &use
 
 void StatisticProxy::initProxySourceFile() {
 
-        const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+    const string socialcubePath = (getenv("SOCIALCUBEPATH"));
 
-        m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
-        m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
-        m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
-        m_defaultObjectPreferenceProxyFile= socialcubePath + "/statistics/user_object_preference.json";
-        m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
+    m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
+    m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
+    m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
+    m_defaultObjectPreferenceProxyFile= socialcubePath + "/statistics/user_object_preference.json";
+    m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
 }

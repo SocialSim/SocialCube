@@ -31,3 +31,9 @@ uint64_t Event::getTimestamp() const {
 void Event::show() const {
     cout << m_userID << " " << m_objectID << " " << m_eventType << " " << m_timestamp << "\n";
 }
+
+ostream& operator<<(ostream& os, const Event& e)
+{  
+    os << e.m_userID << " " << e.m_objectID << " " << e.m_eventType << " " << e.m_timestamp << "\n";
+    return os;  
+} 

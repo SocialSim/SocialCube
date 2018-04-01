@@ -6,6 +6,7 @@
 #include <memory>
 #include <cassert>
 #include <cstdint>
+#include <fstream>
 
 #include "common/Event.hpp"
 #include "Agent/UserAgent/UserAgent.hpp"
@@ -41,9 +42,21 @@ protected:
 
     bool m_profileOn;
 
+    bool m_eventOn;
+
+    uint64_t m_eventThreashold;
+
+    string m_eventFileName;
+
+    ofstream m_eventFile; 
+
+    uint64_t m_eventCount;
+
     // Private member function
 
-    void simulationCheck();
+    void preSimulationConfig();
+
+    void postSimulationConfig();
 
     void step();
 
@@ -55,11 +68,18 @@ protected:
 
     virtual void simulateImpl();
 
+    void emitEventOnExceedThreashold();
+
+    void storeEvent();
+
+    void _storeEvent();
 public:
 
     Simulator();
 
     virtual ~Simulator();
+
+    /********************** All setter function *************************/
 
     void setCurrentTime(uint64_t t_currentTime);
 
@@ -69,7 +89,13 @@ public:
 
     void setUnitTime(uint64_t t_unitTime);
 
-    void setProfile(bool t_profileOn);
+    void setProfileShow(bool t_profileOn);
+
+    void setEventShow(bool t_eventOn);
+
+    void setEventFileName(const string& t_file);
+
+    void setEventThreashold(uint64_t t_threashold);
 
     void setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger);
 
@@ -80,8 +106,6 @@ public:
     void transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList);
 
     virtual void simulate() final;
-
-    void showEvent();
 
     uint64_t getCurrentTime();
 

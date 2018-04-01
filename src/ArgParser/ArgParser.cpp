@@ -23,7 +23,9 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("e, end_time", "Simulation end time", cxxopts::value<uint64_t>())
           ("u, unit_time", "Simulation unit time", cxxopts::value<uint64_t>())
           ("c, current_time", "Simulation current time", cxxopts::value<uint64_t>())
-          ("p, profile", "Simulation profiling")
+          ("show_profile", "Show profiling results after finishing simulation")
+          ("show_event", "Store all events of simulation")
+          ("event_file", "File name for storing events", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
         try 
@@ -58,10 +60,23 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 simulator_currentTime = 0;
             }
 
-            if (result.count("profile")) { 
-                simulator_profile = true;
+            if (result.count("show_profile")) { 
+                simulator_profileShow = true;
             } else {
-                simulator_profile = false;
+                simulator_profileShow = false;
+            }
+
+            if (result.count("show_event")) { 
+                simulator_eventShow = true;
+            } else {
+                simulator_eventShow = false;
+            }
+
+            if (result.count("event_file")) { 
+                simulator_eventFileName = result["event_file"].as<string>();
+            } else {
+                const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+                simulator_eventFileName = socialcubePath + string("/events.txt");
             }
 
             if (result.count("init_file")) { 
@@ -107,6 +122,13 @@ uint64_t ArgParser::getSimulationCurrentTime() {
     return simulator_currentTime;
 }
 
-bool ArgParser::getSimulationProfileStatus() {
-    return simulator_profile;
+bool ArgParser::getSimulationShowProfileStatus() {
+    return simulator_profileShow;
+}
+
+bool ArgParser::getSimulationShowEventStatus() {
+    return simulator_eventShow;
+}
+string ArgParser::getSimulationEventFileName() {
+    return simulator_eventFileName;
 }

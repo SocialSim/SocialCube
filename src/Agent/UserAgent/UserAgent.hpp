@@ -12,7 +12,7 @@ class UserAgent : public Agent {
 
     public:
 
-        virtual ~UserAgent() {};
+        virtual ~UserAgent() = default;
 };
 
 #endif

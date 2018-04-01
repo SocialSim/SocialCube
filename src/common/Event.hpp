@@ -30,6 +30,8 @@ public:
     uint64_t getTimestamp() const;
 
     void show() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Event& e);  
 };
 
 #endif

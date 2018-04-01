@@ -16,6 +16,15 @@ void SimulatorProfiler::timeEnd() {
 void SimulatorProfiler::showProfile() {
     DBG(LOGP(TAG, "\n\n*************************** Simulation Profile ***************************", false);)
     DBG(LOGP(TAG, "     Simulation Total Time "+stringfy(m_duration.count())+" s");)
+    DBG(LOGP(TAG, "     Simulation Total Events "+stringfy(m_eventCount));)
     DBG(LOGP(TAG, "*************************** Simulation Profile ***************************\n\n", false);)
 
+    if(m_eventCount == 0) {
+        DBG(LOGW(TAG, "     Simulation Total Events Count is 0!");)
+    }
+}
+
+void SimulatorProfiler::setEventCount(uint64_t t_cnt) {
+    DBG(LOGP(TAG, "Set Event Count " + stringfy(t_cnt));)
+    m_eventCount = t_cnt;
 }

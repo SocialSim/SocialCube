@@ -13,7 +13,7 @@ class Agent {
     public:
         Agent(const std::string& t_id) : m_id(t_id) {};
 
-        virtual ~Agent() {};
+        virtual ~Agent() = default;
 
         virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) = 0;
 

@@ -43,7 +43,7 @@ void LOGW(const string& tag, const string& log, bool preamble)
 }
 
 void LOGIMPL(const string& tag, const string& log, const char* color, bool preamble) {
-    string offset(50-tag.size(),' ');
+    string offset(getSpaceCnt(tag),' ');
     log_lock.lock();
     if(preamble)
         cout<<color<<tag<<": "<<offset<<log<<RESET<<"\n";
@@ -51,6 +51,13 @@ void LOGIMPL(const string& tag, const string& log, const char* color, bool pream
         cout<<color<<log<<RESET<<"\n";
     cout.flush();
     log_lock.unlock();
+}
+
+size_t getSpaceCnt(const string& tag) {
+    int cnt = 50 - tag.size();
+    while(cnt <= 0)
+        cnt += 50;
+    return (size_t)cnt;
 }
 
 #endif

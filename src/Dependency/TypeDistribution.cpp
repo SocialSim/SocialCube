@@ -43,7 +43,7 @@ string TypeDistribution::randomChooseAction() const {
     double d = ((double)rand()) / RAND_MAX;
     double sum = 0.0;
     string action;
-    for(int action_index = 0; action_index < m_dist.size(); ++action_index){
+    for(size_t action_index = 0; action_index < m_dist.size(); ++action_index){
         sum += m_dist[action_index];
         if(sum > d) {
             action = TypeDistribution::m_actions.find(action_index)->second;

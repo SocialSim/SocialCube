@@ -19,12 +19,13 @@ int main(int argc, const char* argv[]) {
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());
     s.setUnitTime(args.getSimulationUnitTime());
-    s.setProfile(args.getSimulationProfileStatus());
+    s.setProfileShow(args.getSimulationShowProfileStatus());
+    s.setEventShow(args.getSimulationShowEventStatus());
+    s.setEventFileName(args.getSimulationEventFileName());
 
     std::vector<std::unique_ptr<SimpleGithubUserAgent>>& agentList = builder.getUserAgentList();
     for(auto& iter : agentList)
         s.addUserAgent(move(iter));
 
     s.simulate();
-    // s.showEvent();
 }
