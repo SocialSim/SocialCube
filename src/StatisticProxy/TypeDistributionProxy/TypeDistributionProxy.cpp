@@ -2,6 +2,8 @@
 
 using namespace std;
 
+DBG(static const string tag="TypeDistributionProxy";)
+
 TypeDistributionProxy::TypeDistributionProxy(const string& file) throw() {
     try {
         m_typeDistributionFile.open(file);
@@ -33,7 +35,7 @@ void TypeDistributionProxy::parse() {
         }
         m_typeDistribution[userID] = move(typeDistribution);
     }
-    cout << "Type Distributions Rate has " << m_typeDistribution.size() << endl;
+    DBG(LOGD(TAG, "Type Distribution Rate has "+stringfy(m_typeDistribution.size()));)
 }
 
 void TypeDistributionProxy::show() {

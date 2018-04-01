@@ -11,6 +11,7 @@
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "Agent/ObjectAgent/ObjectAgent.hpp"
 #include "DependentEventLogger/DependentEventLogger.hpp"
+#include "Log/Log.hpp"
 
 using namespace std;
 

@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include "StatisticProxy/StatisticProxy.hpp"
+#include "Log/Log.hpp"
 
 template<class TUserAgent, class TObjectAgent>
 class AgentBuilder {

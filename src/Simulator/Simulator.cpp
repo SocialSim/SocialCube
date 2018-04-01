@@ -1,9 +1,16 @@
 #include "Simulator.hpp"
 
+DBG(static const string tag="Simulator";)
+
 Simulator::Simulator() : m_currentTime (0), m_startTime (0), m_endTime (0),
     m_unitTime (1), m_dependentEventLogger(nullptr) {
 
     srand(time(NULL));
+
+    DBG(LOGD(TAG, "Simulation Start Time "+stringfy(m_startTime));)
+    DBG(LOGD(TAG, "Simulation End Time "+stringfy(m_endTime));)
+    DBG(LOGD(TAG, "Simulation Unit Time"+stringfy(m_unitTime));)
+    DBG(LOGD(TAG, "Simulation Current Time "+stringfy(m_currentTime));)
     return;
 }
 
@@ -47,6 +54,7 @@ void Simulator::simulate() {
     simulationCheck();
 
     for(; m_currentTime < m_endTime; m_currentTime += m_unitTime) {
+        DBG(LOGD(TAG, "Simulate "+stringfy(m_currentTime)+"/"+stringfy(m_endTime));)
         step();
     }
 }

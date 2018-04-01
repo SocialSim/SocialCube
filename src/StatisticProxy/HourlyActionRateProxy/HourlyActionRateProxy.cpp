@@ -1,5 +1,7 @@
 #include "HourlyActionRateProxy.hpp"
 
+DBG(static const string tag="HourlyActionRateProxy";)
+
 using namespace std;
 
 HourlyActionRateProxy::HourlyActionRateProxy(const string& file) throw() {
@@ -37,7 +39,7 @@ void HourlyActionRateProxy::parse() {
         }
         m_hourlyActionRate[userID] = move(hourlyActionRate);
     }
-    cout << "Hourly Action Rate has " << m_hourlyActionRate.size() << endl;
+    DBG(LOGD(TAG, "Hourly Action Rate has "+stringfy(m_hourlyActionRate.size()));)
 }
 
 void HourlyActionRateProxy::show() {

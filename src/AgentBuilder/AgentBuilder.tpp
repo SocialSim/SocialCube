@@ -1,5 +1,7 @@
 #include "AgentBuilder.hpp"
 
+DBG(static const string tag="AgentBuilder";)
+
 template<class TUserAgent, class TObjectAgent>
 AgentBuilder<TUserAgent, TObjectAgent>::AgentBuilder() : m_statProxy(StatisticProxy::getInstance()) {
     return;
@@ -14,7 +16,8 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     buildUsers();
     buildObjects();
-    std::cout << "User counts " << m_userAgents.size() << std::endl;
+    DBG(LOGD(TAG, "Agent Builder generates "+stringfy(m_userAgents.size())+" user agents");)
+    DBG(LOGD(TAG, "Agent Builder generates "+stringfy(m_objectAgents.size())+" object agents");)
 }
 
 template<class TUserAgent, class TObjectAgent>

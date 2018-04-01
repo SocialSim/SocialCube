@@ -11,6 +11,7 @@
 #include "Dependency/ObjectPreference.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
+#include "Log/Log.hpp"
 
 class ObjectPreferenceProxy : public ProxyModule {
 private:

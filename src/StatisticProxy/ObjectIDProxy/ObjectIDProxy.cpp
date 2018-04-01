@@ -2,6 +2,8 @@
 
 using namespace std;
 
+DBG(static const string tag="ObjectIDProxy";)
+
 ObjectIDProxy::ObjectIDProxy(const string& file) throw() {
     try{
         m_objectIDStatisticsFile.open (file);
@@ -16,13 +18,14 @@ ObjectIDProxy::ObjectIDProxy(const string& file) throw() {
 ObjectIDProxy::~ObjectIDProxy() {
     m_objectIDStatisticsFile.close();
     return;
-    return;
 }
 
 void ObjectIDProxy::parse() {
     string objectID;
     while (m_objectIDStatisticsFile >> objectID)
         m_objectIDs.push_back(objectID);
+
+    DBG(LOGD(TAG, "Object ID has "+stringfy(m_objectIDs.size()));)
 }
 
 vector<string>& ObjectIDProxy::get() {

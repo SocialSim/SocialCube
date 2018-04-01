@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
+#include "Log/Log.hpp"
 
 class ObjectIDProxy : public ProxyModule {
 private:

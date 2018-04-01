@@ -4,7 +4,7 @@ SRCDIR := $(BASEDIR)/src
 TARGET := socialcube
 
 CXX := g++
-CXX_FLAGS := -O3 -g
+CXX_FLAGS := -O3 -g -DDEBUG
 #CXX_FLAGS := -g3 -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CXX_FLAGS := $(CXX_FLAGS) -Wpointer-arith -Wsign-compare -Wendif-labels
@@ -29,13 +29,13 @@ OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
+OBJS := $(OBJS) Log.o
 OBJS := $(OBJS) main.o
 
 all:	$(TARGET)
 
 $(TARGET):	$(OBJS)
 	$(CXX) $(CXX_FLAGS) $^ -o $@
-	rm *.o
 
 Simulator.o:	./Simulator/Simulator.cpp ./Simulator/Simulator.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
@@ -92,6 +92,9 @@ DependentEventLogger.o:	./DependentEventLogger/DependentEventLogger.cpp ./Depend
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ArgParser.o:	./ArgParser/ArgParser.cpp ./ArgParser/ArgParser.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+Log.o:	./Log/Log.cpp ./Log/Log.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp

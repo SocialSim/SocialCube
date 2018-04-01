@@ -25,5 +25,5 @@ int main(int argc, const char* argv[]) {
         s.addUserAgent(move(iter));
 
     s.simulate();
-    s.showEvent();
+    // s.showEvent();
 }

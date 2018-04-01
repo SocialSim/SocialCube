@@ -12,6 +12,7 @@
 #include "Dependency/TypeDistribution.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
+#include "Log/Log.hpp"
 
 class TypeDistributionProxy : public ProxyModule {
 private:

@@ -2,6 +2,8 @@
 
 using namespace std;
 
+DBG(static const string tag="UserIDProxy";)
+
 UserIDProxy::UserIDProxy(const string& file) throw() {
     try{
         m_userIDStatisticsFile.open(file.c_str());
@@ -22,7 +24,7 @@ void UserIDProxy::parse() {
     string userID;
     while (m_userIDStatisticsFile >> userID)
         m_userIDs.push_back(userID);
-    cout << "User ID has " << m_userIDs.size() << endl;
+    DBG(LOGD(TAG, "User ID has "+stringfy(m_userIDs.size()));)
 }
 
 vector<string>& UserIDProxy::get() {

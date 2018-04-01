@@ -9,6 +9,7 @@
 #include <cassert>
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
+#include "Log/Log.hpp"
 
 class UserIDProxy : public ProxyModule {
 private:

@@ -12,6 +12,7 @@
 #include "Dependency/HourlyActionRate.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
+#include "Log/Log.hpp"
 
 class HourlyActionRateProxy : public ProxyModule {
 private:

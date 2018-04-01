@@ -2,6 +2,8 @@
 
 using namespace std;
 
+DBG(static const string tag="ObjectPreferenceProxy";)
+
 ObjectPreferenceProxy::ObjectPreferenceProxy(const string& file) throw() {
     try{
         m_objectPreferenceStatisticsFile.open(file);
@@ -32,7 +34,7 @@ void ObjectPreferenceProxy::parse() {
         }
         m_objectPreference[userID] = move(objectPreference);
     }
-    cout << "Object Preference has " << m_objectPreference.size() << endl;
+    DBG(LOGD(TAG, "Object Preference has "+stringfy(m_objectPreference.size()));)
 }
 
 void ObjectPreferenceProxy::show() {
