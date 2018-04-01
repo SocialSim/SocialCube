@@ -2,14 +2,12 @@
 
 using namespace std;
 
-TypeDistributionProxy::TypeDistributionProxy() throw() {
+TypeDistributionProxy::TypeDistributionProxy(const string& file) throw() {
     try {
-        string filePath(getenv("SOCIALCUBEPATH"));
-        filePath += "/statistics/user_type_distribution.json";
-        m_typeDistributionFile.open (filePath);
+        m_typeDistributionFile.open(file);
     } catch (exception &e) {
-        HourlyActionRateProxyException h_e;
-        throw h_e;
+        TypeDistributionProxyException t_e;
+        throw t_e;
     }
     assert(m_typeDistributionFile.is_open());
     return;

@@ -19,7 +19,7 @@ private:
     std::ifstream m_objectPreferenceStatisticsFile;
 
 public:
-    ObjectPreferenceProxy() throw();
+    ObjectPreferenceProxy(const std::string& file) throw();
 
     virtual ~ObjectPreferenceProxy();
 

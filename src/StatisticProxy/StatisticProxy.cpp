@@ -7,12 +7,15 @@ StatisticProxy& StatisticProxy::getInstance() {
     return instance;
 }
 
-StatisticProxy::StatisticProxy() :
-    m_userIDProxy(new UserIDProxy),
-    m_objectIDProxy(new ObjectIDProxy),
-    m_objectPreferenceProxy(new ObjectPreferenceProxy),
-    m_hourlyActionRateProxy(new HourlyActionRateProxy),
-    m_typeDistributionProxy(new TypeDistributionProxy) {
+StatisticProxy::StatisticProxy() {
+
+    initProxySourceFile();
+
+    m_userIDProxy.reset(new UserIDProxy(m_defaultUserIDProxyFile));
+    m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
+    m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
+    m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
+    m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
 
     m_userIDProxy->parse();
     m_objectIDProxy->parse();
@@ -46,3 +49,14 @@ ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) 
 TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &userID) const {
     return m_typeDistributionProxy->get(userID);
 } 
+
+void StatisticProxy::initProxySourceFile() {
+
+        const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+
+        m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
+        m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
+        m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
+        m_defaultObjectPreferenceProxyFile= socialcubePath + "/statistics/user_object_preference.json";
+        m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
+}

@@ -2,11 +2,9 @@
 
 using namespace std;
 
-ObjectPreferenceProxy::ObjectPreferenceProxy() throw() {
+ObjectPreferenceProxy::ObjectPreferenceProxy(const string& file) throw() {
     try{
-        string filePath(getenv("SOCIALCUBEPATH"));
-        filePath += "/statistics/user_object_preference.json";
-        m_objectPreferenceStatisticsFile.open(filePath);
+        m_objectPreferenceStatisticsFile.open(file);
     } catch (exception& e) {
         ObjectPreferenceProxyException o_e;
         throw o_e;

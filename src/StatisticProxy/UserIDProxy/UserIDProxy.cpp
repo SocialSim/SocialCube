@@ -2,11 +2,9 @@
 
 using namespace std;
 
-UserIDProxy::UserIDProxy() throw() {
+UserIDProxy::UserIDProxy(const string& file) throw() {
     try{
-        string filePath(getenv("SOCIALCUBEPATH"));
-        filePath += "/statistics/user_id.json";
-        m_userIDStatisticsFile.open(filePath.c_str());
+        m_userIDStatisticsFile.open(file.c_str());
     } catch(exception& e) {
         UserIDProxyException u_e;
         throw u_e;

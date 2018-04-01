@@ -21,7 +21,7 @@ private:
     std::ifstream m_typeDistributionFile;
 
 public:
-    TypeDistributionProxy() throw();
+    TypeDistributionProxy(const std::string& file) throw();
 
     virtual ~TypeDistributionProxy();
 

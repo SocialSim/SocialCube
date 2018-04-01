@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <cstdlib>
 #include <memory>
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
@@ -14,6 +15,12 @@
 #include "StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp"
 
 class StatisticProxy {
+    private:
+        std::string m_defaultUserIDProxyFile;
+        std::string m_defaultObjectIDProxyFile;
+        std::string m_defaultObjectPreferenceProxyFile;
+        std::string m_defaultHourlyActionRateProxyFile;
+        std::string m_defaultTypeDistributionProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -24,6 +31,9 @@ class StatisticProxy {
 
         // Private member functions
         StatisticProxy();
+
+        void initProxySourceFile();
+        
 
     public:
 

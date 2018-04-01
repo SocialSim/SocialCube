@@ -16,7 +16,7 @@ private:
 
     std::ifstream m_objectIDStatisticsFile;
 public:
-    ObjectIDProxy() throw();
+    ObjectIDProxy(const std::string& file) throw();
 
     virtual ~ObjectIDProxy();
 

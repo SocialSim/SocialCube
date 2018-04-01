@@ -16,7 +16,7 @@ private:
 
     std::ifstream m_userIDStatisticsFile;
 public:
-    UserIDProxy() throw();
+    UserIDProxy(const std::string& file) throw();
 
     virtual ~UserIDProxy();
 

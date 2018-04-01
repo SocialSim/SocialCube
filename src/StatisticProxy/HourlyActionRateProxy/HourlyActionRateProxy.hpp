@@ -21,7 +21,7 @@ private:
     std::ifstream m_hourlyActionRateStatisticFile;
 
 public:
-    HourlyActionRateProxy() throw();
+    HourlyActionRateProxy(const std::string& file) throw();
 
     virtual ~HourlyActionRateProxy();
 

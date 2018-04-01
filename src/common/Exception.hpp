@@ -30,4 +30,11 @@ class ObjectIDProxyException: public std::exception {
     }
 };
 
+class TypeDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for TypeDistribution";
+    }
+};
+
 #endif

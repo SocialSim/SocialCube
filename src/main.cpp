@@ -11,7 +11,7 @@ int main() {
     AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
     
-    CacheAwareSimulator s;
+    Simulator s;
     s.setCurrentTime(0);
     s.setStartTime(0);
     s.setEndTime(24);
@@ -22,5 +22,5 @@ int main() {
         s.addUserAgent(move(iter));
 
     s.simulate();
-    // s.showEvent();
+    s.showEvent();
 }
