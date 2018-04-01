@@ -19,6 +19,7 @@ int main(int argc, const char* argv[]) {
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());
     s.setUnitTime(args.getSimulationUnitTime());
+    s.setProfile(args.getSimulationProfileStatus());
 
     std::vector<std::unique_ptr<SimpleGithubUserAgent>>& agentList = builder.getUserAgentList();
     for(auto& iter : agentList)

@@ -18,28 +18,37 @@ stringstream ss;
 int event_num=0;
 
 
-void LOGD(const string& tag, const string& log)
+void LOGD(const string& tag, const string& log, bool preamble)
 {
     const char* color=GREEN;
+    LOGIMPL(tag, log, color, preamble);
+}
+
+void LOGP(const string& tag, const string& log, bool preamble)
+{
+    const char* color=BLUE;
+    LOGIMPL(tag, log, color, preamble);
+}
+
+void LOGE(const string& tag, const string& log, bool preamble)
+{
+    const char* color=RED;
+    LOGIMPL(tag, log, color, preamble);
+}
+
+void LOGW(const string& tag, const string& log, bool preamble)
+{
+    const char* color=YELLOW;
+    LOGIMPL(tag, log, color, preamble);
+}
+
+void LOGIMPL(const string& tag, const string& log, const char* color, bool preamble) {
     string offset(50-tag.size(),' ');
     log_lock.lock();
-    cout<<color<<tag<<": "<<offset<<log<<RESET<<"\n";
-    cout.flush();
-    log_lock.unlock();
-}
-
-void LOGE(const string& tag, const string& log)
-{
-    log_lock.lock();
-    cout<<RED<<tag<<":"<<log<<RESET<<"\n";
-    cout.flush();
-    log_lock.unlock();
-}
-
-void LOGW(const string& tag, const string& log)
-{
-    log_lock.lock();
-    cout<<YELLOW<<tag<<":"<<log<<RESET<<"\n";
+    if(preamble)
+        cout<<color<<tag<<": "<<offset<<log<<RESET<<"\n";
+    else
+        cout<<color<<log<<RESET<<"\n";
     cout.flush();
     log_lock.unlock();
 }

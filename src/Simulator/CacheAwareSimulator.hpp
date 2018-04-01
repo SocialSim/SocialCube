@@ -18,7 +18,7 @@ using namespace std;
 class CacheAwareSimulator : public Simulator {
 
 public:
-    virtual void simulate();
+    virtual void simulateImpl();
 };
 
 #endif

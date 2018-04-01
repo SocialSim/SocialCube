@@ -12,12 +12,15 @@
 #include "Agent/ObjectAgent/ObjectAgent.hpp"
 #include "DependentEventLogger/DependentEventLogger.hpp"
 #include "Log/Log.hpp"
+#include "SimulatorProfiler.hpp"
 
 using namespace std;
 
 class Simulator {
 
 protected:
+    // Private member variables
+    
     vector<unique_ptr<UserAgent>> m_userAgents;
 
     vector<unique_ptr<ObjectAgent>> m_objectAgents;
@@ -34,6 +37,12 @@ protected:
 
     unique_ptr<DependentEventLogger> m_dependentEventLogger;
 
+    unique_ptr<SimulatorProfiler> m_profiler;
+
+    bool m_profileOn;
+
+    // Private member function
+
     void simulationCheck();
 
     void step();
@@ -41,6 +50,10 @@ protected:
     void logEventInDependentEventLogger(const vector<unique_ptr<Event>>& t_events);
 
     void appendEventInEventHistory(vector<unique_ptr<Event>>& t_events);
+
+    void showProfile();
+
+    virtual void simulateImpl();
 
 public:
 
@@ -56,6 +69,8 @@ public:
 
     void setUnitTime(uint64_t t_unitTime);
 
+    void setProfile(bool t_profileOn);
+
     void setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger);
 
     void addUserAgent(unique_ptr<UserAgent> t_agent);
@@ -64,7 +79,7 @@ public:
 
     void transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList);
 
-    virtual void simulate();
+    virtual void simulate() final;
 
     void showEvent();
 

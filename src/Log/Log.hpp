@@ -32,17 +32,20 @@ using namespace std;
 
 string pathy(const vector<string>& path);
 
-void LOGD(const string& tag, const string& log);
+void LOGD(const string& tag, const string& log, bool preamble = true);
 
-void LOGE(const string& tag, const string& log);
+void LOGP(const string& tag, const string& log, bool preamble = true);
 
-void LOGW(const string& tag, const string& log);
+void LOGE(const string& tag, const string& log, bool preamble = true);
+
+void LOGW(const string& tag, const string& log, bool preamble = true);
+
+void LOGIMPL(const string& tag, const string& log, const char* color, bool preamble = true);
 
 extern stringstream ss;
 template<typename  T>
 string stringfy(T x)
 {
-
     return to_string(x);
 }
 

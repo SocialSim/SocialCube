@@ -7,6 +7,9 @@
 
 class ArgParser {
     private:
+
+        // Private member variables
+
         uint64_t simulator_startTime;
 
         uint64_t simulator_currentTime;
@@ -15,7 +18,11 @@ class ArgParser {
 
         uint64_t simulator_unitTime;
 
+        bool simulator_profile;
+
         bool readFromFile;
+
+        // Private member functions
 
         void initSocialCubeArgFromCLI(int argc, const char* argv[]);
 
@@ -34,6 +41,8 @@ class ArgParser {
         uint64_t getSimulationUnitTime();
 
         uint64_t getSimulationCurrentTime();
+
+        bool getSimulationProfileStatus();
 
 };
 

@@ -30,6 +30,7 @@ OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
 OBJS := $(OBJS) Log.o
+OBJS := $(OBJS) SimulatorProfiler.o
 OBJS := $(OBJS) main.o
 
 all:	$(TARGET)
@@ -95,6 +96,9 @@ ArgParser.o:	./ArgParser/ArgParser.cpp ./ArgParser/ArgParser.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Log.o:	./Log/Log.cpp ./Log/Log.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SimulatorProfiler.o:	./Simulator/SimulatorProfiler.cpp ./Simulator/SimulatorProfiler.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp

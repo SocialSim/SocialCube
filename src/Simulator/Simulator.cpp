@@ -2,15 +2,13 @@
 
 DBG(static const string tag="Simulator";)
 
-Simulator::Simulator() : m_currentTime (0), m_startTime (0), m_endTime (0),
-    m_unitTime (1), m_dependentEventLogger(nullptr) {
+Simulator::Simulator() : m_currentTime (0),
+    m_startTime (0), m_endTime (0),
+    m_unitTime (1), m_dependentEventLogger(nullptr), 
+    m_profiler (new SimulatorProfiler), m_profileOn(false) {
 
     srand(time(NULL));
 
-    DBG(LOGD(TAG, "Simulation Start Time "+stringfy(m_startTime));)
-    DBG(LOGD(TAG, "Simulation End Time "+stringfy(m_endTime));)
-    DBG(LOGD(TAG, "Simulation Unit Time"+stringfy(m_unitTime));)
-    DBG(LOGD(TAG, "Simulation Current Time "+stringfy(m_currentTime));)
     return;
 }
 
@@ -34,6 +32,10 @@ void Simulator::setUnitTime(uint64_t t_unitTime) {
     m_unitTime = t_unitTime;
 }
 
+void Simulator::setProfile(bool t_profileOn) {
+    m_profileOn = t_profileOn;
+}
+
 void Simulator::setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger) {
     m_dependentEventLogger = move(t_dependentEventLogger);
 }
@@ -53,6 +55,16 @@ void Simulator::transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList) {
 void Simulator::simulate() {
     simulationCheck();
 
+    m_profiler->timeStart();
+
+    simulateImpl();
+
+    m_profiler->timeEnd();
+
+    showProfile();
+}
+
+void Simulator::simulateImpl() {
     for(; m_currentTime < m_endTime; m_currentTime += m_unitTime) {
         DBG(LOGD(TAG, "Simulate "+stringfy(m_currentTime)+"/"+stringfy(m_endTime));)
         step();
@@ -104,10 +116,21 @@ vector<string> Simulator::getAllUserIDs() {
     return userIDs;
 }
 
-
 void Simulator::simulationCheck() {
+    DBG(LOGP(TAG, "\n\n*************************** Simulator Configuration ***************************", false);)
+    DBG(LOGP(TAG, "     Simulation Start Time: "+stringfy(m_startTime));)
+    DBG(LOGP(TAG, "     Simulation End Time: "+stringfy(m_endTime));)
+    DBG(LOGP(TAG, "     Simulation Unit Time: "+stringfy(m_unitTime));)
+    DBG(LOGP(TAG, "     Simulation Current Time: "+stringfy(m_currentTime));)
+    DBG(LOGP(TAG, "     Simulation Profile Status: "+stringfy(m_profileOn));)
+    DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     // assert(m_currentTime >= 0);
     // assert(m_startTime >= 0);
     // assert(m_endTime>= 0);
     // assert(m_endTime >= m_startTime);
+}
+
+void Simulator::showProfile() {
+    if(m_profileOn)
+        m_profiler->showProfile();
 }

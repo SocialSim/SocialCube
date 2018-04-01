@@ -19,10 +19,11 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           .show_positional_help();
 
         options.add_options()
-          ("s, start_time", "Simulation Start Time", cxxopts::value<uint64_t>())
-          ("e, end_time", "Simulation End Time", cxxopts::value<uint64_t>())
-          ("u, unit_time", "Simulation Unit Time", cxxopts::value<uint64_t>())
-          ("c, current_time", "Simulation Current Time", cxxopts::value<uint64_t>())
+          ("s, start_time", "Simulation start time", cxxopts::value<uint64_t>())
+          ("e, end_time", "Simulation end time", cxxopts::value<uint64_t>())
+          ("u, unit_time", "Simulation unit time", cxxopts::value<uint64_t>())
+          ("c, current_time", "Simulation current time", cxxopts::value<uint64_t>())
+          ("p, profile", "Simulation profiling")
           ("init_file", "Read Configuration from File");
 
         try 
@@ -57,12 +58,18 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 simulator_currentTime = 0;
             }
 
+            if (result.count("profile")) { 
+                simulator_profile = true;
+            } else {
+                simulator_profile = false;
+            }
 
             if (result.count("init_file")) { 
                 readFromFile = true;
             } else {
                 readFromFile = false;
             }
+
         } catch (const cxxopts::OptionException& e)
         {
             std::cout << "error parsing options: " << e.what() << std::endl;
@@ -98,4 +105,8 @@ uint64_t ArgParser::getSimulationUnitTime() {
 
 uint64_t ArgParser::getSimulationCurrentTime() {
     return simulator_currentTime;
+}
+
+bool ArgParser::getSimulationProfileStatus() {
+    return simulator_profile;
 }
