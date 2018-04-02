@@ -12,7 +12,7 @@
 #include "Log/Log.hpp"
 
 class UserIDProxy : public ProxyModule {
-private:
+protected:
     std::vector<std::string> m_userIDs;
 
     std::ifstream m_userIDStatisticsFile;
@@ -24,6 +24,8 @@ public:
     virtual void parse();
 
     std::vector<std::string>& get();
+
+    virtual uint64_t getCommunityTag(const std::string& t_userID);
 
     virtual void show();
 };

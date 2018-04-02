@@ -36,3 +36,8 @@ void UserIDProxy::show() {
         cout << id << "\n";
     cout << m_userIDs.size() << endl;
 }
+
+uint64_t UserIDProxy::getCommunityTag(const std::string& t_userID) {
+    UserIDProxyNoMethodException u_e;
+    throw u_e;
+}

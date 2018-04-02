@@ -14,6 +14,8 @@ CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 OBJS := Simulator.o
 OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o 
+OBJS := $(OBJS) ClusteredGithubUserAgent.o 
+OBJS := $(OBJS) Community.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
@@ -26,6 +28,7 @@ OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
+OBJS := $(OBJS) ClusteredUserIDProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
@@ -86,6 +89,9 @@ ObjectIDProxy.o:	./StatisticProxy/ObjectIDProxy/ObjectIDProxy.cpp ./StatisticPro
 UserIDProxy.o:	./StatisticProxy/UserIDProxy/UserIDProxy.cpp ./StatisticProxy/UserIDProxy/UserIDProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+ClusteredUserIDProxy.o:	./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.cpp ./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 Event.o:	./common/Event.cpp ./common/Event.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -99,6 +105,12 @@ Log.o:	./Log/Log.cpp ./Log/Log.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SimulatorProfiler.o:	./Simulator/SimulatorProfiler.cpp ./Simulator/SimulatorProfiler.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ClusteredGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+Community.o:	./Simulator/Community.cpp ./Simulator/Community.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp

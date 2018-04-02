@@ -23,6 +23,13 @@ class UserIDProxyException: public std::exception {
     }
 };
 
+class UserIDProxyNoMethodException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "This UserIDProxy does not have the method you wish to call";
+    }
+};
+
 class ObjectIDProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

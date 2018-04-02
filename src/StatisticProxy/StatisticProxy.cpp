@@ -11,7 +11,7 @@ StatisticProxy::StatisticProxy() {
 
     initProxySourceFile();
 
-    m_userIDProxy.reset(new UserIDProxy(m_defaultUserIDProxyFile));
+    m_userIDProxy.reset(new ClusteredUserIDProxy(m_defaultUserIDProxyFile));
     m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
     m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
@@ -60,3 +60,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultObjectPreferenceProxyFile= socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
 }
+
+uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
+    return m_userIDProxy->getCommunityTag(userID);
+} 

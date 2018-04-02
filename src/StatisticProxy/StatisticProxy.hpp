@@ -9,6 +9,7 @@
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
 #include "StatisticProxy/UserIDProxy/UserIDProxy.hpp"
+#include "StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp"
 #include "StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp"
 #include "StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp"
 #include "StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp"
@@ -52,6 +53,8 @@ class StatisticProxy {
         ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
 
         TypeDistribution& getUserTypeDistribution(const std::string &userID) const; 
+
+        uint64_t getUserCommunityTag(const std::string &userID) const; 
 };
 
 #endif

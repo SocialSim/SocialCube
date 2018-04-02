@@ -12,7 +12,7 @@
 #include "common/Event.hpp"
 
 class SimpleGithubUserAgent : public UserAgent {
-    private:
+    protected:
 
         const StatisticProxy& m_statProxy;
 
@@ -25,9 +25,9 @@ class SimpleGithubUserAgent : public UserAgent {
     public:
         SimpleGithubUserAgent(const std::string& t_id);
 
-        ~SimpleGithubUserAgent();
+        virtual ~SimpleGithubUserAgent();
 
-        std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) override;
+        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) override;
 };
 
 #endif
