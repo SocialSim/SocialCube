@@ -94,7 +94,6 @@ void Simulator::step() {
 
     for(auto& agent : m_userAgents) {
         vector<unique_ptr<Event>> events = agent->step(m_currentTime, m_unitTime);
-        m_eventCount += events.size();
         logEventInDependentEventLogger(events);
         appendEventInEventHistory(events);
     }
@@ -110,6 +109,7 @@ void Simulator::logEventInDependentEventLogger(const vector<unique_ptr<Event>>& 
 }
 
 void Simulator::appendEventInEventHistory(vector<unique_ptr<Event>>& events) {
+    m_eventCount += events.size();
     for(auto& event : events) {
         m_eventHistory.push_back(move(event));
     }
