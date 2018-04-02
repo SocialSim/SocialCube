@@ -25,6 +25,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("c, current_time", "Simulation current time", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
+          ("help", "Help")
           ("event_file", "File name for storing events", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
