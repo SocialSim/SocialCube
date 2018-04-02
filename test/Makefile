@@ -32,7 +32,7 @@ CXXFLAGS += -g --std=c++11 -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = Simulator_test Event_test
+TESTS = Simulator_test Event_test ObjectPreference_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -77,6 +77,12 @@ Event.o : $(USER_DIR)/common/Event.cpp $(USER_DIR)/common/Event.hpp
 DependentEventLogger.o : $(USER_DIR)/DependentEventLogger/DependentEventLogger.cpp $(USER_DIR)/DependentEventLogger/DependentEventLogger.hpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
 
+ObjectPreference.o : $(USER_DIR)/Dependency/ObjectPreference.cpp $(USER_DIR)/Dependency/ObjectPreference.hpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
+
+SimulatorProfiler.o : $(USER_DIR)/Simulator/SimulatorProfiler.cpp $(USER_DIR)/Simulator/SimulatorProfiler.hpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
+
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
@@ -88,7 +94,7 @@ Simulator_unittest.o : $(TEST_DIR)/Simulator_unittest.cc \
                      $(USER_DIR)/Simulator/Simulator.hpp $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/Simulator_unittest.cc
 
-Simulator_test: Simulator.o Simulator_unittest.o gtest_main.a Event.o DependentEventLogger.o
+Simulator_test: Simulator.o Simulator_unittest.o gtest_main.a Event.o DependentEventLogger.o SimulatorProfiler.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 Event_unittest.o : $(TEST_DIR)/Event_unittest.cc \
@@ -96,4 +102,11 @@ Event_unittest.o : $(TEST_DIR)/Event_unittest.cc \
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/Event_unittest.cc
 
 Event_test: Event.o Event_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+ObjectPreference_unittest.o : $(TEST_DIR)/ObjectPreference_unittest.cc \
+                     $(USER_DIR)/Dependency/ObjectPreference.hpp $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/ObjectPreference_unittest.cc
+
+ObjectPreference_test: ObjectPreference.o ObjectPreference_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

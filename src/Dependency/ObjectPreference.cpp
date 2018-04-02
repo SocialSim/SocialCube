@@ -12,49 +12,21 @@ ObjectPreference::~ObjectPreference() {
 }
 
 void ObjectPreference::set(const std::string &t_objectID, double t_preference) {
-    m_preference[t_objectID] = t_preference;
-}
-
-double ObjectPreference::get(const std::string &t_objectID) {
-    return m_preference[t_objectID];
-}
-
-void ObjectPreference::increment(const std::string &t_objectID, double t_delta) {
-    m_preference[t_objectID] += t_delta;
-}
-
-bool ObjectPreference::exist(const std::string &t_objectID) const {
-    return m_preference.find(t_objectID) != m_preference.end();
-}
-
-std::vector<std::string> ObjectPreference::getPreferedObjectIDs() {
-    std::vector<std::string> objectIDs;
-
-    for(auto iter : m_preference) {
-        objectIDs.push_back(iter.first);
-    }
-
-    return objectIDs;
+    unique_ptr<PreferenceNode> ptr(new PreferenceNode(t_objectID, t_preference));
+    m_preference.push_back(move(ptr));
 }
 
 void ObjectPreference::show() const {
     cout << m_userID << endl;
-    for(auto iter : m_preference) {
-        cout << iter.first << " " << iter.second << endl; 
+    for(auto& iter : m_preference) {
+        cout << iter->objID << " " << iter->preference << "\n"; 
     }
 }
 
-string ObjectPreference::randomChooseTarget() const {
-    double d = ((double)rand()) / RAND_MAX;
-    double sum = 0.0;
-    string target;
-    for(auto& iter : m_preference){
-        sum += iter.second;
-        if(sum > d) {
-            target = iter.first;
-            break;
-        }
-    }
+string ObjectPreference::randomChooseTarget(bool seed, double _d) const {
+    double d = seed ? _d : ((double)rand()) / RAND_MAX;
+    auto upper = std::upper_bound(m_preference.begin(), m_preference.end(), d, PreferenceNode::Comparator);
+    string target = (*upper).get()->objID;
     return target;
 }
 
