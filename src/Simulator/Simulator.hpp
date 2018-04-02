@@ -44,7 +44,7 @@ protected:
 
     bool m_eventOn;
 
-    uint64_t m_eventThreashold;
+    uint64_t m_eventThreshold;
 
     string m_eventFileName;
 
@@ -68,7 +68,7 @@ protected:
 
     virtual void simulateImpl();
 
-    void emitEventOnExceedThreashold();
+    void emitEventOnExceedThreshold();
 
     void storeEvent();
 
@@ -95,7 +95,7 @@ public:
 
     void setEventFileName(const string& t_file);
 
-    void setEventThreashold(uint64_t t_threashold);
+    void setEventThreshold(uint64_t t_threshold);
 
     void setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger);
 

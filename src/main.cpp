@@ -14,7 +14,7 @@ int main(int argc, const char* argv[]) {
     AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
     
-    Simulator s;
+    CacheAwareSimulator s;
     s.setCurrentTime(args.getSimulationCurrentTime());
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());

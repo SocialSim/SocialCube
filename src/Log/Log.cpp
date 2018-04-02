@@ -2,21 +2,10 @@
 
 #ifdef DEBUG
 
-static const int session_to_pause=0;
-
-void pause_session(int session)
-{
-#ifdef PAUSE
-    if(session==session_to_pause)
-        getchar();
-#endif
-}
-
 mutex log_lock;
 stringstream ss;
 
 int event_num=0;
-
 
 void LOGD(const string& tag, const string& log, bool preamble)
 {

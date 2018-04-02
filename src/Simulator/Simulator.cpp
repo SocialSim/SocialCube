@@ -6,7 +6,7 @@ Simulator::Simulator() : m_currentTime(0),
     m_startTime(0), m_endTime(0),
     m_unitTime(1), m_dependentEventLogger(nullptr), 
     m_profiler(new SimulatorProfiler), m_profileOn(false),
-    m_eventThreashold(1<<20), m_eventFileName(""),
+    m_eventThreshold(1<<20), m_eventFileName(""),
     m_eventCount(0) {
 
     srand(time(NULL));
@@ -42,8 +42,8 @@ void Simulator::setEventShow(bool t_eventOn) {
     m_eventOn = t_eventOn;
 }
 
-void Simulator::setEventThreashold(uint64_t t_threashold) {
-    m_eventThreashold = t_threashold;
+void Simulator::setEventThreshold(uint64_t t_threshold) {
+    m_eventThreshold = t_threshold;
 }
 
 void Simulator::setEventFileName(const string& t_file) {
@@ -84,7 +84,7 @@ void Simulator::simulateImpl() {
     for(; m_currentTime < m_endTime; m_currentTime += m_unitTime) {
         DBG(LOGD(TAG, "Simulate "+stringfy(m_currentTime)+"/"+stringfy(m_endTime));)
         step();
-        emitEventOnExceedThreashold();
+        emitEventOnExceedThreshold();
     }
 }
 
@@ -130,14 +130,14 @@ vector<string> Simulator::getAllUserIDs() {
 
 void Simulator::preSimulationConfig() {
     DBG(LOGP(TAG, "\n\n*************************** Simulator Configuration ***************************", false);)
-    DBG(LOGP(TAG, "     Simulation Start Time: "+stringfy(m_startTime));)
-    DBG(LOGP(TAG, "     Simulation End Time: "+stringfy(m_endTime));)
-    DBG(LOGP(TAG, "     Simulation Unit Time: "+stringfy(m_unitTime));)
-    DBG(LOGP(TAG, "     Simulation Current Time: "+stringfy(m_currentTime));)
-    DBG(LOGP(TAG, "     Simulation Profile Status: "+stringfy(m_profileOn));)
-    DBG(LOGP(TAG, "     Simulation Event Threashold : "+stringfy(m_eventThreashold));)
-    DBG(LOGP(TAG, "     Simulation Event Storage: "+stringfy(m_eventOn));)
-    DBG(LOGP(TAG, "     Simulation Event Storage path: "+m_eventFileName);)
+    DBG(LOGP(TAG, "Simulation Start Time: "+stringfy(m_startTime));)
+    DBG(LOGP(TAG, "Simulation End Time: "+stringfy(m_endTime));)
+    DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
+    DBG(LOGP(TAG, "Simulation Current Time: "+stringfy(m_currentTime));)
+    DBG(LOGP(TAG, "Simulation Profile Status: "+stringfy(m_profileOn));)
+    DBG(LOGP(TAG, "Simulation Event Threshold : "+stringfy(m_eventThreshold));)
+    DBG(LOGP(TAG, "Simulation Event Storage: "+stringfy(m_eventOn));)
+    DBG(LOGP(TAG, "Simulation Event Storage path: "+m_eventFileName);)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     // assert(m_currentTime >= 0);
     // assert(m_startTime >= 0);
@@ -157,10 +157,10 @@ void Simulator::showProfile() {
         m_profiler->showProfile();
 }
 
-void Simulator::emitEventOnExceedThreashold() {
+void Simulator::emitEventOnExceedThreshold() {
 
-    if(m_eventHistory.size() > m_eventThreashold) {
-        DBG(LOGP(TAG, "Emit " + stringfy(m_eventHistory.size()) + " Events");)
+    if(m_eventHistory.size() > m_eventThreshold) {
+        DBG(LOGD(TAG, "Emit " + stringfy(m_eventHistory.size()) + " Events");)
         storeEvent();
         m_eventHistory.clear();
     }
@@ -172,7 +172,7 @@ void Simulator::storeEvent() {
 }
 
 void Simulator::_storeEvent(){
-    DBG(LOGP(TAG, "Store " + stringfy(m_eventHistory.size()) + " Events");)
+    DBG(LOGD(TAG, "Store " + stringfy(m_eventHistory.size()) + " Events");)
     for(auto& event : m_eventHistory) {
         m_eventFile << *event;
     }

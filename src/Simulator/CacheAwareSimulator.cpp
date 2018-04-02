@@ -7,6 +7,7 @@ void CacheAwareSimulator::simulateImpl() {
             logEventInDependentEventLogger(events);
             appendEventInEventHistory(events);
         }
+        emitEventOnExceedThreshold();
     }
 }
 

@@ -57,7 +57,7 @@ extern int event_num;
 
 #ifdef DEBUG
 #define DBG(arg) arg
-#define TAG tag+'-'+stringfy(__LINE__)+'-'+__func__+"-event["+stringfy(event_num++)+"]"
+#define TAG tag+'-'+stringfy(__LINE__)+'-'+__func__
 
 
 #else
