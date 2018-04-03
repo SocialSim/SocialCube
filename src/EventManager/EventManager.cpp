@@ -66,6 +66,8 @@ void EventManager::storeEvent(std::vector<std::unique_ptr<Event>>& events) {
         std::make_move_iterator(events.end())
     );
     events.clear();
+
+    emitEventOnBufferFull();
 }
 
 void EventManager::setEventShow(bool t_eventOn) {
