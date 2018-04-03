@@ -25,7 +25,7 @@ class Community {
 
         void add(Agent const * t_agent);
 
-        std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime);
+        std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime);
 };
 
 #endif

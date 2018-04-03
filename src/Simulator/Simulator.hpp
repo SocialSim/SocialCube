@@ -23,11 +23,11 @@ protected:
     
     std::unique_ptr<CommunityManager> m_communityManager;
 
-    uint64_t m_startTime;
+    time_t m_startTime;
 
-    uint64_t m_endTime;
+    time_t m_endTime;
 
-    uint64_t m_unitTime;
+    time_t m_unitTime;
 
     // Private member function
 
@@ -45,11 +45,11 @@ public:
 
     /********************** All setter function *************************/
 
-    void setStartTime(uint64_t t_startTime);
+    void setStartTime(time_t t_startTime);
 
-    void setEndTime(uint64_t t_endTime);
+    void setEndTime(time_t t_endTime);
 
-    void setUnitTime(uint64_t t_unitTime);
+    void setUnitTime(time_t t_unitTime);
 
     void addUserAgent(Agent const * t_agent);
 

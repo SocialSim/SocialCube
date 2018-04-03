@@ -16,11 +16,11 @@ class CommunityManager {
     private:
         std::unordered_map<uint64_t, std::unique_ptr<Community>> m_community;
 
-        uint64_t m_startTime;
+        time_t m_startTime;
 
-        uint64_t m_endTime;
+        time_t m_endTime;
 
-        uint64_t m_unitTime;
+        time_t m_unitTime;
 
         // Private member function
         bool communityExist(uint64_t t_tag);
@@ -32,7 +32,7 @@ class CommunityManager {
 
         void addAgent(Agent const * t_agent);
 
-        void simulate(uint64_t t_startTime, uint64_t t_endTime, uint64_t t_unitTime);
+        void simulate(time_t t_startTime, time_t t_endTime, time_t t_unitTime);
 };
 
 

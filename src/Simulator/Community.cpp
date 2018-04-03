@@ -18,7 +18,7 @@ void Community::add(Agent const * t_agent) {
     m_community.push_back(move(t_agent));
 }
 
-vector<unique_ptr<Event>> Community::step(uint64_t t_currentTime, uint64_t t_unitTime) {
+vector<unique_ptr<Event>> Community::step(time_t t_currentTime, time_t t_unitTime) {
     vector<unique_ptr<Event>> events;
     for(auto& agent : m_community) {
         vector<unique_ptr<Event>> agent_events = agent->step(t_currentTime, t_unitTime);

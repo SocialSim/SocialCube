@@ -16,15 +16,15 @@ Simulator::~Simulator() {
     return;
 }
 
-void Simulator::setStartTime(uint64_t t_currentTime) {
+void Simulator::setStartTime(time_t t_currentTime) {
     m_startTime = t_currentTime;
 }
 
-void Simulator::setEndTime(uint64_t t_endTime) {
+void Simulator::setEndTime(time_t t_endTime) {
     m_endTime = t_endTime;
 }
 
-void Simulator::setUnitTime(uint64_t t_unitTime) {
+void Simulator::setUnitTime(time_t t_unitTime) {
     m_unitTime = t_unitTime;
 }
 

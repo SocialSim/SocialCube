@@ -25,8 +25,8 @@ class SimpleBehaviorModel {
     static std::vector<std::unique_ptr<Event>> evaluate(HourlyActionRate& t_hourlyActionRate,
             ObjectPreference &t_objectPreference,
             TypeDistribution &t_typeDistribution,
-            uint64_t t_currentTime,
-            uint64_t t_unitTime
+            time_t t_currentTime,
+            time_t t_unitTime
             );
 
 };

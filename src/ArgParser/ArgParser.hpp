@@ -2,6 +2,8 @@
 #define __ARG_PARSER__
 
 #include <iostream>
+#include <locale>
+#include <iomanip>
 #include <cstdlib>
 #include <string>
 #include "cxxopts.hpp"
@@ -11,11 +13,11 @@ class ArgParser {
 
         // Private member variables
 
-        uint64_t simulator_startTime;
+        time_t simulator_startTime;
 
-        uint64_t simulator_endTime;
+        time_t simulator_endTime;
 
-        uint64_t simulator_unitTime;
+        time_t simulator_unitTime;
 
         bool profile_show;
 
@@ -33,17 +35,25 @@ class ArgParser {
 
         void initSocialCubeArgFromFile();
 
+        void parseStartTime(const std::string& t_startTime);
+
+        void parseEndTime(const std::string& t_endTime);
+
+        void parseUnitTime(const std::string& t_unitTime);
+
+        void parseTime(const std::string& str_time, time_t& simulator_time);
+
 
     public:
         ArgParser(int argc, const char* argv[]);
 
         virtual ~ArgParser() final = default;
 
-        uint64_t getSimulationStartTime();
+        time_t getSimulationStartTime();
 
-        uint64_t getSimulationEndTime();
+        time_t getSimulationEndTime();
 
-        uint64_t getSimulationUnitTime();
+        time_t getSimulationUnitTime();
 
         bool getSimulationShowProfileStatus();
 

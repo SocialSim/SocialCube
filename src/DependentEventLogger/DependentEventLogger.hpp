@@ -9,7 +9,7 @@ class DependentEventLogger {
         DependentEventLogger();
         ~DependentEventLogger();
         void step();
-        void logUserEventAtTime(const std::string& userID, const std::string& eventType, uint64_t timestamp);
+        void logUserEventAtTime(const std::string& userID, const std::string& eventType, time_t timestamp);
 };
 
 #endif

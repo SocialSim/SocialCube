@@ -13,11 +13,10 @@ private:
 
     std::string m_eventType;
 
-    uint64_t m_timestamp;
+    time_t m_timestamp;
 
 public:
-    Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType, 
-            uint64_t m_timestamp);
+    Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType, time_t m_timestamp);
 
     ~Event();
 
@@ -27,7 +26,7 @@ public:
 
     std::string getEventType() const;
 
-    uint64_t getTimestamp() const;
+    std::string getTimestamp() const;
 
     void show() const;
 

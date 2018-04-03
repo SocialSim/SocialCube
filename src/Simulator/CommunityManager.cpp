@@ -11,7 +11,7 @@ void CommunityManager::addAgent(Agent const * t_agent) {
     m_community.at(communityTag)->add(t_agent);
 }
 
-void CommunityManager::simulate(uint64_t t_startTime, uint64_t t_endTime, uint64_t t_unitTime) {
+void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_unitTime) {
     DBG(LOGD(TAG, "Total " + stringfy(m_community.size()) + " detected");)
 
     m_startTime = t_startTime;
@@ -33,7 +33,7 @@ void CommunityManager::simulate(uint64_t t_startTime, uint64_t t_endTime, uint64
         #endif
 
         DBG(LOGD(TAG, "Simulating community " + stringfy(communityTag) + " (" + stringfy(finishedCommunityCount++) + "/" + stringfy(communityCnt) + ")");)
-        for(uint64_t currentTime = m_startTime; currentTime < m_endTime; currentTime += m_unitTime) {
+        for(size_t currentTime = m_startTime; currentTime < m_endTime; currentTime += m_unitTime) {
             vector<unique_ptr<Event>> community_events = community.second->step(currentTime, m_unitTime);
             em.storeEvent(community_events);
         }

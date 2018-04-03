@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Event::Event(const string& t_userID, const string& t_objectID, const string& t_eventType, uint64_t t_timestamp) :
+Event::Event(const string& t_userID, const string& t_objectID, const string& t_eventType, time_t t_timestamp) :
     m_userID(t_userID), m_objectID(t_objectID), m_eventType(t_eventType), 
     m_timestamp(t_timestamp) {
     return;
@@ -24,16 +24,19 @@ string Event::getEventType() const {
     return m_eventType;
 }
 
-uint64_t Event::getTimestamp() const {
-    return m_timestamp;
+string Event::getTimestamp() const {
+
+    char buf[sizeof "1970-00-00T00:00:00Z"];
+    strftime(buf, sizeof buf, "%FT%TZ", gmtime(&m_timestamp));
+    return buf;
 }
 
 void Event::show() const {
-    cout << m_userID << " " << m_objectID << " " << m_eventType << " " << m_timestamp << "\n";
+    cout << getTimestamp() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
 }
 
 ostream& operator<<(ostream& os, const Event& e)
 {  
-    os << e.m_userID << " " << e.m_objectID << " " << e.m_eventType << " " << e.m_timestamp << "\n";
+    os << e.getTimestamp() << " " << e.getObjectID() << " " << e.getUserID() << " " << e.getEventType() << "\n";
     return os;  
 } 

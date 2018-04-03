@@ -18,7 +18,7 @@ class SimpleGithubObjectAgent : public ObjectAgent {
 
         ~SimpleGithubObjectAgent();
 
-        std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) const override;
+        std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const override;
 };
 
 #endif

@@ -14,8 +14,8 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
         HourlyActionRate& t_hourlyActionRate,
         ObjectPreference& t_objectPreference,
         TypeDistribution& t_typeDistribution,
-        uint64_t t_currentTime,
-        uint64_t t_unitTime
+        time_t t_currentTime,
+        time_t t_unitTime
         ) {
     vector<unique_ptr<Event>> events;
 

@@ -19,9 +19,9 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           .show_positional_help();
 
         options.add_options()
-          ("s, start_time", "Simulation start time", cxxopts::value<uint64_t>())
-          ("e, end_time", "Simulation end time", cxxopts::value<uint64_t>())
-          ("u, unit_time", "Simulation unit time", cxxopts::value<uint64_t>())
+          ("s, start_time", "Simulation start time", cxxopts::value<string>())
+          ("e, end_time", "Simulation end time", cxxopts::value<string>())
+          ("u, unit_time", "Simulation unit time", cxxopts::value<string>())
           ("event_buffer", "Buffer size of Event Manager", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
@@ -38,21 +38,24 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 exit(0);
             } 
             if (result.count("start_time")) { 
-                simulator_startTime = result["start_time"].as<uint64_t>();
+                string startTime = result["start_time"].as<string>();
+                parseStartTime(startTime);
             } else {
                 simulator_startTime = 0;
             }
 
             if (result.count("end_time")) { 
-                simulator_endTime = result["end_time"].as<uint64_t>();
+                string endTime = result["end_time"].as<string>();
+                parseEndTime(endTime);
             } else {
-                simulator_endTime = 24;
+                simulator_endTime = 24 * 3600;
             }
 
             if (result.count("unit_time")) { 
-                simulator_unitTime = result["unit_time"].as<uint64_t>();
+                string unitTime = result["unit_time"].as<string>();
+
             } else {
-                simulator_unitTime = 1;
+                simulator_unitTime = 3600;
             }
 
             if (result.count("event_buffer")) { 
@@ -107,15 +110,15 @@ void ArgParser::initSocialCubeArgFromFile() {
     return;
 }
 
-uint64_t ArgParser::getSimulationStartTime() {
+time_t ArgParser::getSimulationStartTime() {
     return simulator_startTime;
 }
 
-uint64_t ArgParser::getSimulationEndTime() {
+time_t ArgParser::getSimulationEndTime() {
     return simulator_endTime;
 }
 
-uint64_t ArgParser::getSimulationUnitTime() {
+time_t ArgParser::getSimulationUnitTime() {
     return simulator_unitTime;
 }
 
@@ -132,4 +135,36 @@ string ArgParser::getSimulationEventFileName() {
 
 uint64_t ArgParser::getSimulationEventBufferSize() {
     return event_buffer;
+}
+
+void ArgParser::parseTime(const std::string& str_time, time_t& simulator_time) {
+    std::tm t = {};
+    std::istringstream ss(str_time);
+
+    if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+    {
+        std::cout << std::put_time(&t, "%c") << "\n"
+        << std::mktime(&t) << "\n";
+        simulator_time = std::mktime(&t);
+    } else {
+        throw; 
+    }
+}
+
+void ArgParser::parseStartTime(const std::string& t_startTime) {
+    parseTime(t_startTime, simulator_startTime);
+}
+
+void ArgParser::parseEndTime(const std::string& t_endTime) {
+    parseTime(t_endTime, simulator_endTime);
+}
+
+void ArgParser::parseUnitTime(const std::string& t_unitTime) {
+    if(t_unitTime == "h") {
+        simulator_unitTime = 3600;
+    } else if(t_unitTime == "d") {
+        simulator_unitTime = 3600*24;
+    } else {
+        throw;
+    }
 }
