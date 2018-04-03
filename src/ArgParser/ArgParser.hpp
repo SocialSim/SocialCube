@@ -17,11 +17,13 @@ class ArgParser {
 
         uint64_t simulator_unitTime;
 
-        bool simulator_profileShow;
+        bool profile_show;
 
-        bool simulator_eventShow;
+        bool event_show;
 
-        std::string simulator_eventFileName;
+        std::string event_file;
+
+        uint64_t event_buffer;
 
         bool readFromFile;
 
@@ -46,6 +48,8 @@ class ArgParser {
         bool getSimulationShowProfileStatus();
 
         bool getSimulationShowEventStatus();
+
+        uint64_t getSimulationEventBufferSize();
 
         std::string getSimulationEventFileName();
 

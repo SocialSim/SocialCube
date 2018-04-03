@@ -20,7 +20,7 @@ class EventManager {
 
         uint64_t m_eventCount;
 
-        uint64_t m_threshold;
+        uint64_t m_bufferSize;
 
         std::string m_eventFileName;
 
@@ -30,13 +30,13 @@ class EventManager {
 
         // Private member functions
 
-        void emitEventOnExceedThreshold();
+        void emitEventOnBufferFull();
 
         void emitEvent();
 
         void _emitEvent();
 
-        EventManager() = default;
+        EventManager();
 
     public:
         static EventManager& getInstance();
@@ -47,7 +47,7 @@ class EventManager {
 
         void setEventFileName(const std::string& t_file);
 
-        void setEventThreshold(uint64_t t_threshold);
+        void setEventBufferSize(uint64_t t_bufferSize);
 
         void start();
 

@@ -4,14 +4,20 @@ using namespace std;
 
 DBG(static const string tag="EventManager";)
 
+EventManager::EventManager() : m_eventCount(0), m_bufferSize(1<<20),
+    m_eventFile(""), m_eventOn(false) {
+    return;    
+}
+
+
 EventManager& EventManager::getInstance() {
     static EventManager instance;
     return instance;
 }
 
-void EventManager::emitEventOnExceedThreshold() {
+void EventManager::emitEventOnBufferFull() {
 
-    if(m_events.size() > m_threshold) {
+    if(m_events.size() > m_bufferSize) {
         DBG(LOGD(TAG, "Emit " + stringfy(m_events.size()) + " Events");)
         emitEvent();
         m_events.clear();
@@ -31,6 +37,12 @@ void EventManager::_emitEvent(){
 }
 
 void EventManager::start() {
+    DBG(LOGP(TAG, "\n\n*************************** Event Manager Configuration ***************************", false);)
+    DBG(LOGP(TAG, "Event Buffer Size: "+stringfy(m_bufferSize));)
+    DBG(LOGP(TAG, "Event Storage: "+m_eventFileName);)
+    DBG(LOGP(TAG, "Event Show Status: "+stringfy(m_eventOn));)
+    DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
+
     m_eventFile.open(m_eventFileName.c_str()); 
 }
 
@@ -64,6 +76,6 @@ void EventManager::setEventFileName(const std::string& t_file) {
     m_eventFileName = t_file;
 }
 
-void EventManager::setEventThreshold(uint64_t t_threshold) {
-    m_threshold = t_threshold;
+void EventManager::setEventBufferSize(uint64_t t_bufferSize) {
+    m_bufferSize = t_bufferSize;
 }

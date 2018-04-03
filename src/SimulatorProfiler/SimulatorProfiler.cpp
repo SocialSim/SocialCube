@@ -40,7 +40,7 @@ void SimulatorProfiler::showProfile() {
 }
 
 void SimulatorProfiler::setEventCount(uint64_t t_cnt) {
-    DBG(LOGP(TAG, "Set Event Count " + stringfy(t_cnt));)
+    DBG(LOGD(TAG, "Set Event Count " + stringfy(t_cnt));)
     m_eventCount = t_cnt;
 }
 

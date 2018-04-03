@@ -35,8 +35,6 @@ protected:
 
     void postSimulationConfig();
 
-    void showProfile();
-
     virtual void simulateImpl();
 
 public:

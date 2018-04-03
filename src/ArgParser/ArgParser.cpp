@@ -22,6 +22,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("s, start_time", "Simulation start time", cxxopts::value<uint64_t>())
           ("e, end_time", "Simulation end time", cxxopts::value<uint64_t>())
           ("u, unit_time", "Simulation unit time", cxxopts::value<uint64_t>())
+          ("event_buffer", "Buffer size of Event Manager", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
           ("help", "Help")
@@ -54,23 +55,29 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 simulator_unitTime = 1;
             }
 
-            if (result.count("show_profile")) { 
-                simulator_profileShow = true;
+            if (result.count("event_buffer")) { 
+                event_buffer = result["event_buffer"].as<uint64_t>();
             } else {
-                simulator_profileShow = false;
+                event_buffer = 1<<20;
+            }
+
+            if (result.count("show_profile")) { 
+                profile_show = true;
+            } else {
+                profile_show = false;
             }
 
             if (result.count("show_event")) { 
-                simulator_eventShow = true;
+                event_show = true;
             } else {
-                simulator_eventShow = false;
+                event_show = false;
             }
 
             if (result.count("event_file")) { 
-                simulator_eventFileName = result["event_file"].as<string>();
+                event_file = result["event_file"].as<string>();
             } else {
                 const string socialcubePath = (getenv("SOCIALCUBEPATH"));
-                simulator_eventFileName = socialcubePath + string("/events.txt");
+                event_file = socialcubePath + string("/events.txt");
             }
 
             if (result.count("init_file")) { 
@@ -113,12 +120,16 @@ uint64_t ArgParser::getSimulationUnitTime() {
 }
 
 bool ArgParser::getSimulationShowProfileStatus() {
-    return simulator_profileShow;
+    return profile_show;
 }
 
 bool ArgParser::getSimulationShowEventStatus() {
-    return simulator_eventShow;
+    return event_show;
 }
 string ArgParser::getSimulationEventFileName() {
-    return simulator_eventFileName;
+    return event_file;
+}
+
+uint64_t ArgParser::getSimulationEventBufferSize() {
+    return event_buffer;
 }

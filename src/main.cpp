@@ -25,6 +25,7 @@ int main(int argc, const char* argv[]) {
     EventManager& em = EventManager::getInstance();
     em.setEventShow(args.getSimulationShowEventStatus());
     em.setEventFileName(args.getSimulationEventFileName());
+    em.setEventBufferSize(args.getSimulationEventBufferSize());
 
     // Initialize AgentBuilder
     AgentBuilder<ClusteredGithubUserAgent, SimpleGithubObjectAgent> builder;

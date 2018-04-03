@@ -12,6 +12,8 @@ void CommunityManager::addAgent(Agent const * t_agent) {
 }
 
 void CommunityManager::simulate(uint64_t t_startTime, uint64_t t_endTime, uint64_t t_unitTime) {
+    DBG(LOGD(TAG, "Total " + stringfy(m_community.size()) + " detected");)
+
     m_startTime = t_startTime;
     m_endTime = t_endTime;
     m_unitTime = t_unitTime;
