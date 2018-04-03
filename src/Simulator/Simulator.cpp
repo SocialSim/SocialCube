@@ -55,6 +55,11 @@ void Simulator::preSimulationConfig() {
     DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
 
+    if(m_endTime < m_startTime) {
+        EndTimeLessThanStartTime e_e;
+        throw e_e;
+    }
+
     SimulatorProfiler& sp = SimulatorProfiler::getInstance();
     EventManager& em = EventManager::getInstance();
 

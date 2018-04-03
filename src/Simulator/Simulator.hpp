@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "common/Event.hpp"
+#include "common/Exception.hpp"
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "Agent/ObjectAgent/ObjectAgent.hpp"
 #include "DependentEventLogger/DependentEventLogger.hpp"

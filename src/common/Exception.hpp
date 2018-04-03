@@ -44,4 +44,10 @@ class TypeDistributionProxyException: public std::exception {
     }
 };
 
+class EndTimeLessThanStartTime: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "End time is less than start time. Quit simulation";
+    }
+};
 #endif
