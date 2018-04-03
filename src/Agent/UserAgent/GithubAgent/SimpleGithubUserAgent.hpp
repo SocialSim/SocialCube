@@ -27,7 +27,7 @@ class SimpleGithubUserAgent : public UserAgent {
 
         virtual ~SimpleGithubUserAgent();
 
-        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) override;
+        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) const override;
 };
 
 #endif

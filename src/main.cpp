@@ -8,25 +8,30 @@
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
 
-
 int main(int argc, const char* argv[]) {
     ArgParser args(argc, argv);
 
-    AgentBuilder<ClusteredGithubUserAgent, SimpleGithubObjectAgent> builder;
-    builder.build();
-    
-    CacheAwareSimulator s;
-    s.setCurrentTime(args.getSimulationCurrentTime());
+    // Initialize Simulator
+    Simulator s;
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());
     s.setUnitTime(args.getSimulationUnitTime());
-    s.setProfileShow(args.getSimulationShowProfileStatus());
-    s.setEventShow(args.getSimulationShowEventStatus());
-    s.setEventFileName(args.getSimulationEventFileName());
 
-    std::vector<std::unique_ptr<ClusteredGithubUserAgent>>& agentList = builder.getUserAgentList();
+    // Initialize SimulatorProfiler
+    SimulatorProfiler& sp = SimulatorProfiler::getInstance();
+    sp.setProfileShow(args.getSimulationShowProfileStatus());
+
+    // Initialize EventManager
+    EventManager& em = EventManager::getInstance();
+    em.setEventShow(args.getSimulationShowEventStatus());
+    em.setEventFileName(args.getSimulationEventFileName());
+
+    // Initialize AgentBuilder
+    AgentBuilder<ClusteredGithubUserAgent, SimpleGithubObjectAgent> builder;
+    builder.build();
+    std::vector<std::shared_ptr<ClusteredGithubUserAgent>>& agentList = builder.getUserAgentList();
     for(auto& iter : agentList)
-        s.addUserAgent(move(iter));
+        s.addUserAgent(iter.get());
 
     s.simulate();
 }

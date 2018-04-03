@@ -8,7 +8,7 @@ CXX_FLAGS := -O3 -g -DDEBUG
 #CXX_FLAGS := -g3 -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CXX_FLAGS := $(CXX_FLAGS) -Wpointer-arith -Wsign-compare -Wendif-labels
-CXX_FLAGS := $(CXX_FLAGS) -std=c++11
+CXX_FLAGS := $(CXX_FLAGS) -std=c++14
 CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 
 OBJS := Simulator.o
@@ -16,6 +16,7 @@ OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o 
 OBJS := $(OBJS) ClusteredGithubUserAgent.o 
 OBJS := $(OBJS) Community.o 
+OBJS := $(OBJS) CommunityManager.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
@@ -30,6 +31,7 @@ OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
 OBJS := $(OBJS) Event.o
+OBJS := $(OBJS) EventManager.o
 OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
 OBJS := $(OBJS) Log.o
@@ -95,6 +97,9 @@ ClusteredUserIDProxy.o:	./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.cpp ./
 Event.o:	./common/Event.cpp ./common/Event.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+EventManager.o:	./EventManager/EventManager.cpp ./EventManager/EventManager.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 DependentEventLogger.o:	./DependentEventLogger/DependentEventLogger.cpp ./DependentEventLogger/DependentEventLogger.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -104,13 +109,16 @@ ArgParser.o:	./ArgParser/ArgParser.cpp ./ArgParser/ArgParser.hpp
 Log.o:	./Log/Log.cpp ./Log/Log.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
-SimulatorProfiler.o:	./Simulator/SimulatorProfiler.cpp ./Simulator/SimulatorProfiler.hpp
+SimulatorProfiler.o:	./SimulatorProfiler/SimulatorProfiler.cpp ./SimulatorProfiler/SimulatorProfiler.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ClusteredGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Community.o:	./Simulator/Community.cpp ./Simulator/Community.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CommunityManager.o:	./Simulator/CommunityManager.cpp ./Simulator/CommunityManager.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp

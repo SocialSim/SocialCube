@@ -4,6 +4,21 @@ using namespace std;
 
 DBG(static const string tag="SimulatorProfiler";)
 
+SimulatorProfiler& SimulatorProfiler::getInstance() {
+    static SimulatorProfiler instance;
+    return instance;
+}
+
+SimulatorProfiler::SimulatorProfiler() : m_eventCount(0), m_profileOn(false) {
+    return;
+}
+
+SimulatorProfiler::~SimulatorProfiler() {
+    if(m_profileOn) {
+        showProfile(); 
+    }
+}
+
 void SimulatorProfiler::timeStart() {
     m_chronoStart = chrono::steady_clock::now();
 }
@@ -27,4 +42,8 @@ void SimulatorProfiler::showProfile() {
 void SimulatorProfiler::setEventCount(uint64_t t_cnt) {
     DBG(LOGP(TAG, "Set Event Count " + stringfy(t_cnt));)
     m_eventCount = t_cnt;
+}
+
+void SimulatorProfiler::setProfileShow(bool t_profileOn) {
+    m_profileOn = t_profileOn;
 }

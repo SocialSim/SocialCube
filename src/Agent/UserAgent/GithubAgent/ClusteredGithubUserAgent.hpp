@@ -20,6 +20,8 @@ class ClusteredGithubUserAgent : public SimpleGithubUserAgent {
         ClusteredGithubUserAgent(const std::string& t_id);
 
         virtual ~ClusteredGithubUserAgent() = default;
+
+        virtual uint64_t getCommunityTag() const;
 };
 
 #endif

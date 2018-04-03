@@ -22,7 +22,6 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("s, start_time", "Simulation start time", cxxopts::value<uint64_t>())
           ("e, end_time", "Simulation end time", cxxopts::value<uint64_t>())
           ("u, unit_time", "Simulation unit time", cxxopts::value<uint64_t>())
-          ("c, current_time", "Simulation current time", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
           ("help", "Help")
@@ -53,12 +52,6 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 simulator_unitTime = result["unit_time"].as<uint64_t>();
             } else {
                 simulator_unitTime = 1;
-            }
-
-            if (result.count("current_time")) { 
-                simulator_currentTime = result["current_time"].as<uint64_t>();
-            } else {
-                simulator_currentTime = 0;
             }
 
             if (result.count("show_profile")) { 
@@ -117,10 +110,6 @@ uint64_t ArgParser::getSimulationEndTime() {
 
 uint64_t ArgParser::getSimulationUnitTime() {
     return simulator_unitTime;
-}
-
-uint64_t ArgParser::getSimulationCurrentTime() {
-    return simulator_currentTime;
 }
 
 bool ArgParser::getSimulationShowProfileStatus() {

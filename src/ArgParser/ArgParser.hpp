@@ -13,8 +13,6 @@ class ArgParser {
 
         uint64_t simulator_startTime;
 
-        uint64_t simulator_currentTime;
-
         uint64_t simulator_endTime;
 
         uint64_t simulator_unitTime;
@@ -44,8 +42,6 @@ class ArgParser {
         uint64_t getSimulationEndTime();
 
         uint64_t getSimulationUnitTime();
-
-        uint64_t getSimulationCurrentTime();
 
         bool getSimulationShowProfileStatus();
 

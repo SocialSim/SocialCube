@@ -15,9 +15,11 @@ class Agent {
 
         virtual ~Agent() = default;
 
-        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) = 0;
+        virtual std::vector<std::unique_ptr<Event>> step(uint64_t t_currentTime, uint64_t t_unitTime) const = 0;
 
         std::string getID() { return m_id; }
+
+        virtual uint64_t getCommunityTag() const {throw;}
 };
 
 #endif

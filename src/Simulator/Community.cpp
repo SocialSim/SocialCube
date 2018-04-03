@@ -14,7 +14,7 @@ uint64_t Community::getCommunityTag() {
     return m_communityTag;
 }
 
-void Community::add(std::unique_ptr<UserAgent>& t_agent) {
+void Community::add(Agent const * t_agent) {
     m_community.push_back(move(t_agent));
 }
 

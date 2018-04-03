@@ -8,3 +8,6 @@ ClusteredGithubUserAgent::ClusteredGithubUserAgent(const string& t_id) : SimpleG
     return;
 }
 
+uint64_t ClusteredGithubUserAgent::getCommunityTag() const {
+    return m_communityTag;
+}

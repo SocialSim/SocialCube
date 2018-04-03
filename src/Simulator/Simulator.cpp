@@ -1,13 +1,11 @@
 #include "Simulator.hpp"
 
+using namespace std;
+
 DBG(static const string tag="Simulator";)
 
-Simulator::Simulator() : m_currentTime(0),
-    m_startTime(0), m_endTime(0),
-    m_unitTime(1), m_dependentEventLogger(nullptr), 
-    m_profiler(new SimulatorProfiler), m_profileOn(false),
-    m_eventThreshold(1<<20), m_eventFileName(""),
-    m_eventCount(0) {
+Simulator::Simulator() : m_communityManager(new CommunityManager),
+    m_startTime(0), m_endTime(0), m_unitTime(1) {
 
     srand(time(NULL));
 
@@ -16,10 +14,6 @@ Simulator::Simulator() : m_currentTime(0),
 
 Simulator::~Simulator() {
     return;
-}
-
-void Simulator::setCurrentTime(uint64_t t_currentTime) {
-    m_currentTime = t_currentTime;
 }
 
 void Simulator::setStartTime(uint64_t t_currentTime) {
@@ -34,98 +28,24 @@ void Simulator::setUnitTime(uint64_t t_unitTime) {
     m_unitTime = t_unitTime;
 }
 
-void Simulator::setProfileShow(bool t_profileOn) {
-    m_profileOn = t_profileOn;
+void Simulator::addUserAgent(Agent const * t_agent) {
+    m_communityManager->addAgent(t_agent);
 }
 
-void Simulator::setEventShow(bool t_eventOn) {
-    m_eventOn = t_eventOn;
-}
-
-void Simulator::setEventThreshold(uint64_t t_threshold) {
-    m_eventThreshold = t_threshold;
-}
-
-void Simulator::setEventFileName(const string& t_file) {
-    m_eventFileName = t_file;
-}
-
-void Simulator::setDependentEventLogger(unique_ptr<DependentEventLogger>& t_dependentEventLogger) {
-    m_dependentEventLogger = move(t_dependentEventLogger);
-}
-
-void Simulator::addUserAgent(unique_ptr<UserAgent> t_agent) {
-    m_userAgents.push_back(move(t_agent));
-}
-
-void Simulator::addObjectAgent(unique_ptr<ObjectAgent> t_agent) {
-    m_objectAgents.push_back(move(t_agent));
-}
-
-void Simulator::transferUserAgent(vector<unique_ptr<UserAgent>>& t_agentList) {
-    m_userAgents = (move(t_agentList));
+void Simulator::addObjectAgent(Agent const * t_agent) {
+    throw;
 }
 
 void Simulator::simulate() {
     preSimulationConfig();
 
-    m_profiler->timeStart();
-
     simulateImpl();
 
-    m_profiler->timeEnd();
-
     postSimulationConfig();
-
-    showProfile();
 }
 
 void Simulator::simulateImpl() {
-    for(; m_currentTime < m_endTime; m_currentTime += m_unitTime) {
-        DBG(LOGD(TAG, "Simulate "+stringfy(m_currentTime)+"/"+stringfy(m_endTime));)
-        step();
-        emitEventOnExceedThreshold();
-    }
-}
-
-void Simulator::step() {
-    if(m_dependentEventLogger)
-        m_dependentEventLogger->step();
-
-    for(auto& agent : m_userAgents) {
-        vector<unique_ptr<Event>> events = agent->step(m_currentTime, m_unitTime);
-        logEventInDependentEventLogger(events);
-        appendEventInEventHistory(events);
-    }
-}
-
-void Simulator::logEventInDependentEventLogger(const vector<unique_ptr<Event>>& events) {
-    for(auto& event : events) {
-        string userId = event->getUserID();
-        string eventType = event->getEventType();
-        uint64_t timeStamp = event->getTimestamp();
-        m_dependentEventLogger->logUserEventAtTime(userId, eventType, timeStamp);
-    }
-}
-
-void Simulator::appendEventInEventHistory(vector<unique_ptr<Event>>& events) {
-    m_eventCount += events.size();
-    for(auto& event : events) {
-        m_eventHistory.push_back(move(event));
-    }
-}
-
-uint64_t Simulator::getCurrentTime() {
-    return m_currentTime;
-}
-
-// NOTE: return vector<string> here to leverage "named return value optimization"
-vector<string> Simulator::getAllUserIDs() {
-    vector<string> userIDs;
-    for(auto& agent : m_userAgents) {
-        userIDs.push_back(agent->getID()); 
-    }
-    return userIDs;
+    m_communityManager->simulate(m_startTime, m_endTime, m_unitTime);
 }
 
 void Simulator::preSimulationConfig() {
@@ -133,47 +53,21 @@ void Simulator::preSimulationConfig() {
     DBG(LOGP(TAG, "Simulation Start Time: "+stringfy(m_startTime));)
     DBG(LOGP(TAG, "Simulation End Time: "+stringfy(m_endTime));)
     DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
-    DBG(LOGP(TAG, "Simulation Current Time: "+stringfy(m_currentTime));)
-    DBG(LOGP(TAG, "Simulation Profile Status: "+stringfy(m_profileOn));)
-    DBG(LOGP(TAG, "Simulation Event Threshold : "+stringfy(m_eventThreshold));)
-    DBG(LOGP(TAG, "Simulation Event Storage: "+stringfy(m_eventOn));)
-    DBG(LOGP(TAG, "Simulation Event Storage path: "+m_eventFileName);)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
-    // assert(m_currentTime >= 0);
-    // assert(m_startTime >= 0);
-    // assert(m_endTime>= 0);
-    // assert(m_endTime >= m_startTime);
-    m_eventFile.open(m_eventFileName.c_str()); 
+
+    SimulatorProfiler& sp = SimulatorProfiler::getInstance();
+    EventManager& em = EventManager::getInstance();
+
+    em.start();
+    sp.timeStart();
 }
 
 void Simulator::postSimulationConfig() {
-    storeEvent();
-    m_eventFile.close(); 
-    m_profiler->setEventCount(m_eventCount);
+    SimulatorProfiler& sp = SimulatorProfiler::getInstance();
+    EventManager& em = EventManager::getInstance();
+
+    sp.timeEnd();
+    em.end();
+    return;
 }
 
-void Simulator::showProfile() {
-    if(m_profileOn)
-        m_profiler->showProfile();
-}
-
-void Simulator::emitEventOnExceedThreshold() {
-
-    if(m_eventHistory.size() > m_eventThreshold) {
-        DBG(LOGD(TAG, "Emit " + stringfy(m_eventHistory.size()) + " Events");)
-        storeEvent();
-        m_eventHistory.clear();
-    }
-}
-
-void Simulator::storeEvent() {
-    if(m_eventOn)
-        _storeEvent();
-}
-
-void Simulator::_storeEvent(){
-    DBG(LOGD(TAG, "Store " + stringfy(m_eventHistory.size()) + " Events");)
-    for(auto& event : m_eventHistory) {
-        m_eventFile << *event;
-    }
-}

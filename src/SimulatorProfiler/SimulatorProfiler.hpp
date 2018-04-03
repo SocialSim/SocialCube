@@ -9,26 +9,35 @@ class SimulatorProfiler {
     private:
         
         // Private member variable
+        
         std::chrono::time_point<std::chrono::steady_clock> m_chronoStart;
 
         std::chrono::time_point<std::chrono::steady_clock> m_chronoEnd;
 
         std::chrono::duration<double> m_duration;
 
-        uint64_t m_eventCount {0};
+        uint64_t m_eventCount;
+
+        bool m_profileOn;
+
+        // Private member function
+
+        void showProfile();
+
+        SimulatorProfiler();
 
     public:
-        SimulatorProfiler() = default;
+        static SimulatorProfiler& getInstance();
 
-        ~SimulatorProfiler() = default;
+        ~SimulatorProfiler();
 
         void timeStart();
 
         void timeEnd();
 
-        void showProfile();
-
         void setEventCount(uint64_t t_cnt);
+
+        void setProfileShow(bool t_profileOn);
 };
 
 #endif

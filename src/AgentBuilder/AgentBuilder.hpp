@@ -13,9 +13,9 @@ class AgentBuilder {
 private:
     const StatisticProxy& m_statProxy;
 
-    std::vector<std::unique_ptr<TUserAgent>> m_userAgents; 
+    std::vector<std::shared_ptr<TUserAgent>> m_userAgents; 
 
-    std::vector<std::unique_ptr<TObjectAgent>> m_objectAgents; 
+    std::vector<std::shared_ptr<TObjectAgent>> m_objectAgents; 
 
     void buildUsers();
 
@@ -29,9 +29,9 @@ public:
 
     void build();
 
-    std::vector<std::unique_ptr<TUserAgent>>& getUserAgentList();
+    std::vector<std::shared_ptr<TUserAgent>>& getUserAgentList();
 
-    std::vector<std::unique_ptr<TObjectAgent>>& getObjectAgentList();
+    std::vector<std::shared_ptr<TObjectAgent>>& getObjectAgentList();
 };
 
 #include "AgentBuilder.tpp"

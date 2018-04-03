@@ -19,7 +19,7 @@ SimpleGithubUserAgent::~SimpleGithubUserAgent() {
     return;
 }
 
-vector<unique_ptr<Event>> SimpleGithubUserAgent::step(uint64_t t_currentTime, uint64_t t_unitTime) {
+vector<unique_ptr<Event>> SimpleGithubUserAgent::step(uint64_t t_currentTime, uint64_t t_unitTime) const {
     vector<unique_ptr<Event>> events = SimpleBehaviorModel::evaluate(m_hourlyActionRate,
                                           m_objectPreference,
                                           m_typeDistribution,
