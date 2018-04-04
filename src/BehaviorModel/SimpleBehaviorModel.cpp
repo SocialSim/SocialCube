@@ -19,6 +19,8 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
         ) {
     vector<unique_ptr<Event>> events;
 
+    int currentHour = SimpleBehaviorModel::convertISOtoHour(t_currentTime);
+
     const std::unique_ptr<EventHourlyActionRate>& m_rate = t_hourlyActionRate.getRate();
     double dailyActivityLevel = m_rate->getActivityLevel();
     double prob = t_hourlyActionRate.getHourlyActionRate(t_currentTime % 24);
@@ -34,7 +36,7 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
             unique_ptr<Event> event(new Event(userID, objectID, actionType, t_currentTime));
             events.push_back(move(event));
         }
-        dailyActivityLevel -= 0.1;
+        dailyActivityLevel -= 1.0;
     }
 
     return events;
@@ -48,4 +50,8 @@ string SimpleBehaviorModel::chooseTarget(const ObjectPreference& t_objectPrefere
 string SimpleBehaviorModel::chooseAction(const TypeDistribution& t_typeDistribution) {
     string action = t_typeDistribution.randomChooseAction();
     return action;
+}
+
+int SimpleBehaviorModel::convertISOtoHour(time_t t_currentTime) {
+    return gmtime(&t_currentTime)->tm_hour;
 }

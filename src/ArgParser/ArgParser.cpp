@@ -8,7 +8,6 @@ ArgParser::ArgParser(int argc, const char* argv[]) {
 
     if(readFromFile)
         initSocialCubeArgFromFile();
-
 }
 
 void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
@@ -19,13 +18,14 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           .show_positional_help();
 
         options.add_options()
+          ("help", "Help")
           ("s, start_time", "Simulation start time", cxxopts::value<string>())
           ("e, end_time", "Simulation end time", cxxopts::value<string>())
+          ("t, time_zone", "Simulation time zone", cxxopts::value<string>())
           ("u, unit_time", "Simulation unit time", cxxopts::value<string>())
           ("event_buffer", "Buffer size of Event Manager", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
-          ("help", "Help")
           ("event_file", "File name for storing events", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
@@ -37,6 +37,21 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 std::cout << options.help({""}) << std::endl;
                 exit(0);
             } 
+            
+            // NOTE: checking for time_zone should always happen before
+            // Parsing start time and end time. The reason is that 
+            // internally parseTime function will call mktime(), which
+            // assumes timezone has already been set.
+            if (result.count("time_zone")) { 
+                simulator_timeZone = result["time_zone"].as<string>();
+                setenv( "TZ", simulator_timeZone.c_str(), 1 );
+                tzset();
+            } else {
+                simulator_timeZone = "UTC";
+                setenv( "TZ", simulator_timeZone.c_str(), 1 );
+                tzset();
+            }
+
             if (result.count("start_time")) { 
                 string startTime = result["start_time"].as<string>();
                 parseStartTime(startTime);
@@ -53,7 +68,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
 
             if (result.count("unit_time")) { 
                 string unitTime = result["unit_time"].as<string>();
-
+                parseUnitTime(unitTime);
             } else {
                 simulator_unitTime = 3600;
             }

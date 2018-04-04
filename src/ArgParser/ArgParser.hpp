@@ -29,6 +29,8 @@ class ArgParser {
 
         bool readFromFile;
 
+        std::string simulator_timeZone;
+
         // Private member functions
 
         void initSocialCubeArgFromCLI(int argc, const char* argv[]);

@@ -20,6 +20,8 @@ class SimpleBehaviorModel {
 
         static std::string chooseAction(const TypeDistribution& t_typeDistribution);
 
+        static int convertISOtoHour(time_t t_currentTime);
+
     public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(HourlyActionRate& t_hourlyActionRate,

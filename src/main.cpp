@@ -9,6 +9,7 @@
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
+
     ArgParser args(argc, argv);
 
     // Initialize Simulator

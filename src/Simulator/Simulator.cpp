@@ -74,4 +74,3 @@ void Simulator::postSimulationConfig() {
     sp.timeEnd();
     em.end();
 }
-
