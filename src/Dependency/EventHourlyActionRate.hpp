@@ -15,8 +15,6 @@ class EventHourlyActionRate {
 
         double m_activityLevel;
 
-        double m_probSum;
-
     public:
 
         EventHourlyActionRate(double t_activityLevel);
@@ -27,9 +25,7 @@ class EventHourlyActionRate {
 
         double getProb(int t_hour);
 
-        double getProbSum();
-
-        uint64_t getActivityLevel();
+        double getActivityLevel();
 
         void show();
 };
