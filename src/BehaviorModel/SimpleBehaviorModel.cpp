@@ -23,7 +23,7 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
 
     const std::unique_ptr<EventHourlyActionRate>& m_rate = t_hourlyActionRate.getRate();
     double dailyActivityLevel = m_rate->getActivityLevel();
-    double prob = t_hourlyActionRate.getHourlyActionRate(t_currentTime % 24);
+    double prob = t_hourlyActionRate.getHourlyActionRate(currentHour % 24);
 
     while(dailyActivityLevel > 0.0) {
         if(dailyActivityLevel < 1.0) {
