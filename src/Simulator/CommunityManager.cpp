@@ -6,9 +6,20 @@ using namespace std;
 
 void CommunityManager::addAgent(Agent const * t_agent) {
     uint64_t communityTag = t_agent->getCommunityTag();
-    if(!communityExist(communityTag))
+    if(!communityExist(communityTag)) {
         m_community[communityTag] = make_unique<Community>(communityTag);
+        m_communityPendingSimulation[communityTag] = 0;
+    }
     m_community.at(communityTag)->add(t_agent);
+    m_communityPendingSimulation[communityTag] += 1;
+}
+
+
+vector<uint64_t> CommunityManager::schedule() {
+
+    auto& scheduler = SimpleScheduler::getInstance();
+    auto communityToSimulate = scheduler.schedule(m_communityPendingSimulation);
+    return communityToSimulate;
 }
 
 void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_unitTime) {
@@ -18,29 +29,28 @@ void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_u
     m_endTime = t_endTime;
     m_unitTime = t_unitTime;
 
-    EventManager& em = EventManager::getInstance();
+    SimulatorWorkerManager& sm = SimulatorWorkerManager::getInstance();
 
-    vector<unique_ptr<Event>> events;
-
-    #ifdef DEBUG
-    static size_t finishedCommunityCount = 0;
-    static uint64_t communityCnt = m_community.size();
-    #endif
-
-    for(auto& community: m_community) {
-        #ifdef DEBUG
-        uint64_t communityTag = community.first;
-        #endif
-
-        DBG(LOGD(TAG, "Simulating community " + stringfy(communityTag) + " (" + stringfy(finishedCommunityCount++) + "/" + stringfy(communityCnt) + ")");)
-        for(size_t currentTime = m_startTime; currentTime < m_endTime; currentTime += m_unitTime) {
-            vector<unique_ptr<Event>> community_events = community.second->step(currentTime, m_unitTime);
-            em.storeEvent(community_events);
+    while(!m_communityPendingSimulation.empty()) {
+        auto communityToSimulate = schedule(); 
+        Workload workload(m_startTime, m_endTime, m_unitTime);
+        for(auto communityID : communityToSimulate) {
+            workload.addCommunity(move(m_community[communityID]));
+            m_community.erase(communityID);
+            m_communityPendingSimulation.erase(communityID);
         }
+        sm.scheduleWorkload(workload);
     }
+    sm.finishSchedule();
+    waitSimulatorWorkerManager();
 }
 
 bool CommunityManager::communityExist(uint64_t t_tag) {
     return m_community.find(t_tag) != m_community.end();
 }
 
+void CommunityManager::waitSimulatorWorkerManager() {
+    SimulatorWorkerManager& sm = SimulatorWorkerManager::getInstance();
+    if(!sm.finishSimulation())
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+}

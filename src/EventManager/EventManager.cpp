@@ -59,6 +59,7 @@ uint64_t EventManager::getEventCount() {
 }
 
 void EventManager::storeEvent(std::vector<std::unique_ptr<Event>>& events) {
+    lock_guard<mutex> lock(m_mutex);
     m_eventCount += events.size();
     m_events.insert(
         m_events.end(),

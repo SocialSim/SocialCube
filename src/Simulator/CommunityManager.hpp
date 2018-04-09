@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <cassert>
+#include <chrono>
 #include <memory>
 #include <cstdlib>
 #include "Agent/Agent.hpp"
@@ -11,6 +12,9 @@
 #include "common/Event.hpp"
 #include "Log/Log.hpp"
 #include "EventManager/EventManager.hpp"
+#include "Scheduler/SimpleScheduler/SimpleScheduler.hpp"
+#include "common/Workload.hpp"
+#include "SimulatorWorkerManager/SimulatorWorkerManager.hpp"
 
 class CommunityManager {
     private:
@@ -22,8 +26,14 @@ class CommunityManager {
 
         time_t m_unitTime;
 
+        std::unordered_map<uint64_t, size_t> m_communityPendingSimulation;
+
         // Private member function
         bool communityExist(uint64_t t_tag);
+
+        std::vector<uint64_t> schedule();
+
+        void waitSimulatorWorkerManager();
 
     public:
         CommunityManager() = default;

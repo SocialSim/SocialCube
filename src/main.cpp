@@ -6,6 +6,7 @@
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
+#include "SimulatorWorkerManager/SimulatorWorkerManager.hpp"
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
@@ -17,6 +18,9 @@ int main(int argc, const char* argv[]) {
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());
     s.setUnitTime(args.getSimulationUnitTime());
+
+    SimulatorWorkerManager& sm = SimulatorWorkerManager::getInstance();
+    sm.spawnWorkers(4);
 
     // Initialize SimulatorProfiler
     SimulatorProfiler& sp = SimulatorProfiler::getInstance();

@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include <cstdlib>
+#include <mutex>
 
 
 #include "SimulatorProfiler/SimulatorProfiler.hpp"
@@ -27,6 +28,8 @@ class EventManager {
         std::ofstream m_eventFile; 
 
         bool m_eventOn;
+
+        std::mutex m_mutex;
 
         // Private member functions
 

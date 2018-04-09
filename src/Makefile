@@ -4,8 +4,9 @@ SRCDIR := $(BASEDIR)/src
 TARGET := socialcube
 
 CXX := g++
-CXX_FLAGS := -O3 -g -DDEBUG
+CXX_FLAGS := -O0 -g -DDEBUG
 #CXX_FLAGS := -g3 -pthread
+CXX_FLAGS := $(CXX_FLAGS) -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CXX_FLAGS := $(CXX_FLAGS) -Wpointer-arith -Wsign-compare -Wendif-labels
 CXX_FLAGS := $(CXX_FLAGS) -std=c++14
@@ -36,6 +37,10 @@ OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
 OBJS := $(OBJS) Log.o
 OBJS := $(OBJS) SimulatorProfiler.o
+OBJS := $(OBJS) Workload.o
+OBJS := $(OBJS) SimulatorWorker.o
+OBJS := $(OBJS) SimpleScheduler.o
+OBJS := $(OBJS) SimulatorWorkerManager.o
 OBJS := $(OBJS) main.o
 
 all:	$(TARGET)
@@ -119,6 +124,18 @@ Community.o:	./Simulator/Community.cpp ./Simulator/Community.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommunityManager.o:	./Simulator/CommunityManager.cpp ./Simulator/CommunityManager.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+Workload.o:	./common/Workload.cpp ./common/Workload.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SimulatorWorker.o:	./SimulatorWorker/SimulatorWorker.cpp ./SimulatorWorker/SimulatorWorker.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SimulatorWorkerManager.o:	./SimulatorWorkerManager/SimulatorWorkerManager.cpp ./SimulatorWorkerManager/SimulatorWorkerManager.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SimpleScheduler.o:	./Scheduler/SimpleScheduler/SimpleScheduler.cpp ./Scheduler/SimpleScheduler/SimpleScheduler.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp
