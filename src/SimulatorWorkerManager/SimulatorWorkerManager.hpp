@@ -29,9 +29,9 @@ class SimulatorWorkerManager {
 
         std::queue<unsigned> m_freeWorkers; // Worker will only be in m_freeWorkers when it is not assigned to a workload
 
-        std::unordered_map<unsigned, Workload> m_workloadQueue;
+        std::unordered_map<unsigned, std::unique_ptr<Workload>> m_workloadQueue;
 
-        std::queue<Workload> m_workloadBuffer;
+        std::queue<std::unique_ptr<Workload>> m_workloadBuffer;
 
         bool m_finishSimulation {false};
 
@@ -47,11 +47,11 @@ class SimulatorWorkerManager {
     public:
         static SimulatorWorkerManager& getInstance();
 
-        Workload fetchWorkload(unsigned wid);
+        std::unique_ptr<Workload> fetchWorkload(unsigned wid);
 
         bool workloadAvailable(unsigned wid);
 
-        void scheduleWorkload(Workload& t_workload);
+        void scheduleWorkload(std::unique_ptr<Workload> t_workload);
 
         void notifyWorkerManager(unsigned wid);
 

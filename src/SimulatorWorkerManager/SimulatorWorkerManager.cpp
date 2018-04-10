@@ -16,10 +16,10 @@ SimulatorWorkerManager& SimulatorWorkerManager::getInstance() {
     return s;
 }
 
-Workload SimulatorWorkerManager::fetchWorkload(unsigned wid) {
+unique_ptr<Workload> SimulatorWorkerManager::fetchWorkload(unsigned wid) {
     lock_guard<mutex> lock(m_mutex);
     assert(m_workloadQueue.find(wid) != m_workloadQueue.end());
-    Workload w = move(m_workloadQueue[wid]);
+    unique_ptr<Workload> w = move(m_workloadQueue[wid]);
     m_workloadQueue.erase(wid);
     return move(w);
 }
@@ -29,7 +29,7 @@ bool SimulatorWorkerManager::workloadAvailable(unsigned wid) {
     return m_workloadQueue.find(wid) != m_workloadQueue.end();
 }
 
-void SimulatorWorkerManager::scheduleWorkload(Workload& t_workload) {
+void SimulatorWorkerManager::scheduleWorkload(unique_ptr<Workload> t_workload) {
     lock_guard<mutex> lock(m_mutex);
     unsigned wid = chooseWorker(); // May consider load balancing
     if(wid == NO_WORKER_AVAILABLE) {

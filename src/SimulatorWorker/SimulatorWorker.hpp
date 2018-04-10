@@ -27,7 +27,7 @@ class SimulatorWorker {
         std::shared_ptr<std::condition_variable> m_cv;
 
         // member functions
-        Workload fetchWorkload(unsigned wid) const;
+        std::unique_ptr<Workload> fetchWorkload(unsigned wid) const;
 
         void notifyWorkerManager() const;
 
@@ -36,7 +36,7 @@ class SimulatorWorker {
 
         static void SimulatorWorkerImpl(SimulatorWorker const * ptr);
 
-        static void simulate(Workload& t_workload);
+        static void simulate(std::unique_ptr<Workload>& t_workload, unsigned t_workerID);
         
     public:
         SimulatorWorker(unsigned t_workerID, std::shared_ptr<std::condition_variable> t_cv);

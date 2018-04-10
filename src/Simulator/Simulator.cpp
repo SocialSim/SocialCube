@@ -42,6 +42,7 @@ void Simulator::simulate() {
     simulateImpl();
 
     postSimulationConfig();
+    DBG(LOGP(TAG, "Simulation post!");)
 }
 
 void Simulator::simulateImpl() {

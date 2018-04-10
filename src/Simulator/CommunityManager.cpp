@@ -33,16 +33,17 @@ void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_u
 
     while(!m_communityPendingSimulation.empty()) {
         auto communityToSimulate = schedule(); 
-        Workload workload(m_startTime, m_endTime, m_unitTime);
+        unique_ptr<Workload> workloadPtr(new Workload(m_startTime, m_endTime, m_unitTime));
         for(auto communityID : communityToSimulate) {
-            workload.addCommunity(move(m_community[communityID]));
+            workloadPtr->addCommunity(move(m_community[communityID]));
             m_community.erase(communityID);
             m_communityPendingSimulation.erase(communityID);
         }
-        sm.scheduleWorkload(workload);
+        sm.scheduleWorkload(move(workloadPtr));
     }
     sm.finishSchedule();
     waitSimulatorWorkerManager();
+    DBG(LOGW(TAG, "Finish simulation in CommunityManagerrr!");)
 }
 
 bool CommunityManager::communityExist(uint64_t t_tag) {
@@ -51,6 +52,6 @@ bool CommunityManager::communityExist(uint64_t t_tag) {
 
 void CommunityManager::waitSimulatorWorkerManager() {
     SimulatorWorkerManager& sm = SimulatorWorkerManager::getInstance();
-    if(!sm.finishSimulation())
+    while(!sm.finishSimulation())
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 }

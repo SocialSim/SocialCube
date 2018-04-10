@@ -28,5 +28,5 @@ vector<unique_ptr<Event>> Community::step(time_t t_currentTime, time_t t_unitTim
             std::make_move_iterator(agent_events.end())
         );
     }
-    return events;
+    return move(events);
 }

@@ -14,7 +14,7 @@ void SimulatorWorker::SimulatorWorkerImpl(SimulatorWorker const * ptr) {
             unique_lock<mutex> lock(m);
             worker->m_cv->wait(lock, [&wid]() { return SimulatorWorker::workloadAvailable(wid);});
             auto workload = worker->fetchWorkload(wid);
-            SimulatorWorker::simulate(workload);
+            SimulatorWorker::simulate(workload, worker->getWorkerID());
             worker->notifyWorkerManager();
         }
     }
@@ -32,7 +32,7 @@ SimulatorWorker::~SimulatorWorker() {
     // delete m_thread;
 }
 
-Workload SimulatorWorker::fetchWorkload(unsigned wid) const {
+unique_ptr<Workload> SimulatorWorker::fetchWorkload(unsigned wid) const {
     return move(manager.fetchWorkload(wid));
 }
 
@@ -41,20 +41,21 @@ bool SimulatorWorker::workloadAvailable(unsigned wid) {
     return sm.workloadAvailable(wid);
 }
 
-void SimulatorWorker::simulate(Workload& t_workload) {
-    time_t startTime = t_workload.getStartTime();
-    time_t endTime = t_workload.getEndTime();
-    time_t unitTime = t_workload.getUnitTime();
-    auto community = t_workload.transferWorkload();
+void SimulatorWorker::simulate(unique_ptr<Workload>& t_workload, unsigned t_workerID) {
+    time_t startTime = t_workload->getStartTime();
+    time_t endTime = t_workload->getEndTime();
+    time_t unitTime = t_workload->getUnitTime();
+    auto community = t_workload->transferWorkload();
 
     EventManager& em = EventManager::getInstance();
 
     vector<unique_ptr<Event>> events;
 
     for(auto& iter : community) {
-        DBG(LOGD(TAG, "Simulating " + stringfy(iter->getCommunityTag()) + " Community");)
-        vector<unique_ptr<Event>> community_events = iter->step(startTime, unitTime);
-        em.storeEvent(community_events);
+        for(time_t currentTime = startTime; currentTime < endTime; currentTime += unitTime) {
+            vector<unique_ptr<Event>> community_events = iter->step(currentTime, unitTime);
+            em.storeEvent(community_events);
+        }
     }
 }
 
