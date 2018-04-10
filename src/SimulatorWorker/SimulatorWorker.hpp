@@ -11,6 +11,7 @@
 #include "EventManager/EventManager.hpp"
 #include "SimulatorWorkerManager/SimulatorWorkerManager.hpp"
 #include "common/Workload.hpp"
+#include "Log/Log.hpp"
 
 class SimulatorWorkerManager;
 

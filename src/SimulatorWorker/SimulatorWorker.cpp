@@ -1,5 +1,7 @@
 #include "SimulatorWorker.hpp"
 
+DBG(static const string tag="SimulatorWorker";)
+
 using namespace std;
 
 void SimulatorWorker::SimulatorWorkerImpl(SimulatorWorker const * ptr) {
@@ -27,7 +29,7 @@ SimulatorWorker::SimulatorWorker(unsigned t_workerID, shared_ptr<condition_varia
 }
 
 SimulatorWorker::~SimulatorWorker() {
-    delete m_thread;
+    // delete m_thread;
 }
 
 Workload SimulatorWorker::fetchWorkload(unsigned wid) const {
@@ -50,6 +52,7 @@ void SimulatorWorker::simulate(Workload& t_workload) {
     vector<unique_ptr<Event>> events;
 
     for(auto& iter : community) {
+        DBG(LOGD(TAG, "Simulating " + stringfy(iter->getCommunityTag()) + " Community");)
         vector<unique_ptr<Event>> community_events = iter->step(startTime, unitTime);
         em.storeEvent(community_events);
     }
