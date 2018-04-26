@@ -58,7 +58,8 @@ They you need to copy the training data into the following folder:
 user@apollo5$ $ cp ${LOCATION_TO_YOUR_DATA}/ISO-time-event_2015-01-01.txt {SOCIALSIMPATH}/data/
 ```
 
-Let's assume you put ISO-time-event_2015-01-01.txt file in the right directory. Then you would have:```
+Let's assume you put ISO-time-event_2015-01-01.txt file in the right directory. Then you would have:
+```
 user@apollo5$ ls ${SOCIALSIMPATH}/data/
 ISO-time-event_2015-01-01.txt
 ```
