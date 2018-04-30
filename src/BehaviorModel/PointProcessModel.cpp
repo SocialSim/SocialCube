@@ -27,12 +27,12 @@ std::vector<unique_ptr<Event>> PointProcessModel::evaluate(
 			double temInterval = 0.0;
 			while(1) {
 				double intensity = mu[i] + ((upperIntensity[i] - mu[i]) * exp(-beta[i] * temInterval));
-				int u = rand();
+				double u = (double)rand() / RAND_MAX;
 				double delta = -log(u) / intensity;
 				if(delta > 10000.0)
 					break;
 				temInterval += delta;
-				int s = rand();
+				double s = (double)rand() / RAND_MAX;
 				double temIntensity = mu[i] + (intensity - mu[i]) * exp(-beta[i] * delta);
 				if(s <= temIntensity / intensity) {
 					interval[i] = temInterval;
