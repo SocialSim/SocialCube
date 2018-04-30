@@ -40,6 +40,7 @@ std::vector<std::unique_ptr<Event>> Community::simulate(time_t t_startTime, time
 
     for(auto& agent : m_community) {
 		vector<unique_ptr<Event>> agent_events = agent->simulate(currentTime, endTime);
+		cout << "Finish simulating " << agent->getID() << endl;
 		events.insert(
 			events.end(),
 			std::make_move_iterator(agent_events.begin()),
