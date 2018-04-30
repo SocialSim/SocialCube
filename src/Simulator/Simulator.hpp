@@ -32,11 +32,13 @@ protected:
 
     // Private member function
 
-    void preSimulationConfig();
+    virtual void preSimulationConfig();
 
-    void postSimulationConfig();
+    virtual void postSimulationConfig();
 
     virtual void simulateImpl();
+
+	virtual void printConfig();
 
 public:
 
@@ -46,15 +48,15 @@ public:
 
     /********************** All setter function *************************/
 
-    void setStartTime(time_t t_startTime);
+    virtual void setStartTime(time_t t_startTime);
 
-    void setEndTime(time_t t_endTime);
+    virtual void setEndTime(time_t t_endTime);
 
-    void setUnitTime(time_t t_unitTime);
+    virtual void setUnitTime(time_t t_unitTime);
 
-    void addUserAgent(Agent const * t_agent);
+    virtual void addUserAgent(Agent const * t_agent);
 
-    void addObjectAgent(Agent const * t_agent);
+    virtual void addObjectAgent(Agent const * t_agent);
 
     virtual void simulate() final;
 };

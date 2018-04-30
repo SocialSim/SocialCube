@@ -19,6 +19,7 @@ OBJS := $(OBJS) Community.o
 OBJS := $(OBJS) CommunityManager.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) BehaviorModel.o
+OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
@@ -36,6 +37,7 @@ OBJS := $(OBJS) DependentEventLogger.o
 OBJS := $(OBJS) ArgParser.o
 OBJS := $(OBJS) Log.o
 OBJS := $(OBJS) SimulatorProfiler.o
+OBJS := $(OBJS) matOps.o
 OBJS := $(OBJS) main.o
 
 all:	$(TARGET)
@@ -56,6 +58,9 @@ SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAge
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/EventHourlyActionRate.hpp
@@ -119,6 +124,9 @@ Community.o:	./Simulator/Community.cpp ./Simulator/Community.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommunityManager.o:	./Simulator/CommunityManager.cpp ./Simulator/CommunityManager.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+matOps.o:	./common/matOps.cpp ./common/matOps.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 main.o:	./main.cpp

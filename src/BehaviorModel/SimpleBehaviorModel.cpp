@@ -55,3 +55,4 @@ string SimpleBehaviorModel::chooseAction(const TypeDistribution& t_typeDistribut
 int SimpleBehaviorModel::convertISOtoHour(time_t t_currentTime) {
     return gmtime(&t_currentTime)->tm_hour;
 }
+

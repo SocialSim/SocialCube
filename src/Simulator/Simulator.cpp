@@ -49,11 +49,7 @@ void Simulator::simulateImpl() {
 }
 
 void Simulator::preSimulationConfig() {
-    DBG(LOGP(TAG, "\n\n*************************** Simulator Configuration ***************************", false);)
-    DBG(LOGP(TAG, "Simulation Start Time: "+stringfy(m_startTime));)
-    DBG(LOGP(TAG, "Simulation End Time: "+stringfy(m_endTime));)
-    DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
-    DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
+	printConfig();
 
     if(m_endTime < m_startTime) {
         EndTimeLessThanStartTime e_e;
@@ -73,4 +69,12 @@ void Simulator::postSimulationConfig() {
 
     sp.timeEnd();
     em.end();
+}
+
+void Simulator::printConfig() {
+    DBG(LOGP(TAG, "\n\n*************************** Simulator Configuration ***************************", false);)
+    DBG(LOGP(TAG, "Simulation Start Time: "+stringfy(m_startTime));)
+    DBG(LOGP(TAG, "Simulation End Time: "+stringfy(m_endTime));)
+    DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
+    DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
 }

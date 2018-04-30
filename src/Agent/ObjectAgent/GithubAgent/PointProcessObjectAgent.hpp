@@ -16,13 +16,9 @@ class SimpleGithubObjectAgent : public ObjectAgent {
     public:
         SimpleGithubObjectAgent(const std::string& t_id);
 
-        ~SimpleGithubObjectAgent();
+        ~SimpleGithubObjectAgent() = default;
 
-        virtual std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const override;
-
-        virtual std::vector<std::unique_ptr<Event>> simulate(time_t t_currentTime, time_t t_endTime) const override;
-
-        virtual std::vector<std::unique_ptr<Event>> next(time_t t_currentTime, time_t& t_deltaTime) const override;
+        std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const override;
 };
 
 #endif

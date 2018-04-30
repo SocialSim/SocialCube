@@ -40,6 +40,22 @@ void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_u
     }
 }
 
+void CommunityManager::eventBasedSimulate(time_t t_startTime, time_t t_endTime) {
+    DBG(LOGD(TAG, "Total " + stringfy(m_community.size()) + " detected");)
+
+    m_startTime = t_startTime;
+    m_endTime = t_endTime;
+
+    EventManager& em = EventManager::getInstance();
+
+    vector<unique_ptr<Event>> events;
+
+    for(auto& community: m_community) {
+		vector<unique_ptr<Event>> community_events = community.second->simulate(m_startTime, m_endTime);
+		em.storeEvent(community_events);
+    }
+}
+
 bool CommunityManager::communityExist(uint64_t t_tag) {
     return m_community.find(t_tag) != m_community.end();
 }

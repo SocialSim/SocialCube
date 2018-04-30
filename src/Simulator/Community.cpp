@@ -30,3 +30,21 @@ vector<unique_ptr<Event>> Community::step(time_t t_currentTime, time_t t_unitTim
     }
     return events;
 }
+
+
+std::vector<std::unique_ptr<Event>> Community::simulate(time_t t_startTime, time_t t_endTime) {
+	time_t currentTime = t_startTime;
+	time_t endTime = t_endTime;
+
+    vector<unique_ptr<Event>> events;
+
+    for(auto& agent : m_community) {
+		vector<unique_ptr<Event>> agent_events = agent->simulate(currentTime, endTime);
+		events.insert(
+			events.end(),
+			std::make_move_iterator(agent_events.begin()),
+			std::make_move_iterator(agent_events.end())
+		);
+    }
+    return events;
+}
