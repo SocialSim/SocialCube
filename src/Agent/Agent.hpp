@@ -10,6 +10,9 @@
 class Agent {
     protected:
         std::string m_id;
+
+        uint64_t m_communityTag;
+
     public:
         Agent(const std::string& t_id) : m_id(t_id) {};
 
@@ -18,8 +21,6 @@ class Agent {
         virtual std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const = 0;
 
         virtual std::vector<std::unique_ptr<Event>> simulate(time_t t_currentTime, time_t t_endTime) const = 0;
-
-        virtual std::vector<std::unique_ptr<Event>> next(time_t t_currentTime, time_t& t_deltaTime) const = 0;
 
         std::string getID() { return m_id; }
 

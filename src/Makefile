@@ -4,7 +4,7 @@ SRCDIR := $(BASEDIR)/src
 TARGET := socialcube
 
 CXX := g++
-CXX_FLAGS := -O3 -g -DDEBUG
+CXX_FLAGS := -O0 -g -DDEBUG
 #CXX_FLAGS := -g3 -pthread
 CXX_FLAGS := $(CXX_FLAGS) -Wall -W -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CXX_FLAGS := $(CXX_FLAGS) -Wpointer-arith -Wsign-compare -Wendif-labels
@@ -13,21 +13,25 @@ CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 
 OBJS := Simulator.o
 OBJS := $(OBJS) CacheAwareSimulator.o
+OBJS := $(OBJS) EventBasedSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o 
 OBJS := $(OBJS) ClusteredGithubUserAgent.o 
 OBJS := $(OBJS) Community.o 
 OBJS := $(OBJS) CommunityManager.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
+OBJS := $(OBJS) PointProcessObjectAgent.o 
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
+OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
+OBJS := $(OBJS) PointProcessProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
@@ -51,10 +55,16 @@ Simulator.o:	./Simulator/Simulator.cpp ./Simulator/Simulator.hpp
 CacheAwareSimulator.o:	./Simulator/CacheAwareSimulator.cpp ./Simulator/CacheAwareSimulator.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+EventBasedSimulator.o:	./Simulator/EventBasedSimulator.cpp ./Simulator/EventBasedSimulator.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
@@ -78,6 +88,9 @@ UserDependency.o:	./Dependency/UserDependency.cpp ./Dependency/UserDependency.hp
 TypeDistribution.o:	./Dependency/TypeDistribution.cpp ./Dependency/TypeDistribution.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+PointProcessStat.o:	./Dependency/PointProcessStat.cpp ./Dependency/PointProcessStat.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/StatisticProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -97,6 +110,9 @@ UserIDProxy.o:	./StatisticProxy/UserIDProxy/UserIDProxy.cpp ./StatisticProxy/Use
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ClusteredUserIDProxy.o:	./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.cpp ./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PointProcessProxy.o:	./StatisticProxy/PointProcessProxy/PointProcessProxy.cpp ./StatisticProxy/PointProcessProxy/PointProcessProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Event.o:	./common/Event.cpp ./common/Event.hpp

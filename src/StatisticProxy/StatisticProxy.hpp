@@ -8,12 +8,14 @@
 #include <memory>
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
+#include "Dependency/PointProcessStat.hpp"
 #include "StatisticProxy/UserIDProxy/UserIDProxy.hpp"
 #include "StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp"
 #include "StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp"
 #include "StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp"
 #include "StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp"
 #include "StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp"
+#include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -22,6 +24,7 @@ class StatisticProxy {
         std::string m_defaultObjectPreferenceProxyFile;
         std::string m_defaultHourlyActionRateProxyFile;
         std::string m_defaultTypeDistributionProxyFile;
+        std::string m_defaultPointProcessProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -29,12 +32,12 @@ class StatisticProxy {
         std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
         std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
         std::unique_ptr<TypeDistributionProxy> m_typeDistributionProxy;
+        std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
 
         // Private member functions
         StatisticProxy();
 
         void initProxySourceFile();
-        
 
     public:
 
@@ -53,6 +56,8 @@ class StatisticProxy {
         ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
 
         TypeDistribution& getUserTypeDistribution(const std::string &userID) const; 
+
+        PointProcessStat& getPointProcessStat(const std::string &userID) const; 
 
         uint64_t getUserCommunityTag(const std::string &userID) const; 
 };

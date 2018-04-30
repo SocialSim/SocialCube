@@ -1,5 +1,5 @@
-#ifndef __CLUSTERED_GITHUB_USER__AGENT__
-#define __CLUSTERED_GITHUB_USER__AGENT__
+#ifndef __CLUSTERED_GITHUB_USER_AGENT__
+#define __CLUSTERED_GITHUB_USER_AGENT__
 
 #include <vector>
 #include <string>
@@ -13,8 +13,7 @@
 
 class ClusteredGithubUserAgent : public SimpleGithubUserAgent {
     protected:
-
-        uint64_t m_communityTag;
+		uint64_t m_communityTag;
 
     public:
         ClusteredGithubUserAgent(const std::string& t_id);

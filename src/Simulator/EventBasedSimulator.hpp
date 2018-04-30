@@ -7,7 +7,6 @@
 #include <cassert>
 #include <cstdint>
 #include <fstream>
-
 #include "Simulator.hpp"
 
 class EventBasedSimulator : public Simulator {
@@ -23,6 +22,8 @@ public:
     EventBasedSimulator() = default;
 
     virtual ~EventBasedSimulator() = default;
+
+    virtual void addObjectAgent(Agent const * t_agent) override;
 };
 
 #endif

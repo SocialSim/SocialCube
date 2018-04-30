@@ -44,6 +44,13 @@ class TypeDistributionProxyException: public std::exception {
     }
 };
 
+class PointProcessProxyException : public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PointProcessProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {

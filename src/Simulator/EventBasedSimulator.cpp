@@ -4,11 +4,11 @@ using namespace std;
 
 DBG(static const string tag="EventBasedSimulator";)
 
-void Simulator::addObjectAgent(Agent const * t_agent) {
+void EventBasedSimulator::addObjectAgent(Agent const * t_agent) {
     throw;
 }
 
-void Simulator::simulateImpl() {
+void EventBasedSimulator::simulateImpl() {
     m_communityManager->eventBasedSimulate(m_startTime, m_endTime);
 }
 

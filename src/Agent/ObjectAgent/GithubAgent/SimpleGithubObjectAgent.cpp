@@ -20,7 +20,3 @@ vector<unique_ptr<Event>> SimpleGithubObjectAgent::step(time_t t_currentTime, ti
 vector<unique_ptr<Event>> SimpleGithubObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
 	throw;
 }
-
-vector<unique_ptr<Event>> SimpleGithubObjectAgent::next(time_t t_currentTime, time_t& t_endTime) const {
-	throw;
-}

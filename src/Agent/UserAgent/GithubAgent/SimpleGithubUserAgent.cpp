@@ -32,6 +32,3 @@ vector<unique_ptr<Event>> SimpleGithubUserAgent::simulate(time_t t_currentTime, 
 	throw;
 }
 
-vector<unique_ptr<Event>> SimpleGithubUserAgent::next(time_t t_currentTime, time_t& t_endTime) const {
-	throw;
-}

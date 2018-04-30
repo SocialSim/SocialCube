@@ -1,11 +1,9 @@
 #include <memory>
 #include "AgentBuilder/AgentBuilder.hpp"
 #include "Simulator/Simulator.hpp"
-#include "Simulator/EventBasedSimulator.hpp"
 #include "Simulator/CacheAwareSimulator.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
-#include "Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
@@ -15,7 +13,7 @@ int main(int argc, const char* argv[]) {
     ArgParser args(argc, argv);
 
     // Initialize Simulator
-    EventBasedSimulator s;
+    Simulator s;
     s.setStartTime(args.getSimulationStartTime());
     s.setEndTime(args.getSimulationEndTime());
     s.setUnitTime(args.getSimulationUnitTime());
@@ -31,9 +29,9 @@ int main(int argc, const char* argv[]) {
     em.setEventBufferSize(args.getSimulationEventBufferSize());
 
     // Initialize AgentBuilder
-    AgentBuilder<ClusteredGithubUserAgent, PointProcessObjectAgent> builder;
+    AgentBuilder<ClusteredGithubUserAgent, SimpleGithubObjectAgent> builder;
     builder.build();
-    std::vector<std::shared_ptr<PointProcessObjectAgent>>& agentList = builder.getObjectAgentList();
+    std::vector<std::shared_ptr<ClusteredGithubUserAgent>>& agentList = builder.getUserAgentList();
     for(auto& iter : agentList)
         s.addUserAgent(iter.get());
 
