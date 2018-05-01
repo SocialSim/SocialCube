@@ -34,7 +34,8 @@ void ObjectPreferenceProxy::parse() {
             aggrPreference += preference;
             objectPreference->set(objectID, aggrPreference);
         }
-        m_objectPreference[userID] = move(objectPreference);
+		if(stoi(preferenceCount) != 0)
+			m_objectPreference[userID] = move(objectPreference);
     }
     DBG(LOGD(TAG, "Object Preference has "+stringfy(m_objectPreference.size()));)
 }
