@@ -29,7 +29,7 @@ std::vector<unique_ptr<Event>> PointProcessModel::evaluate(
 				double intensity = mu[i] + ((upperIntensity[i] - mu[i]) * exp(-beta[i] * temInterval));
 				double u = (double)rand() / RAND_MAX;
 				double theoretical_delta = -log(u) / intensity;
-				double delta = theoretical_delta < (double)1 / 60 ? (double)1/60 : theoretical_delta;
+				double delta = theoretical_delta < (double)0.3 ? 0.3 : theoretical_delta;
 				if(delta > 10000.0)
 					break;
 				temInterval += delta;
