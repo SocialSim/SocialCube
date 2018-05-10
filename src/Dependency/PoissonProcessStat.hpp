@@ -1,5 +1,5 @@
-#ifndef SOCIALCUBE_POISSORPROCESSSTAT_HPP
-#define SOCIALCUBE_POISSORPROCESSSTAT_HPP
+#ifndef SOCIALCUBE_POISSONPROCESSSTAT_HPP
+#define SOCIALCUBE_POISSONPROCESSSTAT_HPP
 
 #include <unordered_map>
 #include <string>
@@ -7,13 +7,12 @@
 #include <cstdint>
 #include <iostream>
 #include <cassert>
-#include "EventHourlyActionRate.hpp"
 #include "common/util.hpp"
 
 class PoissonProcessStat {
 private:
 
-    std::double mu;
+    double mu;
     std::string type;
     std::string m_userID;
 
@@ -23,11 +22,11 @@ public:
 
     ~PoissonProcessStat() = default;
 
-    void setMu(const std::vector<double>& in);
+    void setMu(const double in);
 
-    void setType(const std::string in);
+    void setType(const std::string &in);
 
-    std::double getMu() const;
+    double getMu() const;
 
     std::string getType() const;
 
@@ -36,4 +35,4 @@ public:
     void show() const;
 };
 
-#endif //SOCIALCUBE_POISSORPROCESSSTAT_HPP
+#endif //SOCIALCUBE_POISSONPROCESSSTAT_HPP
