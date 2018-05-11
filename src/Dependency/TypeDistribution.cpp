@@ -3,16 +3,16 @@
 using namespace std;
 
 const std::unordered_map<int, std::string> TypeDistribution::m_actions{
-    {0, "CreateEvent"}, 
-    {1, "DeleteEvent"},
-    {2, "ForkEvent"},
-    {3, "IssuesEvent"}, 
-    {4, "PullRequestEvent"},
-    {5, "PushEvent"},
-    {6, "WatchEvent"},
-    {7, "PullRequestReviewCommentEvent"},
-    {8, "IssueCommentEvent"},
-    {9, "CommitCommentEvent"}
+        {0, "PushEvent"},
+        {1, "IssuesEvent"},
+        {2, "PullRequestReviewCommentEvent"},
+        {3, "PullRequestEvent"},
+        {4, "IssueCommentEvent"},
+        {5, "CreateEvent"},
+        {6, "WatchEvent"},
+        {7, "ForkEvent"},
+        {8, "DeleteEvent"},
+        {9, "CommitCommentEvent"}
 };
 
 TypeDistribution::TypeDistribution(std::string t_userID) : m_userID(t_userID) {
