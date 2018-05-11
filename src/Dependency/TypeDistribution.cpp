@@ -5,11 +5,15 @@ using namespace std;
 const std::unordered_map<int, std::string> TypeDistribution::m_actions{
     {0, "CreateEvent"}, 
     {1, "DeleteEvent"},
-    {2, "ForkEvent", }, 
+    {2, "ForkEvent"},
     {3, "IssuesEvent"}, 
-    {4, "PullRequestE"}, 
-    {5, "PushEvent", }, 
-    {6, "WatchEvent",}};
+    {4, "PullRequestEvent"},
+    {5, "PushEvent"},
+    {6, "WatchEvent"},
+    {7, "PullRequestReviewCommentEvent"},
+    {8, "IssueCommentEvent"},
+    {9, "CommitCommentEvent"}
+};
 
 TypeDistribution::TypeDistribution(std::string t_userID) : m_userID(t_userID) {
     return;
