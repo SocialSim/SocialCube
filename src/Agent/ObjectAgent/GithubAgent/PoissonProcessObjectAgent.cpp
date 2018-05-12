@@ -18,10 +18,12 @@ vector<unique_ptr<Event>> PoissonProcessObjectAgent::step(time_t t_currentTime, 
 }
 
 vector<unique_ptr<Event>> PoissonProcessObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+    auto k = m_stat.getK();
     auto mu = m_stat.getMu();
-    auto type = m_stat.getType();
+    auto typeList = m_stat.getTypeList();
 
-    vector<unique_ptr<Event>> events = PoissonProcessModel::evaluate(m_id, mu, type, t_currentTime, t_endTime);
+    vector<unique_ptr<Event>> events = PoissonProcessModel::evaluate(m_id, mu, typeList, k,
+                                                                     t_currentTime, t_endTime);
 
     return events;
 }

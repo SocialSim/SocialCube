@@ -12,8 +12,9 @@
 class PoissonProcessStat {
 private:
 
-    double mu;
-    std::string type;
+    std::vector<double> mu;
+    std::vector<std::string> typeList;
+    int k;
     std::string m_userID;
 
 public:
@@ -22,17 +23,21 @@ public:
 
     ~PoissonProcessStat() = default;
 
-    void setMu(const double in);
+    void setMu(const std::vector<double>& in);
 
-    void setType(const std::string &in);
+    void setTypeList(const std::vector<std::string>& in);
 
-    double getMu() const;
+    void setK(int t_k);
 
-    std::string getType() const;
+    std::vector<double> getMu() const;
 
-    std::string getUserID() const;
+    std::vector<std::string> getTypeList() const;
+
+    int getK() const;
 
     void show() const;
+
+    std::string getUserID() const;
 };
 
 #endif //SOCIALCUBE_POISSONPROCESSSTAT_HPP

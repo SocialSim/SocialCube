@@ -24,19 +24,29 @@ void PoissonProcessProxy::parse() {
 
     string tmp;
     while (getline(m_poissonProcessStatisticsFile, tmp)) {
-        istringstream in(tmp);
-        string userID;
-        string type;
-        string str_mu;
-        double mu;
-
-        in >> userID;
-        in >> type;
-        in >> str_mu;
-        mu = stod(str_mu);
-
+        string userID = tmp.substr(0, tmp.find(" "));
+        int k = stoi(tmp.substr(tmp.find(" ") + 1));
         unique_ptr<PoissonProcessStat> poissonProcessStat(new PoissonProcessStat(userID));
-        poissonProcessStat->setType(type);
+        poissonProcessStat->setK(k);
+
+        // parse typeList
+        getline(m_poissonProcessStatisticsFile, tmp);
+        istringstream in(tmp);
+        string type;
+        vector<string> typeList;
+        while(in >> type) {
+            typeList.push_back(type);
+        }
+        poissonProcessStat->setTypeList(typeList);
+        // parse mu
+        getline(m_poissonProcessStatisticsFile, tmp);
+        istringstream mu_in(tmp);
+        string mu_ele;
+        vector<double> mu;
+        for(int i = 0; i < k; ++i) {
+            mu_in >> mu_ele;
+            mu.push_back(stod(mu_ele));
+        }
         poissonProcessStat->setMu(mu);
 
         m_stats[userID] = move(poissonProcessStat);

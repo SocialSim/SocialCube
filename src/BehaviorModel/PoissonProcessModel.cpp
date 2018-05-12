@@ -4,8 +4,9 @@ using namespace std;
 
 std::vector<unique_ptr<Event>> PoissonProcessModel::evaluate(
         const string objectID,
-        const double mu,
-        const string actionType,
+        const vector<double>& mu,
+        const vector<string>& typeList,
+        int k,
         time_t t_startTime,
         time_t t_endTime
 ) {
@@ -15,19 +16,24 @@ std::vector<unique_ptr<Event>> PoissonProcessModel::evaluate(
     double startMinute = t_startTime / 60;
     double endMinute = t_endTime / 60;
 
-    while(currentMinute < endMinute) {
+    for (int i = 0; i < k; i++){
+        string actionType = typeList[i];
+        currentMinute = t_startTime / 60;
+        double typeMu = mu[i];
+        while(currentMinute < endMinute) {
 
-        double u = (double)rand() / RAND_MAX;
-        currentMinute += -log(u) / (mu + 1e-7);
+            double u = (double)rand() / RAND_MAX;
+            currentMinute += -log(u) / (typeMu + 1e-7);
 
-        if(currentMinute > endMinute){
-            return events;
+            if(currentMinute > endMinute){
+                break;
+            }
+
+            string userID = generateUserID();
+            time_t eventTime = currentMinute * 60;
+            unique_ptr<Event> event(new Event(userID, objectID, actionType, eventTime));
+            events.push_back(move(event));
         }
-
-        string userID = generateUserID();
-        time_t eventTime = currentMinute * 60;
-        unique_ptr<Event> event(new Event(userID, objectID, actionType, eventTime));
-        events.push_back(move(event));
     }
 
     return events;

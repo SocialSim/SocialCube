@@ -7,28 +7,39 @@ PoissonProcessStat::PoissonProcessStat(const std::string &t_userID) :
     return;
 }
 
-void PoissonProcessStat::setMu(const double in) {
+void PoissonProcessStat::setMu(const vector<double>& in) {
     mu = in;
 }
 
-void PoissonProcessStat::setType(const string &in) {
-    type = in;
+void PoissonProcessStat::setTypeList(const vector<string>& in) {
+    typeList = in;
 }
 
-double PoissonProcessStat::getMu() const {
+void PoissonProcessStat::setK(int t_k) {
+    k = t_k;
+}
+
+vector<double> PoissonProcessStat::getMu() const {
     return mu;
 }
 
-string PoissonProcessStat::getType() const {
-    return type;
+vector<string> PoissonProcessStat::getTypeList() const {
+    return typeList;
+}
+
+int PoissonProcessStat::getK() const {
+    return k;
 }
 
 void PoissonProcessStat::show() const {
     cout << "User " << m_userID << endl;
+    cout << "K: " << k << endl;
 
-    cout << "type " << type << endl;
+    cout << "type list " << endl;
+    socialcube::print_vec(typeList);
 
-    cout << "mu " << mu << endl;
+    cout << "mu " << endl;
+    socialcube::print_vec(mu);
 
     cout << "\n\n";
 }

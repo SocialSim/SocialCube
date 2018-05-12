@@ -32,9 +32,9 @@ int main(int argc, const char* argv[]) {
     em.setEventBufferSize(args.getSimulationEventBufferSize());
 
     // Initialize AgentBuilder
-    AgentBuilder<ClusteredGithubUserAgent, PointProcessObjectAgent> builder;
+    AgentBuilder<ClusteredGithubUserAgent, PoissonProcessObjectAgent> builder;
     builder.build();
-    std::vector<std::shared_ptr<PointProcessObjectAgent>>& agentList = builder.getObjectAgentList();
+    std::vector<std::shared_ptr<PoissonProcessObjectAgent>>& agentList = builder.getObjectAgentList();
     for(auto& iter : agentList)
         s.addUserAgent(iter.get());
 

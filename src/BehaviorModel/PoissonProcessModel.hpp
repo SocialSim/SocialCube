@@ -21,8 +21,9 @@ public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(
             const std::string objectID,
-            const double mu,
-            const std::string eventType,
+            const std::vector<double>& mu,
+            const std::vector<std::string>& typeList,
+            int k,
             time_t t_startTime,
             time_t t_endTime
     );
