@@ -17,25 +17,36 @@ std::vector<unique_ptr<Event>> PointProcessModel::evaluate(
     double currentMinute = t_startTime / 60;
     double startMinute = t_startTime / 60;
     double endMinute = t_endTime / 60;
+	int simulationCount = 0;
 
 	vector<double> upperIntensity = mu;
 
 	while(currentMinute < endMinute) {
 		auto interval = matops::mul(matops::ones(k), 10000);
 
+		// Avoid infinite simulation, restart the simulation.
+		if(events.size() > 100000) {
+			currentMinute = t_startTime / 60;
+			upperIntensity = mu;
+			events.clear();
+			simulationCount++;
+		}
+
+		// Stop the simulation after 5 failed tries.
+		if(simulationCount >= 5){
+			return events;
+		}
+
 		for(int i = 0; i < k; ++i) {
 			double temInterval = 0.0;
 			while(1) {
 				double intensity = mu[i] + ((upperIntensity[i] - mu[i]) * exp(-beta[i] * temInterval));
 				double u = (double)rand() / RAND_MAX;
-				double theoretical_delta = -log(u) / intensity;
-				double delta = theoretical_delta < (double)0.3 ? 0.3 : theoretical_delta;
-				if(delta > 10000.0)
-					break;
+				double delta = -log(u) / (intensity + 1e-7);
 				temInterval += delta;
 				double s = (double)rand() / RAND_MAX;
 				double temIntensity = mu[i] + (intensity - mu[i]) * exp(-beta[i] * delta);
-				if(s <= temIntensity / intensity) {
+				if(s <= (temIntensity + 1e-7) / (intensity + 1e-7)) {
 					interval[i] = temInterval;
 					break;
 				}
@@ -45,6 +56,9 @@ std::vector<unique_ptr<Event>> PointProcessModel::evaluate(
 		string actionType = typeList[j];
 		double minInterval = interval[j];
 		currentMinute += minInterval;
+		if(currentMinute >= endMinute){
+			return events;
+		}
 
 		string userID = generateUserID();
 		time_t eventTime = currentMinute * 60;

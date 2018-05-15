@@ -17,6 +17,7 @@ StatisticProxy::StatisticProxy() {
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
     m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessProxyFile));
+    m_poissonProcessProxy.reset(new PoissonProcessProxy(m_defaultPoissonProcessProxyFile));
 
     m_userIDProxy->parse();
     m_objectIDProxy->parse();
@@ -24,6 +25,7 @@ StatisticProxy::StatisticProxy() {
     m_hourlyActionRateProxy->parse();
     m_typeDistributionProxy->parse();
     m_pointProcessProxy->parse();
+    m_poissonProcessProxy->parse();
 
     return;
 }
@@ -54,7 +56,11 @@ TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &use
 
 PointProcessStat& StatisticProxy::getPointProcessStat(const std::string &userID) const {
     return m_pointProcessProxy->get(userID);
-} 
+}
+
+PoissonProcessStat& StatisticProxy::getPoissonProcessStat(const std::string &userID) const {
+    return m_poissonProcessProxy->get(userID);
+}
 
 void StatisticProxy::initProxySourceFile() {
 
@@ -66,6 +72,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultObjectPreferenceProxyFile= socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
     m_defaultPointProcessProxyFile = socialcubePath + "/statistics/point_process.json";
+    m_defaultPoissonProcessProxyFile = socialcubePath + "/statistics/poisson_process.json";
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {

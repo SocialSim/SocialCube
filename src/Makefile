@@ -19,19 +19,23 @@ OBJS := $(OBJS) ClusteredGithubUserAgent.o
 OBJS := $(OBJS) Community.o 
 OBJS := $(OBJS) CommunityManager.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
-OBJS := $(OBJS) PointProcessObjectAgent.o 
+OBJS := $(OBJS) PointProcessObjectAgent.o
+OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
+OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
 OBJS := $(OBJS) PointProcessStat.o
+OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) PointProcessProxy.o
+OBJS := $(OBJS) PoissonProcessProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
@@ -67,10 +71,16 @@ SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAge
 PointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/PoissonProcessModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/EventHourlyActionRate.hpp
@@ -89,6 +99,9 @@ TypeDistribution.o:	./Dependency/TypeDistribution.cpp ./Dependency/TypeDistribut
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessStat.o:	./Dependency/PointProcessStat.cpp ./Dependency/PointProcessStat.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PoissonProcessStat.o:	./Dependency/PoissonProcessStat.cpp ./Dependency/PoissonProcessStat.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/StatisticProxy.hpp
@@ -113,6 +126,9 @@ ClusteredUserIDProxy.o:	./StatisticProxy/UserIDProxy/ClusteredUserIDProxy.cpp ./
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessProxy.o:	./StatisticProxy/PointProcessProxy/PointProcessProxy.cpp ./StatisticProxy/PointProcessProxy/PointProcessProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PoissonProcessProxy.o:	./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.cpp ./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Event.o:	./common/Event.cpp ./common/Event.hpp

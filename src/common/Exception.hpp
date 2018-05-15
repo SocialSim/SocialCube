@@ -51,6 +51,13 @@ class PointProcessProxyException : public std::exception {
     }
 };
 
+class PoissonProcessProxyException : public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PoissonProcessProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {
