@@ -30,18 +30,14 @@ int main(int argc, const char* argv[]) {
     std::map <std::string, std::string> filePaths;
 
     while (std::getline(infile, line)) {
-        std::cout << "line = " << line << std::endl;
-
         if (line.length() > 0 && line.at(0) == '#') {
             builderType = line.substr(line.find('#') + 1, line.length());
             // Initialize AgentBuilder
-            std::cout << "builderType = " << builderType << std::endl;
         } else if (line.length() > 0) {
             int pos = line.find(delimiter);
             if (pos != std::string::npos) {
                 std::string fileName = line.substr(0, pos);
                 std::string path = line.substr(pos + delimiter.length(), line.length());
-                std::cout << "fileName = " << fileName << ", path = " << path << ", length = " << filePaths.size() << std::endl;
                 filePaths.insert(std::pair <std::string, std::string> (fileName, path));
             } else {
                 cout << "Format Error!" << endl;
@@ -68,7 +64,6 @@ int main(int argc, const char* argv[]) {
             if (builderType == "PointProcess") {
                 AgentBuilder<ClusteredGithubUserAgent, PointProcessObjectAgent> builder;
                 for (auto& iter : filePaths) {
-                    std::cout << iter.first << ": " << iter.second << std::endl;
                     builder.setFilePath(iter.first, iter.second);
                 }
                 filePaths.clear();

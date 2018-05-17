@@ -22,8 +22,6 @@ StatisticProxy::~StatisticProxy() {
 void StatisticProxy::startParsing() {
     std::cout << "m_defaultUserIDProxyFile = " << m_defaultUserIDProxyFile << std::endl;
     std::cout << "m_defaultObjectIDProxyFile = " << m_defaultObjectIDProxyFile << std::endl;
-    std::cout << "m_defaultPointProcessProxyFile = " << m_defaultPointProcessProxyFile << std::endl;
-    std::cout << "m_defaultPoissonProcessProxyFile = " << m_defaultPoissonProcessProxyFile << std::endl;
 
     m_userIDProxy.reset(new ClusteredUserIDProxy(m_defaultUserIDProxyFile));
     m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
@@ -31,12 +29,12 @@ void StatisticProxy::startParsing() {
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
     if (m_defaultPointProcessProxyFile.length() > 0) {
-        std::cout << "m_pointProcessProxy != NULL" << std::endl;
+        std::cout << "Using Point model, pointProcessProxyFile =" << m_defaultPointProcessProxyFile << std::endl;
         m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessProxyFile));
         m_pointProcessProxy->parse();
     }
     if (m_defaultPoissonProcessProxyFile.length() > 0) {
-        std::cout << "m_poissonProcessProxy != NULL" << std::endl;
+        std::cout << "Using Poisson model, poissonProcessProxyFile =" << m_defaultPoissonProcessProxyFile << std::endl;
         m_poissonProcessProxy.reset(new PoissonProcessProxy(m_defaultPoissonProcessProxyFile));
         m_poissonProcessProxy->parse();
     }

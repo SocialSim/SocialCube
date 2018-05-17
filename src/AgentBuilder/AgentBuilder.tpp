@@ -21,7 +21,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "hourlyActionRateFile") {
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
-        std::cout << "set objectPreferenceProxyFile OK" << std::endl;
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
     } else if (fileName == "pointProcessProxyFile") {
         m_statProxy.setPointProcessProxyFilePath(filePath);
@@ -33,7 +32,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     m_statProxy.startParsing();
-    std::cout << "finish startParsing" << std::endl;
     buildUsers();
     buildObjects();
     DBG(LOGD(TAG, "Agent Builder generates "+stringfy(m_userAgents.size())+" user agents");)
@@ -62,13 +60,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
-    std::cout << "buildObjects" << std::endl;
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
-    std::cout << "m_statProxy.getObjectIDs() OK, length = " << objectIDs.size() << std::endl;
 
     for(auto& objectID : objectIDs) {
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }
-    std::cout << "buildObjects OK" << std::endl;
 }

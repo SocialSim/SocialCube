@@ -105,9 +105,9 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 time (&rawtime);
                 timeinfo = localtime(&rawtime);
 
-                strftime(buffer,sizeof(buffer),"%d-%m-%Y_%I:%M:%S",timeinfo);
+                strftime(buffer,sizeof(buffer),"%d-%m-%Y_%H:%M:%S",timeinfo);
                 std::string str(buffer);
-                event_file = socialcubePath + "/events_" + str + ".txt";
+                event_file = socialcubePath + "/events" + str + ".txt";
             }
 
             if (result.count("init_file")) { 
