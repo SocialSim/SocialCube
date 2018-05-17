@@ -8,10 +8,10 @@
 #include "Log/Log.hpp"
 
 template<class TUserAgent, class TObjectAgent>
-class AgentBuilder {
+class AgentBuilder{
 
 private:
-    const StatisticProxy& m_statProxy;
+    StatisticProxy& m_statProxy;
 
     std::vector<std::shared_ptr<TUserAgent>> m_userAgents; 
 
@@ -28,6 +28,8 @@ public:
     ~AgentBuilder();
 
     void build();
+
+    void setFilePath(const std::string fileName, const std::string filePath);
 
     std::vector<std::shared_ptr<TUserAgent>>& getUserAgentList();
 

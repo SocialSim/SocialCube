@@ -1,7 +1,7 @@
 #include "matOps.hpp"
+#include <cmath>
 
 using namespace std;
-
 vector<double> matops::ones(int k) {
 	vector<double> v(k, 1.0);
 	return v;
