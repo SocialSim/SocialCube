@@ -42,8 +42,7 @@ void EventManager::start() {
     DBG(LOGP(TAG, "Event Storage: "+m_eventFileName);)
     DBG(LOGP(TAG, "Event Show Status: "+stringfy(m_eventOn));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
-
-    m_eventFile.open(m_eventFileName.c_str()); 
+    m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
 }
 
 void EventManager::end() {

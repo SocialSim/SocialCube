@@ -1,4 +1,7 @@
 #include "ArgParser.hpp"
+#include <iostream>
+#include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -95,7 +98,16 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 event_file = result["event_file"].as<string>();
             } else {
                 const string socialcubePath = (getenv("SOCIALCUBEPATH"));
-                event_file = socialcubePath + string("/events.txt");
+                time_t rawtime;
+                struct tm * timeinfo;
+                char buffer[80];
+
+                time (&rawtime);
+                timeinfo = localtime(&rawtime);
+
+                strftime(buffer,sizeof(buffer),"%d-%m-%Y_%H:%M:%S",timeinfo);
+                std::string str(buffer);
+                event_file = socialcubePath + "/events" + str + ".txt";
             }
 
             if (result.count("init_file")) { 

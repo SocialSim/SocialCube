@@ -49,6 +49,15 @@ class StatisticProxy {
         
         static StatisticProxy& getInstance();
 
+        void startParsing();
+
+        void setUserIDProxyFilePath(std::string userIDProxyFilePath);
+        void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
+        void setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath);
+        void setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath);
+        void setPointProcessProxyFilePath(std::string pointProcessProxyFilePath);
+        void setPoissonProcessProxyFilePath(std::string poissonProcessProxyFilePath);
+
         void retrieveStatistics();
 
         std::vector<std::string>& getUserIDs() const;

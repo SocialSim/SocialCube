@@ -128,7 +128,49 @@ user@apollo5$ cd ${SOCIALCUBEPATH}/src
 user@apollo5$ make
 ```
 
-It will generate an executable called __socialcube__. Run the following command to start simulation:
+It will generate an executable called __socialcube__. 
+
+Under the root folder, there is a configure file called _ProxyFilePaths.config_, which is used for setting the types of models and their corresponding proxy files.
+
+In _ProxyFilePaths.config_, use `#ModelName` to start a new model configuration. Lines following a `#ModelName` should be in the form of `ProxyFileName=ProxyFilePath`. The configuration of a model is ended with a line break.
+
+For example, a valid _ProxyFilePaths.config_ can be:
+
+```
+#PoissonProcess
+objectIDProxyFile=/statistics/poisson_ids.json
+poissonProcessProxyFile=/statistics/poisson_stats.json
+
+#PointProcess
+objectIDProxyFile=/statistics/point_ids.json
+pointProcessProxyFile=/statistics/point_stats.json
+```
+
+In the first line, it starts a new model called _PoissonProcess_. The second line sets the path of the _objectIDProxyFile_ of this _PoissonProcess_ to be _${SOCIALSIMPATH}/statistics/poisson_ids.json_. And the third line set  _poissonProcessProxyFile_ to be _/statistics/poisson_stats.json_. Those unspecified proxy file paths will remain default. 
+
+The configruations of two models are seperated by a line break. The second model in this config file is _PointProcess_. 
+
+Currently we support model types including:
+
+- PointProcess
+- PoissionProcess
+- SimpleModel
+
+So please make sure the model types specified in _ProxyFilePaths.config_ belong to the three.
+
+And the file paths that can be set include:
+
+- userIDProxyFile
+- objectIDProxyFile
+- hourlyActionRateFile
+- objectPreferenceProxyFile
+- pointProcessProxyFile
+- poissonProcessProxyFile
+
+For unset file paths, this framework will use default paths to find the corresponding files. (see __${SOCIALSIMPATH}/src/ArgParser/ArgParser.cpp__  to check the default file paths)
+
+Run the following command to start simulation:
+
 ```
 user@apollo5$ ./socialcube --show_profile --show_event -s 2018-02-01T00:00:00Z -e "2018-02-02T00:00:00Z"
 ```

@@ -5,7 +5,8 @@ DBG(static const string tag="PointProcessProxy";)
 using namespace std;
 
 PointProcessProxy::PointProcessProxy(const string& file) throw() {
-    try {
+    std::cout << file << std::endl;
+	try {
         m_pointProcessStatisticsFile.open (file);
     } catch (exception &e) {
         PointProcessProxyException p_e;
