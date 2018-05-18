@@ -32,3 +32,6 @@ vector<unique_ptr<Event>> SimpleGithubUserAgent::simulate(time_t t_currentTime, 
 	throw;
 }
 
+uint64_t SimpleGithubUserAgent::getCommunityTag() const {
+}
+

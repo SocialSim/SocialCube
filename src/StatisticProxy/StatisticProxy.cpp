@@ -23,7 +23,7 @@ void StatisticProxy::startParsing() {
     std::cout << "m_defaultUserIDProxyFile = " << m_defaultUserIDProxyFile << std::endl;
     std::cout << "m_defaultObjectIDProxyFile = " << m_defaultObjectIDProxyFile << std::endl;
 
-    m_userIDProxy.reset(new ClusteredUserIDProxy(m_defaultUserIDProxyFile));
+    m_userIDProxy.reset(new UserIDProxy(m_defaultUserIDProxyFile));
     m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
     m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));

@@ -45,12 +45,6 @@ int main(int argc, const char* argv[]) {
         }
 
         if (line.length() == 0 or infile.peek() == EOF) {
-            // Initialize Simulator
-            EventBasedSimulator s;
-            s.setStartTime(args.getSimulationStartTime());
-            s.setEndTime(args.getSimulationEndTime());
-            s.setUnitTime(args.getSimulationUnitTime());
-
             // Initialize SimulatorProfiler
             SimulatorProfiler& sp = SimulatorProfiler::getInstance();
             sp.setProfileShow(args.getSimulationShowProfileStatus());
@@ -62,7 +56,13 @@ int main(int argc, const char* argv[]) {
             em.setEventBufferSize(args.getSimulationEventBufferSize());
 
             if (builderType == "PointProcess") {
-                AgentBuilder<ClusteredGithubUserAgent, PointProcessObjectAgent> builder;
+                // Initialize Simulator
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SimpleGithubUserAgent, PointProcessObjectAgent> builder;
                 for (auto& iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
@@ -74,7 +74,13 @@ int main(int argc, const char* argv[]) {
                     s.addUserAgent(iter.get());
                 s.simulate();
             } else if (builderType == "PoissonProcess") {
-                AgentBuilder<ClusteredGithubUserAgent, PoissonProcessObjectAgent> builder;
+                // Initialize Simulator
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SimpleGithubUserAgent, PoissonProcessObjectAgent> builder;
                 for (auto& iter : filePaths)
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
@@ -83,6 +89,24 @@ int main(int argc, const char* argv[]) {
                 agentList = builder.getObjectAgentList();
                 for(auto& iter : agentList)
                     s.addUserAgent(iter.get());
+                s.simulate();
+            } else if (builderType == "SimpleBehavior") {
+                // Initialize Simulator
+                Simulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
+                for (auto& iter : filePaths)
+                    builder.setFilePath(iter.first, iter.second);
+                filePaths.clear();
+                std::vector<std::shared_ptr<SimpleGithubUserAgent>> agentList;
+                builder.build();
+                agentList = builder.getUserAgentList();
+                for(auto& iter : agentList) {
+                    s.addUserAgent(iter.get());
+                }
                 s.simulate();
             } else {
                 std::cout << "Unsupported model type" << std::endl;
