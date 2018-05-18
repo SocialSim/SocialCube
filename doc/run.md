@@ -154,7 +154,6 @@ Currently we support model types including:
 
 - PointProcess
 - PoissionProcess
-- SimpleModel
 
 So please make sure the model types specified in _ProxyFilePaths.config_ belong to the three.
 

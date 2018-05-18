@@ -85,16 +85,7 @@ int main(int argc, const char* argv[]) {
                     s.addUserAgent(iter.get());
                 s.simulate();
             } else {
-                AgentBuilder<ClusteredGithubUserAgent, SimpleGithubObjectAgent> builder;
-                for (auto& iter : filePaths)
-                    builder.setFilePath(iter.first, iter.second);
-                filePaths.clear();
-                std::vector<std::shared_ptr<SimpleGithubObjectAgent>> agentList;
-                builder.build();
-                agentList = builder.getObjectAgentList();
-                for(auto& iter : agentList)
-                    s.addUserAgent(iter.get());
-                s.simulate();
+                std::cout << "Unsupported model type" << std::endl;
             }
         }
     }
