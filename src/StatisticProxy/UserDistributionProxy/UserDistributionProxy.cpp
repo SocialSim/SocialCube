@@ -52,7 +52,7 @@ void UserDistributionProxy::parse() {
                 }
                 if (m_repoUserDistribution.count(repoID) == 0) {
                     m_repoUserDistribution.insert(std::pair<std::string, std::unique_ptr<UserDistribution>>(repoID, \
-                     new UserDistribution(repoID)));
+                     std::make_unique<UserDistribution>(repoID)));
                 }
                 m_repoUserDistribution[repoID]->insertUserCount(date, userID, count);
             }

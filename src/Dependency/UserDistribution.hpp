@@ -2,6 +2,7 @@
 #define __USER_DISTRIBUTION__
 
 #include <unordered_map>
+#include <algorithm>
 #include <vector>
 #include <map>
 #include <cstdint>

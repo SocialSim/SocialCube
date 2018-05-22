@@ -1,0 +1,15 @@
+#2016-01-07
+repo01,user01,1,user02,1
+repo02,user01,2,user02,2
+repo03,user02,3
+#2016-01-14
+repo01,user01,1
+repo02,user02,2,user03,3
+#2016-01-21
+#2016-01-28
+repo02,user01,10,user02,2,user03,2
+repo03,user03,20
+#2016-02-04
+repo01,user01,2,user02,2,user03,1
+repo02,user04,5,user03,1
+repo03,user02,4
