@@ -18,6 +18,7 @@
 #include "StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp"
 #include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 #include "StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp"
+#include "StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -26,6 +27,7 @@ class StatisticProxy {
         std::string m_defaultObjectPreferenceProxyFile;
         std::string m_defaultHourlyActionRateProxyFile;
         std::string m_defaultTypeDistributionProxyFile;
+        std::string m_defaultUserDistributionProxyFile;
         std::string m_defaultPointProcessProxyFile;
         std::string m_defaultPoissonProcessProxyFile;
 
@@ -35,6 +37,7 @@ class StatisticProxy {
         std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
         std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
         std::unique_ptr<TypeDistributionProxy> m_typeDistributionProxy;
+        std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
 
@@ -55,6 +58,8 @@ class StatisticProxy {
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
         void setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath);
         void setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath);
+        void setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath);
+        void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessProxyFilePath(std::string poissonProcessProxyFilePath);
 
@@ -69,6 +74,8 @@ class StatisticProxy {
         ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
 
         TypeDistribution& getUserTypeDistribution(const std::string &userID) const; 
+
+        UserDistribution& getRepoUserDistribution(const std::string &repoID) const;
 
         PointProcessStat& getPointProcessStat(const std::string &userID) const;
 

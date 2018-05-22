@@ -28,6 +28,8 @@ public:
 
     std::string getTimestamp() const;
 
+    void warpTimestamp(time_t startTime, double ratio);
+
     void show() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Event& e);  

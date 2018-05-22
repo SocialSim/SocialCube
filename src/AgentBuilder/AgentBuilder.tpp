@@ -26,6 +26,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPointProcessProxyFilePath(filePath);
     } else if (fileName == "poissonProcessProxyFile") {
         m_statProxy.setPoissonProcessProxyFilePath(filePath);
+    } else if (fileName == "userDistributionProxyFile") {
+        m_statProxy.setUserDistributionProxyFilePath((filePath));
     }
 }
 
@@ -67,3 +69,4 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
         m_objectAgents.push_back(move(agent));
     }
 }
+

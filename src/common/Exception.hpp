@@ -44,6 +44,13 @@ class TypeDistributionProxyException: public std::exception {
     }
 };
 
+class UserDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for UserDistribution";
+    }
+};
+
 class PointProcessProxyException : public std::exception {
     virtual const char * what () const throw ()
     {

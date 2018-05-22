@@ -28,6 +28,10 @@ void StatisticProxy::startParsing() {
     m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
+    if (m_defaultUserDistributionProxyFile.length() > 0) {
+        m_userDistributionProxy.reset(new UserDistributionProxy(m_defaultUserDistributionProxyFile));
+        m_userDistributionProxy->parse();
+    }
     if (m_defaultPointProcessProxyFile.length() > 0) {
         std::cout << "Using Point model, pointProcessProxyFile =" << m_defaultPointProcessProxyFile << std::endl;
         m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessProxyFile));
@@ -44,7 +48,6 @@ void StatisticProxy::startParsing() {
     m_objectPreferenceProxy->parse();
     m_hourlyActionRateProxy->parse();
     m_typeDistributionProxy->parse();
-
     initProxySourceFile();
 }
 
@@ -66,7 +69,11 @@ ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) 
 
 TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &userID) const {
     return m_typeDistributionProxy->get(userID);
-} 
+}
+
+UserDistribution& StatisticProxy::getRepoUserDistribution(const std::string &repoID) const {
+    return m_userDistributionProxy->get(repoID);
+}
 
 PointProcessStat& StatisticProxy::getPointProcessStat(const std::string &userID) const {
     return m_pointProcessProxy->get(userID);
@@ -85,6 +92,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
+    m_defaultUserDistributionProxyFile = "";
     m_defaultPointProcessProxyFile = "";
     m_defaultPoissonProcessProxyFile = "";
 }
@@ -103,6 +111,14 @@ void StatisticProxy::setHourlyActionRateProxyFilePath(std::string hourlyActionRa
 
 void StatisticProxy::setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath) {
     m_defaultObjectPreferenceProxyFile = (getenv("SOCIALCUBEPATH")) + objectPreferenceProxyFilePath;
+}
+
+void StatisticProxy::setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath) {
+    m_defaultTypeDistributionProxyFile = (getenv("SOCIALCUBEPATH")) + typeDistributionProxyFilePath;
+}
+
+void StatisticProxy::setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath) {
+    m_defaultUserDistributionProxyFile = (getenv("SOCIALCUBEPATH")) + userDistributionProxyFilePath;
 }
 
 void StatisticProxy::setPointProcessProxyFilePath(std::string pointProcessProxyFilePath) {

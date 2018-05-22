@@ -31,6 +31,13 @@ string Event::getTimestamp() const {
     return buf;
 }
 
+void Event::warpTimestamp(time_t startTime, double ratio) {
+    cout << "---------------------" << endl;
+    cout << "startTime = " << ctime(&startTime) << ", ratio = " << ratio << ", m_timestamp = " << ctime(&m_timestamp);
+    m_timestamp = (m_timestamp - startTime) * ratio + startTime;
+    cout << ", new m_timestamp = " << m_timestamp << endl;
+}
+
 void Event::show() const {
     cout << getTimestamp() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
 }

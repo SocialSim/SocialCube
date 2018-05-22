@@ -20,20 +20,24 @@ OBJS := $(OBJS) Community.o
 OBJS := $(OBJS) CommunityManager.o 
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) PointProcessObjectAgent.o
+OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
+OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
+OBJS := $(OBJS) UserDistribution.o
 OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
+OBJS := $(OBJS) UserDistributionProxy.o
 OBJS := $(OBJS) PointProcessProxy.o
 OBJS := $(OBJS) PoissonProcessProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
@@ -71,6 +75,9 @@ SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAge
 PointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+IntegratedPointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -78,6 +85,9 @@ BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleB
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+IntegratedPointProcessModel.o:	./BehaviorModel/IntegratedPointProcessModel.cpp ./BehaviorModel/IntegratedPointProcessModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/PoissonProcessModel.hpp
@@ -98,6 +108,9 @@ UserDependency.o:	./Dependency/UserDependency.cpp ./Dependency/UserDependency.hp
 TypeDistribution.o:	./Dependency/TypeDistribution.cpp ./Dependency/TypeDistribution.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+UserDistribution.o: ./Dependency/UserDistribution.cpp ./Dependency/UserDistribution.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 PointProcessStat.o:	./Dependency/PointProcessStat.cpp ./Dependency/PointProcessStat.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -114,6 +127,9 @@ ObjectPreferenceProxy.o:	./StatisticProxy/ObjectPreferenceProxy/ObjectPreference
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 TypeDistributionProxy.o:	./StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.cpp ./StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+UserDistributionProxy.o:	./StatisticProxy/UserDistributionProxy/UserDistributionProxy.cpp ./StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectIDProxy.o:	./StatisticProxy/ObjectIDProxy/ObjectIDProxy.cpp ./StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp
