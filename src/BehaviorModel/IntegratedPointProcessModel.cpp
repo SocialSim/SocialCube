@@ -19,6 +19,10 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
 
     vector<unique_ptr<Event>> events;
 
+    if (userDistribution.getUserDistribution().size() == 0) {
+        return events;
+    }
+
     for (time_t t_currentTime = t_startTime; t_currentTime < t_endTime; ) {
         int eventNum = userDistribution.getTotalCount(t_currentTime);
         vector<string> userIDs = userDistribution.getShuffledUserIDs(t_currentTime);

@@ -80,12 +80,7 @@ TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &use
 }
 
 UserDistribution& StatisticProxy::getRepoUserDistribution(const std::string &repoID) const {
-    if (m_userDistributionProxy.count(repoID)) {
         return m_userDistributionProxy->get(repoID);
-    } else {
-        cout << "repoID: " << repoID << " does not exist in userDistribution stats file" << endl;
-        return NULL;
-    }
 }
 
 PointProcessStat& StatisticProxy::getPointProcessStats(const std::string &userID) const {
