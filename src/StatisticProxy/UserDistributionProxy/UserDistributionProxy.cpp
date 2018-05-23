@@ -57,10 +57,6 @@ void UserDistributionProxy::parse() {
                 m_repoUserDistribution[repoID]->insertUserCount(date, userID, count);
             }
             m_repoUserDistribution[repoID]->show();
-            cout << "m_repoUserDistribution.size() = " << m_repoUserDistribution.size() << endl;
-
-
-//            m_repoUserDistribution[repoID] = move(userDistribution);
         }
     }
     DBG(LOGD(TAG, "Total repo number = "+stringfy(m_repoUserDistribution.size()));)
