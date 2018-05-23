@@ -139,24 +139,32 @@ For example, a valid _ProxyFilePaths.config_ can be:
 ```
 #PoissonProcess
 objectIDProxyFile=/statistics/poisson_ids.json
-poissonProcessProxyFile=/statistics/poisson_stats.json
+poissonProcessStatsProxyFile=/statistics/poisson_stats.json
 
 #PointProcess
 objectIDProxyFile=/statistics/point_ids.json
-pointProcessProxyFile=/statistics/point_stats.json
+pointProcessStatsProxyFile=/statistics/point_stats.json
+
+#SimpleBehavior
+
+#IntegratedPointProcess
+userDistributionProxyFile=/statistics/user_activity_count.json
+objectIDProxyFile=/statistics/toy_point_ids.json
+pointProcessStatsProxyFile=/statistics/toy_point_stats.json
 ```
 
 In the first line, it starts a new model called _PoissonProcess_. The second line sets the path of the _objectIDProxyFile_ of this _PoissonProcess_ to be _${SOCIALSIMPATH}/statistics/poisson_ids.json_. And the third line set  _poissonProcessProxyFile_ to be _/statistics/poisson_stats.json_. Those unspecified proxy file paths will remain default. 
 
-The configruations of two models are seperated by a line break. The second model in this config file is _PointProcess_. 
+The configruations of two models are seperated by a line break. 
 
 Currently we support model types including:
 
 - PointProcess
 - PoissionProcess
 - SimpleBehavior
+- IntegratedPointProcess
 
-So please make sure the model types specified in _ProxyFilePaths.config_ belong to the three.
+So please make sure the model types specified in _ProxyFilePaths.config_ belong to the four.
 
 And the file paths that can be set include:
 
@@ -164,10 +172,25 @@ And the file paths that can be set include:
 - objectIDProxyFile
 - hourlyActionRateFile
 - objectPreferenceProxyFile
-- pointProcessProxyFile
-- poissonProcessProxyFile
+- typeDistributionProxyFile
+- pointProcessStatsProxyFile
+- poissonProcessStatsProxyFile
+- userDistributionProxyFile
 
-For unset file paths, this framework will use default paths to find the corresponding files. (see __${SOCIALSIMPATH}/src/ArgParser/ArgParser.cpp__  to check the default file paths)
+For unset file paths, this framework will use default paths to find the corresponding files.
+
+The default paths for each files are as follows:
+
+- __userIDProxyFile__: $SOCIALCUBEPATH/statistics/user_id.json
+- __objectIDProxyFile__: $SOCIALCUBEPATH/statistics/obj_id.json
+- __hourlyActionRateFile__: $SOCIALCUBEPATH//statistics/user_action_rate.json
+- __objectPreferenceProxyFile__: $SOCIALCUBEPATH/statistics/user_object_preference.json
+- __typeDistributionProxyFile__: $SOCIALCUBEPATH/statistics/user_type_distribution.json
+- __pointProcessStatsProxyFile__: $SOCIALCUBEPATH/statistics/point_stats.json
+- __poissonProcessStatsProxyFile__: $SOCIALCUBEPATH/statistics/poisson_stats.json
+- __userDistributionProxyFile__: $SOCIALCUBEPATH/statistics/repo_user_distribution.json
+
+
 
 Run the following command to start simulation:
 

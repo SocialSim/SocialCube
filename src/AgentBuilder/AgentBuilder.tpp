@@ -22,6 +22,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
+    } else if (fileName == "typeDistributionProxyFile") {
+        m_statProxy.setTypeDistributionProxyFilePath(filePath);
     } else if (fileName == "pointProcessStatsProxyFile") {
         m_statProxy.setPointProcessStatsProxyFilePath(filePath);
     } else if (fileName == "poissonProcessStatsProxyFile") {

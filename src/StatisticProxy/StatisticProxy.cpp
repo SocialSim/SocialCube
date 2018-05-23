@@ -100,9 +100,9 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
-    m_defaultUserDistributionProxyFile = "";
-    m_defaultPointProcessStatsProxyFile = "";
-    m_defaultPoissonProcessStatsProxyFile = "";
+    m_defaultUserDistributionProxyFile = "/statistics/repo_user_distribution.json";
+    m_defaultPointProcessStatsProxyFile = "/statistics/point_stats.json";
+    m_defaultPoissonProcessStatsProxyFile = "/statistics/poisson_stats.json";
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
