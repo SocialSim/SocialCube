@@ -22,10 +22,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
-    } else if (fileName == "pointProcessProxyFile") {
-        m_statProxy.setPointProcessProxyFilePath(filePath);
-    } else if (fileName == "poissonProcessProxyFile") {
-        m_statProxy.setPoissonProcessProxyFilePath(filePath);
+    } else if (fileName == "pointProcessStatsProxyFile") {
+        m_statProxy.setPointProcessStatsProxyFilePath(filePath);
+    } else if (fileName == "poissonProcessStatsProxyFile") {
+        m_statProxy.setPoissonProcessStatsProxyFilePath(filePath);
     } else if (fileName == "userDistributionProxyFile") {
         m_statProxy.setUserDistributionProxyFilePath((filePath));
     }
@@ -33,11 +33,41 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::build() {
-    m_statProxy.startParsing();
-    buildUsers();
-    buildObjects();
-    DBG(LOGD(TAG, "Agent Builder generates "+stringfy(m_userAgents.size())+" user agents");)
-    DBG(LOGD(TAG, "Agent Builder generates "+stringfy(m_objectAgents.size())+" object agents");)
+    // PointProcess model
+    if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, PointProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parsePointProcessStats();
+        buildObjects();
+    }
+    // PoissonProcess model
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, PoissonProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parsePoissonProcessStats();
+        buildObjects();
+    }
+    // SimpleBehavior model (user centric)
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parseHourlyActionRate();
+        m_statProxy.parseObjectPreference();
+        m_statProxy.parseTypeDistribution();
+        buildUsers();
+    }
+    // IntegratedPointProcess model
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, IntegratedPointProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parseUserDistribution();
+        m_statProxy.parsePointProcessStats();
+        buildObjects();
+    } else {
+        cout << "Wrong agent type combination" << endl;
+    }
+    // Reset proxy source files
+    m_statProxy.initProxySourceFile();
 }
 
 template<class TUserAgent, class TObjectAgent>

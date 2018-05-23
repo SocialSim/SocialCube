@@ -5,6 +5,11 @@
 #include <memory>
 #include <iostream>
 #include "StatisticProxy/StatisticProxy.hpp"
+#include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp"
 #include "Log/Log.hpp"
 
 template<class TUserAgent, class TObjectAgent>

@@ -4,7 +4,7 @@ using namespace std;
 
 IntegratedPointProcessObjectAgent::IntegratedPointProcessObjectAgent(const string& t_id) : ObjectAgent(t_id),
                                                                        m_statProxy(StatisticProxy::getInstance()),
-                                                                       m_stat(m_statProxy.getPointProcessStat(t_id))
+                                                                       m_stat(m_statProxy.getPointProcessStats(t_id))
 {
     static uint64_t id = 0;
     m_communityTag = id++;

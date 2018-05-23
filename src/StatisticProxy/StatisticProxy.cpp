@@ -19,36 +19,44 @@ StatisticProxy::~StatisticProxy() {
     return;
 }
 
-void StatisticProxy::startParsing() {
-    std::cout << "m_defaultUserIDProxyFile = " << m_defaultUserIDProxyFile << std::endl;
-    std::cout << "m_defaultObjectIDProxyFile = " << m_defaultObjectIDProxyFile << std::endl;
-
+void StatisticProxy::parseUserID() {
     m_userIDProxy.reset(new UserIDProxy(m_defaultUserIDProxyFile));
-    m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
-    m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
-    m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
-    m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
-    if (m_defaultUserDistributionProxyFile.length() > 0) {
-        m_userDistributionProxy.reset(new UserDistributionProxy(m_defaultUserDistributionProxyFile));
-        m_userDistributionProxy->parse();
-    }
-    if (m_defaultPointProcessProxyFile.length() > 0) {
-        std::cout << "Using Point model, pointProcessProxyFile =" << m_defaultPointProcessProxyFile << std::endl;
-        m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessProxyFile));
-        m_pointProcessProxy->parse();
-    }
-    if (m_defaultPoissonProcessProxyFile.length() > 0) {
-        std::cout << "Using Poisson model, poissonProcessProxyFile =" << m_defaultPoissonProcessProxyFile << std::endl;
-        m_poissonProcessProxy.reset(new PoissonProcessProxy(m_defaultPoissonProcessProxyFile));
-        m_poissonProcessProxy->parse();
-    }
-
     m_userIDProxy->parse();
+}
+
+void StatisticProxy::parseObjectID() {
+    m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
     m_objectIDProxy->parse();
+}
+
+void StatisticProxy::parseObjectPreference() {
+    m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
     m_objectPreferenceProxy->parse();
+}
+
+void StatisticProxy::parseHourlyActionRate() {
+    m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
     m_hourlyActionRateProxy->parse();
+}
+
+void StatisticProxy::parseTypeDistribution() {
+    m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
     m_typeDistributionProxy->parse();
-    initProxySourceFile();
+}
+
+void StatisticProxy::parseUserDistribution() {
+    m_userDistributionProxy.reset(new UserDistributionProxy(m_defaultUserDistributionProxyFile));
+    m_userDistributionProxy->parse();
+}
+
+void StatisticProxy::parsePointProcessStats() {
+    m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessStatsProxyFile));
+    m_pointProcessProxy->parse();
+}
+
+void StatisticProxy::parsePoissonProcessStats() {
+    m_poissonProcessProxy.reset(new PoissonProcessProxy(m_defaultPoissonProcessStatsProxyFile));
+    m_poissonProcessProxy->parse();
 }
 
 vector<string>& StatisticProxy::getUserIDs() const {
@@ -72,14 +80,19 @@ TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &use
 }
 
 UserDistribution& StatisticProxy::getRepoUserDistribution(const std::string &repoID) const {
-    return m_userDistributionProxy->get(repoID);
+    if (m_userDistributionProxy.count(repoID)) {
+        return m_userDistributionProxy->get(repoID);
+    } else {
+        cout << "repoID: " << repoID << " does not exist in userDistribution stats file" << endl;
+        return NULL;
+    }
 }
 
-PointProcessStat& StatisticProxy::getPointProcessStat(const std::string &userID) const {
+PointProcessStat& StatisticProxy::getPointProcessStats(const std::string &userID) const {
     return m_pointProcessProxy->get(userID);
 }
 
-PoissonProcessStat& StatisticProxy::getPoissonProcessStat(const std::string &userID) const {
+PoissonProcessStat& StatisticProxy::getPoissonProcessStats(const std::string &userID) const {
     return m_poissonProcessProxy->get(userID);
 }
 
@@ -93,8 +106,8 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
     m_defaultUserDistributionProxyFile = "";
-    m_defaultPointProcessProxyFile = "";
-    m_defaultPoissonProcessProxyFile = "";
+    m_defaultPointProcessStatsProxyFile = "";
+    m_defaultPoissonProcessStatsProxyFile = "";
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
@@ -121,12 +134,12 @@ void StatisticProxy::setUserDistributionProxyFilePath(std::string userDistributi
     m_defaultUserDistributionProxyFile = (getenv("SOCIALCUBEPATH")) + userDistributionProxyFilePath;
 }
 
-void StatisticProxy::setPointProcessProxyFilePath(std::string pointProcessProxyFilePath) {
-    m_defaultPointProcessProxyFile = (getenv("SOCIALCUBEPATH")) + pointProcessProxyFilePath;
+void StatisticProxy::setPointProcessStatsProxyFilePath(std::string pointProcessStatsProxyFilePath) {
+    m_defaultPointProcessStatsProxyFile = (getenv("SOCIALCUBEPATH")) + pointProcessStatsProxyFilePath;
 }
 
-void StatisticProxy::setPoissonProcessProxyFilePath(std::string poissonProcessProxyFilePath) {
-    m_defaultPoissonProcessProxyFile = (getenv("SOCIALCUBEPATH")) + poissonProcessProxyFilePath;
+void StatisticProxy::setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyStatsFilePath) {
+    m_defaultPoissonProcessStatsProxyFile = (getenv("SOCIALCUBEPATH")) + poissonProcessProxyStatsFilePath;
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {

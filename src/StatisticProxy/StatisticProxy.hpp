@@ -28,8 +28,8 @@ class StatisticProxy {
         std::string m_defaultHourlyActionRateProxyFile;
         std::string m_defaultTypeDistributionProxyFile;
         std::string m_defaultUserDistributionProxyFile;
-        std::string m_defaultPointProcessProxyFile;
-        std::string m_defaultPoissonProcessProxyFile;
+        std::string m_defaultPointProcessStatsProxyFile;
+        std::string m_defaultPoissonProcessStatsProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -44,15 +44,22 @@ class StatisticProxy {
         // Private member functions
         StatisticProxy();
 
-        void initProxySourceFile();
-
     public:
 
         ~StatisticProxy();
         
         static StatisticProxy& getInstance();
 
-        void startParsing();
+        void initProxySourceFile();
+
+        void parseUserID();
+        void parseObjectID();
+        void parseObjectPreference();
+        void parseHourlyActionRate();
+        void parseTypeDistribution();
+        void parseUserDistribution();
+        void parsePointProcessStats();
+        void parsePoissonProcessStats();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -60,8 +67,8 @@ class StatisticProxy {
         void setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath);
         void setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath);
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
-        void setPointProcessProxyFilePath(std::string pointProcessProxyFilePath);
-        void setPoissonProcessProxyFilePath(std::string poissonProcessProxyFilePath);
+        void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
+        void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
 
         void retrieveStatistics();
 
@@ -77,9 +84,9 @@ class StatisticProxy {
 
         UserDistribution& getRepoUserDistribution(const std::string &repoID) const;
 
-        PointProcessStat& getPointProcessStat(const std::string &userID) const;
+        PointProcessStat& getPointProcessStats(const std::string &userID) const;
 
-        PoissonProcessStat& getPoissonProcessStat(const std::string &userID) const;
+        PoissonProcessStat& getPoissonProcessStats(const std::string &userID) const;
 
         uint64_t getUserCommunityTag(const std::string &userID) const;
 };

@@ -4,7 +4,7 @@ using namespace std;
 
 PoissonProcessObjectAgent::PoissonProcessObjectAgent(const string& t_id) : ObjectAgent(t_id),
                                                                        m_statProxy(StatisticProxy::getInstance()),
-                                                                       m_stat(m_statProxy.getPoissonProcessStat(t_id))
+                                                                       m_stat(m_statProxy.getPoissonProcessStats(t_id))
 {
     static uint64_t id = 0;
     m_communityTag = id++;
