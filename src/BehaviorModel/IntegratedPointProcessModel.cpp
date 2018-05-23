@@ -12,14 +12,14 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
         time_t t_startTime,
         time_t t_endTime
 ) {
-    cout << "-------------objectID: " << objectID << "------------" << endl;
+    // cout << "-------------objectID: " << objectID << "------------" << endl;
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
 
     UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(objectID);
 
     vector<unique_ptr<Event>> events;
 
-    cout << "in model, userDistribution.getUserDistribution().size() = " << userDistribution.getUserDistribution().size() << endl;
+    // cout << "in model, userDistribution.getUserDistribution().size() = " << userDistribution.getUserDistribution().size() << endl;
 
     if (userDistribution.getUserDistribution().size() == 0) {
         return events;
@@ -28,7 +28,7 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
         int eventNum = userDistribution.getTotalCount(t_currentTime);
         vector<string> userIDs = userDistribution.getShuffledUserIDs(t_currentTime);
 
-        cout << "t_currentTime = " << ctime(&t_currentTime) << ", eventNum = " << eventNum << endl;
+        // cout << "t_currentTime = " << ctime(&t_currentTime) << ", eventNum = " << eventNum << endl;
         vector<unique_ptr<Event>> weekEvents;
 
         double currentMinute = t_currentTime / 60;
@@ -81,13 +81,13 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
         }
 
         double ratio = (7*24*60) / (currentMinute - startMinute);
-        cout << "ratio = " << ratio << endl;
+        // cout << "ratio = " << ratio << endl;
         for (auto& e : weekEvents) {
             e->warpTimestamp(startMinute * 60, ratio);
         }
 
         move(weekEvents.begin(), weekEvents.end(), back_inserter(events));
-        cout << "weekEvent.size = " << weekEvents.size() << "event.size = " << events.size() << endl;
+        // cout << "weekEvent.size = " << weekEvents.size() << "event.size = " << events.size() << endl;
         // Add 1 week
         struct tm* tm_date = localtime(&t_currentTime);
         tm_date->tm_mday += 7;
