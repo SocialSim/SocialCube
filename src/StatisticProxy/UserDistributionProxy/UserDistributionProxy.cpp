@@ -63,6 +63,10 @@ void UserDistributionProxy::parse() {
 }
 
 UserDistribution& UserDistributionProxy::get(const std::string& repoID) {
+    // cout << "m_repoUserDistribution.count(repoID) = " << m_repoUserDistribution.count(repoID) << endl;
+    if (m_repoUserDistribution.count(repoID) == 0) {
+        m_repoUserDistribution[repoID] = std::make_unique<UserDistribution>(repoID);
+    }
     return *(m_repoUserDistribution[repoID]);
 }
 
