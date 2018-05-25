@@ -24,26 +24,34 @@ string Event::getEventType() const {
     return m_eventType;
 }
 
-string Event::getTimestamp() const {
+string Event::getTimestampStr() const {
 
     char buf[sizeof "1970-00-00T00:00:00Z"];
     strftime(buf, sizeof buf, "%FT%TZ", gmtime(&m_timestamp));
     return buf;
 }
 
+time_t Event::getTimestamp() const {
+    return m_timestamp;
+}
+
 void Event::warpTimestamp(time_t startTime, double ratio) {
-    cout << "---------------------" << endl;
     cout << "startTime = " << ctime(&startTime) << ", ratio = " << ratio << ", m_timestamp = " << ctime(&m_timestamp);
     m_timestamp = (m_timestamp - startTime) * ratio + startTime;
-    cout << ", new m_timestamp = " << m_timestamp << endl;
+    cout << ", new m_timestamp = " << ctime(&m_timestamp) << endl;
 }
 
 void Event::show() const {
-    cout << getTimestamp() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
+    cout << getTimestampStr() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
 }
 
 ostream& operator<<(ostream& os, const Event& e)
 {  
-    os << e.getTimestamp() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
+    os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
     return os;  
-} 
+}
+
+//bool Event::operator< (const Event &other) const {
+//    std::cout << "operator <" << std::endl;
+//    return m_timestamp < other.getTimestamp();
+//}

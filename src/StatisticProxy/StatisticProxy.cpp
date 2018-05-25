@@ -83,12 +83,12 @@ UserDistribution& StatisticProxy::getRepoUserDistribution(const std::string &rep
         return m_userDistributionProxy->get(repoID);
 }
 
-PointProcessStat& StatisticProxy::getPointProcessStats(const std::string &userID) const {
-    return m_pointProcessProxy->get(userID);
+PointProcessStat& StatisticProxy::getPointProcessStats(const std::string &repoID) const {
+    return m_pointProcessProxy->get(repoID);
 }
 
-PoissonProcessStat& StatisticProxy::getPoissonProcessStats(const std::string &userID) const {
-    return m_poissonProcessProxy->get(userID);
+PoissonProcessStat& StatisticProxy::getPoissonProcessStats(const std::string &repoID) const {
+    return m_poissonProcessProxy->get(repoID);
 }
 
 void StatisticProxy::initProxySourceFile() {

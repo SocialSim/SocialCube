@@ -26,13 +26,17 @@ public:
 
     std::string getEventType() const;
 
-    std::string getTimestamp() const;
+    time_t getTimestamp() const;
+
+    std::string getTimestampStr() const;
 
     void warpTimestamp(time_t startTime, double ratio);
 
     void show() const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Event& e);  
+//    bool operator< (const Event &other) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Event& e);
 };
 
 #endif

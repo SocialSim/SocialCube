@@ -84,9 +84,9 @@ class StatisticProxy {
 
         UserDistribution& getRepoUserDistribution(const std::string &repoID) const;
 
-        PointProcessStat& getPointProcessStats(const std::string &userID) const;
+        PointProcessStat& getPointProcessStats(const std::string &repoID) const;
 
-        PoissonProcessStat& getPoissonProcessStats(const std::string &userID) const;
+        PoissonProcessStat& getPoissonProcessStats(const std::string &repoID) const;
 
         uint64_t getUserCommunityTag(const std::string &userID) const;
 };

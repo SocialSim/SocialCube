@@ -48,9 +48,10 @@ void PoissonProcessProxy::parse() {
             mu.push_back(stod(mu_ele));
         }
         poissonProcessStat->setMu(mu);
-
+        poissonProcessStat->show();
         m_stats[userID] = move(poissonProcessStat);
     }
+
     DBG(LOGD(TAG, "Poisson Process Stat has "+stringfy(m_stats.size()));)
 }
 

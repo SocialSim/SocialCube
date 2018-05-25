@@ -28,7 +28,7 @@ std::vector<std::string> UserDistribution::getShuffledUserIDs(time_t date) {
     for (auto& iter : m_userCount) {
         cout << "iter.first = " << iter.first << endl;
         if (iter.first >= date && difftime(iter.first, date) < 7*24*60*60) {
-            cout << "here" << endl;
+            // cout << "here" << endl;
             for (auto& u : iter.second) {
                 vector<string> tmp(u.second, u.first);
                 move(tmp.begin(), tmp.end(), back_inserter(userIDs));

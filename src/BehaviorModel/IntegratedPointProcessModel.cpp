@@ -80,7 +80,7 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
             upperIntensity = matops::add(upperIntensity, matops::mul(alpha[j], beta));
         }
 
-        double ratio = (7*24*60) / (currentMinute - startMinute);
+        double ratio = (7*24*60) / abs(currentMinute - startMinute);
         // cout << "ratio = " << ratio << endl;
         for (auto& e : weekEvents) {
             e->warpTimestamp(startMinute * 60, ratio);
