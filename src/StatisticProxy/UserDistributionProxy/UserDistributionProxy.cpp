@@ -29,7 +29,7 @@ void UserDistributionProxy::parse() {
             std::istringstream ss(tmp.substr(1));
             ss >> get_time(&tm_date, "%Y-%m-%d");
             // User start date
-            tm_date->tm_mday += 7;
+            tm_date.tm_mday += 6;
             date = mktime(&tm_date);
         } else {
             size_t start = 0;
@@ -58,7 +58,7 @@ void UserDistributionProxy::parse() {
                 }
                 m_repoUserDistribution[repoID]->insertUserCount(date, userID, count);
             }
-            m_repoUserDistribution[repoID]->show();
+            // m_repoUserDistribution[repoID]->show();
         }
     }
     DBG(LOGD(TAG, "Total repo number = "+stringfy(m_repoUserDistribution.size()));)

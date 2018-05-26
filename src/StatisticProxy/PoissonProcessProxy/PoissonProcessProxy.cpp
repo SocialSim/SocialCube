@@ -48,7 +48,7 @@ void PoissonProcessProxy::parse() {
             mu.push_back(stod(mu_ele));
         }
         poissonProcessStat->setMu(mu);
-        poissonProcessStat->show();
+        // poissonProcessStat->show();
         m_stats[userID] = move(poissonProcessStat);
     }
 

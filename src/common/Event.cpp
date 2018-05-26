@@ -36,9 +36,9 @@ time_t Event::getTimestamp() const {
 }
 
 void Event::warpTimestamp(time_t startTime, double ratio) {
-    cout << "startTime = " << ctime(&startTime) << ", ratio = " << ratio << ", m_timestamp = " << ctime(&m_timestamp);
+    // cout << "startTime = " << ctime(&startTime) << ", ratio = " << ratio << ", m_timestamp = " << ctime(&m_timestamp);
     m_timestamp = (m_timestamp - startTime) * ratio + startTime;
-    cout << ", new m_timestamp = " << ctime(&m_timestamp) << endl;
+    // cout << ", new m_timestamp = " << ctime(&m_timestamp) << endl;
 }
 
 void Event::show() const {

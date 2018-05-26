@@ -71,7 +71,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseUserDistribution();
         m_statProxy.parsePoissonProcessStats();
         buildObjects();
-        cout << "finish building" << endl;
     } else {
         cout << "Wrong agent type combination" << endl;
     }
@@ -103,7 +102,7 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        cout << "objectID: " << objectID << endl;
+        // cout << "objectID: " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

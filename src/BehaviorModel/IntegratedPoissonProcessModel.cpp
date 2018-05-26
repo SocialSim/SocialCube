@@ -54,9 +54,6 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
                     it++;
                 }
             }
-            for (auto& iter : tmpEvents) {
-                cout << iter->getTimestamp() << endl;
-            }
             move(tmpEvents.begin(), tmpEvents.end(), back_inserter(weekEvents));
         }
         // Get the first eventNum events
