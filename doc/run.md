@@ -177,7 +177,13 @@ And the file paths that can be set include:
 - poissonProcessStatsProxyFile
 - userDistributionProxyFile
 
-For unset file paths, this framework will use default paths to find the corresponding files.
+ 
+
+The following table shows which of the files are needed by each model:
+
+![Files needed by each model](https://raw.githubusercontent.com/SocialSim/SocialCube/master/doc/files_needed_by_each_model.png)
+
+
 
 The default paths for each files are as follows:
 
