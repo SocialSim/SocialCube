@@ -159,25 +159,32 @@ The configruations of two models are seperated by a line break.
 
 Currently we support model types including:
 
-- PointProcess
-- PoissionProcess
 - SimpleBehavior
+- PointProcess
+- PoissonProcess
 - IntegratedPointProcess
+- IntegratedPoissonProcess
 
 So please make sure the model types specified in _ProxyFilePaths.config_ belong to the four.
 
 And the file paths that can be set include:
 
 - userIDProxyFile
+
 - objectIDProxyFile
+
 - hourlyActionRateFile
+
 - objectPreferenceProxyFile
+
 - typeDistributionProxyFile
+
 - pointProcessStatsProxyFile
+
 - poissonProcessStatsProxyFile
+
 - userDistributionProxyFile
 
- 
 
 The following table shows which of the files are needed by each model:
 
@@ -185,7 +192,7 @@ The following table shows which of the files are needed by each model:
 
 
 
-The default paths for each files are as follows:
+For unset file paths, this framework will use default paths to find the corresponding files. The default paths for each files are as follows:
 
 - __userIDProxyFile__: $SOCIALCUBEPATH/statistics/user_id.json
 - __objectIDProxyFile__: $SOCIALCUBEPATH/statistics/obj_id.json

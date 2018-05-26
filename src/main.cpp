@@ -8,6 +8,7 @@
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
@@ -125,6 +126,25 @@ int main(int argc, const char* argv[]) {
                 agentList = builder.getObjectAgentList();
                 for(auto& iter : agentList)
                     s.addUserAgent(iter.get());
+                s.simulate();
+            } else if (builderType == "IntegratedPoissonProcess") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SimpleGithubUserAgent, IntegratedPoissonProcessObjectAgent> builder;
+                for (auto &iter : filePaths) {
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector <std::shared_ptr<IntegratedPoissonProcessObjectAgent>> agentList;
+                builder.build();
+                cout << "finish build" <<endl;
+                agentList = builder.getObjectAgentList();
+                for (auto &iter : agentList)
+                    s.addUserAgent(iter.get());
+                cout << "start simulate" << endl;
                 s.simulate();
             } else {
                 std::cout << "Unsupported model type" << std::endl;
