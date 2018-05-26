@@ -11,7 +11,7 @@ UserDistribution::~UserDistribution() {
 }
 
 void UserDistribution::insertUserCount(time_t date, std::string userID, int count) {
-    cout << "insertUserCount, t_repoID = " << m_repoID <<  ", date = " << date << ", userID = " << userID << ", count = " << count << endl;
+    // cout << "insertUserCount, t_repoID = " << m_repoID <<  ", date = " << date << ", userID = " << userID << ", count = " << count << endl;
     m_userCount[date][userID] = count;
     totalCount[date] += count;
 }
@@ -22,13 +22,9 @@ std::unordered_map<time_t, std::unordered_map<std::string, int>> UserDistributio
 
 std::vector<std::string> UserDistribution::getShuffledUserIDs(time_t date) {
     vector<string> userIDs;
-    cout << "-----------" << endl;
-    cout << "date = " << date << endl;
-    cout << "in getShuffledUserIDs, repoID = " << m_repoID << " , m_userCount.size() = " << m_userCount.size() << endl;
     for (auto& iter : m_userCount) {
-        cout << "iter.first = " << iter.first << endl;
         if (iter.first >= date && difftime(iter.first, date) < 7*24*60*60) {
-            cout << "here" << endl;
+            // cout << "here" << endl;
             for (auto& u : iter.second) {
                 vector<string> tmp(u.second, u.first);
                 move(tmp.begin(), tmp.end(), back_inserter(userIDs));
@@ -36,11 +32,6 @@ std::vector<std::string> UserDistribution::getShuffledUserIDs(time_t date) {
         }
     }
     random_shuffle(userIDs.begin(), userIDs.end());
-    cout << "userIDs: " << endl;
-    for (auto& iter : userIDs) {
-        cout << iter << ", ";
-    }
-    cout << endl;
     return userIDs;
 }
 
@@ -58,7 +49,6 @@ int UserDistribution::getTotalCount(time_t date) {
     // Find out the latest
     for (auto& iter : totalCount) {
         if (iter.first >= date && difftime(iter.first, date) < 7*24*60*60) {
-            cout << "difftime(date, iter.first) = " << difftime(iter.first, date) << ", 7*24*60*60 = " << 7*24*60*60 << endl;
             return totalCount[iter.first];
         }
     }

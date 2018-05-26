@@ -65,6 +65,12 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseUserDistribution();
         m_statProxy.parsePointProcessStats();
         buildObjects();
+    } else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, IntegratedPoissonProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parseUserDistribution();
+        m_statProxy.parsePoissonProcessStats();
+        buildObjects();
     } else {
         cout << "Wrong agent type combination" << endl;
     }
@@ -95,8 +101,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
-
     for(auto& objectID : objectIDs) {
+        // cout << "objectID: " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

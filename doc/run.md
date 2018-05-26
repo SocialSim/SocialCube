@@ -159,23 +159,37 @@ The configruations of two models are seperated by a line break.
 
 Currently we support model types including:
 
-- PointProcess
-- PoissionProcess
 - SimpleBehavior
+- PointProcess
+- PoissonProcess
 - IntegratedPointProcess
+- IntegratedPoissonProcess
 
 So please make sure the model types specified in _ProxyFilePaths.config_ belong to the four.
 
 And the file paths that can be set include:
 
 - userIDProxyFile
+
 - objectIDProxyFile
+
 - hourlyActionRateFile
+
 - objectPreferenceProxyFile
+
 - typeDistributionProxyFile
+
 - pointProcessStatsProxyFile
+
 - poissonProcessStatsProxyFile
+
 - userDistributionProxyFile
+
+  ​
+
+![Files needed by each model](https://github.com/SocialSim/SocialCube/tree/master/doc/files_needed_by_each_model.png)
+
+
 
 For unset file paths, this framework will use default paths to find the corresponding files.
 

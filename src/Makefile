@@ -21,10 +21,12 @@ OBJS := $(OBJS) CommunityManager.o
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) PointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
+OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) BehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
+OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) HourlyActionRate.o
@@ -78,6 +80,9 @@ PointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PointProcessObjectAge
 IntegratedPointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+IntegratedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -88,6 +93,9 @@ PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/Point
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 IntegratedPointProcessModel.o:	./BehaviorModel/IntegratedPointProcessModel.cpp ./BehaviorModel/IntegratedPointProcessModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+IntegratedPoissonProcessModel.o:	./BehaviorModel/IntegratedPoissonProcessModel.cpp ./BehaviorModel/IntegratedPoissonProcessModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/PoissonProcessModel.hpp
