@@ -42,15 +42,20 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
                 time_t eventTime = currentMinute * 60;
                 unique_ptr <Event> event(new Event(userID, objectID, actionType, eventTime));
                 tmpEvents.push_back(move(event));
-                cout << "eventTime = " << ctime(&eventTime) << ", time_t = " << eventTime << endl;
             }
             double ratio = (7*24*60) / (currentMinute - startMinute);
-            for (auto& e : tmpEvents) {
-                cout << "---------------------" << endl;
-                cout << "repoID = " << objectID << ", actionType = " << actionType << ", currentMinute = " << \
-                 currentMinute << ", startMinute = " << startMinute;
-                cout << ", ratio = " << ratio << endl;
-                e->warpTimestamp(startMinute * 60, ratio);
+
+            for (auto it = tmpEvents.begin(); it != tmpEvents.end(); ) {
+                (*it)->warpTimestamp(startMinute * 60, ratio);
+                time_t time = (*it)->getTimestamp();
+                if ((*it)->getTimestamp() > t_endTime) {
+                    it = tmpEvents.erase(it);
+                } else {
+                    it++;
+                }
+            }
+            for (auto& iter : tmpEvents) {
+                cout << iter->getTimestamp() << endl;
             }
             move(tmpEvents.begin(), tmpEvents.end(), back_inserter(weekEvents));
         }
@@ -61,7 +66,9 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
                       return lhs->getTimestamp() < rhs->getTimestamp();
                   });
 
-        weekEvents.resize(eventNum);
+        if (weekEvents.size() > eventNum) {
+            weekEvents.resize(eventNum);
+        }
 
         move(weekEvents.begin(), weekEvents.end(), back_inserter(events));
 
@@ -69,5 +76,6 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
         tm_date->tm_mday += 7;
         t_currentTime = mktime(tm_date);
     }
+
     return events;
 }
