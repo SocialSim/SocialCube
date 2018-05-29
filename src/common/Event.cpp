@@ -26,8 +26,8 @@ string Event::getEventType() const {
 
 string Event::getTimestampStr() const {
 
-    char buf[sizeof "1970-00-00T00:00:00Z"];
-    strftime(buf, sizeof buf, "%FT%TZ", gmtime(&m_timestamp));
+    char buf[sizeof "1970-00-00 00:00:00"];
+    strftime(buf, sizeof buf, "%F %T", gmtime(&m_timestamp));
     return buf;
 }
 
