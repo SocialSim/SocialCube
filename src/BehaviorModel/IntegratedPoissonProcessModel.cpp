@@ -5,8 +5,8 @@ using namespace std;
 std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
         const string objectID,
         const vector<double>& mu,
-        const vector<string>& typeList,
-        int k,
+	const vector<string>& typeList,
+	int k,
         time_t t_startTime,
         time_t t_endTime
 ) {
@@ -43,17 +43,6 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
                 unique_ptr <Event> event(new Event(userID, objectID, actionType, eventTime));
                 tmpEvents.push_back(move(event));
             }
-            double ratio = (7*24*60) / (currentMinute - startMinute);
-
-            for (auto it = tmpEvents.begin(); it != tmpEvents.end(); ) {
-                (*it)->warpTimestamp(startMinute * 60, ratio);
-                time_t time = (*it)->getTimestamp();
-                if ((*it)->getTimestamp() > t_endTime) {
-                    it = tmpEvents.erase(it);
-                } else {
-                    it++;
-                }
-            }
             move(tmpEvents.begin(), tmpEvents.end(), back_inserter(weekEvents));
         }
         // Get the first eventNum events
@@ -62,12 +51,31 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
                   [](const unique_ptr<Event>& lhs, const unique_ptr<Event>& rhs) {
                       return lhs->getTimestamp() < rhs->getTimestamp();
                   });
-
+        
         if (weekEvents.size() > eventNum) {
-            weekEvents.resize(eventNum);
+	    weekEvents.resize(eventNum);
         }
 
-        move(weekEvents.begin(), weekEvents.end(), back_inserter(events));
+	if (weekEvents.size() > 0) {
+	    double endMinute = (weekEvents.back()->getTimestamp()) / 60;
+	    double ratio = (7*24*60) / (endMinute - startMinute);
+	    if (isfinite(ratio)) {
+		for (auto it = weekEvents.begin(); it != weekEvents.end(); ) {
+		    (*it)->warpTimestamp(startMinute * 60, ratio);
+		    time_t time = (*it)->getTimestamp();
+		    if ((*it)->getTimestamp() > t_endTime) {
+	    		it = weekEvents.erase(it);
+		    } else {
+			it++;
+		    }
+	        }
+	    }	
+
+	}
+
+	if (weekEvents.size() > 0) {
+            move(weekEvents.begin(), weekEvents.end(), back_inserter(events));
+	}
 
         struct tm* tm_date = localtime(&t_currentTime);
         tm_date->tm_mday += 7;
