@@ -25,6 +25,8 @@ class ArgParser {
 
         std::string event_file;
 
+        std::string proxy_config_file;
+
         uint64_t event_buffer;
 
         bool readFromFile;
@@ -64,6 +66,8 @@ class ArgParser {
         uint64_t getSimulationEventBufferSize();
 
         std::string getSimulationEventFileName();
+
+        std::string getProxyConfigFileName();
 
 };
 

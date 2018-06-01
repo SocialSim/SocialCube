@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]) {
      */
     const string socialcubePath = (getenv("SOCIALCUBEPATH"));
 
-    std::ifstream infile(socialcubePath + "/ProxyFilePaths.config");
+    std::ifstream infile(socialcubePath + args.getProxyConfigFileName());
     std::string line;
     std::string delimiter = "=";
 
