@@ -1,5 +1,5 @@
-#ifndef __USER_ID_PROXY__
-#define __USER_ID_PROXY__
+#ifndef __COUNTRY_CODES_PROXY__
+#define __COUNTRY_CODES_PROXY__
 
 #include <vector>
 #include <iostream>
@@ -11,21 +11,19 @@
 #include "common/Exception.hpp"
 #include "Log/Log.hpp"
 
-class UserIDProxy : public ProxyModule {
+class CountryCodesProxy : public ProxyModule {
 protected:
-    std::vector<std::string> m_userIDs;
+    std::vector<std::string> m_countryCodes;
 
-    std::ifstream m_userIDStatisticsFile;
+    std::ifstream m_countryCodesStatisticsFile;
 public:
-    UserIDProxy(const std::string& file) throw();
+    CountryCodesProxy(const std::string& file) throw();
 
-    virtual ~UserIDProxy();
+    virtual ~CountryCodesProxy();
 
     virtual void parse();
 
     std::vector<std::string>& get();
-
-    uint64_t index(const std::string& userID);
 
     virtual uint64_t getCommunityTag(const std::string& t_userID);
 

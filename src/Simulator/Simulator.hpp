@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cstdint>
 #include <fstream>
+#include <math.h>  
 
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
@@ -29,6 +30,8 @@ protected:
     time_t m_endTime;
 
     time_t m_unitTime;
+
+    std::vector<std::vector<float>> temp_pref_data;
 
     // Private member function
 

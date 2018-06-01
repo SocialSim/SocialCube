@@ -65,6 +65,13 @@ class PoissonProcessProxyException : public std::exception {
     }
 };
 
+class CountryCodesProxyException : public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for CountryCodesProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {

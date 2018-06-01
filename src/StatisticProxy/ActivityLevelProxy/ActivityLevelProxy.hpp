@@ -1,5 +1,5 @@
-#ifndef __USER_ID_PROXY__
-#define __USER_ID_PROXY__
+#ifndef __ACTIVITY_LEVEL_PROXY__
+#define __ACTIVITY_LEVEL_PROXY__
 
 #include <vector>
 #include <iostream>
@@ -11,21 +11,19 @@
 #include "common/Exception.hpp"
 #include "Log/Log.hpp"
 
-class UserIDProxy : public ProxyModule {
+class ActivityLevelProxy : public ProxyModule {
 protected:
-    std::vector<std::string> m_userIDs;
+    std::vector<std::string> m_activityLevels;
 
-    std::ifstream m_userIDStatisticsFile;
+    std::ifstream m_activityLevelStatisticsFile;
 public:
-    UserIDProxy(const std::string& file) throw();
+    ActivityLevelProxy(const std::string& file) throw();
 
-    virtual ~UserIDProxy();
+    virtual ~ActivityLevelProxy();
 
     virtual void parse();
 
     std::vector<std::string>& get();
-
-    uint64_t index(const std::string& userID);
 
     virtual uint64_t getCommunityTag(const std::string& t_userID);
 

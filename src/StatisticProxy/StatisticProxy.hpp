@@ -19,6 +19,8 @@
 #include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 #include "StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp"
 #include "StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp"
+#include "StatisticProxy/CountryCodesProxy/CountryCodesProxy.hpp"
+#include "StatisticProxy/ActivityLevelProxy/ActivityLevelProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -30,6 +32,8 @@ class StatisticProxy {
         std::string m_defaultUserDistributionProxyFile;
         std::string m_defaultPointProcessStatsProxyFile;
         std::string m_defaultPoissonProcessStatsProxyFile;
+        std::string m_defaultCountryCodesProxyFile;
+        std::string m_defaultActivityLevelProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -40,6 +44,8 @@ class StatisticProxy {
         std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
+        std::unique_ptr<CountryCodesProxy> m_countryCodesProxy;
+        std::unique_ptr<ActivityLevelProxy> m_activityLevelProxy;
 
         // Private member functions
         StatisticProxy();
@@ -60,6 +66,8 @@ class StatisticProxy {
         void parseUserDistribution();
         void parsePointProcessStats();
         void parsePoissonProcessStats();
+        void parseCountryCodesStats();
+        void parseActivityLevelStats();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -69,12 +77,18 @@ class StatisticProxy {
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
+        void setCountryCodesFilePath(std::string countryCodesFilePath);
+        void setActivityLevelFilePath(std::string activityLevelFilePath);
 
         void retrieveStatistics();
 
         std::vector<std::string>& getUserIDs() const;
 
         std::vector<std::string>& getObjectIDs() const; 
+
+        std::vector<std::string>& getCountryCodes() const;
+
+        std::vector<std::string>& getActivityLevels() const;
 
         HourlyActionRate& getUserHourlyActionRate(const std::string &userID) const;
 

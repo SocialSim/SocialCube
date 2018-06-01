@@ -23,7 +23,7 @@ class SimpleGithubUserAgent : public UserAgent {
         TypeDistribution& m_typeDistribution;
 
     public:
-        SimpleGithubUserAgent(const std::string& t_id);
+        SimpleGithubUserAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
         virtual ~SimpleGithubUserAgent();
 

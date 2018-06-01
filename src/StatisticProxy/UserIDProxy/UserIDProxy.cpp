@@ -37,6 +37,17 @@ void UserIDProxy::show() {
     cout << m_userIDs.size() << endl;
 }
 
+uint64_t UserIDProxy::index(const string& userID) {
+    uint64_t count = 0;
+    for(auto id : m_userIDs) {
+        if (id == userID) {
+            break;
+        }
+        count++;
+    }
+    return count;
+}
+
 uint64_t UserIDProxy::getCommunityTag(const std::string& t_userID) {
     UserIDProxyNoMethodException u_e;
     throw u_e;

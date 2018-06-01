@@ -14,6 +14,7 @@ AgentBuilder<TUserAgent, TObjectAgent>::~AgentBuilder() {
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileName, const std::string filePath) {
+    std::cout << "Hello" << std::endl;
     if (fileName == "userIDProxyFile") {
         m_statProxy.setUserIDProxyFilePath(filePath);
     } else if (fileName == "objectIDProxyFile") {
@@ -56,6 +57,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseHourlyActionRate();
         m_statProxy.parseObjectPreference();
         m_statProxy.parseTypeDistribution();
+        m_statProxy.parseCountryCodesStats();
+        m_statProxy.parseActivityLevelStats();
         buildUsers();
     }
     // IntegratedPointProcess model
@@ -85,16 +88,25 @@ std::vector<std::shared_ptr<TUserAgent>>& AgentBuilder<TUserAgent, TObjectAgent>
 
 template<class TUserAgent, class TObjectAgent>
 std::vector<std::shared_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgent>::getObjectAgentList() {
+    std::cout << "Hello" << std::endl;
     return m_objectAgents;
 }
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
-    const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
+    // this is the one
 
-    for(auto& userID : userIDs) {
-        std::shared_ptr<TUserAgent> agent(new TUserAgent(userID));
+    // DBG(LOGD(TAG, "Country Code has "));
+    const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
+    const std::vector<std::string>& countryCodes = m_statProxy.getCountryCodes();
+    const std::vector<std::string>& activityLevels = m_statProxy.getActivityLevels();
+
+    int count = 0;
+    for (int i = 0; i < userIDs.size(); i++) {
+        // DBG(LOGD(TAG, "Activity Level #" + activityLevels[i]));
+        std::shared_ptr<TUserAgent> agent(new TUserAgent(userIDs[i], countryCodes[i], stoi(activityLevels[i])));
         m_userAgents.push_back(move(agent));
+        count++;
     }
 }
 
@@ -102,7 +114,6 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        // cout << "objectID: " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

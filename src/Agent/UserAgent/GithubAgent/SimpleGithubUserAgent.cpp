@@ -2,7 +2,7 @@
 
 using namespace std;
 
-SimpleGithubUserAgent::SimpleGithubUserAgent(const string& t_id) : UserAgent(t_id), 
+SimpleGithubUserAgent::SimpleGithubUserAgent(const string& t_id, const string& t_cc, const int& t_al) : UserAgent(t_id, t_cc, t_al), 
     m_statProxy(StatisticProxy::getInstance()),
     m_hourlyActionRate(m_statProxy.getUserHourlyActionRate(m_id)), 
     m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),

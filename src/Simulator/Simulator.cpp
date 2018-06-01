@@ -45,11 +45,57 @@ void Simulator::simulate() {
 }
 
 void Simulator::simulateImpl() {
-    m_communityManager->simulate(m_startTime, m_endTime, m_unitTime);
+    m_communityManager->simulate(temp_pref_data, m_startTime, m_endTime, m_unitTime);
 }
 
 void Simulator::preSimulationConfig() {
-	printConfig();
+    int total_users = 22226;
+    int us_users = 13373;
+    int in_users = 1819;
+    int cn_users = 7034;
+
+    const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+
+    ifstream us_infile(socialcubePath + "/dist/us_action_distribution.txt");
+    string us_line;
+    vector<float> us_data;
+    while (getline(us_infile, us_line)) {
+        if (us_line.length() > 0) {
+            us_line.erase(std::remove(us_line.begin(), us_line.end(), '\n'), us_line.end());
+            us_data.push_back(stof(us_line));
+        }
+    }
+
+    ifstream cn_infile(socialcubePath + "/dist/cn_action_distribution.txt");
+    string cn_line;
+    vector<float> cn_data;
+    while (getline(cn_infile, cn_line)) {
+        if (cn_line.length() > 0) {
+            cn_line.erase(std::remove(cn_line.begin(), cn_line.end(), '\n'), cn_line.end());
+            cn_data.push_back(stof(cn_line));
+        }
+    }
+    
+    ifstream in_infile(socialcubePath + "/dist/in_action_distribution.txt");
+    string in_line;
+    vector<float> in_data;
+    while (getline(in_infile, in_line)) {
+        if (in_line.length() > 0) {
+            in_line.erase(std::remove(in_line.begin(), in_line.end(), '\n'), in_line.end());
+            in_data.push_back(stof(in_line));
+        }
+    }
+
+    vector<float> subdata;
+    for (int i = 0; i < us_data.size(); i++) {
+        subdata.push_back(ceil(us_data[i] * us_users));
+        subdata.push_back(ceil(cn_data[i] * cn_users));
+        subdata.push_back(ceil(in_data[i] * in_users));
+        temp_pref_data.push_back(subdata);
+        subdata.clear();
+    }
+
+    printConfig();
 
     if(m_endTime < m_startTime) {
         EndTimeLessThanStartTime e_e;

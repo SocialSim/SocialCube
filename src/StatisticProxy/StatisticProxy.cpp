@@ -3,6 +3,8 @@
 
 using namespace std;
 
+DBG(static const string tag="StatisticsProxy";)
+
 StatisticProxy& StatisticProxy::getInstance() {
     static StatisticProxy instance;
     return instance;
@@ -59,8 +61,26 @@ void StatisticProxy::parsePoissonProcessStats() {
     m_poissonProcessProxy->parse();
 }
 
+void StatisticProxy::parseCountryCodesStats() {
+    m_countryCodesProxy.reset(new CountryCodesProxy(m_defaultCountryCodesProxyFile));
+    m_countryCodesProxy->parse();
+}
+
+void StatisticProxy::parseActivityLevelStats() {
+    m_activityLevelProxy.reset(new ActivityLevelProxy(m_defaultActivityLevelProxyFile));
+    m_activityLevelProxy->parse();
+}
+
 vector<string>& StatisticProxy::getUserIDs() const {
     return m_userIDProxy->get();
+}
+
+vector<string>& StatisticProxy::getCountryCodes() const {
+    return m_countryCodesProxy->get();
+}
+
+vector<string>& StatisticProxy::getActivityLevels() const {
+    return m_activityLevelProxy->get();
 }
 
 vector<string>& StatisticProxy::getObjectIDs() const {
@@ -100,9 +120,11 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
-    m_defaultUserDistributionProxyFile = "/statistics/repo_user_distribution.json";
-    m_defaultPointProcessStatsProxyFile = "/statistics/point_stats.json";
-    m_defaultPoissonProcessStatsProxyFile = "/statistics/poisson_stats.json";
+    m_defaultUserDistributionProxyFile = socialcubePath + "/statistics/repo_user_distribution.json";
+    m_defaultPointProcessStatsProxyFile = socialcubePath + "/statistics/point_stats.json";
+    m_defaultPoissonProcessStatsProxyFile = socialcubePath + "/statistics/poisson_stats.json";
+    m_defaultCountryCodesProxyFile = socialcubePath + "/statistics/country_codes.json";
+    m_defaultActivityLevelProxyFile = socialcubePath + "/statistics/user_activity_levels.json";
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
@@ -135,6 +157,14 @@ void StatisticProxy::setPointProcessStatsProxyFilePath(std::string pointProcessS
 
 void StatisticProxy::setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyStatsFilePath) {
     m_defaultPoissonProcessStatsProxyFile = (getenv("SOCIALCUBEPATH")) + poissonProcessProxyStatsFilePath;
+}
+
+void StatisticProxy::setCountryCodesFilePath(std::string countryCodesFilePath) {
+    m_defaultCountryCodesProxyFile = (getenv("SOCIALCUBEPATH")) + countryCodesFilePath;
+}
+
+void StatisticProxy::setActivityLevelFilePath(std::string activityLevelFilePath) {
+    m_defaultActivityLevelProxyFile = (getenv("SOCIALCUBEPATH")) + activityLevelFilePath;
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {

@@ -42,6 +42,8 @@ OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) UserDistributionProxy.o
 OBJS := $(OBJS) PointProcessProxy.o
 OBJS := $(OBJS) PoissonProcessProxy.o
+OBJS := $(OBJS) CountryCodesProxy.o
+OBJS := $(OBJS) ActivityLevelProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
@@ -153,6 +155,12 @@ PointProcessProxy.o:	./StatisticProxy/PointProcessProxy/PointProcessProxy.cpp ./
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessProxy.o:	./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.cpp ./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CountryCodesProxy.o:	./StatisticProxy/CountryCodesProxy/CountryCodesProxy.cpp ./StatisticProxy/CountryCodesProxy/CountryCodesProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ActivityLevelProxy.o:	./StatisticProxy/ActivityLevelProxy/ActivityLevelProxy.cpp ./StatisticProxy/ActivityLevelProxy/ActivityLevelProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Event.o:	./common/Event.cpp ./common/Event.hpp

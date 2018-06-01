@@ -11,8 +11,9 @@ void CommunityManager::addAgent(Agent const * t_agent) {
     m_community.at(communityTag)->add(t_agent);
 }
 
-void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_unitTime) {
+void CommunityManager::simulate(vector<vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime, time_t t_unitTime) {
     DBG(LOGD(TAG, "Total " + stringfy(m_community.size()) + " detected");)
+    DBG(LOGD(TAG, "Temp Pref Data size: " + stringfy(temp_pref_data.size()));)
 
     m_startTime = t_startTime;
     m_endTime = t_endTime;
@@ -27,17 +28,24 @@ void CommunityManager::simulate(time_t t_startTime, time_t t_endTime, time_t t_u
     static uint64_t communityCnt = m_community.size();
     #endif
 
-    for(auto& community: m_community) {
-        #ifdef DEBUG
-        uint64_t communityTag = community.first;
-        #endif
+    int count = 0;
+    for(size_t currentTime = m_startTime; currentTime < m_endTime; currentTime += m_unitTime) {
+        for(auto& community: m_community) {
+            #ifdef DEBUG
+            uint64_t communityTag = community.first;
+            #endif
 
-        DBG(LOGD(TAG, "Simulating community " + stringfy(communityTag) + " (" + stringfy(finishedCommunityCount++) + "/" + stringfy(communityCnt) + ")");)
-        for(size_t currentTime = m_startTime; currentTime < m_endTime; currentTime += m_unitTime) {
-            vector<unique_ptr<Event>> community_events = community.second->step(currentTime, m_unitTime);
+            // DBG(LOGD(TAG, "Simulating community " + stringfy(communityTag) + " (" + stringfy(finishedCommunityCount++) + "/" + stringfy(communityCnt) + ")");)
+
+            vector<unique_ptr<Event>> community_events = community.second->step(temp_pref_data[count], currentTime, m_unitTime);
             em.storeEvent(community_events);
         }
+        count++;
+        if (count >= temp_pref_data.size()) {
+            count = 0;
+        }
     }
+    // cout << count << endl;
 }
 
 void CommunityManager::eventBasedSimulate(time_t t_startTime, time_t t_endTime) {

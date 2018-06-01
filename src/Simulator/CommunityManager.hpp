@@ -32,7 +32,7 @@ class CommunityManager {
 
         void addAgent(Agent const * t_agent);
 
-        void simulate(time_t t_startTime, time_t t_endTime, time_t t_unitTime);
+        void simulate(std::vector<std::vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime, time_t t_unitTime);
 
         void eventBasedSimulate(time_t t_startTime, time_t t_endTime);
 };
