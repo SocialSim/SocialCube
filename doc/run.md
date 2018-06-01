@@ -130,7 +130,13 @@ user@apollo5$ make
 
 It will generate an executable called __socialcube__. 
 
-Under the root folder, there is a configure file called _ProxyFilePaths.config_, which is used for setting the types of models and their corresponding proxy files.
+Under the root folder, there is a configure file called _ProxyFilePaths.config_, which is used for setting the types of models and their corresponding proxy files. 
+
+You can also use flag __"--proxy_config_file"__ to specify the name of the proxy configuration file that you want to use. For example, if the proxy configuration file name is _ProxyFilePaths_simple.config_, then you should use the command line:
+
+`./socialcube --show_profile --show_event -s 2017-07-01T00:00:00Z -e 2017-08-31T23:59:59Z --proxy_config_file ProxyFilePaths_toy.config`
+
+
 
 In _ProxyFilePaths.config_, use `#ModelName` to start a new model configuration. Lines following a `#ModelName` should be in the form of `ProxyFileName=ProxyFilePath`. The configuration of a model is ended with a line break.
 
