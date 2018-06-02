@@ -76,7 +76,7 @@ void Simulator::preSimulationConfig() {
         }
     }
     
-    ifstream in_infile(socialcubePath + "/dist/in_action_distribution.json");
+    ifstream in_infile(socialcubePath + "/statistics/in_action_distribution.json");
     string in_line;
     vector<float> in_data;
     while (getline(in_infile, in_line)) {
