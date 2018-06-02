@@ -56,7 +56,7 @@ void Simulator::preSimulationConfig() {
 
     const string socialcubePath = (getenv("SOCIALCUBEPATH"));
 
-    ifstream us_infile(socialcubePath + "/dist/us_action_distribution.txt");
+    ifstream us_infile(socialcubePath + "/statistics/us_action_distribution.json");
     string us_line;
     vector<float> us_data;
     while (getline(us_infile, us_line)) {
@@ -66,7 +66,7 @@ void Simulator::preSimulationConfig() {
         }
     }
 
-    ifstream cn_infile(socialcubePath + "/dist/cn_action_distribution.txt");
+    ifstream cn_infile(socialcubePath + "/statistics/cn_action_distribution.json");
     string cn_line;
     vector<float> cn_data;
     while (getline(cn_infile, cn_line)) {
@@ -76,7 +76,7 @@ void Simulator::preSimulationConfig() {
         }
     }
     
-    ifstream in_infile(socialcubePath + "/dist/in_action_distribution.txt");
+    ifstream in_infile(socialcubePath + "/dist/in_action_distribution.json");
     string in_line;
     vector<float> in_data;
     while (getline(in_infile, in_line)) {
