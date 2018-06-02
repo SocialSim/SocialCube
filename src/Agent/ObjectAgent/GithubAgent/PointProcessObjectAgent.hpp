@@ -18,7 +18,7 @@ class PointProcessObjectAgent: public ObjectAgent {
 		PointProcessStat& m_stat;
 
     public:
-        PointProcessObjectAgent(const std::string& t_id);
+        PointProcessObjectAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
         ~PointProcessObjectAgent() = default;
 

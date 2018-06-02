@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PointProcessObjectAgent::PointProcessObjectAgent(const string& t_id) : ObjectAgent(t_id), 
+PointProcessObjectAgent::PointProcessObjectAgent(const string& t_id, const string& t_cc, const int& t_al) : ObjectAgent(t_id, t_cc, t_al), 
     m_statProxy(StatisticProxy::getInstance()),
 	m_stat(m_statProxy.getPointProcessStats(t_id))
 {

@@ -18,7 +18,7 @@ private:
     PointProcessStat& m_stat;
 
 public:
-    IntegratedPointProcessObjectAgent(const std::string& t_id);
+    IntegratedPointProcessObjectAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
     ~IntegratedPointProcessObjectAgent() = default;
 

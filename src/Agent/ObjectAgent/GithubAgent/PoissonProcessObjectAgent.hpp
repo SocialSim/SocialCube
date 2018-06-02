@@ -18,7 +18,7 @@ private:
     PoissonProcessStat& m_stat;
 
 public:
-    PoissonProcessObjectAgent(const std::string& t_id);
+    PoissonProcessObjectAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
     ~PoissonProcessObjectAgent() = default;
 

@@ -61,7 +61,7 @@ void Simulator::preSimulationConfig() {
     vector<float> us_data;
     while (getline(us_infile, us_line)) {
         if (us_line.length() > 0) {
-            us_line.erase(std::remove(us_line.begin(), us_line.end(), '\n'), us_line.end());
+            // us_line.erase(std::remove(us_line.begin(), us_line.end(), '\n'), us_line.end());
             us_data.push_back(stof(us_line));
         }
     }
@@ -71,7 +71,7 @@ void Simulator::preSimulationConfig() {
     vector<float> cn_data;
     while (getline(cn_infile, cn_line)) {
         if (cn_line.length() > 0) {
-            cn_line.erase(std::remove(cn_line.begin(), cn_line.end(), '\n'), cn_line.end());
+            // cn_line.erase(std::remove(cn_line.begin(), cn_line.end(), '\n'), cn_line.end());
             cn_data.push_back(stof(cn_line));
         }
     }
@@ -81,7 +81,7 @@ void Simulator::preSimulationConfig() {
     vector<float> in_data;
     while (getline(in_infile, in_line)) {
         if (in_line.length() > 0) {
-            in_line.erase(std::remove(in_line.begin(), in_line.end(), '\n'), in_line.end());
+            // in_line.erase(std::remove(in_line.begin(), in_line.end(), '\n'), in_line.end());
             in_data.push_back(stof(in_line));
         }
     }
@@ -91,6 +91,7 @@ void Simulator::preSimulationConfig() {
         subdata.push_back(ceil(us_data[i] * us_users));
         subdata.push_back(ceil(cn_data[i] * cn_users));
         subdata.push_back(ceil(in_data[i] * in_users));
+        cout << subdata[0] << " " << subdata[1] << " " << subdata[2] << endl;
         temp_pref_data.push_back(subdata);
         subdata.clear();
     }

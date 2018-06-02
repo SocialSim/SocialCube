@@ -114,7 +114,7 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
+        std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID, "us", 1));
         m_objectAgents.push_back(move(agent));
     }
 }

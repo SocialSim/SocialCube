@@ -14,7 +14,7 @@ class SimpleGithubObjectAgent : public ObjectAgent {
         const StatisticProxy& m_statProxy;
 
     public:
-        SimpleGithubObjectAgent(const std::string& t_id);
+        SimpleGithubObjectAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
         ~SimpleGithubObjectAgent();
 
