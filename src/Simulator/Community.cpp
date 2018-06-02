@@ -24,15 +24,18 @@ vector<unique_ptr<Event>> Community::step(vector<float> temp_pref_data, time_t t
         
     for(auto& agent : m_community) {
         // Uses Temporal Preferences of Users
-        if (agent->getCC() == "us") {
+        string user_cc = agent->getCC();
+        if (user_cc == "us") {
             if (agent->getAL() > temp_pref_data[0]) {
                 continue;
             }
-        } else if (agent->getCC() == "cn") {
+        }
+        if (user_cc == "cn") {
             if (agent->getAL() > temp_pref_data[1]) {
                 continue;
             }
-        } else {
+        }
+        if (user_cc == "in") {
             if (agent->getAL() > temp_pref_data[2]) {
                 continue;
             }
