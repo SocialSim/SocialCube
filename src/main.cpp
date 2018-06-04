@@ -15,15 +15,13 @@
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
-
     ArgParser args(argc, argv);
 
     /**
      * Read config file
      */
-    const string socialcubePath = (getenv("SOCIALCUBEPATH"));
 
-    std::ifstream infile(socialcubePath + args.getProxyConfigFileName());
+    std::ifstream infile(args.getProxyConfigFileName());
     std::string line;
     std::string delimiter = "=";
 
