@@ -23,6 +23,9 @@ UserDistributionProxy::~UserDistributionProxy() {
 void UserDistributionProxy::parse() {
     string tmp;
     time_t date;
+
+    srand(time(0));
+
     while (getline(m_userDistributionFile, tmp)) {
         if (tmp.at(0) == '#') {
             struct tm tm_date = {0};
@@ -43,15 +46,24 @@ void UserDistributionProxy::parse() {
                 string userID = tmp.substr(start, end-start);
                 start = end + 1;
                 end = tmp.find(",", end+1);
-                int count;
+                
+		double count_in_double;
 
                 if (end != string::npos) {
-                    count = stoi(tmp.substr(start, end-start));
+                    count_in_double = stod(tmp.substr(start, end-start));
                     start = end + 1;
                     end = tmp.find(",", end+1);
                 } else {
-                    count = stoi(tmp.substr(start));
+                    count_in_double = stod(tmp.substr(start));
                 }
+		
+		double fraction_part = count_in_double - int(count_in_double);
+		double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);		
+		int count = int(count_in_double);
+		if (randnum < fraction_part) {
+			count++;
+		}
+
                 if (m_repoUserDistribution.count(repoID) == 0) {
                     m_repoUserDistribution.insert(std::pair<std::string, std::unique_ptr<UserDistribution>>(repoID, \
                      std::make_unique<UserDistribution>(repoID)));
