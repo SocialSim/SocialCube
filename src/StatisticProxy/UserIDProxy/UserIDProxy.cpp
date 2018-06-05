@@ -5,6 +5,7 @@ using namespace std;
 DBG(static const string tag="UserIDProxy";)
 
 UserIDProxy::UserIDProxy(const string& file) throw() {
+   cout << file.c_str() << endl;
     try{
         m_userIDStatisticsFile.open(file.c_str());
     } catch(exception& e) {

@@ -98,7 +98,6 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
             if (result.count("event_file")) { 
                 event_file = result["event_file"].as<string>();
             } else {
-                const string socialcubePath = (getenv("SOCIALCUBEPATH"));
                 time_t rawtime;
                 struct tm * timeinfo;
                 char buffer[80];
@@ -108,13 +107,13 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
 
                 strftime(buffer,sizeof(buffer),"%d-%m-%Y_%H:%M:%S",timeinfo);
                 std::string str(buffer);
-                event_file = socialcubePath + "/events" + str + ".txt";
+                event_file = "events" + str + ".txt";
             }
 
             if (result.count("proxy_config_file")) {
-                proxy_config_file = "/" + result["proxy_config_file"].as<string>();
+                proxy_config_file = result["proxy_config_file"].as<string>();
             } else {
-                proxy_config_file = "/ProxyFilePaths.config";
+                proxy_config_file = "ProxyFilePaths.config";
             }
 
             if (result.count("init_file")) { 
