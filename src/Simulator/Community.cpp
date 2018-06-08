@@ -26,8 +26,10 @@ vector<unique_ptr<Event>> Community::step(vector<string> cc_list, vector<float> 
         // Uses Temporal Preferences of Users
         string user_cc = agent->getCC();
         ptrdiff_t pos = distance(cc_list.begin(), find(cc_list.begin(), cc_list.end(), user_cc));
-        if (agent->getAL() > temp_pref_data[pos]) {
-            continue;
+        if (pos < cc_list.size()) {
+            if (agent->getAL() > temp_pref_data[pos]) {
+                continue;
+            }
         }
 
         vector<unique_ptr<Event>> agent_events = agent->step(t_currentTime, t_unitTime);
