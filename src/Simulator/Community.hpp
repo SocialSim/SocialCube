@@ -10,6 +10,7 @@
 #include <math.h>  
 #include <dirent.h>
 #include <cstdlib>
+#include <algorithm>
 #include "Agent/Agent.hpp"
 #include "common/Event.hpp"
 

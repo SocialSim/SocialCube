@@ -44,3 +44,11 @@ yarn-error.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/statistics/country_codes.json
+/statistics/obj_id.json
+/statistics/user_action_rate.json
+/statistics/user_activity_levels.json
+/statistics/user_id.json
+/statistics/user_object_preference.json
+/statistics/user_type_distribution.json

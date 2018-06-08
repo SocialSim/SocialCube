@@ -9,6 +9,7 @@
 #include <fstream>
 #include <math.h>  
 #include <dirent.h>
+#include <algorithm>
 
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
