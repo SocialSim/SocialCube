@@ -3,7 +3,7 @@
 
 using namespace std;
 
-DBG(static const string tag="StatisticsProxy";)
+DBG(static const string tag="StatisticProxy";)
 
 StatisticProxy& StatisticProxy::getInstance() {
     static StatisticProxy instance;
@@ -22,51 +22,61 @@ StatisticProxy::~StatisticProxy() {
 }
 
 void StatisticProxy::parseUserID() {
+    DBG(LOGD(TAG, "\nuserIDProxyFile: " + m_defaultUserIDProxyFile);)
     m_userIDProxy.reset(new UserIDProxy(m_defaultUserIDProxyFile));
     m_userIDProxy->parse();
 }
 
 void StatisticProxy::parseObjectID() {
+    DBG(LOGD(TAG, "\nobjectIDProxyFile: " + m_defaultObjectIDProxyFile);)
     m_objectIDProxy.reset(new ObjectIDProxy(m_defaultObjectIDProxyFile));
     m_objectIDProxy->parse();
 }
 
 void StatisticProxy::parseObjectPreference() {
+    DBG(LOGD(TAG, "\nobjectPreferenceProxyFile: " + m_defaultObjectPreferenceProxyFile);)
     m_objectPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultObjectPreferenceProxyFile));
     m_objectPreferenceProxy->parse();
 }
 
 void StatisticProxy::parseHourlyActionRate() {
+    DBG(LOGD(TAG, "\nhourlyActionRateProxyFile: " + m_defaultHourlyActionRateProxyFile);)
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
     m_hourlyActionRateProxy->parse();
 }
 
 void StatisticProxy::parseTypeDistribution() {
+    DBG(LOGD(TAG, "\ntypeDistributionProxyFile: " + m_defaultTypeDistributionProxyFile);)
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
     m_typeDistributionProxy->parse();
 }
 
 void StatisticProxy::parseUserDistribution() {
+    DBG(LOGD(TAG, "\nuserDistributionProxyFile: " + m_defaultUserDistributionProxyFile);)
     m_userDistributionProxy.reset(new UserDistributionProxy(m_defaultUserDistributionProxyFile));
     m_userDistributionProxy->parse();
 }
 
 void StatisticProxy::parsePointProcessStats() {
+    DBG(LOGD(TAG, "\npointProcessStatsProxyFile: " + m_defaultPointProcessStatsProxyFile);)
     m_pointProcessProxy.reset(new PointProcessProxy(m_defaultPointProcessStatsProxyFile));
     m_pointProcessProxy->parse();
 }
 
 void StatisticProxy::parsePoissonProcessStats() {
+    DBG(LOGD(TAG, "\npoissonProcessStatsProxyFile: " + m_defaultPoissonProcessStatsProxyFile);)
     m_poissonProcessProxy.reset(new PoissonProcessProxy(m_defaultPoissonProcessStatsProxyFile));
     m_poissonProcessProxy->parse();
 }
 
 void StatisticProxy::parseCountryCodesStats() {
+    DBG(LOGD(TAG, "\ncountryCodesStatsProxyFile: " + m_defaultCountryCodesProxyFile);)
     m_countryCodesProxy.reset(new CountryCodesProxy(m_defaultCountryCodesProxyFile));
     m_countryCodesProxy->parse();
 }
 
 void StatisticProxy::parseActivityLevelStats() {
+    DBG(LOGD(TAG, "\nactivityLevelStatsProxyFile: " + m_defaultActivityLevelProxyFile);)
     m_activityLevelProxy.reset(new ActivityLevelProxy(m_defaultActivityLevelProxyFile));
     m_activityLevelProxy->parse();
 }
@@ -128,43 +138,43 @@ void StatisticProxy::initProxySourceFile() {
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
-    m_defaultUserIDProxyFile = (getenv("SOCIALCUBEPATH")) + userIDProxyFilePath;
+    m_defaultUserIDProxyFile = userIDProxyFilePath;
 }
 
 void StatisticProxy::setObjectIDProxyFilePath(std::string objectIDProxyFilePath) {
-    m_defaultObjectIDProxyFile = (getenv("SOCIALCUBEPATH")) + objectIDProxyFilePath;
+    m_defaultObjectIDProxyFile = objectIDProxyFilePath;
 }
 
 void StatisticProxy::setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath) {
-    m_defaultHourlyActionRateProxyFile = (getenv("SOCIALCUBEPATH")) + hourlyActionRateProxyFilePath;
+    m_defaultHourlyActionRateProxyFile = hourlyActionRateProxyFilePath;
 }
 
 void StatisticProxy::setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath) {
-    m_defaultObjectPreferenceProxyFile = (getenv("SOCIALCUBEPATH")) + objectPreferenceProxyFilePath;
+    m_defaultObjectPreferenceProxyFile = objectPreferenceProxyFilePath;
 }
 
 void StatisticProxy::setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath) {
-    m_defaultTypeDistributionProxyFile = (getenv("SOCIALCUBEPATH")) + typeDistributionProxyFilePath;
+    m_defaultTypeDistributionProxyFile = typeDistributionProxyFilePath;
 }
 
 void StatisticProxy::setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath) {
-    m_defaultUserDistributionProxyFile = (getenv("SOCIALCUBEPATH")) + userDistributionProxyFilePath;
+    m_defaultUserDistributionProxyFile = userDistributionProxyFilePath;
 }
 
 void StatisticProxy::setPointProcessStatsProxyFilePath(std::string pointProcessStatsProxyFilePath) {
-    m_defaultPointProcessStatsProxyFile = (getenv("SOCIALCUBEPATH")) + pointProcessStatsProxyFilePath;
+    m_defaultPointProcessStatsProxyFile = pointProcessStatsProxyFilePath;
 }
 
 void StatisticProxy::setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyStatsFilePath) {
-    m_defaultPoissonProcessStatsProxyFile = (getenv("SOCIALCUBEPATH")) + poissonProcessProxyStatsFilePath;
+    m_defaultPoissonProcessStatsProxyFile = poissonProcessProxyStatsFilePath;
 }
 
 void StatisticProxy::setCountryCodesFilePath(std::string countryCodesFilePath) {
-    m_defaultCountryCodesProxyFile = (getenv("SOCIALCUBEPATH")) + countryCodesFilePath;
+    m_defaultCountryCodesProxyFile = countryCodesFilePath;
 }
 
 void StatisticProxy::setActivityLevelFilePath(std::string activityLevelFilePath) {
-    m_defaultActivityLevelProxyFile = (getenv("SOCIALCUBEPATH")) + activityLevelFilePath;
+    m_defaultActivityLevelProxyFile = activityLevelFilePath;
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
