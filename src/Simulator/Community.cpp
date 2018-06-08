@@ -19,26 +19,15 @@ void Community::add(Agent const * t_agent) {
 }
 
 // temp_pref_data = {us_frac, cn_frac, in_frac}
-vector<unique_ptr<Event>> Community::step(vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime) {
+vector<unique_ptr<Event>> Community::step(vector<string> cc_list, vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime) {
     vector<unique_ptr<Event>> events;
-        
+
     for(auto& agent : m_community) {
         // Uses Temporal Preferences of Users
         string user_cc = agent->getCC();
-        if (user_cc == "us") {
-            if (agent->getAL() > temp_pref_data[0]) {
-                continue;
-            }
-        }
-        if (user_cc == "cn") {
-            if (agent->getAL() > temp_pref_data[1]) {
-                continue;
-            }
-        }
-        if (user_cc == "in") {
-            if (agent->getAL() > temp_pref_data[2]) {
-                continue;
-            }
+        ptrdiff_t pos = distance(cc_list.begin(), find(cc_list.begin(), cc_list.end(), user_cc));
+        if (agent->getAL() > temp_pref_data[pos]) {
+            continue;
         }
 
         vector<unique_ptr<Event>> agent_events = agent->step(t_currentTime, t_unitTime);

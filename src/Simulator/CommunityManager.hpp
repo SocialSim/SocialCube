@@ -6,6 +6,11 @@
 #include <cassert>
 #include <memory>
 #include <cstdlib>
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include "Agent/Agent.hpp"
 #include "Community.hpp"
 #include "common/Event.hpp"
@@ -32,9 +37,11 @@ class CommunityManager {
 
         void addAgent(Agent const * t_agent);
 
-        void simulate(std::vector<std::vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime, time_t t_unitTime);
+        void simulate(std::vector<std::string> cc_list, std::vector<std::vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime, time_t t_unitTime);
 
         void eventBasedSimulate(time_t t_startTime, time_t t_endTime);
+
+        int currentDow(time_t now);
 };
 
 

@@ -2,7 +2,13 @@
 #define __COMMUNITY__
 
 #include <vector>
+#include <string>
 #include <memory>
+#include <cassert>
+#include <cstdint>
+#include <fstream>
+#include <math.h>  
+#include <dirent.h>
 #include <cstdlib>
 #include "Agent/Agent.hpp"
 #include "common/Event.hpp"
@@ -25,7 +31,7 @@ class Community {
 
         void add(Agent const * t_agent);
 
-        std::vector<std::unique_ptr<Event>> step(std::vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime);
+        std::vector<std::unique_ptr<Event>> step(std::vector<std::string> cc_list, std::vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime);
 
         std::vector<std::unique_ptr<Event>> simulate(time_t t_startTime, time_t t_endTime);
 };

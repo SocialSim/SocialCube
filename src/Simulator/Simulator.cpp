@@ -45,53 +45,77 @@ void Simulator::simulate() {
 }
 
 void Simulator::simulateImpl() {
-    m_communityManager->simulate(temp_pref_data, m_startTime, m_endTime, m_unitTime);
+    m_communityManager->simulate(cc_list, temp_pref_data, m_startTime, m_endTime, m_unitTime);
 }
 
+// ./socialcube --show_profile --show_event -s 2018-04-02T00:00:00Z -e 2018-10-28T23:59:59Z --proxy_config_file /Users/Flamino/Virtualenvs/simulator_core/SocialCube/ProxyFilePaths.config
+// ./socialcube --show_profile --show_event -s 2018-04-02T00:00:00Z -e 2018-04-29T23:59:59Z --proxy_config_file /Users/Flamino/Virtualenvs/simulator_core/SocialCube/ProxyFilePaths.config
 void Simulator::preSimulationConfig() {
-    int total_users = 22226;
-    int us_users = 13373;
-    int in_users = 1819;
-    int cn_users = 7034;
-
     const string socialcubePath = (getenv("SOCIALCUBEPATH"));
 
-    ifstream us_infile(socialcubePath + "/statistics/us_action_distribution.json");
-    string us_line;
-    vector<float> us_data;
-    while (getline(us_infile, us_line)) {
-        if (us_line.length() > 0) {
-            // us_line.erase(std::remove(us_line.begin(), us_line.end(), '\n'), us_line.end());
-            us_data.push_back(stof(us_line));
+    DIR *dir;
+    struct dirent *ent;
+    vector<vector<float>> ccData;
+    vector<int> ccCount;
+    vector<string> ccRef;
+    string statPath = socialcubePath + "/statistics/cc_stats/";
+    int count = 0;
+    if ((dir = opendir(statPath.c_str())) != NULL) {
+        while ((ent = readdir (dir)) != NULL) {
+            string fileName = ent->d_name;
+            if (fileName.size() > 3) {
+                string ccName = getCc(fileName);
+
+                ccRef.push_back(ccName);
+                ccCount.push_back(0);
+
+                vector<float> ph;
+                ccData.push_back(ph);
+
+                ifstream infile(socialcubePath + "/statistics/cc_stats/" + fileName);
+                string line;
+                while (getline(infile, line)) {
+                    if (line.length() > 1) {
+                        ccData[count].push_back(stof(line));
+                    }
+                }
+                count++;
+            }
+            
         }
+        closedir(dir);
+    } else {
+        perror("");
     }
 
-    ifstream cn_infile(socialcubePath + "/statistics/cn_action_distribution.json");
-    string cn_line;
-    vector<float> cn_data;
-    while (getline(cn_infile, cn_line)) {
-        if (cn_line.length() > 0) {
-            // cn_line.erase(std::remove(cn_line.begin(), cn_line.end(), '\n'), cn_line.end());
-            cn_data.push_back(stof(cn_line));
-        }
-    }
-    
-    ifstream in_infile(socialcubePath + "/statistics/in_action_distribution.json");
-    string in_line;
-    vector<float> in_data;
-    while (getline(in_infile, in_line)) {
-        if (in_line.length() > 0) {
-            // in_line.erase(std::remove(in_line.begin(), in_line.end(), '\n'), in_line.end());
-            in_data.push_back(stof(in_line));
+    ifstream infile(socialcubePath + "/statistics/country_codes.json");
+    string line;
+    while (getline(infile, line)) {
+        if (line.length() < 3) {
+            ptrdiff_t pos = distance(ccRef.begin(), find(ccRef.begin(), ccRef.end(), line));
+            if (pos >= ccRef.size()) {
+                continue;
+            } else {
+                ccCount[pos]++;
+            }
         }
     }
 
     vector<float> subdata;
-    for (int i = 0; i < us_data.size(); i++) {
-        subdata.push_back(ceil(us_data[i] * us_users));
-        subdata.push_back(ceil(cn_data[i] * cn_users));
-        subdata.push_back(ceil(in_data[i] * in_users));
-        cout << subdata[0] << " " << subdata[1] << " " << subdata[2] << endl;
+    for (int i = 0; i < ccData[ccRef.size() - 1].size(); i++) {
+        for (int j = 0; j < ccRef.size(); j++) {
+            if (ccCount[j] > 0) {
+                if (cc_list.size() > 0) {
+                    ptrdiff_t pos = distance(cc_list.begin(), find(cc_list.begin(), cc_list.end(), ccRef[j]));
+                    if (pos >= cc_list.size()) {
+                        cc_list.push_back(ccRef[j]);
+                    }
+                } else {
+                    cc_list.push_back(ccRef[j]);
+                }
+                subdata.push_back(ceil(ccData[j][i] * ccCount[j]));
+            }
+        }
         temp_pref_data.push_back(subdata);
         subdata.clear();
     }
@@ -124,4 +148,18 @@ void Simulator::printConfig() {
     DBG(LOGP(TAG, "Simulation End Time: "+stringfy(m_endTime));)
     DBG(LOGP(TAG, "Simulation Unit Time: "+stringfy(m_unitTime));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
+}
+
+string Simulator::getCc(const string& s) {
+   vector<string> tokens;
+   string token;
+   istringstream tokenStream(s);
+   while (getline(tokenStream, token, '.')) {
+      tokens.push_back(token);
+   }
+   return tokens[0];
+}
+
+void Simulator::testSetup() {
+    return;
 }

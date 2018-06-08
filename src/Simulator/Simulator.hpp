@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <fstream>
 #include <math.h>  
+#include <dirent.h>
 
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
@@ -32,6 +33,8 @@ protected:
     time_t m_unitTime;
 
     std::vector<std::vector<float>> temp_pref_data;
+
+    std::vector<std::string> cc_list;
 
     // Private member function
 
@@ -62,6 +65,10 @@ public:
     virtual void addObjectAgent(Agent const * t_agent);
 
     virtual void simulate() final;
+
+    virtual void testSetup() final;
+
+    virtual std::string getCc(const std::string& s);
 };
 
 #endif
