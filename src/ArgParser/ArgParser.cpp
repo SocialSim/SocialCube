@@ -116,6 +116,13 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 proxy_config_file = "ProxyFilePaths.config";
             }
 
+            if (result.count("proxy_config_file")) {
+                proxy_config_file = result["proxy_config_file"].as<string>();
+            } else {
+                const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+                proxy_config_file = socialcubePath + "/ProxyFilePaths.config";
+            }
+
             if (result.count("init_file")) { 
                 readFromFile = true;
             } else {
