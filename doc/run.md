@@ -258,4 +258,3 @@ user@apollo5$ python evaluate.py
 This will start evaluation. Depending on the size of ground truth and events file, the time for evaluation may vary.
 
 __NOTE__: When doing evaluation, you should make sure the time duration for the ground truth should match the generated events.txt. Otherwise, some metrics might differ a lot. For example, if you simulate from 2017-01-01 to 2017-01-02, you should use a groundtruth that contains data for only one day. If you use groundtruth that contains data for one month or one hour, the expected count of events will surely differ :)
-

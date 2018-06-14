@@ -1,7 +1,5 @@
 #include "AgentBuilder.hpp"
 
-DBG(static const string tag="AgentBuilder";)
-
 template<class TUserAgent, class TObjectAgent>
 AgentBuilder<TUserAgent, TObjectAgent>::AgentBuilder() : m_statProxy(StatisticProxy::getInstance()) {
     return;

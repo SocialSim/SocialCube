@@ -3,9 +3,9 @@
 using namespace std;
 
 const std::unordered_map<int, std::string> TypeDistribution::m_actions{
-    {0, "PushEvent"},
-    {1, "IssuesEvent"},
-    {2, "PullRequestReviewCommentEvent"},
+    {0, "IssuesEvent"},
+    {1, "PullRequestReviewCommentEvent"},
+    {2, "PushEvent"},
     {3, "PullRequestEvent"},
     {4, "IssueCommentEvent"},
     {5, "CreateEvent"},
