@@ -9,6 +9,13 @@ class HourlyActionRateProxyException: public std::exception {
     }
 };
 
+class DailyActivityLevelProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for DailyActivityLevel";
+    }
+};
+
 class ObjectPreferenceProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

@@ -29,6 +29,7 @@ OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
+OBJS := $(OBJS) DailyActivityLevel.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
@@ -37,6 +38,7 @@ OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
+OBJS := $(OBJS) DailyActivityLevelProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) UserDistributionProxy.o
@@ -107,6 +109,9 @@ EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/Eve
 HourlyActionRate.o:	./Dependency/HourlyActionRate.cpp ./Dependency/HourlyActionRate.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+DailyActivityLevel.o:	./Dependency/DailyActivityLevel.cpp ./Dependency/DailyActivityLevel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 ObjectPreference.o:	./Dependency/ObjectPreference.cpp ./Dependency/ObjectPreference.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -129,6 +134,9 @@ StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/Statistic
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 HourlyActionRateProxy.o:	./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.cpp ./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+DailyActivityLevelProxy.o:	./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.cpp ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreferenceProxy.o:	./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.cpp ./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp
