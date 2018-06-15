@@ -144,19 +144,19 @@ For example, a valid _ProxyFilePaths.config_ can be:
 
 ```
 #PoissonProcess
-objectIDProxyFile=/statistics/poisson_ids.json
-poissonProcessStatsProxyFile=/statistics/poisson_stats.json
+objectIDProxyFile=../statistics/poisson_ids.json
+poissonProcessStatsProxyFile=../statistics/poisson_stats.json
 
 #PointProcess
-objectIDProxyFile=/statistics/point_ids.json
-pointProcessStatsProxyFile=/statistics/point_stats.json
+objectIDProxyFile=../statistics/point_ids.json
+pointProcessStatsProxyFile=../statistics/point_stats.json
 
 #SimpleBehavior
 
 #IntegratedPointProcess
-userDistributionProxyFile=/statistics/user_activity_count.json
-objectIDProxyFile=/statistics/toy_point_ids.json
-pointProcessStatsProxyFile=/statistics/toy_point_stats.json
+userDistributionProxyFile=../statistics/user_activity_count.json
+objectIDProxyFile=../statistics/toy_point_ids.json
+pointProcessStatsProxyFile=../statistics/toy_point_stats.json
 ```
 
 In the first line, it starts a new model called _PoissonProcess_. The second line sets the path of the _objectIDProxyFile_ of this _PoissonProcess_ to be _${SOCIALSIMPATH}/statistics/poisson_ids.json_. And the third line set  _poissonProcessProxyFile_ to be _/statistics/poisson_stats.json_. Those unspecified proxy file paths will remain default. 
