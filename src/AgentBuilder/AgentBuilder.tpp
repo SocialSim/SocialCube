@@ -16,9 +16,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setUserIDProxyFilePath(filePath);
     } else if (fileName == "objectIDProxyFile") {
         m_statProxy.setObjectIDProxyFilePath(filePath);
-    } else if (fileName == "hourlyActionRateFile") {
+    } else if (fileName == "hourlyActionRateProxyFile") {
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
-    } else if (fileName == "dailyActivityLevelFile") {
+    } else if (fileName == "dailyActivityLevelProxyFile") {
         cout << "set dailyActivityLevelFile path" << endl;
         m_statProxy.setDailyActivityLevelProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
