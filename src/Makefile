@@ -23,7 +23,8 @@ OBJS := $(OBJS) PointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
-OBJS := $(OBJS) BehaviorModel.o
+OBJS := $(OBJS) SimpleBehaviorModel.o
+OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
@@ -73,6 +74,9 @@ EventBasedSimulator.o:	./Simulator/EventBasedSimulator.cpp ./Simulator/EventBase
 SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+DailySimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -88,7 +92,10 @@ IntegratedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/Integrate
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
-BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+DailySimpleBehaviorModel.o:	./BehaviorModel/DailySimpleBehaviorModel.cpp ./BehaviorModel/DailySimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
@@ -136,7 +143,7 @@ StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/Statistic
 HourlyActionRateProxy.o:	./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.cpp ./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
-DailyActivityLevelProxy.o:	./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.cpp ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp
+DailyActivityLevelProxy.o: ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.cpp ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreferenceProxy.o:	./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.cpp ./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp

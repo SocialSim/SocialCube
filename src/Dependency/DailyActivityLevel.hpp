@@ -1,5 +1,5 @@
-#ifndef __HOURLY_ACTION_RATE__
-#define __HOURLY_ACTION_RATE__
+#ifndef __DAILYACTIVITYLEVEL__
+#define __DAILYACTIVITYLEVEL__
 
 #include <vector>
 #include <unordered_map>
@@ -22,6 +22,8 @@ class DailyActivityLevel {
         ~DailyActivityLevel();
 
         double getActivityLevel(int t_day);
+
+        int getActivityLevelSize();
 
         void addActivityLevel(double t_activityLevel);
 

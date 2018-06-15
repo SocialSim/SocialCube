@@ -16,6 +16,11 @@ double DailyActivityLevel::getActivityLevel(int t_day) {
     return m_activityLevels[t_day];
 }
 
+int DailyActivityLevel::getActivityLevelSize() {
+    return m_activityLevels.size();
+}
+
+
 void DailyActivityLevel::addActivityLevel(double t_activityLevel) {
     m_activityLevels.push_back(t_activityLevel);
 }

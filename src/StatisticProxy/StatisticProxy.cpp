@@ -45,6 +45,11 @@ void StatisticProxy::parseHourlyActionRate() {
     m_hourlyActionRateProxy->parse();
 }
 
+void StatisticProxy::parseDailyActivityLevel() {
+    DBG(LOGD(TAG, "\ndailyActivityLevel: " + m_defaultDailyActivityLevelProxyFile);)
+
+}
+
 void StatisticProxy::parseTypeDistribution() {
     DBG(LOGD(TAG, "\ntypeDistributionProxyFile: " + m_defaultTypeDistributionProxyFile);)
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
@@ -81,6 +86,10 @@ HourlyActionRate& StatisticProxy::getUserHourlyActionRate(const string &userID) 
     return m_hourlyActionRateProxy->get(userID);
 }
 
+DailyActivityLevel& StatisticProxy::getDailyActivityLevel(const string &userID) const {
+    return m_dailyActivityLevelProxy->get(userID);
+}
+
 ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) const {
     return m_objectPreferenceProxy->get(userID);
 }
@@ -108,6 +117,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
     m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
     m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
+    m_defaultDailyActivityLevelProxyFile = socialcubePath + "/statistics/daily_activity_level.json";
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
     m_defaultUserDistributionProxyFile = "/statistics/repo_user_distribution.json";
@@ -125,6 +135,10 @@ void StatisticProxy::setObjectIDProxyFilePath(std::string objectIDProxyFilePath)
 
 void StatisticProxy::setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath) {
     m_defaultHourlyActionRateProxyFile = hourlyActionRateProxyFilePath;
+}
+
+void StatisticProxy::setDailyActivityLevelProxyFilePath(std::string dailyActivityLevelProxyFilePath) {
+    m_defaultDailyActivityLevelProxyFile = dailyActivityLevelProxyFilePath;
 }
 
 void StatisticProxy::setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath) {

@@ -4,6 +4,7 @@
 #include "Simulator/EventBasedSimulator.hpp"
 #include "Simulator/CacheAwareSimulator.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
+#include "Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/ObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp"
@@ -102,6 +103,23 @@ int main(int argc, const char* argv[]) {
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
                 std::vector<std::shared_ptr<SimpleGithubUserAgent>> agentList;
+                builder.build();
+                agentList = builder.getUserAgentList();
+                for(auto& iter : agentList) {
+                    s.addUserAgent(iter.get());
+                }
+                s.simulate();
+            } else if (builderType == "DailySimpleBehavior") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<DailySimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
+                for (auto& iter : filePaths)
+                    builder.setFilePath(iter.first, iter.second);
+                filePaths.clear();
+                std::vector<std::shared_ptr<DailySimpleGithubUserAgent>> agentList;
                 builder.build();
                 agentList = builder.getUserAgentList();
                 for(auto& iter : agentList) {

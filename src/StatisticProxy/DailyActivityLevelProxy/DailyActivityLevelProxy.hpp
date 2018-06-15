@@ -1,5 +1,5 @@
-#ifndef __HOURLY_ACTION_RATE_PROXY__
-#define __HOURLY_ACTION_RATE_PROXY__
+#ifndef __DAILY_ACTIVITY_LEVEL_PROXY__
+#define __DAILY_ACTIVITY_LEVEL_PROXY__
 
 #include <unordered_map>
 #include <string>
