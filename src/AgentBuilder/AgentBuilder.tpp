@@ -18,6 +18,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setObjectIDProxyFilePath(filePath);
     } else if (fileName == "hourlyActionRateFile") {
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
+    } else if (fileName == "dailyActivityLevelFile") {
+        cout << "set dailyActivityLevelFile path" << endl;
+        m_statProxy.setDailyActivityLevelProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
     } else if (fileName == "typeDistributionProxyFile") {
@@ -56,6 +59,15 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseTypeDistribution();
         buildUsers();
     }
+    // DailySimpleBehavior model
+    else if (std::is_same<TUserAgent, DailySimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parseDailyActivityLevel();
+        m_statProxy.parseObjectPreference();
+        m_statProxy.parseTypeDistribution();
+        buildUsers();
+    }
     // IntegratedPointProcess model
     else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, IntegratedPointProcessObjectAgent>::value) {
@@ -88,9 +100,11 @@ std::vector<std::shared_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgen
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
+    cout << "in buildUsers()" << endl;
     const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
 
     for(auto& userID : userIDs) {
+        cout << "in buildUsers(), userID = " << userID << endl;
         std::shared_ptr<TUserAgent> agent(new TUserAgent(userID));
         m_userAgents.push_back(move(agent));
     }

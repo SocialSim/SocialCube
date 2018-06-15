@@ -6,6 +6,7 @@
 #include <iostream>
 #include "StatisticProxy/StatisticProxy.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
+#include "Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"

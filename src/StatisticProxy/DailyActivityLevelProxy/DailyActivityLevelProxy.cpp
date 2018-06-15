@@ -34,10 +34,11 @@ void DailyActivityLevelProxy::parse() {
         string str_activityLevels = tmp.substr(tmp.find(" "));
         stringstream ss(str_activityLevels);
         string item;
-        while (getline(ss, item, ' ')) {
+        while (ss >> item) {
             m_dailyActivityLevels[userID]->addActivityLevel(stod(item));
         }
     }
+    // show();
     DBG(LOGD(TAG, "Daily Activity Level has "+stringfy(m_dailyActivityLevels.size()));)
 }
 

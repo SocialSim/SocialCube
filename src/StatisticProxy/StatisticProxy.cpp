@@ -47,7 +47,8 @@ void StatisticProxy::parseHourlyActionRate() {
 
 void StatisticProxy::parseDailyActivityLevel() {
     DBG(LOGD(TAG, "\ndailyActivityLevel: " + m_defaultDailyActivityLevelProxyFile);)
-
+    m_dailyActivityLevelProxy.reset(new DailyActivityLevelProxy(m_defaultDailyActivityLevelProxyFile));
+    m_dailyActivityLevelProxy->parse();
 }
 
 void StatisticProxy::parseTypeDistribution() {

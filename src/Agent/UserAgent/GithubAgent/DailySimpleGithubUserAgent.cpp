@@ -3,14 +3,14 @@
 using namespace std;
 
 DailySimpleGithubUserAgent::DailySimpleGithubUserAgent(const string& t_id) : UserAgent(t_id),
-                                                                   m_statProxy(StatisticProxy::getInstance()),
-                                                                   m_dailyActivityLevel(m_statProxy.getDailyActivityLevel(m_id)),
-                                                                   m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),
-                                                                   m_typeDistribution(m_statProxy.getUserTypeDistribution(m_id))
+    m_statProxy(StatisticProxy::getInstance()),
+    m_dailyActivityLevel(m_statProxy.getDailyActivityLevel(m_id)),
+    m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),
+    m_typeDistribution(m_statProxy.getUserTypeDistribution(m_id))
 {
+    cout << "user id: " << t_id << endl;
     assert(&m_dailyActivityLevel != 0);
     assert(&m_objectPreference != 0);
-    assert(&m_hourlyActionRate != 0);
     assert(&m_typeDistribution != 0);
     return;
 }

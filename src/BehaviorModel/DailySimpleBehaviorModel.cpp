@@ -49,6 +49,7 @@ std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string t
 
             time_t eventTime = currentTime + (hours * 60 + minutes) * 60 + seconds;
             unique_ptr<Event> event(new Event(userID, objectID, actionType, eventTime));
+            // event->show();
             events.push_back(move(event));
         }
         currentTime += 24 * 60 * 60;
