@@ -100,11 +100,9 @@ std::vector<std::shared_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgen
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
-    cout << "in buildUsers()" << endl;
     const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
 
     for(auto& userID : userIDs) {
-        cout << "in buildUsers(), userID = " << userID << endl;
         std::shared_ptr<TUserAgent> agent(new TUserAgent(userID));
         m_userAgents.push_back(move(agent));
     }
@@ -114,7 +112,6 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        // cout << "objectID: " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

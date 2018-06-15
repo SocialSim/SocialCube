@@ -32,7 +32,6 @@ void EventManager::emitEvent() {
 void EventManager::_emitEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-        event->show();
         m_eventFile << *event;
     }
 }
