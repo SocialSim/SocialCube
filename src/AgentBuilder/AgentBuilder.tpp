@@ -12,7 +12,6 @@ AgentBuilder<TUserAgent, TObjectAgent>::~AgentBuilder() {
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileName, const std::string filePath) {
-    std::cout << "Hello" << std::endl;
     if (fileName == "userIDProxyFile") {
         m_statProxy.setUserIDProxyFilePath(filePath);
     } else if (fileName == "objectIDProxyFile") {
@@ -29,6 +28,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPoissonProcessStatsProxyFilePath(filePath);
     } else if (fileName == "userDistributionProxyFile") {
         m_statProxy.setUserDistributionProxyFilePath((filePath));
+    } else if (fileName == "countryCodesProxyFile") {
+        m_statProxy.setCountryCodesFilePath(filePath);
+    } else if (fileName == "activityLevelsProxyFile") {
+        m_statProxy.setActivityLevelFilePath(filePath);
     }
 }
 
