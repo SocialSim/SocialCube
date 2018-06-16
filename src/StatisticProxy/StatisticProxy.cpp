@@ -135,6 +135,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultPoissonProcessStatsProxyFile = socialcubePath + "/statistics/poisson_stats.json";
     m_defaultCountryCodesProxyFile = socialcubePath + "/statistics/country_codes.json";
     m_defaultActivityLevelProxyFile = socialcubePath + "/statistics/user_activity_levels.json";
+    m_defaultCcStatsProxyFile = socialcubePath + "/statistics/cc_stats/";
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
@@ -177,6 +178,36 @@ void StatisticProxy::setActivityLevelFilePath(std::string activityLevelFilePath)
     m_defaultActivityLevelProxyFile = activityLevelFilePath;
 }
 
+void StatisticProxy::setCcStatsProxyFilePath(string ccStatsFilePath) {
+    m_defaultCcStatsProxyFile = ccStatsFilePath;
+}
+
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
     return m_userIDProxy->getCommunityTag(userID);
 } 
+
+string StatisticProxy::getStatProxyPath(string pname) {
+    if (pname == "userIDProxyFile") {
+        return m_defaultUserIDProxyFile;
+    } else if (pname == "objectIDProxyFile") {
+        return m_defaultObjectIDProxyFile;
+    } else if (pname == "hourlyActionRateFile") {
+        return m_defaultHourlyActionRateProxyFile;
+    } else if (pname == "objectPreferenceProxyFile") {
+        return m_defaultObjectPreferenceProxyFile;
+    } else if (pname == "typeDistributionProxyFile") {
+        return m_defaultTypeDistributionProxyFile;
+    } else if (pname == "pointProcessStatsProxyFile") {
+        return m_defaultPointProcessStatsProxyFile;
+    } else if (pname == "poissonProcessStatsProxyFile") {
+        return m_defaultPoissonProcessStatsProxyFile;
+    } else if (pname == "userDistributionProxyFile") {
+        return m_defaultUserDistributionProxyFile;
+    } else if (pname == "countryCodesProxyFile") {
+        return m_defaultCountryCodesProxyFile;
+    } else if (pname == "activityLevelsProxyFile") {
+        return m_defaultActivityLevelProxyFile;
+    } else if (pname == "ccStatsProxyFile") {
+        return m_defaultCcStatsProxyFile;
+    }
+}

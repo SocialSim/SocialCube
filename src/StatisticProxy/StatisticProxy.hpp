@@ -34,6 +34,7 @@ class StatisticProxy {
         std::string m_defaultPoissonProcessStatsProxyFile;
         std::string m_defaultCountryCodesProxyFile;
         std::string m_defaultActivityLevelProxyFile;
+        std::string m_defaultCcStatsProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -79,8 +80,11 @@ class StatisticProxy {
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
         void setCountryCodesFilePath(std::string countryCodesFilePath);
         void setActivityLevelFilePath(std::string activityLevelFilePath);
+        void setCcStatsProxyFilePath(std::string ccStatsFilePath);
 
         void retrieveStatistics();
+
+        std::string getStatProxyPath(std::string pname);
 
         std::vector<std::string>& getUserIDs() const;
 

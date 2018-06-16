@@ -19,6 +19,7 @@
 #include "Log/Log.hpp"
 #include "SimulatorProfiler/SimulatorProfiler.hpp"
 #include "CommunityManager.hpp"
+#include "StatisticProxy/StatisticProxy.hpp"
 
 class Simulator {
 
@@ -26,6 +27,8 @@ protected:
     // Private member variables
     
     std::unique_ptr<CommunityManager> m_communityManager;
+
+    StatisticProxy& m_statProxy;
 
     time_t m_startTime;
 

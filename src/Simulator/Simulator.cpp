@@ -5,7 +5,7 @@ using namespace std;
 DBG(static const string tag="Simulator";)
 
 Simulator::Simulator() : m_communityManager(new CommunityManager),
-    m_startTime(0), m_endTime(0), m_unitTime(1) {
+    m_startTime(0), m_endTime(0), m_unitTime(1), m_statProxy(StatisticProxy::getInstance()) {
 
     srand(time(NULL));
 
@@ -51,14 +51,12 @@ void Simulator::simulateImpl() {
 // ./socialcube --show_profile --show_event -s 2018-04-02T00:00:00Z -e 2018-10-28T23:59:59Z --proxy_config_file /Users/Flamino/Virtualenvs/simulator_core/SocialCube/ProxyFilePaths.config
 // ./socialcube --show_profile --show_event -s 2018-04-02T00:00:00Z -e 2018-04-29T23:59:59Z --proxy_config_file /Users/Flamino/Virtualenvs/simulator_core/SocialCube/ProxyFilePaths.config
 void Simulator::preSimulationConfig() {
-    const string socialcubePath = (getenv("SOCIALCUBEPATH"));
-
     DIR *dir;
     struct dirent *ent;
     vector<vector<float>> ccData;
     vector<int> ccCount;
     vector<string> ccRef;
-    string statPath = socialcubePath + "/statistics/cc_stats/";
+    string statPath = m_statProxy.getStatProxyPath("ccStatsProxyFile");
     int count = 0;
     if ((dir = opendir(statPath.c_str())) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
@@ -72,7 +70,7 @@ void Simulator::preSimulationConfig() {
                 vector<float> ph;
                 ccData.push_back(ph);
 
-                ifstream infile(socialcubePath + "/statistics/cc_stats/" + fileName);
+                ifstream infile(statPath + fileName);
                 string line;
                 while (getline(infile, line)) {
                     if (line.length() > 1) {
@@ -88,7 +86,8 @@ void Simulator::preSimulationConfig() {
         perror("");
     }
 
-    ifstream infile(socialcubePath + "/statistics/country_codes.json");
+    string ccStatPath = m_statProxy.getStatProxyPath("countryCodesProxyFile");
+    ifstream infile(ccStatPath);
     string line;
     while (getline(infile, line)) {
         if (line.length() < 3) {

@@ -32,6 +32,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setCountryCodesFilePath(filePath);
     } else if (fileName == "activityLevelsProxyFile") {
         m_statProxy.setActivityLevelFilePath(filePath);
+    } else if (fileName == "ccStatsProxyFile") {
+        m_statProxy.setCcStatsProxyFilePath(filePath);
     }
 }
 
@@ -79,7 +81,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         cout << "Wrong agent type combination" << endl;
     }
     // Reset proxy source files
-    m_statProxy.initProxySourceFile();
+    // m_statProxy.initProxySourceFile();
 }
 
 template<class TUserAgent, class TObjectAgent>
