@@ -57,6 +57,7 @@ void Simulator::preSimulationConfig() {
     vector<int> ccCount;
     vector<string> ccRef;
     string statPath = m_statProxy.getStatProxyPath("ccStatsProxyFile");
+    cout << "Simulator has retrieved cc stats from " << statPath << endl;
     int count = 0;
     if ((dir = opendir(statPath.c_str())) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
