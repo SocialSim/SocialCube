@@ -10,7 +10,6 @@ SimpleGithubUserAgent::SimpleGithubUserAgent(const string& t_id, const string& t
 {
     assert(&m_hourlyActionRate != 0);
     assert(&m_objectPreference != 0);
-    assert(&m_hourlyActionRate != 0);
     assert(&m_typeDistribution != 0);
     return;
 }

@@ -14,7 +14,8 @@ CXX_FLAGS := $(CXX_FLAGS) -I $(SRCDIR)
 OBJS := Simulator.o
 OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) EventBasedSimulator.o
-OBJS := $(OBJS) SimpleGithubUserAgent.o 
+OBJS := $(OBJS) SimpleGithubUserAgent.o
+OBJS := $(OBJS) DailySimpleGithubUserAgent.o
 OBJS := $(OBJS) ClusteredGithubUserAgent.o 
 OBJS := $(OBJS) Community.o 
 OBJS := $(OBJS) CommunityManager.o 
@@ -23,12 +24,14 @@ OBJS := $(OBJS) PointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
-OBJS := $(OBJS) BehaviorModel.o
+OBJS := $(OBJS) SimpleBehaviorModel.o
+OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
+OBJS := $(OBJS) DailyActivityLevel.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
@@ -37,6 +40,7 @@ OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
+OBJS := $(OBJS) DailyActivityLevelProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) UserDistributionProxy.o
@@ -73,6 +77,9 @@ EventBasedSimulator.o:	./Simulator/EventBasedSimulator.cpp ./Simulator/EventBase
 SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+DailySimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -88,7 +95,10 @@ IntegratedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/Integrate
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
-BehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+DailySimpleBehaviorModel.o:	./BehaviorModel/DailySimpleBehaviorModel.cpp ./BehaviorModel/DailySimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
@@ -107,6 +117,9 @@ EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/Eve
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 HourlyActionRate.o:	./Dependency/HourlyActionRate.cpp ./Dependency/HourlyActionRate.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+DailyActivityLevel.o:	./Dependency/DailyActivityLevel.cpp ./Dependency/DailyActivityLevel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreference.o:	./Dependency/ObjectPreference.cpp ./Dependency/ObjectPreference.hpp
@@ -131,6 +144,9 @@ StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/Statistic
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 HourlyActionRateProxy.o:	./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.cpp ./StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+DailyActivityLevelProxy.o: ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.cpp ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreferenceProxy.o:	./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.cpp ./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp

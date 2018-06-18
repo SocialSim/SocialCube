@@ -144,19 +144,19 @@ For example, a valid _ProxyFilePaths.config_ can be:
 
 ```
 #PoissonProcess
-objectIDProxyFile=/statistics/poisson_ids.json
-poissonProcessStatsProxyFile=/statistics/poisson_stats.json
+objectIDProxyFile=../statistics/poisson_ids.json
+poissonProcessStatsProxyFile=../statistics/poisson_stats.json
 
 #PointProcess
-objectIDProxyFile=/statistics/point_ids.json
-pointProcessStatsProxyFile=/statistics/point_stats.json
+objectIDProxyFile=../statistics/point_ids.json
+pointProcessStatsProxyFile=../statistics/point_stats.json
 
 #SimpleBehavior
 
 #IntegratedPointProcess
-userDistributionProxyFile=/statistics/user_activity_count.json
-objectIDProxyFile=/statistics/toy_point_ids.json
-pointProcessStatsProxyFile=/statistics/toy_point_stats.json
+userDistributionProxyFile=../statistics/user_activity_count.json
+objectIDProxyFile=../statistics/toy_point_ids.json
+pointProcessStatsProxyFile=../statistics/toy_point_stats.json
 ```
 
 In the first line, it starts a new model called _PoissonProcess_. The second line sets the path of the _objectIDProxyFile_ of this _PoissonProcess_ to be _${SOCIALSIMPATH}/statistics/poisson_ids.json_. And the third line set  _poissonProcessProxyFile_ to be _/statistics/poisson_stats.json_. Those unspecified proxy file paths will remain default. 
@@ -166,6 +166,7 @@ The configruations of two models are seperated by a line break.
 Currently we support model types including:
 
 - SimpleBehavior
+- DailySimpleBehavior
 - PointProcess
 - PoissonProcess
 - IntegratedPointProcess
@@ -176,19 +177,13 @@ So please make sure the model types specified in _ProxyFilePaths.config_ belong 
 And the file paths that can be set include:
 
 - userIDProxyFile
-
 - objectIDProxyFile
-
-- hourlyActionRateFile
-
+- hourlyActionRateProxyFile
+- dailyActivityLevelProxyFile
 - objectPreferenceProxyFile
-
 - typeDistributionProxyFile
-
 - pointProcessStatsProxyFile
-
 - poissonProcessStatsProxyFile
-
 - userDistributionProxyFile
 
 
@@ -202,7 +197,8 @@ For unset file paths, this framework will use default paths to find the correspo
 
 - __userIDProxyFile__: $SOCIALCUBEPATH/statistics/user_id.json
 - __objectIDProxyFile__: $SOCIALCUBEPATH/statistics/obj_id.json
-- __hourlyActionRateFile__: $SOCIALCUBEPATH//statistics/user_action_rate.json
+- __hourlyActionRateProxyFile__: $SOCIALCUBEPATH/statistics/user_action_rate.json
+- __dailyActivityLevelProxyFile__: $SOCIALCUBEPATH/statistics/daily_activity_level.json
 - __objectPreferenceProxyFile__: $SOCIALCUBEPATH/statistics/user_object_preference.json
 - __typeDistributionProxyFile__: $SOCIALCUBEPATH/statistics/user_type_distribution.json
 - __pointProcessStatsProxyFile__: $SOCIALCUBEPATH/statistics/point_stats.json

@@ -9,6 +9,20 @@ class HourlyActionRateProxyException: public std::exception {
     }
 };
 
+class DailyActivityLevelProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for DailyActivityLevel";
+    }
+};
+
+class TimeSpanExceedException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "The given time span exceeds the one in DailyActivityLevel proxy file";
+    }
+};
+
 class ObjectPreferenceProxyException: public std::exception {
     virtual const char * what () const throw ()
     {
