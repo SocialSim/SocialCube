@@ -23,7 +23,7 @@ protected:
     TypeDistribution& m_typeDistribution;
 
 public:
-    DailySimpleGithubUserAgent(const std::string& t_id);
+    DailySimpleGithubUserAgent(const std::string& t_id, const std::string& t_cc, const int& t_al);
 
     virtual ~DailySimpleGithubUserAgent();
 

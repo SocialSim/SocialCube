@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DailySimpleGithubUserAgent::DailySimpleGithubUserAgent(const string& t_id) : UserAgent(t_id),
+DailySimpleGithubUserAgent::DailySimpleGithubUserAgent(const string& t_id, const string& t_cc, const int& t_al) : UserAgent(t_id, t_cc, t_al),
     m_statProxy(StatisticProxy::getInstance()),
     m_dailyActivityLevel(m_statProxy.getDailyActivityLevel(m_id)),
     m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),
