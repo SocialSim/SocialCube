@@ -74,6 +74,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseDailyActivityLevel();
         m_statProxy.parseObjectPreference();
         m_statProxy.parseTypeDistribution();
+        m_statProxy.parseCountryCodesStats();
+        m_statProxy.parseActivityLevelStats();
         buildUsers();
     }
     // IntegratedPointProcess model
@@ -109,9 +111,6 @@ std::vector<std::shared_ptr<TObjectAgent>>& AgentBuilder<TUserAgent, TObjectAgen
 
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
-    // this is the one
-
-    // DBG(LOGD(TAG, "Country Code has "));
     const std::vector<std::string>& userIDs = m_statProxy.getUserIDs();
     const std::vector<std::string>& countryCodes = m_statProxy.getCountryCodes();
     const std::vector<std::string>& activityLevels = m_statProxy.getActivityLevels();
