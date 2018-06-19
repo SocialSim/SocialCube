@@ -24,7 +24,7 @@ class Agent {
 
         virtual std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const = 0;
 
-        virtual std::vector<std::unique_ptr<Event>> simulate(time_t t_currentTime, time_t t_endTime) const = 0;
+        virtual std::vector<std::unique_ptr<Event>> simulate(std::vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const = 0;
 
         int getAL() const { return m_al; }
 

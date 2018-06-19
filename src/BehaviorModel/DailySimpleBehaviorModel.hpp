@@ -4,6 +4,13 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <unordered_map>
+#include <cassert>
+#include <cstdlib>
+#include <string>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
 #include "Dependency/DailyActivityLevel.hpp"
@@ -21,11 +28,16 @@ private:
 
     static std::string chooseAction(const TypeDistribution& t_typeDistribution);
 
+    static int currentDow(time_t now);
+
     static int convertISOtoDay(time_t t_currentTime);
 
 public:
 
-    static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
+    static std::vector<std::unique_ptr<Event>> evaluate(const std::string& t_id, 
+                                                        const std::string& t_cc, 
+                                                        const int& t_al,
+                                                        std::vector<float> temp_pref_weekly,
                                                         DailyActivityLevel& t_dailyActivityLevel,
                                                         ObjectPreference& t_objectPreference,
                                                         TypeDistribution& t_typeDistribution,

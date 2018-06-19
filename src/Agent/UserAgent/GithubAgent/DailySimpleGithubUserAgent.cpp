@@ -8,7 +8,7 @@ DailySimpleGithubUserAgent::DailySimpleGithubUserAgent(const string& t_id, const
     m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),
     m_typeDistribution(m_statProxy.getUserTypeDistribution(m_id))
 {
-    cout << "user id: " << t_id << endl;
+    // cout << "user id: " << t_id << endl;
     assert(&m_dailyActivityLevel != 0);
     assert(&m_objectPreference != 0);
     assert(&m_typeDistribution != 0);
@@ -23,9 +23,9 @@ vector<unique_ptr<Event>> DailySimpleGithubUserAgent::step(time_t t_currentTime,
     throw;
 }
 
-vector<unique_ptr<Event>> DailySimpleGithubUserAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> DailySimpleGithubUserAgent::simulate(vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const {
 
-    vector<unique_ptr<Event>> events = DailySimpleBehaviorModel::evaluate(m_id, m_dailyActivityLevel,
+    vector<unique_ptr<Event>> events = DailySimpleBehaviorModel::evaluate(m_id, m_cc, m_al, temp_pref_data, m_dailyActivityLevel,
                                                                           m_objectPreference, m_typeDistribution,
                                                                           t_currentTime, t_endTime);
 

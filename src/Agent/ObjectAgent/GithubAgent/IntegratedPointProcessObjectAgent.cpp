@@ -17,7 +17,7 @@ vector<unique_ptr<Event>> IntegratedPointProcessObjectAgent::step(time_t t_curre
     throw;
 }
 
-vector<unique_ptr<Event>> IntegratedPointProcessObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> IntegratedPointProcessObjectAgent::simulate(vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const {
     auto k = m_stat.getK();
     auto mu = m_stat.getMu();
     auto alpha = m_stat.getAlpha();

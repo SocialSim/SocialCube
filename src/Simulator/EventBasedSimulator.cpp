@@ -1,4 +1,5 @@
 #include "EventBasedSimulator.hpp"
+#include "Simulator.hpp"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ void EventBasedSimulator::addObjectAgent(Agent const * t_agent) {
 }
 
 void EventBasedSimulator::simulateImpl() {
-    m_communityManager->eventBasedSimulate(m_startTime, m_endTime);
+    m_communityManager->eventBasedSimulate(cc_list, temp_pref_data_weekly, m_startTime, m_endTime);
 }
 
 void EventBasedSimulator::printConfig() {

@@ -36,9 +36,6 @@ protected:
 
     time_t m_unitTime;
 
-    std::vector<std::vector<float>> temp_pref_data;
-
-    std::vector<std::string> cc_list;
 
     // Private member function
 
@@ -55,6 +52,12 @@ public:
     Simulator();
 
     virtual ~Simulator();
+
+    std::vector<std::vector<float>> temp_pref_data;
+
+    std::vector<std::vector<float>> temp_pref_data_weekly;
+
+    std::vector<std::string> cc_list;
 
     /********************** All setter function *************************/
 

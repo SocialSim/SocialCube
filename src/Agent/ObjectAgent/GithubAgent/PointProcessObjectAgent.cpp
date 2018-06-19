@@ -17,7 +17,7 @@ vector<unique_ptr<Event>> PointProcessObjectAgent::step(time_t t_currentTime, ti
 	throw;
 }
 
-vector<unique_ptr<Event>> PointProcessObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> PointProcessObjectAgent::simulate(vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const {
 	auto k = m_stat.getK();
 	auto mu = m_stat.getMu();
 	auto alpha = m_stat.getAlpha();

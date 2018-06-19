@@ -44,7 +44,7 @@ void CommunityManager::simulate(vector<string> cc_list, vector<vector<float>> te
     }
 }
 
-void CommunityManager::eventBasedSimulate(time_t t_startTime, time_t t_endTime) {
+void CommunityManager::eventBasedSimulate(vector<string> cc_list, vector<vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime) {
     DBG(LOGD(TAG, "Total " + stringfy(m_community.size()) + " detected");)
 
     m_startTime = t_startTime;
@@ -55,7 +55,7 @@ void CommunityManager::eventBasedSimulate(time_t t_startTime, time_t t_endTime) 
     vector<unique_ptr<Event>> events;
 
     for(auto& community: m_community) {
-		vector<unique_ptr<Event>> community_events = community.second->simulate(m_startTime, m_endTime);
+		vector<unique_ptr<Event>> community_events = community.second->simulate(cc_list, temp_pref_data, m_startTime, m_endTime);
 		em.storeEvent(community_events);
     }
 }

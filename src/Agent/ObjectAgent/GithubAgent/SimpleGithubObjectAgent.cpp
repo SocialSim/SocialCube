@@ -17,6 +17,6 @@ vector<unique_ptr<Event>> SimpleGithubObjectAgent::step(time_t t_currentTime, ti
     return events;
 }
 
-vector<unique_ptr<Event>> SimpleGithubObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> SimpleGithubObjectAgent::simulate(vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const {
 	throw;
 }

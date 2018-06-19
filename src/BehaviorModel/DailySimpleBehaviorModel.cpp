@@ -10,7 +10,10 @@ DailySimpleBehaviorModel::~DailySimpleBehaviorModel() {
     return;
 }
 
-std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string t_id,
+std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string& t_id, 
+                                                                  const string& t_cc, 
+                                                                  const int& t_al,
+                                                                  vector<float> temp_pref_weekly,
                                                                   DailyActivityLevel& t_dailyActivityLevel,
                                                                   ObjectPreference& t_objectPreference,
                                                                   TypeDistribution& t_typeDistribution,
@@ -28,7 +31,13 @@ std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string t
 
     time_t currentTime = t_startTime;
 
+    int dayCount = DailySimpleBehaviorModel::currentDow(currentTime);
     for (int i = 0; i <= endDay - startDay; i++) {
+        // Uses Temporal Preferences of Users
+        // if (t_al > temp_pref_weekly[dayCount - 1]) {
+        //     continue;
+        // }
+
         double activityLevel_in_double = t_dailyActivityLevel.getActivityLevel(i);
         double fraction_part = activityLevel_in_double - int(activityLevel_in_double);
         double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
@@ -53,6 +62,11 @@ std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string t
             events.push_back(move(event));
         }
         currentTime += 24 * 60 * 60;
+        if (dayCount >= 7) {
+            dayCount = 1;
+        } else {
+            dayCount++;
+        }
     }
 
     return events;
@@ -72,3 +86,17 @@ int DailySimpleBehaviorModel::convertISOtoDay(time_t t_currentTime) {
     return int(t_currentTime / (24 * 60 * 60));
 }
 
+int DailySimpleBehaviorModel::currentDow(time_t now) {
+    const tm currentTimeUtc = *gmtime(addressof(now));
+
+    ostringstream dowStream;
+
+    // static const char format[] = "%A, %d %B %Y %H:%M:%S UCT"; // standard UTC time presentation for reference
+    static const char dowFormat[] = "%u";
+
+    dowStream << put_time(addressof(currentTimeUtc), dowFormat);
+    
+    string stringDow = dowStream.str();
+
+    return stoi(stringDow);
+}

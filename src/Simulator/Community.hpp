@@ -34,7 +34,7 @@ class Community {
 
         std::vector<std::unique_ptr<Event>> step(std::vector<std::string> cc_list, std::vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime);
 
-        std::vector<std::unique_ptr<Event>> simulate(time_t t_startTime, time_t t_endTime);
+        std::vector<std::unique_ptr<Event>> simulate(std::vector<std::string> cc_list, std::vector<std::vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime);
 };
 
 #endif

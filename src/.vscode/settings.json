@@ -35,6 +35,9 @@
         "__locale": "cpp",
         "chrono": "cpp",
         "memory": "cpp",
-        "*.tpp": "cpp"
+        "*.tpp": "cpp",
+        "cstdint": "cpp",
+        "limits": "cpp",
+        "ratio": "cpp"
     }
 }

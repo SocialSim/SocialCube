@@ -54,6 +54,7 @@ void Simulator::preSimulationConfig() {
     DIR *dir;
     struct dirent *ent;
     vector<vector<float>> ccData;
+    vector<vector<float>> ccDataWeekly;
     vector<int> ccCount;
     vector<string> ccRef;
     string statPath = m_statProxy.getStatProxyPath("ccStatsProxyFile");
@@ -69,7 +70,9 @@ void Simulator::preSimulationConfig() {
                 ccCount.push_back(0);
 
                 vector<float> ph;
+                vector<float> ph2;
                 ccData.push_back(ph);
+                ccDataWeekly.push_back(ph2);
 
                 ifstream infile(statPath + fileName);
                 string line;
@@ -77,6 +80,16 @@ void Simulator::preSimulationConfig() {
                     if (line.length() > 1) {
                         ccData[count].push_back(stof(line));
                     }
+                }
+                for (int i = 1; i <= 7; i++) {
+                    vector<float> candidates;
+                    for (int j = 1; j <= ccData[count].size(); j++) {
+                        if (j >= ((i - 1) * 24) && j <= (i * 24)) {
+                            candidates.push_back(ccData[count][j]);
+                        }
+                    }
+                    ptrdiff_t pos = distance(candidates.begin(), max_element(candidates.begin(), candidates.end()));
+                    ccDataWeekly[count].push_back(candidates[pos]);
                 }
                 count++;
             }
@@ -113,10 +126,31 @@ void Simulator::preSimulationConfig() {
                 } else {
                     cc_list.push_back(ccRef[j]);
                 }
-                subdata.push_back(ceil(ccData[j][i] * ccCount[j]));
+                int max = ceil(ccData[j][i] * ccCount[j]);
+                subdata.push_back((float)max);
             }
         }
         temp_pref_data.push_back(subdata);
+        subdata.clear();
+    }
+
+    subdata.clear();
+    for (int i = 0; i < ccDataWeekly[ccRef.size() - 1].size(); i++) {
+        for (int j = 0; j < ccRef.size(); j++) {
+            if (ccCount[j] > 0) {
+                if (cc_list.size() > 0) {
+                    ptrdiff_t pos = distance(cc_list.begin(), find(cc_list.begin(), cc_list.end(), ccRef[j]));
+                    if (pos >= cc_list.size()) {
+                        cc_list.push_back(ccRef[j]);
+                    }
+                } else {
+                    cc_list.push_back(ccRef[j]);
+                }
+                int max = ceil(ccDataWeekly[j][i] * ccCount[j]);
+                subdata.push_back((float)max);
+            }
+        }
+        temp_pref_data_weekly.push_back(subdata);
         subdata.clear();
     }
 

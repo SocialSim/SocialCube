@@ -17,7 +17,7 @@ vector<unique_ptr<Event>> PoissonProcessObjectAgent::step(time_t t_currentTime, 
     throw;
 }
 
-vector<unique_ptr<Event>> PoissonProcessObjectAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> PoissonProcessObjectAgent::simulate(vector<float> temp_pref_data, time_t t_currentTime, time_t t_endTime) const {
     auto k = m_stat.getK();
     auto mu = m_stat.getMu();
     auto typeList = m_stat.getTypeList();
