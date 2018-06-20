@@ -34,9 +34,9 @@ std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string& 
     int dayCount = DailySimpleBehaviorModel::currentDow(currentTime);
     for (int i = 0; i <= endDay - startDay; i++) {
         // Uses Temporal Preferences of Users
-        // if (t_al > temp_pref_weekly[dayCount - 1]) {
-        //     continue;
-        // }
+        if (t_al > temp_pref_weekly[dayCount - 1]) {
+            continue;
+        }
 
         double activityLevel_in_double = t_dailyActivityLevel.getActivityLevel(i);
         double fraction_part = activityLevel_in_double - int(activityLevel_in_double);

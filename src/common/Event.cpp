@@ -43,17 +43,17 @@ void Event::warpTimestamp(time_t startTime, double ratio) {
 
 void Event::show() const {
     // uArima
-    // cout << getTimestampStr() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
+    cout << getTimestampStr() << " " << getObjectID() << " " << getUserID() << " " << getEventType() << "\n";
     // rArima
-    cout << getTimestampStr() << " " << getUserID() << " " << getObjectID() << " " << getEventType() << "\n";
+    // cout << getTimestampStr() << " " << getUserID() << " " << getObjectID() << " " << getEventType() << "\n";
 }
 
 ostream& operator<<(ostream& os, const Event& e)
 {  
     // uArima
-    // os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
+    os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
     // rArima
-    os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getObjectID() << "," << e.getUserID() << "\n";
+    // os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getObjectID() << "," << e.getUserID() << "\n";
     return os;  
 }
 
