@@ -47,7 +47,7 @@ void UserDistributionProxy::parse() {
                 start = end + 1;
                 end = tmp.find(",", end+1);
                 
-		double count_in_double;
+		        double count_in_double;
 
                 if (end != string::npos) {
                     count_in_double = stod(tmp.substr(start, end-start));
@@ -57,12 +57,12 @@ void UserDistributionProxy::parse() {
                     count_in_double = stod(tmp.substr(start));
                 }
 		
-		double fraction_part = count_in_double - int(count_in_double);
-		double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);		
-		int count = int(count_in_double);
-		if (randnum < fraction_part) {
-			count++;
-		}
+                double fraction_part = count_in_double - int(count_in_double);
+                double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                int count = int(count_in_double);
+                if (randnum < fraction_part) {
+                    count++;
+                }
 
                 if (m_repoUserDistribution.count(repoID) == 0) {
                     m_repoUserDistribution.insert(std::pair<std::string, std::unique_ptr<UserDistribution>>(repoID, \

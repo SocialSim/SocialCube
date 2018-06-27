@@ -23,8 +23,8 @@ vector<unique_ptr<Event>> IntegratedPointProcessObjectAgent::simulate(time_t t_c
     auto alpha = m_stat.getAlpha();
     auto beta = m_stat.getBeta();
     auto typeList = m_stat.getTypeList();
-
-    vector<unique_ptr<Event>> events = IntegratedPointProcessModel::evaluate(m_id, mu, alpha, beta, typeList, k,
+    UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(m_id);
+    vector<unique_ptr<Event>> events = IntegratedPointProcessModel::evaluate(m_id, mu, alpha, beta, typeList, k, userDistribution,
                                                                    t_currentTime, t_endTime);
 
     return events;

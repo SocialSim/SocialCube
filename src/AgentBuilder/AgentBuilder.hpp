@@ -12,6 +12,7 @@
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/ClassifiedPointProcessObjectAgent.hpp"
 #include "Log/Log.hpp"
 
 template<class TUserAgent, class TObjectAgent>

@@ -28,7 +28,7 @@ public:
 
     void insertUserCount(time_t date, std::string userID, int count);
 
-    std::unordered_map<time_t, std::unordered_map<std::string, int>> getUserDistribution();
+    std::unordered_map<time_t, std::unordered_map<std::string, int>> getUserDistribution() const;
 
     std::vector<std::string> getShuffledUserIDs(time_t date);
 

@@ -30,7 +30,29 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "poissonProcessStatsProxyFile") {
         m_statProxy.setPoissonProcessStatsProxyFilePath(filePath);
     } else if (fileName == "userDistributionProxyFile") {
-        m_statProxy.setUserDistributionProxyFilePath((filePath));
+        m_statProxy.setUserDistributionProxyFilePath(filePath);
+    }
+    // 10 event type user distribution proxy files
+    else if (fileName == "commitCommentEventUserDistributionProxyFile") {
+        m_statProxy.setCommitCommentEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "deleteEventUserDistributionProxyFile") {
+        m_statProxy.setDeleteEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "issueCommentEventUserDistributionProxyFile") {
+        m_statProxy.setIssueCommentEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "pullRequestEventUserDistributionProxyFile") {
+        m_statProxy.setPullRequestEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "pushEventUserDistributionProxyFile") {
+        m_statProxy.setPushEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "createEventUserDistributionProxyFile") {
+        m_statProxy.setCreateEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "forkEventUserDistributionProxyFile") {
+        m_statProxy.setForkEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "issueEventUserDistributionProxyFile") {
+        m_statProxy.setIssueEventUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "pullRequestReviewCommentEventUserDistributionProxyFile") {
+        m_statProxy.setPullRequestReviewCommentEventUserDistributionProxyFile(filePath);
+    } else if (fileName == "watchEventUserDistributionProxyFile") {
+        m_statProxy.setWatchEventUserDistributionProxyFile(filePath);
     }
 }
 
@@ -41,6 +63,13 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     std::is_same<TObjectAgent, PointProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parsePointProcessStats();
+        buildObjects();
+    }
+    // ClassifiedPointProcess model
+    if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, ClassifiedPointProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parseClassifiedUserDistributionStats();
         buildObjects();
     }
     // PoissonProcess model

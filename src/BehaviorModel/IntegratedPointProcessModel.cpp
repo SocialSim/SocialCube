@@ -9,12 +9,13 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
         const vector<double>& beta,
         const vector<string>& typeList,
         int k,
+        UserDistribution& userDistribution,
         time_t t_startTime,
         time_t t_endTime
 ) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
 
-    UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(objectID);
+    // UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(objectID);
 
     vector<unique_ptr<Event>> events;
 

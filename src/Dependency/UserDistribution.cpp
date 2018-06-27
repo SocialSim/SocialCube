@@ -16,7 +16,7 @@ void UserDistribution::insertUserCount(time_t date, std::string userID, int coun
     totalCount[date] += count;
 }
 
-std::unordered_map<time_t, std::unordered_map<std::string, int>> UserDistribution::getUserDistribution() {
+std::unordered_map<time_t, std::unordered_map<std::string, int>> UserDistribution::getUserDistribution() const {
     return m_userCount;
 }
 

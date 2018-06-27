@@ -50,18 +50,42 @@ void PointProcessProxy::parse() {
 		pointProcessStat->setMu(mu);
 		// parse alpha
 		getline(m_pointProcessStatisticsFile, tmp);
-		istringstream alpha_in(tmp);
-		string alpha_ele;
+
+		stringstream ss(tmp);
+		istream_iterator<std::string> begin(ss);
+		istream_iterator<std::string> end;
+		vector<std::string> segments(begin, end);
+
 		vector<vector<double>> alpha;
-        for(int i = 0; i < k; ++i) {
-			vector<double> alpha_row;
-			for(int j = 0; j < k; ++j) {
-				alpha_in >> alpha_ele;
-				alpha_row.push_back(stod(alpha_ele));
+		string alpha_ele;
+
+		if (segments.size() == mu.size()) {
+			for(int i = 0; i < k; ++i) {
+				vector<double> alpha_row;
+				alpha_row.push_back(stod(segments[i]));
+				alpha.push_back(alpha_row);
 			}
-			alpha.push_back(alpha_row);
+		} else {
+			/*istringstream alpha_in(tmp);
+			for(int i = 0; i < k; ++i) {
+				vector<double> alpha_row;
+				for(int j = 0; j < k; ++j) {
+					alpha_in >> alpha_ele;
+					alpha_row.push_back(stod(alpha_ele));
+				}
+				alpha.push_back(alpha_row);
+			}*/
+			for(int i = 0; i < k; ++i) {
+				vector<double> alpha_row;
+				for(int j = 0; j < k; ++j) {
+					alpha_ele = segments[i*k + j];
+					alpha_row.push_back(stod(alpha_ele));
+				}
+				alpha.push_back(alpha_row);
+			}
 		}
 		pointProcessStat->setAlpha(alpha);
+
 		// parse beta
 		getline(m_pointProcessStatisticsFile, tmp);
 		istringstream beta_in(tmp);

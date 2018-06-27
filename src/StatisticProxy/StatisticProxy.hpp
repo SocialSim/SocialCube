@@ -24,6 +24,8 @@
 
 class StatisticProxy {
     private:
+        static const std::unordered_map<std::string, std::string> m_event_types;
+
         std::string m_defaultUserIDProxyFile;
         std::string m_defaultObjectIDProxyFile;
         std::string m_defaultObjectPreferenceProxyFile;
@@ -33,6 +35,19 @@ class StatisticProxy {
         std::string m_defaultUserDistributionProxyFile;
         std::string m_defaultPointProcessStatsProxyFile;
         std::string m_defaultPoissonProcessStatsProxyFile;
+        std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
+
+        // 10 event type user distribution proxy files
+        std::string m_defaultCommitCommentEventUserDistributionProxyFile;
+        std::string m_defaultDeleteEventUserDistributionProxyFile;
+        std::string m_defaultIssueCommentEventUserDistributionProxyFile;
+        std::string m_defaultPullRequestEventUserDistributionProxyFile;
+        std::string m_defaultPushEventUserDistributionProxyFile;
+        std::string m_defaultCreateEventUserDistributionProxyFile;
+        std::string m_defaultForkEventUserDistributionProxyFile;
+        std::string m_defaultIssueEventUserDistributionProxyFile;
+        std::string m_defaultPullRequestReviewCommentEventUserDistributionProxyFile;
+        std::string m_defaultWatchEventUserDistributionProxyFile;
 
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
@@ -44,6 +59,7 @@ class StatisticProxy {
         std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
+        std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
         // Private member functions
         StatisticProxy();
@@ -65,6 +81,7 @@ class StatisticProxy {
         void parseUserDistribution();
         void parsePointProcessStats();
         void parsePoissonProcessStats();
+        void parseClassifiedUserDistributionStats();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -75,6 +92,18 @@ class StatisticProxy {
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
+        void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
+
+        void setCommitCommentEventUserDistributionProxyFilePath(std::string path);
+        void setDeleteEventUserDistributionProxyFilePath(std::string path);
+        void setIssueCommentEventUserDistributionProxyFilePath(std::string path);
+        void setPullRequestEventUserDistributionProxyFilePath(std::string path);
+        void setPushEventUserDistributionProxyFilePath(std::string path);
+        void setCreateEventUserDistributionProxyFilePath(std::string path);
+        void setForkEventUserDistributionProxyFilePath(std::string path);
+        void setIssueEventUserDistributionProxyFilePath(std::string path);
+        void setPullRequestReviewCommentEventUserDistributionProxyFile(std::string path);
+        void setWatchEventUserDistributionProxyFile(std::string path);
 
         void retrieveStatistics();
 
@@ -96,7 +125,11 @@ class StatisticProxy {
 
         PoissonProcessStat& getPoissonProcessStats(const std::string &repoID) const;
 
-        uint64_t getUserCommunityTag(const std::string &userID) const;
+        UserDistribution& getClassifiedUserTypeDistribution(const std::string &event_type, const std::string &repoID);
+
+        std::vector<std::string>& getEventTypes() const;
+
+    uint64_t getUserCommunityTag(const std::string &userID) const;
 };
 
 #endif
