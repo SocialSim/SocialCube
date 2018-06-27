@@ -37,18 +37,6 @@ class StatisticProxy {
         std::string m_defaultPoissonProcessStatsProxyFile;
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
-        // 10 event type user distribution proxy files
-        std::string m_defaultCommitCommentEventUserDistributionProxyFile;
-        std::string m_defaultDeleteEventUserDistributionProxyFile;
-        std::string m_defaultIssueCommentEventUserDistributionProxyFile;
-        std::string m_defaultPullRequestEventUserDistributionProxyFile;
-        std::string m_defaultPushEventUserDistributionProxyFile;
-        std::string m_defaultCreateEventUserDistributionProxyFile;
-        std::string m_defaultForkEventUserDistributionProxyFile;
-        std::string m_defaultIssueEventUserDistributionProxyFile;
-        std::string m_defaultPullRequestReviewCommentEventUserDistributionProxyFile;
-        std::string m_defaultWatchEventUserDistributionProxyFile;
-
     private:
         std::unique_ptr<UserIDProxy> m_userIDProxy;
         std::unique_ptr<ObjectIDProxy> m_objectIDProxy;
@@ -127,7 +115,7 @@ class StatisticProxy {
 
         UserDistribution& getClassifiedUserTypeDistribution(const std::string &event_type, const std::string &repoID);
 
-        std::vector<std::string>& getEventTypes() const;
+        std::vector<std::string> getEventTypes() const;
 
     uint64_t getUserCommunityTag(const std::string &userID) const;
 };

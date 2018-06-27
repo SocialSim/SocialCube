@@ -26,19 +26,24 @@ vector<unique_ptr<Event>> ClassifiedPointProcessObjectAgent::simulate(time_t t_c
 
     vector<unique_ptr<Event>> events;
 
-    vector<string> event_types = m_statProxy.getEventTypes();
-
     for (int i = 0; i < k; ++i) {
-        vector<double> tmp_mu(mu[i]);
+        vector<double> tmp_mu({mu[i]});
+        for (auto it : tmp_mu) {
+            cout << it << endl;
+        }
         vector<vector<double>> tmp_alpha({alpha[i]});
-        vector<double> tmp_beta(beta[i]);
-        vector<string> tmp_typeList({event_types[i]});
+
+        vector<double> tmp_beta({beta[i]});
+        for (auto it : tmp_beta) {
+            cout << it << endl;
+        }
+        vector<string> tmp_typeList({typeList[i]});
+        cout << "id: " << m_id << ", " << "typeList[i] = " << typeList[i] << endl;
         int tmp_k = 1;
-
-        UserDistribution userDistribution = m_statProxy.getClassifiedUserTypeDistribution(event_types[i], m_id);
-
+        UserDistribution userDistribution = m_statProxy.getClassifiedUserTypeDistribution(typeList[i], m_id);
         vector<unique_ptr<Event>> tmp_events = IntegratedPointProcessModel::evaluate(m_id, tmp_mu, tmp_alpha, tmp_beta, tmp_typeList, tmp_k, userDistribution,
                                               t_currentTime, t_endTime);
+
         events.insert(events.end(), make_move_iterator(tmp_events.begin()), make_move_iterator(tmp_events.end()));
     }
     return events;

@@ -40,6 +40,11 @@ vector<double> PointProcessStat::getBeta() const {
 }
 
 vector<string> PointProcessStat::getTypeList() const {
+	cout << "=========================" << endl;
+	cout << "m_userID = " << m_userID << ", typeList:" << endl;
+	socialcube::print_vec(typeList);
+	cout << "=========================" << endl;
+
 	return typeList;
 }
 
@@ -69,5 +74,5 @@ void PointProcessStat::show() const {
 }
 
 string PointProcessStat::getUserID() const {
-    return m_userID;
+	return m_userID;
 }

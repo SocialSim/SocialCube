@@ -35,6 +35,7 @@ void PointProcessProxy::parse() {
 		string type;
 		vector<string> typeList;
 		while(in >> type) {
+			cout << "userID = " << userID << ", " << "type = " << type << endl;
 			typeList.push_back(type);
 		}
 		pointProcessStat->setTypeList(typeList);

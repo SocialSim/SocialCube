@@ -137,11 +137,12 @@ UserDistribution& StatisticProxy::getClassifiedUserTypeDistribution(const std::s
     return (pos->second)->get(repoID);
 };
 
-std::vector<std::string>& StatisticProxy::getEventTypes() const {
+std::vector<std::string> StatisticProxy::getEventTypes() const {
     vector<string> eventTypes;
     for(auto it = m_event_types.begin(); it != m_event_types.end(); ++it) {
         eventTypes.push_back(it->second);
     }
+    cout << "eventTypes size = " << eventTypes.size() << endl;
 
     return eventTypes;
 }
@@ -201,42 +202,43 @@ uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
     return m_userIDProxy->getCommunityTag(userID);
 }
 
+
 void StatisticProxy::setCommitCommentEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultCommitCommentEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["commitCommentEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setDeleteEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultDeleteEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["deleteEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setIssueCommentEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultIssueCommentEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["issueCommentEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setPullRequestEventUserDistributionProxyFilePath(std::string path){
-    m_defaultPullRequestEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["pullRequestEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setPushEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultPushEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["pushEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setCreateEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultCreateEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["createEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setForkEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultForkEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["forkEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setIssueEventUserDistributionProxyFilePath(std::string path) {
-    m_defaultIssueEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["issueEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setPullRequestReviewCommentEventUserDistributionProxyFile(std::string path) {
-    m_defaultPullRequestReviewCommentEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["pullRequestReviewCommentEventUserDistributionProxyFile"] = path;
 }
 
 void StatisticProxy::setWatchEventUserDistributionProxyFile(std::string path) {
-    m_defaultWatchEventUserDistributionProxyFile = path;
+    m_defaultClassifiedUserDistributionProxyFiles["watchEventUserDistributionProxyFile"] = path;
 }

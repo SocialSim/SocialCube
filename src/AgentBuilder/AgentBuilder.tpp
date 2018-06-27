@@ -66,11 +66,13 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         buildObjects();
     }
     // ClassifiedPointProcess model
-    if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, ClassifiedPointProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
+        m_statProxy.parsePointProcessStats();
         m_statProxy.parseClassifiedUserDistributionStats();
         buildObjects();
+        cout << "finish building objects" << endl;
     }
     // PoissonProcess model
     else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
@@ -141,6 +143,7 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
+        cout << "objectID = " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

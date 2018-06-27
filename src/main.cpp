@@ -91,7 +91,9 @@ int main(int argc, const char* argv[]) {
                 agentList = builder.getObjectAgentList();
                 for(auto& iter : agentList)
                     s.addUserAgent(iter.get());
+                cout << "get agentList" << endl;
                 s.simulate();
+                cout << "finish simulation" << endl;
             } else if (builderType == "PoissonProcess") {
                 // Initialize Simulator
                 EventBasedSimulator s;
