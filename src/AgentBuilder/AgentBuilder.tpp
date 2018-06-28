@@ -81,6 +81,14 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePoissonProcessStats();
         buildObjects();
     }
+    // ClassifiedPoissonProcess model
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, ClassifiedPoissonProcessObjectAgent>::value) {
+        m_statProxy.parseObjectID();
+        m_statProxy.parsePoissonProcessStats();
+        m_statProxy.parseClassifiedUserDistributionStats();
+        buildObjects();
+    }
     // SimpleBehavior model (user centric)
     else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {

@@ -22,6 +22,7 @@ OBJS := $(OBJS) CommunityManager.o
 OBJS := $(OBJS) SimpleGithubObjectAgent.o 
 OBJS := $(OBJS) PointProcessObjectAgent.o
 OBJS := $(OBJS) ClassifiedPointProcessObjectAgent.o
+OBJS := $(OBJS) ClassifiedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
@@ -86,6 +87,9 @@ PointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PointProcessObjectAge
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ClassifiedPointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/ClassifiedPointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/ClassifiedPointProcessObjectAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ClassifiedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/ClassifiedPoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/ClassifiedPoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 IntegratedPointProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp

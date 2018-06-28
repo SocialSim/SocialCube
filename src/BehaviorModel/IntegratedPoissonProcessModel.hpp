@@ -28,6 +28,7 @@ public:
             const vector<double>& mu,
             const vector<string>& typeList,
             int k,
+            UserDistribution userDistribution,
             time_t t_startTime,
             time_t t_endTime
     );

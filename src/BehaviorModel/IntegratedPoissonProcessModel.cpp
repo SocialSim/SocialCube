@@ -5,14 +5,13 @@ using namespace std;
 std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
         const string objectID,
         const vector<double>& mu,
-	const vector<string>& typeList,
-	int k,
+	    const vector<string>& typeList,
+	    int k,
+        UserDistribution userDistribution,
         time_t t_startTime,
         time_t t_endTime
 ) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
-
-    UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(objectID);
 
     vector<unique_ptr<Event>> events;
 

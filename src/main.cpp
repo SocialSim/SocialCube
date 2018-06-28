@@ -11,6 +11,8 @@
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/ClassifiedPointProcessObjectAgent.hpp"
+#include "Agent/ObjectAgent/GithubAgent/ClassifiedPoissonProcessObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
@@ -91,9 +93,7 @@ int main(int argc, const char* argv[]) {
                 agentList = builder.getObjectAgentList();
                 for(auto& iter : agentList)
                     s.addUserAgent(iter.get());
-                cout << "get agentList" << endl;
                 s.simulate();
-                cout << "finish simulation" << endl;
             } else if (builderType == "PoissonProcess") {
                 // Initialize Simulator
                 EventBasedSimulator s;
@@ -106,6 +106,24 @@ int main(int argc, const char* argv[]) {
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
                 std::vector<std::shared_ptr<PoissonProcessObjectAgent>> agentList;
+                builder.build();
+                agentList = builder.getObjectAgentList();
+                for(auto& iter : agentList)
+                    s.addUserAgent(iter.get());
+                s.simulate();
+            } else if (builderType == "ClassifiedPoissonProcess") {
+                // Initialize Simulator
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SimpleGithubUserAgent, ClassifiedPoissonProcessObjectAgent> builder;
+                for (auto& iter : filePaths) {
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector<std::shared_ptr<ClassifiedPoissonProcessObjectAgent>> agentList;
                 builder.build();
                 agentList = builder.getObjectAgentList();
                 for(auto& iter : agentList)

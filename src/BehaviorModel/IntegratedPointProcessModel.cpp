@@ -24,7 +24,7 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
     }
     for (time_t t_currentTime = t_startTime; t_currentTime < t_endTime; ) {
         int eventNum = userDistribution.getTotalCount(t_currentTime);
- 	vector<string> userIDs = userDistribution.getShuffledUserIDs(t_currentTime);
+ 	    vector<string> userIDs = userDistribution.getShuffledUserIDs(t_currentTime);
 
         vector<unique_ptr<Event>> weekEvents;
 
@@ -59,8 +59,8 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
                         interval[i] = temInterval;
                         break;
                     }
-		 }
-	    }
+		        }
+	        }
 
             int j = matops::minargs(interval);
             string actionType = typeList[j];
@@ -78,26 +78,24 @@ std::vector<unique_ptr<Event>> IntegratedPointProcessModel::evaluate(
         }
         double ratio = (7*24*60) / abs(currentMinute - startMinute);
 
-	int counter = 0;
+        int counter = 0;
 
-	vector<unique_ptr<Event>> tmp;
-       
-	for (auto it = weekEvents.begin(); it != weekEvents.end(); ) {
+        vector<unique_ptr<Event>> tmp;
+
+        for (auto it = weekEvents.begin(); it != weekEvents.end(); ) {
             counter++;
-	    (*it)->warpTimestamp(startMinute * 60, ratio);
-	    time_t time = (*it)->getTimestamp();
+            (*it)->warpTimestamp(startMinute * 60, ratio);
+            time_t time = (*it)->getTimestamp();
             if ((*it)->getTimestamp() > t_endTime) {
-                // it = weekEvents.erase(it);
-	    	// cout << "counter = " << counter << ", tmp.size() = " << tmp.size() << endl;
-		break;
+                break;
             } else {
-		tmp.push_back(move(*it));
+                tmp.push_back(move(*it));
                 it++;
             }
         }
-	
-	move(tmp.begin(), tmp.end(), back_inserter(events));
-	// Add 1 week
+
+        move(tmp.begin(), tmp.end(), back_inserter(events));
+        // Add 1 week
         struct tm* tm_date = localtime(&t_currentTime);
         tm_date->tm_mday += 7;
         t_currentTime = mktime(tm_date);

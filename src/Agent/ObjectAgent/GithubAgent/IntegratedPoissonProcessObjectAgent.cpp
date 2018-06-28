@@ -21,8 +21,9 @@ vector<unique_ptr<Event>> IntegratedPoissonProcessObjectAgent::simulate(time_t t
     auto k = m_stat.getK();
     auto mu = m_stat.getMu();
     auto typeList = m_stat.getTypeList();
+    UserDistribution userDistribution = m_statProxy.getRepoUserDistribution(m_id);
 
-    vector<unique_ptr<Event>> events = IntegratedPoissonProcessModel::evaluate(m_id, mu, typeList, k,
+    vector<unique_ptr<Event>> events = IntegratedPoissonProcessModel::evaluate(m_id, mu, typeList, k, userDistribution,
                                                                                t_currentTime, t_endTime);
 
     return events;
