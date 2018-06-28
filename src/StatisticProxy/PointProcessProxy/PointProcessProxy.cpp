@@ -35,7 +35,6 @@ void PointProcessProxy::parse() {
 		string type;
 		vector<string> typeList;
 		while(in >> type) {
-			cout << "userID = " << userID << ", " << "type = " << type << endl;
 			typeList.push_back(type);
 		}
 		pointProcessStat->setTypeList(typeList);
@@ -52,11 +51,17 @@ void PointProcessProxy::parse() {
 		// parse alpha
 		getline(m_pointProcessStatisticsFile, tmp);
 
-		stringstream ss(tmp);
-		istream_iterator<std::string> begin(ss);
-		istream_iterator<std::string> end;
-		vector<std::string> segments(begin, end);
-
+		istringstream ss(tmp);
+/*
+ *                istream_iterator<std::string> begin(ss);
+ *                istream_iterator<std::string> end({});
+ *                vector<std::string> segments(begin, end);
+ *
+ */
+		vector<string> segments;
+		copy(std::istream_iterator<string>(ss),
+			std::istream_iterator<string>(),
+			std::back_inserter(segments));
 		vector<vector<double>> alpha;
 		string alpha_ele;
 

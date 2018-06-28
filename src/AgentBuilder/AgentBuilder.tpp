@@ -19,7 +19,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "hourlyActionRateProxyFile") {
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
     } else if (fileName == "dailyActivityLevelProxyFile") {
-        cout << "set dailyActivityLevelFile path" << endl;
         m_statProxy.setDailyActivityLevelProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
@@ -72,7 +71,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePointProcessStats();
         m_statProxy.parseClassifiedUserDistributionStats();
         buildObjects();
-        cout << "finish building objects" << endl;
     }
     // PoissonProcess model
     else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
@@ -151,7 +149,6 @@ template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
     for(auto& objectID : objectIDs) {
-        cout << "objectID = " << objectID << endl;
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
     }

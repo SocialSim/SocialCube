@@ -6,7 +6,6 @@ ClassifiedPoissonProcessObjectAgent::ClassifiedPoissonProcessObjectAgent(const s
                                                                                                m_statProxy(StatisticProxy::getInstance()),
                                                                                                m_stat(m_statProxy.getPoissonProcessStats(t_id))
 {
-    cout << "in constructor" << endl;
     static uint64_t id = 0;
     m_communityTag = id++;
     assert(&m_statProxy != 0);
@@ -26,15 +25,7 @@ vector<unique_ptr<Event>> ClassifiedPoissonProcessObjectAgent::simulate(time_t t
     vector<unique_ptr<Event>> events;
     for (int i = 0; i < k; ++i) {
         vector<double> tmp_mu({mu[i]});
-        cout << "tmp_mu:" << endl;
-        for (auto it : tmp_mu) {
-            cout << it << endl;
-        }
         vector<string> tmp_typeList({typeList[i]});
-        cout << "tmp_typeList:" << endl;
-        for (auto it : tmp_typeList) {
-            cout << it << endl;
-        }
         int tmp_k = 1;
 
         UserDistribution userDistribution = m_statProxy.getClassifiedUserTypeDistribution(typeList[i], m_id);

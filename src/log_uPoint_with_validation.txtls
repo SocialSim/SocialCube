@@ -1,0 +1,41 @@
+[32mStatisticProxy-31-parseObjectID:                    
+objectIDProxyFile: /home/Public/socialsim/weekly_evals/2018_0619/stats/shengzhong/data_rArima_uPoint_with_validation_dryrun_06-18-2018/combined_hawkes_ids.txt[0m
+[32mObjectIDProxy-28-parse:                             Object ID has 5266[0m
+[32mStatisticProxy-67-parsePointProcessStats:           
+pointProcessStatsProxyFile: /home/Public/socialsim/weekly_evals/2018_0619/stats/shengzhong/data_rArima_uPoint_with_validation_dryrun_06-18-2018/combined_hawkes_stats.txt[0m
+[32mPointProcessProxy-78-parse:                         Point Process Stat has 5266[0m
+[34m
+
+*************************** Event Based Simulator Configuration ***************************[0m
+[34mEventBasedSimulator-17-printConfig:                 Simulation Start Time: 1502928000[0m
+[34mEventBasedSimulator-18-printConfig:                 Simulation End Time: 1504223999[0m
+[34mEventBasedSimulator-19-printConfig:                 Simulation Unit Time: 3600[0m
+[34m*************************** Event Based Simulator Configuration ***************************
+
+[0m
+[34m
+
+*************************** Event Manager Configuration ***************************[0m
+[34mEventManager-41-start:                              Event Buffer Size: 1048576[0m
+[34mEventManager-42-start:                              Event Storage: events_uPoint_with_validation.txt[0m
+[34mEventManager-43-start:                              Event Show Status: 1[0m
+[34m*************************** Simulator Configuration ***************************
+
+[0m
+[32mCommunityManager-44-eventBasedSimulate:             Total 1 detected[0m
+Finish simulating BkaY_5mgWxPavz35H4BD4Q
+Finish simulating 2Jpz8-uJaZ3GPVLpPrShyg
+Finish simulating QsDu6DTkuFUJJkiYeAtDzg
+Finish simulating ZQAQBHK7GG_QtYPt52_vCQ
+Finish simulating nU5146WtyG5ku2UovHEC9w
+Finish simulating bIzPmNbJT-QvAR2m1Bx4tw
+Finish simulating LEhMkq-5hwGWPx2DBf_xmw
+Finish simulating h3SNAbFyC8n99igvxkKYOA
+Finish simulating 8--U02wRoG_1sZ99pcLowQ
+Finish simulating JPDXLp71-AsWjSgv_unhjw
+Finish simulating X3TKgmatZNg-DBxbNm-jqA
+Finish simulating ApZeDQvC-veHWlifafC30A
+Finish simulating bEhXYs34CgvJxwm-9Zvzlw
+Finish simulating qi3USuSvMFDwMDopug0bKg
+Finish simulating 6Rgus_WelXA80swy0i5UNw
+Finish simulating jkyjlJgXVWK6PvCqH_LvxA
