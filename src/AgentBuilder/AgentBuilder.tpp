@@ -19,8 +19,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "hourlyActionRateProxyFile") {
         m_statProxy.setHourlyActionRateProxyFilePath(filePath);
     } else if (fileName == "dailyActivityLevelProxyFile") {
-        cout << "set dailyActivityLevelFile path" << endl;
         m_statProxy.setDailyActivityLevelProxyFilePath(filePath);
+    } else if (fileName == "weeklEventCountProxyFile") {
+        m_statProxy.setWeeklyEventCountProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
     } else if (fileName == "typeDistributionProxyFile") {
@@ -72,6 +73,19 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
         m_statProxy.parseUserID();
         m_statProxy.parseDailyActivityLevel();
+        m_statProxy.parseObjectPreference();
+        m_statProxy.parseTypeDistribution();
+        m_statProxy.parseCountryCodesStats();
+        m_statProxy.parseActivityLevelStats();
+        buildUsers();
+    }
+    // WeeklyEventCountBehavior model
+    else if (std::is_same<TUserAgent, ParrotGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        cout << "LSTM Parrot Model" << endl;
+        m_statProxy.parseUserID();
+        m_statProxy.parseDailyActivityLevel();
+        m_statProxy.parseWeeklyEventCount();
         m_statProxy.parseObjectPreference();
         m_statProxy.parseTypeDistribution();
         m_statProxy.parseCountryCodesStats();

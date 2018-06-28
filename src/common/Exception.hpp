@@ -23,6 +23,13 @@ class TimeSpanExceedException: public std::exception {
     }
 };
 
+class TimeSpanExceedWeeklyEventCountException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "The given time span exceeds the one in WeeklyEventCount proxy file";
+    }
+};
+
 class ObjectPreferenceProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

@@ -16,6 +16,7 @@ OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) EventBasedSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o
 OBJS := $(OBJS) DailySimpleGithubUserAgent.o
+OBJS := $(OBJS) ParrotGithubUserAgent.o
 OBJS := $(OBJS) ClusteredGithubUserAgent.o 
 OBJS := $(OBJS) Community.o 
 OBJS := $(OBJS) CommunityManager.o 
@@ -26,12 +27,14 @@ OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
 OBJS := $(OBJS) DailySimpleBehaviorModel.o
+OBJS := $(OBJS) WeeklyEventCountBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) DailyActivityLevel.o
+OBJS := $(OBJS) WeeklyEventCount.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
@@ -41,6 +44,7 @@ OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) DailyActivityLevelProxy.o
+OBJS := $(OBJS) WeeklyEventCountProxy.o
 OBJS := $(OBJS) ObjectPreferenceProxy.o
 OBJS := $(OBJS) TypeDistributionProxy.o
 OBJS := $(OBJS) UserDistributionProxy.o
@@ -80,6 +84,9 @@ SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp
 DailySimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+ParrotGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/ParrotGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/ParrotGithubUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleGithubObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -101,6 +108,9 @@ SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/S
 DailySimpleBehaviorModel.o:	./BehaviorModel/DailySimpleBehaviorModel.cpp ./BehaviorModel/DailySimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+WeeklyEventCountBehaviorModel.o:	./BehaviorModel/WeeklyEventCountBehaviorModel.cpp ./BehaviorModel/WeeklyEventCountBehaviorModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 PointProcessModel.o:	./BehaviorModel/PointProcessModel.cpp ./BehaviorModel/PointProcessModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -120,6 +130,9 @@ HourlyActionRate.o:	./Dependency/HourlyActionRate.cpp ./Dependency/HourlyActionR
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 DailyActivityLevel.o:	./Dependency/DailyActivityLevel.cpp ./Dependency/DailyActivityLevel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+WeeklyEventCount.o:	./Dependency/WeeklyEventCount.cpp ./Dependency/WeeklyEventCount.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreference.o:	./Dependency/ObjectPreference.cpp ./Dependency/ObjectPreference.hpp
@@ -147,6 +160,9 @@ HourlyActionRateProxy.o:	./StatisticProxy/HourlyActionRateProxy/HourlyActionRate
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 DailyActivityLevelProxy.o: ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.cpp ./StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+WeeklyEventCountProxy.o: ./StatisticProxy/WeeklyEventCountProxy/WeeklyEventCountProxy.cpp ./StatisticProxy/WeeklyEventCountProxy/WeeklyEventCountProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ObjectPreferenceProxy.o:	./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.cpp ./StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp

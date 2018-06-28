@@ -51,6 +51,12 @@ void StatisticProxy::parseDailyActivityLevel() {
     m_dailyActivityLevelProxy->parse();
 }
 
+void StatisticProxy::parseWeeklyEventCount() {
+    DBG(LOGD(TAG, "\weeklyEventCount: " + m_defaultWeeklyEventCountProxyFile);)
+    m_weeklyEventCountProxy.reset(new WeeklyEventCountProxy(m_defaultWeeklyEventCountProxyFile));
+    m_weeklyEventCountProxy->parse();
+}
+
 void StatisticProxy::parseTypeDistribution() {
     DBG(LOGD(TAG, "\ntypeDistributionProxyFile: " + m_defaultTypeDistributionProxyFile);)
     m_typeDistributionProxy.reset(new TypeDistributionProxy(m_defaultTypeDistributionProxyFile));
@@ -111,6 +117,10 @@ DailyActivityLevel& StatisticProxy::getDailyActivityLevel(const string &userID) 
     return m_dailyActivityLevelProxy->get(userID);
 }
 
+WeeklyEventCount& StatisticProxy::getWeeklyEventCount(const string &userID) const {
+    return m_weeklyEventCountProxy->get(userID);
+}
+
 ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) const {
     return m_objectPreferenceProxy->get(userID);
 }
@@ -139,6 +149,7 @@ void StatisticProxy::initProxySourceFile() {
     m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
     m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
     m_defaultDailyActivityLevelProxyFile = socialcubePath + "/statistics/daily_activity_level.json";
+    m_defaultWeeklyEventCountProxyFile = socialcubePath + "/statistics/weekly_event_count.json";
     m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
     m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
     m_defaultUserDistributionProxyFile = socialcubePath + "/statistics/repo_user_distribution.json";
@@ -163,6 +174,10 @@ void StatisticProxy::setHourlyActionRateProxyFilePath(std::string hourlyActionRa
 
 void StatisticProxy::setDailyActivityLevelProxyFilePath(std::string dailyActivityLevelProxyFilePath) {
     m_defaultDailyActivityLevelProxyFile = dailyActivityLevelProxyFilePath;
+}
+
+void StatisticProxy::setWeeklyEventCountProxyFilePath(std::string weeklyEventCountProxyFilePath) {
+    m_defaultWeeklyEventCountProxyFile = weeklyEventCountProxyFilePath;
 }
 
 void StatisticProxy::setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath) {
@@ -212,6 +227,10 @@ string StatisticProxy::getStatProxyPath(string pname) {
         return m_defaultObjectPreferenceProxyFile;
     } else if (pname == "typeDistributionProxyFile") {
         return m_defaultTypeDistributionProxyFile;
+    } else if (pname == "dailyActivityLevelProxyFile") {
+        return m_defaultDailyActivityLevelProxyFile;
+    } else if (pname == "weeklyEventCountProxtFile") {
+        return m_defaultWeeklyEventCountProxyFile;
     } else if (pname == "pointProcessStatsProxyFile") {
         return m_defaultPointProcessStatsProxyFile;
     } else if (pname == "poissonProcessStatsProxyFile") {

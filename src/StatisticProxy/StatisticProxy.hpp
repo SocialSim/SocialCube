@@ -10,6 +10,7 @@
 #include "Dependency/ObjectPreference.hpp"
 #include "Dependency/PointProcessStat.hpp"
 #include "Dependency/DailyActivityLevel.hpp"
+#include "Dependency/WeeklyEventCount.hpp"
 #include "Dependency/PoissonProcessStat.hpp"
 #include "StatisticProxy/UserIDProxy/UserIDProxy.hpp"
 #include "StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp"
@@ -17,6 +18,7 @@
 #include "StatisticProxy/ObjectPreferenceProxy/ObjectPreferenceProxy.hpp"
 #include "StatisticProxy/HourlyActionRateProxy/HourlyActionRateProxy.hpp"
 #include "StatisticProxy/DailyActivityLevelProxy/DailyActivityLevelProxy.hpp"
+#include "StatisticProxy/WeeklyEventCountProxy/WeeklyEventCountProxy.hpp"
 #include "StatisticProxy/TypeDistributionProxy/TypeDistributionProxy.hpp"
 #include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 #include "StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp"
@@ -31,6 +33,7 @@ class StatisticProxy {
         std::string m_defaultObjectPreferenceProxyFile;
         std::string m_defaultHourlyActionRateProxyFile;
         std::string m_defaultDailyActivityLevelProxyFile;
+        std::string m_defaultWeeklyEventCountProxyFile;
         std::string m_defaultTypeDistributionProxyFile;
         std::string m_defaultUserDistributionProxyFile;
         std::string m_defaultPointProcessStatsProxyFile;
@@ -45,6 +48,7 @@ class StatisticProxy {
         std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
         std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
         std::unique_ptr<DailyActivityLevelProxy> m_dailyActivityLevelProxy;
+        std::unique_ptr<WeeklyEventCountProxy> m_weeklyEventCountProxy;
         std::unique_ptr<TypeDistributionProxy> m_typeDistributionProxy;
         std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
@@ -68,6 +72,7 @@ class StatisticProxy {
         void parseObjectPreference();
         void parseHourlyActionRate();
         void parseDailyActivityLevel();
+        void parseWeeklyEventCount();
         void parseTypeDistribution();
         void parseUserDistribution();
         void parsePointProcessStats();
@@ -79,6 +84,7 @@ class StatisticProxy {
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
         void setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath);
         void setDailyActivityLevelProxyFilePath(std::string activityLevelProxyFilePath);
+        void setWeeklyEventCountProxyFilePath(std:: string weeklyEventCountProxyFilePath);
         void setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath);
         void setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath);
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
@@ -103,6 +109,8 @@ class StatisticProxy {
         HourlyActionRate& getUserHourlyActionRate(const std::string &userID) const;
 
         DailyActivityLevel& getDailyActivityLevel(const string &userID) const;
+
+        WeeklyEventCount& getWeeklyEventCount(const string &userID) const;
 
         ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
 
