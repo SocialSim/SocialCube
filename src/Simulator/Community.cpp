@@ -37,10 +37,14 @@ std::vector<std::unique_ptr<Event>> Community::simulate(time_t t_startTime, time
 	time_t endTime = t_endTime;
 
     vector<unique_ptr<Event>> events;
-
+    int counter = 0;
     for(auto& agent : m_community) {
 		vector<unique_ptr<Event>> agent_events = agent->simulate(currentTime, endTime);
-		cout << "Finish simulating " << agent->getID() << endl;
+		// cout << "Finish simulating " << agent->getID() << endl;
+		if (counter % 10000 == 0) {
+			cout << "Finish simulating " << counter << " agents" << endl;
+		}
+		counter++;
 		events.insert(
 			events.end(),
 			std::make_move_iterator(agent_events.begin()),

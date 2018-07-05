@@ -47,8 +47,8 @@ void Event::show() const {
 
 ostream& operator<<(ostream& os, const Event& e)
 {  
-    // os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
-    os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getObjectID() << "," << e.getUserID() << "\n";
+    os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getUserID() << "," << e.getObjectID() << "\n";
+    // os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getObjectID() << "," << e.getUserID() << "\n";
     return os;  
 }
 
