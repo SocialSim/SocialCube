@@ -35,6 +35,8 @@ vector<unique_ptr<Event>> Community::step(time_t t_currentTime, time_t t_unitTim
 std::vector<std::unique_ptr<Event>> Community::simulate(time_t t_startTime, time_t t_endTime) {
 	time_t currentTime = t_startTime;
 	time_t endTime = t_endTime;
+    
+    EventManager& em = EventManager::getInstance();
 
     vector<unique_ptr<Event>> events;
     int counter = 0;
@@ -45,11 +47,14 @@ std::vector<std::unique_ptr<Event>> Community::simulate(time_t t_startTime, time
 			cout << "Finish simulating " << counter << " agents" << endl;
 		}
 		counter++;
-		events.insert(
-			events.end(),
-			std::make_move_iterator(agent_events.begin()),
-			std::make_move_iterator(agent_events.end())
-		);
+		em.storeEvent(agent_events);
+		/*
+		 *events.insert(
+		 *        events.end(),
+		 *        std::make_move_iterator(agent_events.begin()),
+		 *        std::make_move_iterator(agent_events.end())
+		 *);
+		 */
     }
     return events;
 }
