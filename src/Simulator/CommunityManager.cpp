@@ -19,7 +19,7 @@ void CommunityManager::simulate(vector<string> cc_list, vector<vector<float>> te
     m_endTime = t_endTime;
     m_unitTime = t_unitTime;
 
-    EventManager& em = EventManager::getInstance();
+    // EventManager& em = EventManager::getInstance();
 
     vector<unique_ptr<Event>> events;
 
@@ -39,7 +39,8 @@ void CommunityManager::simulate(vector<string> cc_list, vector<vector<float>> te
             // DBG(LOGD(TAG, "Simulating community " + stringfy(communityTag) + " (" + stringfy(finishedCommunityCount++) + "/" + stringfy(communityCnt) + ")");)
 
             vector<unique_ptr<Event>> community_events = community.second->step(cc_list, temp_pref_data[count], currentTime, m_unitTime);
-            em.storeEvent(community_events);
+            
+            // em.storeEvent(community_events);
         }
     }
 }
@@ -50,13 +51,13 @@ void CommunityManager::eventBasedSimulate(vector<string> cc_list, vector<vector<
     m_startTime = t_startTime;
     m_endTime = t_endTime;
 
-    EventManager& em = EventManager::getInstance();
+    // EventManager& em = EventManager::getInstance();
 
     vector<unique_ptr<Event>> events;
 
     for(auto& community: m_community) {
 		vector<unique_ptr<Event>> community_events = community.second->simulate(cc_list, temp_pref_data, m_startTime, m_endTime);
-		em.storeEvent(community_events);
+		// em.storeEvent(community_events);
     }
 }
 

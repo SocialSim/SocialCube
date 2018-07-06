@@ -4,7 +4,7 @@ using namespace std;
 
 DBG(static const string tag="EventManager";)
 
-EventManager::EventManager() : m_eventCount(0), m_bufferSize(1<<20),
+EventManager::EventManager() : m_eventCount(0), m_bufferSize(1<<19),
     m_eventFile(""), m_eventOn(false) {
     return;    
 }

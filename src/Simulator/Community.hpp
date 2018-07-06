@@ -13,6 +13,7 @@
 #include <algorithm>
 #include "Agent/Agent.hpp"
 #include "common/Event.hpp"
+#include "EventManager/EventManager.hpp"
 
 class Community {
     private:

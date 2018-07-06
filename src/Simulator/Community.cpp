@@ -21,6 +21,8 @@ void Community::add(Agent const * t_agent) {
 vector<unique_ptr<Event>> Community::step(vector<string> cc_list, vector<float> temp_pref_data, time_t t_currentTime, time_t t_unitTime) {
     vector<unique_ptr<Event>> events;
 
+    EventManager& em = EventManager::getInstance();
+
     for(auto& agent : m_community) {
         // Uses Temporal Preferences of Users
         string user_cc = agent->getCC();
@@ -32,11 +34,14 @@ vector<unique_ptr<Event>> Community::step(vector<string> cc_list, vector<float> 
         }
 
         vector<unique_ptr<Event>> agent_events = agent->step(t_currentTime, t_unitTime);
-        events.insert(
-            events.end(),
-            std::make_move_iterator(agent_events.begin()),
-            std::make_move_iterator(agent_events.end())
-        );
+
+        em.storeEvent(agent_events);
+
+        // events.insert(
+        //     events.end(),
+        //     std::make_move_iterator(agent_events.begin()),
+        //     std::make_move_iterator(agent_events.end())
+        // );
     }
     return events;
 }
@@ -45,6 +50,8 @@ vector<unique_ptr<Event>> Community::step(vector<string> cc_list, vector<float> 
 std::vector<std::unique_ptr<Event>> Community::simulate(vector<string> cc_list, vector<vector<float>> temp_pref_data, time_t t_startTime, time_t t_endTime) {
 	time_t currentTime = t_startTime;
 	time_t endTime = t_endTime;
+
+    EventManager& em = EventManager::getInstance();
 
     vector<unique_ptr<Event>> events;
 
@@ -58,12 +65,14 @@ std::vector<std::unique_ptr<Event>> Community::simulate(vector<string> cc_list, 
         }
 
 		vector<unique_ptr<Event>> agent_events = agent->simulate(agent_temp_pref, currentTime, endTime);
-		// cout << "Finish simulating " << agent->getID() << endl;
-		events.insert(
-			events.end(),
-			std::make_move_iterator(agent_events.begin()),
-			std::make_move_iterator(agent_events.end())
-		);
+
+        em.storeEvent(agent_events);
+
+		// events.insert(
+		// 	events.end(),
+		// 	std::make_move_iterator(agent_events.begin()),
+		// 	std::make_move_iterator(agent_events.end())
+		// );
     }
     return events;
 }
