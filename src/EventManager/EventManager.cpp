@@ -25,14 +25,26 @@ void EventManager::emitEventOnBufferFull() {
 }
 
 void EventManager::emitEvent() {
-    if(m_eventOn)
-        _emitEvent();
+    if(m_eventOn) {
+        if (m_center == "user-centric") {
+            _emitUserCentricEvent();
+        } else if (m_center == "repo-centric") {
+            _emitRepoCentricEvent();
+        }
+    }
 }
 
-void EventManager::_emitEvent(){
+void EventManager::_emitUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-	 m_eventFile << *event;
+        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," << event->getObjectID() << "\n";
+    }
+}
+
+void EventManager::_emitRepoCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    for(auto& event : m_events) {
+        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," << event->getUserID() <<"\n";
     }
 }
 
@@ -67,6 +79,10 @@ void EventManager::storeEvent(std::vector<std::unique_ptr<Event>>& events) {
     events.clear();
 
     emitEventOnBufferFull();
+}
+
+void EventManager::setCenter(const std::string& center) {
+    m_center = center;
 }
 
 void EventManager::setEventShow(bool t_eventOn) {

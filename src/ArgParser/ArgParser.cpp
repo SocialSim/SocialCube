@@ -26,6 +26,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("e, end_time", "Simulation end time", cxxopts::value<string>())
           ("t, time_zone", "Simulation time zone", cxxopts::value<string>())
           ("u, unit_time", "Simulation unit time", cxxopts::value<string>())
+          ("c, center", "User-centric or repo-centric", cxxopts::value<string>())
           ("event_buffer", "Buffer size of Event Manager", cxxopts::value<uint64_t>())
           ("show_profile", "Show profiling results after finishing simulation")
           ("show_event", "Store all events of simulation")
@@ -75,6 +76,18 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 parseUnitTime(unitTime);
             } else {
                 simulator_unitTime = 3600;
+            }
+
+            if (result.count("center")) {
+                string center = result["center"].as<string>();
+                if (center == "user-centric" or center == "repo-centric") {
+                    simulator_center = center;
+                } else {
+                    std::cout << "unknown centric method: " << center << std::endl;
+                    exit(1);
+                }
+            } else {
+                simulator_center = "user-centric";
             }
 
             if (result.count("event_buffer")) { 
@@ -155,6 +168,10 @@ time_t ArgParser::getSimulationEndTime() {
 
 time_t ArgParser::getSimulationUnitTime() {
     return simulator_unitTime;
+}
+
+std::string ArgParser::getSimulationCenter() {
+    return simulator_center;
 }
 
 bool ArgParser::getSimulationShowProfileStatus() {

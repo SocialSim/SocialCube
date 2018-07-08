@@ -15,7 +15,8 @@
 class EventManager {
     private:
         // Private member variables
-        
+        std::string m_center;
+
         std::vector<std::unique_ptr<Event>> m_events;
 
         uint64_t m_eventCount;
@@ -34,7 +35,9 @@ class EventManager {
 
         void emitEvent();
 
-        void _emitEvent();
+        void _emitUserCentricEvent();
+
+        void _emitRepoCentricEvent();
 
         EventManager();
 
@@ -42,6 +45,8 @@ class EventManager {
         static EventManager& getInstance();
 
         ~EventManager() = default;
+
+        void setCenter(const std::string& center);
 
         void setEventShow(bool t_eventOn); 
 

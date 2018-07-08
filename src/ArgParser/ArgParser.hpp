@@ -19,6 +19,8 @@ class ArgParser {
 
         time_t simulator_unitTime;
 
+        std::string simulator_center;
+
         bool profile_show;
 
         bool event_show;
@@ -58,6 +60,8 @@ class ArgParser {
         time_t getSimulationEndTime();
 
         time_t getSimulationUnitTime();
+
+        std::string getSimulationCenter();
 
         bool getSimulationShowProfileStatus();
 
