@@ -32,6 +32,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("show_event", "Store all events of simulation")
           ("event_file", "File name for storing events", cxxopts::value<string>())
           ("proxy_config_file", "File name for proxy configuration file", cxxopts::value<string>())
+          ("default_file_path", "The path for searching default proxy files", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
         try 
@@ -131,6 +132,12 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 proxy_config_file = socialcubePath + "/ProxyFilePaths.config";
             }
 
+            if (result.count("default_file_path")) {
+                default_file_path = result["default_file_path"].as<string>();
+            } else {
+                default_file_path = getenv("SOCIALCUBEPATH");
+            }
+
             if (result.count("init_file")) { 
                 readFromFile = true;
             } else {
@@ -187,6 +194,10 @@ string ArgParser::getSimulationEventFileName() {
 
 string ArgParser::getProxyConfigFileName() {
     return proxy_config_file;
+}
+
+string ArgParser::getDefaultFilePath() {
+    return default_file_path;
 }
 
 uint64_t ArgParser::getSimulationEventBufferSize() {

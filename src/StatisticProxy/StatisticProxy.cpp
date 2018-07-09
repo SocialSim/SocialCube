@@ -23,9 +23,7 @@ StatisticProxy& StatisticProxy::getInstance() {
 }
 
 StatisticProxy::StatisticProxy() {
-
-    initProxySourceFile();
-
+    // initProxySourceFile();
     return;
 }
 
@@ -147,9 +145,9 @@ std::vector<std::string> StatisticProxy::getEventTypes() const {
     return eventTypes;
 }
 
-void StatisticProxy::initProxySourceFile() {
+void StatisticProxy::initProxySourceFile(const std::string &default_file_path) {
 
-    const string socialcubePath = (getenv("SOCIALCUBEPATH"));
+    const string socialcubePath = default_file_path;
 
     m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
     m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";

@@ -32,7 +32,7 @@ private:
 
 public:
 
-    AgentBuilder();
+    AgentBuilder(const std::string &default_file_path);
 
     ~AgentBuilder();
 

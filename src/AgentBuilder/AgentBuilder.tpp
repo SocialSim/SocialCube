@@ -1,7 +1,9 @@
 #include "AgentBuilder.hpp"
 
 template<class TUserAgent, class TObjectAgent>
-AgentBuilder<TUserAgent, TObjectAgent>::AgentBuilder() : m_statProxy(StatisticProxy::getInstance()) {
+AgentBuilder<TUserAgent, TObjectAgent>::AgentBuilder(const std::string &default_file_path) : m_statProxy(StatisticProxy::getInstance()) {
+    m_statProxy.initProxySourceFile(default_file_path);
+
     return;
 }
 
@@ -122,7 +124,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         cout << "Wrong agent type combination" << endl;
     }
     // Reset proxy source files
-    m_statProxy.initProxySourceFile();
+    // m_statProxy.initProxySourceFile();
 }
 
 template<class TUserAgent, class TObjectAgent>

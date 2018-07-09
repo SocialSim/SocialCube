@@ -58,7 +58,7 @@ class StatisticProxy {
         
         static StatisticProxy& getInstance();
 
-        void initProxySourceFile();
+        void initProxySourceFile(const string &default_file_path);
 
         void parseUserID();
         void parseObjectID();

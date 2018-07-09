@@ -66,7 +66,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, PointProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, PointProcessObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
@@ -84,7 +84,8 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, ClassifiedPointProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, ClassifiedPointProcessObjectAgent> builder(args.getDefaultFilePath());
+
                 for (auto& iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
@@ -102,7 +103,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, PoissonProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, PoissonProcessObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths)
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
@@ -119,7 +120,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, ClassifiedPoissonProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, ClassifiedPoissonProcessObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
@@ -137,7 +138,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths)
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
@@ -154,7 +155,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<DailySimpleGithubUserAgent, SimpleGithubObjectAgent> builder;
+                AgentBuilder<DailySimpleGithubUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths)
                     builder.setFilePath(iter.first, iter.second);
                 filePaths.clear();
@@ -171,7 +172,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, IntegratedPointProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, IntegratedPointProcessObjectAgent> builder(args.getDefaultFilePath());
                 for (auto& iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
@@ -188,7 +189,7 @@ int main(int argc, const char* argv[]) {
                 s.setEndTime(args.getSimulationEndTime());
                 s.setUnitTime(args.getSimulationUnitTime());
 
-                AgentBuilder<SimpleGithubUserAgent, IntegratedPoissonProcessObjectAgent> builder;
+                AgentBuilder<SimpleGithubUserAgent, IntegratedPoissonProcessObjectAgent> builder(args.getDefaultFilePath());
                 for (auto &iter : filePaths) {
                     builder.setFilePath(iter.first, iter.second);
                 }
