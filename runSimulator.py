@@ -64,7 +64,7 @@ print('new_user_model_cmd: ', new_user_model_cmd)
 os.system(new_user_model_cmd)
 
 # Combine the simulation results of three parts.
-combined_output_file = args['--output_file']
+combined_output_file = args.output_file
 combined_cmd = "cat " + main_model_args['event_file'] + " " + new_user_model_args['event_file'] + " " + new_repo_model_args['event_file'] + " > " + combined_output_file
 print(combined_cmd)
 os.system(combined_cmd)
