@@ -41,27 +41,33 @@ main_model_cmd = "./src/socialcube --show_profile --show_event" + \
 print('main_model_cmd: ', main_model_cmd)
 os.system(main_model_cmd)
 
-# Run the new user part.
-new_user_model_cmd = "./src/socialcube --show_profile --show_event" + \
-                 " -s " + new_user_model_args['start_date'] + \
-                 " -e " + new_user_model_args['end_date'] + \
-                 " -c " + new_user_model_args['center'] + \
-                 " --proxy_config_file " + new_user_model_args['proxy_config_file'] + \
-                 " --event_file " + new_user_model_args['event_file'] + \
-                 " 2>&1 | tee " + new_user_model_args['log_file']
-print('new_user_model_cmd: ', new_user_model_cmd)
-os.system(new_user_model_cmd)
+if not os.path.exists(new_user_model_args['event_file']):
+    # Run the new user part.
+    new_user_model_cmd = "./src/socialcube --show_profile --show_event" + \
+                     " -s " + new_user_model_args['start_date'] + \
+                     " -e " + new_user_model_args['end_date'] + \
+                     " -c " + new_user_model_args['center'] + \
+                     " --proxy_config_file " + new_user_model_args['proxy_config_file'] + \
+                     " --event_file " + new_user_model_args['event_file'] + \
+                     " 2>&1 | tee " + new_user_model_args['log_file']
+    print('new_user_model_cmd: ', new_user_model_cmd)
+    os.system(new_user_model_cmd)
+else:
+    print("NewUserModel result already exists: " + new_user_model_args['event_file'])
 
-# Run the new repo part.
-new_repo_model_cmd = "./src/socialcube --show_profile --show_event" + \
-                     " -s " + new_repo_model_args['start_date'] + \
-                     " -e " + new_repo_model_args['end_date'] + \
-                     " -c " + new_repo_model_args['center'] + \
-                     " --proxy_config_file " + new_repo_model_args['proxy_config_file'] + \
-                     " --event_file " + new_repo_model_args['event_file'] + \
-                     " 2>&1 | tee " + new_repo_model_args['log_file']
-print('new_user_model_cmd: ', new_user_model_cmd)
-os.system(new_user_model_cmd)
+if not os.path.exists(new_repo_model_args['event_file']): 
+    # Run the new repo part.
+    new_repo_model_cmd = "./src/socialcube --show_profile --show_event" + \
+                         " -s " + new_repo_model_args['start_date'] + \
+                         " -e " + new_repo_model_args['end_date'] + \
+                         " -c " + new_repo_model_args['center'] + \
+                         " --proxy_config_file " + new_repo_model_args['proxy_config_file'] + \
+                         " --event_file " + new_repo_model_args['event_file'] + \
+                         " 2>&1 | tee " + new_repo_model_args['log_file']
+    print('new_user_model_cmd: ', new_repo_model_cmd)
+    os.system(new_repo_model_cmd)
+else:
+    print("NewRepoModel result already exists: " + new_repo_model_args['event_file'])
 
 # Combine the simulation results of three parts.
 combined_output_file = args.output_file
