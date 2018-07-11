@@ -8,7 +8,6 @@ DailySimpleGithubUserAgent::DailySimpleGithubUserAgent(const string& t_id) : Use
     m_objectPreference(m_statProxy.getUserObjectPreference(m_id)),
     m_typeDistribution(m_statProxy.getUserTypeDistribution(m_id))
 {
-    cout << "user id: " << t_id << endl;
     assert(&m_dailyActivityLevel != 0);
     assert(&m_objectPreference != 0);
     assert(&m_typeDistribution != 0);
