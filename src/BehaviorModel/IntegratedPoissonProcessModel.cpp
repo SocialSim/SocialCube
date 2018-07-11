@@ -63,8 +63,7 @@ std::vector<unique_ptr<Event>> IntegratedPoissonProcessModel::evaluate(
 		    (*it)->warpTimestamp(startMinute * 60, ratio);
 		    time_t time = (*it)->getTimestamp();
 		    if ((*it)->getTimestamp() > t_endTime) {
-	    		// it = weekEvents.erase(it);
-			break;
+	    		it = weekEvents.erase(it);
 		    } else {
 			it++;
 		    }
