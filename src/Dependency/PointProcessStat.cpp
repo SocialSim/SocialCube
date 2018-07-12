@@ -40,8 +40,6 @@ vector<double> PointProcessStat::getBeta() const {
 }
 
 vector<string> PointProcessStat::getTypeList() const {
-	socialcube::print_vec(typeList);
-
 	return typeList;
 }
 
