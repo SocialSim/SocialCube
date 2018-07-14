@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
+#include "StatisticProxy/StatisticProxy.hpp"
 
 class Event {
 private:
@@ -14,6 +15,10 @@ private:
     std::string m_eventType;
 
     time_t m_timestamp;
+
+    std::string m_action;
+
+    bool m_merged;
 
 public:
     Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType, time_t m_timestamp);
@@ -29,6 +34,14 @@ public:
     time_t getTimestamp() const;
 
     std::string getTimestampStr() const;
+
+    std::string getAction() const;
+
+    std::string getMerged() const;
+
+    void setAction(double p_opened, double p_closed, double p_reopened);
+
+    void setMerged(double p);
 
     void warpTimestamp(time_t startTime, double ratio);
 

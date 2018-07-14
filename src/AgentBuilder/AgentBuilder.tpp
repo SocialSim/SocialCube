@@ -54,6 +54,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPullRequestReviewCommentEventUserDistributionProxyFile(filePath);
     } else if (fileName == "watchEventUserDistributionProxyFile") {
         m_statProxy.setWatchEventUserDistributionProxyFile(filePath);
+    } else if (fileName == "subEventTypeProbabilityProxyFile") {
+        m_statProxy.setSubEventTypeProbabilityProxyFile(filePath);
     }
 }
 
@@ -64,6 +66,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     std::is_same<TObjectAgent, PointProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parsePointProcessStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     }
     // ClassifiedPointProcess model
@@ -72,6 +75,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseObjectID();
         m_statProxy.parsePointProcessStats();
         m_statProxy.parseClassifiedUserDistributionStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     }
     // PoissonProcess model
@@ -79,6 +83,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     std::is_same<TObjectAgent, PoissonProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parsePoissonProcessStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     }
     // ClassifiedPoissonProcess model
@@ -87,6 +92,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseObjectID();
         m_statProxy.parsePoissonProcessStats();
         m_statProxy.parseClassifiedUserDistributionStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     }
     // SimpleBehavior model (user centric)
@@ -96,6 +102,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseHourlyActionRate();
         m_statProxy.parseObjectPreference();
         m_statProxy.parseTypeDistribution();
+        m_statProxy.parseSubEventTypeProbability();
         buildUsers();
     }
     // DailySimpleBehavior model
@@ -105,6 +112,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseDailyActivityLevel();
         m_statProxy.parseObjectPreference();
         m_statProxy.parseTypeDistribution();
+        m_statProxy.parseSubEventTypeProbability();
         buildUsers();
     }
     // IntegratedPointProcess model
@@ -113,12 +121,14 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseObjectID();
         m_statProxy.parseUserDistribution();
         m_statProxy.parsePointProcessStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     } else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, IntegratedPoissonProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parseUserDistribution();
         m_statProxy.parsePoissonProcessStats();
+        m_statProxy.parseSubEventTypeProbability();
         buildObjects();
     } else {
         cout << "Wrong agent type combination" << endl;

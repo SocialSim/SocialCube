@@ -85,6 +85,26 @@ void StatisticProxy::parsePoissonProcessStats() {
     m_poissonProcessProxy->parse();
 }
 
+void StatisticProxy::parseSubEventTypeProbability() {
+    DBG(LOGD(TAG, "\nsubEventTypeProbability: " + m_defaultSubEventTypeProbabilityProxyFile);)
+    cout << "in parseSubEventTypeProbability"<< endl;
+    std::ifstream filestream;
+
+    filestream.open(m_defaultSubEventTypeProbabilityProxyFile);
+
+    string tmp;
+    while (getline(filestream, tmp)) {
+        string key = tmp.substr(0, tmp.find("="));
+        double p = stod(tmp.substr(tmp.find("=") + 1));
+        m_subEventTypeProbability[key] = p;
+    }
+
+    cout << "parseSubEventTypeProbability()" << endl;
+    for (auto i : m_subEventTypeProbability) {
+        cout << i.first << " = " << i.second << endl;
+    }
+}
+
 void StatisticProxy::parseClassifiedUserDistributionStats() {
     for (auto& iter : m_defaultClassifiedUserDistributionProxyFiles) {
         DBG(LOGD(TAG, "\n" + iter.first + ": " + iter.second);)
@@ -130,6 +150,10 @@ PoissonProcessStat& StatisticProxy::getPoissonProcessStats(const std::string &re
     return m_poissonProcessProxy->get(repoID);
 }
 
+std::unordered_map<std::string, double> StatisticProxy::getSubEventTypeProbability() const {
+    return m_subEventTypeProbability;
+};
+
 UserDistribution& StatisticProxy::getClassifiedUserTypeDistribution(const std::string &event_type, const std::string &repoID) {
     auto pos = m_classifiedUserDistributionProxies.find(event_type);
     return (pos->second)->get(repoID);
@@ -149,15 +173,16 @@ void StatisticProxy::initProxySourceFile(const std::string &default_file_path) {
 
     const string socialcubePath = default_file_path;
 
-    m_defaultUserIDProxyFile = socialcubePath + "/statistics/user_id.json";
-    m_defaultObjectIDProxyFile = socialcubePath + "/statistics/obj_id.json";
-    m_defaultHourlyActionRateProxyFile = socialcubePath + "/statistics/user_action_rate.json";
-    m_defaultDailyActivityLevelProxyFile = socialcubePath + "/statistics/daily_activity_level.json";
-    m_defaultObjectPreferenceProxyFile = socialcubePath + "/statistics/user_object_preference.json";
-    m_defaultTypeDistributionProxyFile = socialcubePath + "/statistics/user_type_distribution.json";
-    m_defaultUserDistributionProxyFile = "/statistics/repo_user_distribution.json";
-    m_defaultPointProcessStatsProxyFile = "/statistics/point_stats.json";
-    m_defaultPoissonProcessStatsProxyFile = "/statistics/poisson_stats.json";
+    m_defaultUserIDProxyFile = default_file_path + "/user_id.json";
+    m_defaultObjectIDProxyFile = default_file_path + "/obj_id.json";
+    m_defaultHourlyActionRateProxyFile = default_file_path + "/user_action_rate.json";
+    m_defaultDailyActivityLevelProxyFile = default_file_path + "/daily_activity_level.json";
+    m_defaultObjectPreferenceProxyFile = default_file_path + "/user_object_preference.json";
+    m_defaultTypeDistributionProxyFile = default_file_path + "/user_type_distribution.json";
+    m_defaultUserDistributionProxyFile = default_file_path + "/repo_user_distribution.json";
+    m_defaultPointProcessStatsProxyFile = default_file_path + "/point_stats.json";
+    m_defaultPoissonProcessStatsProxyFile = default_file_path + "/poisson_stats.json";
+    m_defaultSubEventTypeProbabilityProxyFile = default_file_path + "/subEventTypeProbability.csv";
 }
 
 void StatisticProxy::setUserIDProxyFilePath(std::string userIDProxyFilePath) {
@@ -194,6 +219,10 @@ void StatisticProxy::setPointProcessStatsProxyFilePath(std::string pointProcessS
 
 void StatisticProxy::setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyStatsFilePath) {
     m_defaultPoissonProcessStatsProxyFile = poissonProcessProxyStatsFilePath;
+}
+
+void StatisticProxy::setSubEventTypeProbabilityProxyFile(std::string subEventTypeProbabilityProxyFilePath) {
+    m_defaultSubEventTypeProbabilityProxyFile = subEventTypeProbabilityProxyFilePath;
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
