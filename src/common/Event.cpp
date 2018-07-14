@@ -43,15 +43,23 @@ string Event::getTimestampStr() const {
 }
 
 string Event::getAction() const {
-    return m_action;
+    if (m_eventType == "IssuesEvent" || m_eventType == "PullRequestEvent") {
+        return m_action;
+    } else {
+        return "";
+    }
 }
 
 string Event::getMerged() const {
-	if (m_merged) {
- 	    return "True";
+	if (m_eventType == "IssuesEvent") {
+		if (m_merged) {
+ 	    	return "True";
+		} else {
+	        return "False";
+        }
 	} else {
-	    return "False";
-	}
+        return "";
+    }
 }
 
 time_t Event::getTimestamp() const {

@@ -37,32 +37,14 @@ void EventManager::emitEvent() {
 void EventManager::_emitUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-	string type = event->getEventType();
-        m_eventFile << event->getTimestampStr() << "," << type << "," << event->getUserID() << "," << event->getObjectID();
-	       
-	if (type == "IssuesEvent") {
-	    m_eventFile << "," << event->getAction();
-	} else if (type == "PullRequestEvent") {
-	    m_eventFile << "," << event->getAction() << "," << event->getMerged();	
-	}	
-	
-	m_eventFile << "\n";
+        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," << event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
     }
 }
 
 void EventManager::_emitRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-	string type = event->getEventType();
-        m_eventFile << event->getTimestampStr() << "," << type << "," << event->getObjectID() << "," << event->getUserID();
-	       
-	if (type == "IssuesEvent") {
-	    m_eventFile << "," << event->getAction();
-	} else if (type == "PullRequestEvent") {
-	    m_eventFile << "," << event->getAction() << "," << event->getMerged();	
-	}	
-	
-	m_eventFile << "\n";
+        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," << event->getUserID() << "," << event->getAction() << "," << event->getMerged() << "\n";
     }
 }
 
