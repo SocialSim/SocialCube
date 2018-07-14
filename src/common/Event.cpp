@@ -70,7 +70,7 @@ void Event::setAction(double p_opened, double p_closed, double p_reopened) {
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     if (randnum <= p_opened) {
         m_action = "opened";
-    } else if (randnum <= p_closed) {
+    } else if (randnum <= p_closed + p_opened) {
         m_action = "closed";
     } else {
         m_action = "reopened";
