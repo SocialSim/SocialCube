@@ -51,7 +51,7 @@ string Event::getAction() const {
 }
 
 string Event::getMerged() const {
-	if (m_eventType == "IssuesEvent") {
+	if (m_eventType == "PullRequestEvent") {
 		if (m_merged) {
  	    	return "True";
 		} else {
