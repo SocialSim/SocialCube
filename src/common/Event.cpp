@@ -43,11 +43,15 @@ string Event::getTimestampStr() const {
 }
 
 string Event::getAction() const {
-    if (m_merged) {
-        return "True";
-    } else {
-        return "False";
-    }
+    return m_action;
+}
+
+string Event::getMerged() const {
+	if (m_merged) {
+ 	    return "True";
+	} else {
+	    return "False";
+	}
 }
 
 time_t Event::getTimestamp() const {
