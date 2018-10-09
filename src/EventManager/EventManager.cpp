@@ -37,8 +37,8 @@ void EventManager::emitEvent() {
 void EventManager::_emitUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
-                    event->getObjectID() << "," << event->getAction() << "," << event->getMerged();
+        // m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
+        //          event->getObjectID() << "," << event->getAction() << "," << event->getMerged();
         // Generalized schema to match Twitter and Reddit outputs
         // nodeID = N/A
         // nodeUserID = userID for user who completed the event action
@@ -47,7 +47,7 @@ void EventManager::_emitUserCentricEvent(){
         // actionType = actionType (same as before)
         // nodeTime = timestamp of interaction between user and repo
         // nodeAttributes = actionSubType, status
-        m_eventFile << ", , " << event->getUserID() << ", , " << event->getObjectID() << ", " << event->getAction()
+        m_eventFile << ", " << event->getUserID() << ", , " << event->getObjectID() << ", " << event->getAction()
                     << ", " << event->getTimestampStr() << ", " << event->getMerged() << "\n";
     }
 }
@@ -55,9 +55,9 @@ void EventManager::_emitUserCentricEvent(){
 void EventManager::_emitRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," <<
-                  event->getUserID() << "," << event->getAction() << "," << event->getMerged();
-        m_eventFile << ", , " << event->getObjectID() << ", , " << event->getUserID() << ", " << event->getAction()
+        // m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," <<
+        //          event->getUserID() << "," << event->getAction() << "," << event->getMerged();
+        m_eventFile << ", " << event->getObjectID() << ", , " << event->getUserID() << ", " << event->getAction()
                     << ", " << event->getTimestampStr() << ", " << event->getMerged() << "\n";
     }
 }
