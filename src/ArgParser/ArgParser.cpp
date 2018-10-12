@@ -33,6 +33,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("event_file", "File name for storing events", cxxopts::value<string>())
           ("proxy_config_file", "File name for proxy configuration file", cxxopts::value<string>())
           ("default_file_path", "The path for searching default proxy files", cxxopts::value<string>())
+          ("platform", "Github, Reddit or Twitter", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
         try 
@@ -138,6 +139,12 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 default_file_path = getenv("SOCIALCUBEPATH");
             }
 
+            if (result.count("platform")) {
+                simulator_platform = result["platform"].as<string>();
+            } else {
+                simulator_platform = "github";
+            }
+
             if (result.count("init_file")) { 
                 readFromFile = true;
             } else {
@@ -179,6 +186,10 @@ time_t ArgParser::getSimulationUnitTime() {
 
 std::string ArgParser::getSimulationCenter() {
     return simulator_center;
+}
+
+std::string ArgParser::getSimulationPlatform() {
+    return simulator_platform;
 }
 
 bool ArgParser::getSimulationShowProfileStatus() {

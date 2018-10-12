@@ -35,6 +35,8 @@ public:
 
     std::string getTimestampStr() const;
 
+    std::string getTimestampStrInSeconds() const;
+
     std::string getAction() const;
 
     std::string getMerged() const;

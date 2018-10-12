@@ -7,7 +7,6 @@
 #include <memory>
 #include <cstdlib>
 
-
 #include "SimulatorProfiler/SimulatorProfiler.hpp"
 #include "common/Event.hpp"
 #include "Log/Log.hpp"
@@ -16,6 +15,8 @@ class EventManager {
     private:
         // Private member variables
         std::string m_center;
+
+        std::string m_platform;
 
         std::vector<std::unique_ptr<Event>> m_events;
 
@@ -35,9 +36,15 @@ class EventManager {
 
         void emitEvent();
 
-        void _emitUserCentricEvent();
+        void _emitGithubUserCentricEvent();
 
-        void _emitRepoCentricEvent();
+        void _emitGithubRepoCentricEvent();
+
+        void _emitRedditUserCentricEvent();
+
+        void _emitRedditRepoCentricEvent();
+
+        string _generateRedditNodeId();
 
         EventManager();
 
@@ -47,6 +54,8 @@ class EventManager {
         ~EventManager() = default;
 
         void setCenter(const std::string& center);
+
+        void setPlatform(const std::string& platform);
 
         void setEventShow(bool t_eventOn); 
 

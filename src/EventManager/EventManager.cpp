@@ -9,7 +9,6 @@ EventManager::EventManager() : m_eventCount(0), m_bufferSize(1<<19),
     return;    
 }
 
-
 EventManager& EventManager::getInstance() {
     static EventManager instance;
     return instance;
@@ -25,41 +24,73 @@ void EventManager::emitEventOnBufferFull() {
 }
 
 void EventManager::emitEvent() {
-    if(m_eventOn) {
-        if (m_center == "user-centric") {
-            _emitUserCentricEvent();
-        } else if (m_center == "repo-centric") {
-            _emitRepoCentricEvent();
+    if (m_platform == "github") {
+        if (m_eventOn) {
+            if (m_center == "user-centric") {
+                _emitGithubUserCentricEvent();
+            } else if (m_center == "repo-centric") {
+                _emitGithubRepoCentricEvent();
+            }
+        }
+    } else if (m_platform == "reddit") {
+        if (m_eventOn) {
+            if (m_center == "user-centric") {
+                _emitRedditUserCentricEvent();
+            } else if (m_center == "repo-centric") {
+                _emitRedditRepoCentricEvent();
+            }
         }
     }
+
 }
 
-void EventManager::_emitUserCentricEvent(){
+void EventManager::_emitGithubUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
         m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
                   event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
-        // Generalized schema to match Twitter and Reddit outputs
-        // nodeID = N/A
-        // nodeUserID = userID for user who completed the event action
-        // parentID = N/A
-        // rootID = repoID
-        // actionType = actionType (same as before)
-        // nodeTime = timestamp of interaction between user and repo
-        // nodeAttributes = actionSubType, status
-        // m_eventFile << ", " << event->getUserID() << ", , " << event->getObjectID() << ", " << event->getEventType()
-        //            << ", " << event->getTimestampStr() << ", " << event->getAction() << ", " << event->getMerged() << "\n";
     }
 }
 
-void EventManager::_emitRepoCentricEvent(){
+void EventManager::_emitGithubRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
         m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," <<
                  event->getUserID() << "," << event->getAction() << "," << event->getMerged() << "\n";
-        //m_eventFile << ", " << event->getObjectID() << ", , " << event->getUserID() << ", " << event->getEventType()
-        //            << ", " << event->getTimestampStr() << ", " << event->getAction() << ", " << event->getMerged() << "\n";
     }
+}
+
+void EventManager::_emitRedditUserCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    for(auto& event : m_events) {
+        m_eventFile << _generateRedditNodeId() << ", " << event->getUserID() << ", " << event->getObjectID() << ", " << event->getObjectID()
+                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
+    }
+}
+
+void EventManager::_emitRedditRepoCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    for(auto& event : m_events) {
+        m_eventFile << _generateRedditNodeId() << ", " << event->getObjectID() << ", " << event->getUserID() << ", " << event->getUserID()
+                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
+    }
+}
+
+string EventManager::_generateRedditNodeId() {
+    static const char alphanum[] =
+                    "0123456789"
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    "abcdefghijklmnopqrstuvwxyz";
+
+    int len = strlen("t3_-dt8ErhaKuULHekBf_ke3A");
+
+    string nodeId = "";
+
+    for (int i = 0; i < len; ++i) {
+        nodeId += alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    return nodeId;
 }
 
 void EventManager::start() {
@@ -97,6 +128,10 @@ void EventManager::storeEvent(std::vector<std::unique_ptr<Event>>& events) {
 
 void EventManager::setCenter(const std::string& center) {
     m_center = center;
+}
+
+void EventManager::setPlatform(const std::string& platform) {
+    m_platform = platform;
 }
 
 void EventManager::setEventShow(bool t_eventOn) {

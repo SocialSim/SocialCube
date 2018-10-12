@@ -42,6 +42,13 @@ string Event::getTimestampStr() const {
     return buf;
 }
 
+string Event::getTimestampStrInSeconds() const {
+    std::stringstream ss;
+    ss << m_timestamp;
+
+    return ss.str();
+}
+
 string Event::getAction() const {
     if (m_eventType == "IssuesEvent" || m_eventType == "PullRequestEvent") {
         return m_action;
