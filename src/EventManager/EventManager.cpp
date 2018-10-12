@@ -82,8 +82,7 @@ string EventManager::_generateRedditNodeId() {
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     "abcdefghijklmnopqrstuvwxyz";
 
-    int len = strlen("t3_-dt8ErhaKuULHekBf_ke3A");
-
+    int len = 25;
     string nodeId = "";
 
     for (int i = 0; i < len; ++i) {
