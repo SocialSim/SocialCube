@@ -10,12 +10,12 @@ PostLifespanDistribution::~PostLifespanDistribution() {
     return;
 }
 
-void PostLifespanDistribution::insertLifespanDist(int lifespan, double prob) {
+void PostLifespanDistribution::pushLifespanDist(int lifespan, double prob) {
     m_lifespans_dists.insert(std::pair<int, double>(lifespan, prob));
 }
 
-std::unordered_map<int, double> getLifespanDists() {
-    return std::unordered_map<int, double>(m_lifespans_dists);
+std::vector<std::pair<int, double>> getLifespanDists() {
+    return m_lifespans_dists;
 };
 
 void PostScale::show() {

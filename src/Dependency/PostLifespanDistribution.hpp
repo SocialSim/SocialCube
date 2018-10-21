@@ -14,7 +14,7 @@ private:
 
     std::string m_userID;
 
-    std::unordered_map<int, double> m_lifespans_dists;
+    std::vector<std::pair<int, double>> m_lifespans_dists;
 
 public:
 
@@ -22,9 +22,9 @@ public:
 
     ~PostLifespanDistribution();
 
-    void insertLifespanDist(int lifespan, double prob);
+    void pushLifespanDist(int t_lifespan, double t_prob);
 
-    std::unordered_map<int, double> getLifespanDists();
+    std::vector<std::pair<int, double>> getLifespanDist();
 
     void show();
 };
