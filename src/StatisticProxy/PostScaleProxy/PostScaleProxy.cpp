@@ -2,55 +2,55 @@
 
 using namespace std;
 
-DBG(static const string tag="TypeDistributionProxy";)
+DBG(static const string tag="PostScaleProxy";)
 
-TypeDistributionProxy::TypeDistributionProxy(const string& file) throw() {
+PostScaleProxy::PostScaleProxy(const string& file) throw() {
     try {
-        m_typeDistributionFile.open(file);
+        m_postScaleFile.open(file);
     } catch (exception &e) {
-        TypeDistributionProxyException t_e;
+        PostScaleProxyException t_e;
         throw t_e;
     }
-    assert(m_typeDistributionFile.is_open());
+    assert(m_postScaleFile.is_open());
     return;
 }
 
-TypeDistributionProxy::~TypeDistributionProxy() {
-    m_typeDistributionFile.close();
+PostScaleProxy::~PostScaleProxy() {
+    m_postScaleFile.close();
     return;
 }
 
-void TypeDistributionProxy::parse() {
+void PostScaleProxy::parse() {
     string tmp;
-    while (getline(m_typeDistributionFile, tmp)) {
+    while (getline(m_postScaleFile, tmp)) {
         string userID = tmp.substr(0, tmp.find(" "));
-        string distribution = tmp.substr(tmp.find(" ") + 1);
-        unique_ptr<TypeDistribution> typeDistribution(new TypeDistribution(userID));
+        string scales = tmp.substr(tmp.find(" ") + 1);
+        unique_ptr<PostScale> postScale(new PostScale(userID));
 
-        istringstream in(distribution);
-        for(size_t j = 0; j < TypeDistribution::getActionCount(); ++j) {
-            double dist;
-            in >> dist;
-            typeDistribution->pushDist(dist);
+        int number;
+        int scale;
+        istringstream in(scales);
+        while (in >> number) {
+            in >> scale;
+            postScale.pushScale(number, scale);
         }
-        m_typeDistribution[userID] = move(typeDistribution);
+        m_postScale[userID] = move(postScale);
     }
-    DBG(LOGD(TAG, "Type Distribution Rate has "+stringfy(m_typeDistribution.size()));)
+    DBG(LOGD(TAG, "Post Scale has "+stringfy(m_postScale.size()));)
 }
 
-void TypeDistributionProxy::show() {
-    cout << m_typeDistribution.size() << endl; 
-    for(auto& iter : m_typeDistribution) {
+void PostScaleProxy::show() {
+    cout << m_postScale.size() << endl;
+    for(auto& iter : m_postScale) {
         iter.second->show();
     }
 }
 
-TypeDistribution& TypeDistributionProxy::get(const std::string& userID) {
-    if(m_typeDistribution.find(userID) == m_typeDistribution.end()) {
-        return *(m_typeDistribution["-1"]);
+PostScale& PostScaleProxy::get(const std::string& userID) {
+    if(m_postScale.find(userID) == m_postScale.end()) {
+        return *(m_postScale["-1"]);
     } else {
-        assert(m_typeDistribution.find(userID) != m_typeDistribution.end());
-        return *(m_typeDistribution[userID]);
+        assert(m_postScale.find(userID) != m_postScale.end());
+        return *(m_postScale[userID]);
     }
 }
-
