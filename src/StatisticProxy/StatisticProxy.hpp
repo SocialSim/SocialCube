@@ -21,6 +21,9 @@
 #include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 #include "StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp"
 #include "StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp"
+#include "StatisticProxy/PostScaleProxy/PostScaleProxy.hpp"
+#include "StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp"
+#include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -51,6 +54,9 @@ class StatisticProxy {
         std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
+        std::unique_ptr<PostScaleProxy> m_postScaleProxy;
+        std::unique_ptr<CommentProbabilityProxy> m_commentProbabilityProxy;
+        std::unique_ptr<PostLifespanDistributionProxy> m_PostLifespanDistributionProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -76,6 +82,9 @@ class StatisticProxy {
         void parsePoissonProcessStats();
         void parseClassifiedUserDistributionStats();
         void parseSubEventTypeProbability();
+        void parsePostScale();
+        void parseCommentProbability();
+        void parsePostLifespanDistribution();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -86,7 +95,11 @@ class StatisticProxy {
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
-        void setSubEventTypeProbabilityProxyFile(std::string subEventTypeProbabilityProxyFilePath);
+        void setSubEventTypeProbabilityProxyFilePath(std::string subEventTypeProbabilityProxyFilePath);
+
+        void setPostScaleFilePath();
+        void parseCommentProbabilityFilePath();
+        void parsePostLifespanDistributionFilePath();
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -120,6 +133,12 @@ class StatisticProxy {
         PointProcessStat& getPointProcessStats(const std::string &repoID) const;
 
         PoissonProcessStat& getPoissonProcessStats(const std::string &repoID) const;
+
+        PostScale& getPostScale(const std::string &userID) const;
+
+        CommentProbability& getCommentProbability(const std::string &userID) const;
+
+        PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
 
         std::unordered_map<std::string, double> getSubEventTypeProbability() const;
 

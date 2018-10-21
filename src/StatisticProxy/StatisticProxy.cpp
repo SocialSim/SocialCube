@@ -221,7 +221,7 @@ void StatisticProxy::setPoissonProcessStatsProxyFilePath(std::string poissonProc
     m_defaultPoissonProcessStatsProxyFile = poissonProcessProxyStatsFilePath;
 }
 
-void StatisticProxy::setSubEventTypeProbabilityProxyFile(std::string subEventTypeProbabilityProxyFilePath) {
+void StatisticProxy::setSubEventTypeProbabilityProxyFilePath(std::string subEventTypeProbabilityProxyFilePath) {
     m_defaultSubEventTypeProbabilityProxyFile = subEventTypeProbabilityProxyFilePath;
 }
 
