@@ -48,7 +48,7 @@ void PostScaleProxy::show() {
 
 PostScale& PostScaleProxy::get(const std::string& userID) {
     if(m_postScale.find(userID) == m_postScale.end()) {
-        return *(m_postScale["-1"]);
+        throw;
     } else {
         assert(m_postScale.find(userID) != m_postScale.end());
         return *(m_postScale[userID]);

@@ -1,5 +1,5 @@
-#ifndef __TYPE_DISTRIBUTION_PROXY__
-#define __TYPE_DISTRIBUTION_PROXY__
+#ifndef __POST_SCALE_PROXY__
+#define __POST_SCALE_PROXY__
 
 #include <unordered_map>
 #include <string>
@@ -9,7 +9,7 @@
 #include <fstream>
 #include <cassert>
 #include <cstdlib>
-#include "Dependency/TypeDistribution.hpp"
+#include "Dependency/PostScale.hpp"
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
 #include "Log/Log.hpp"
