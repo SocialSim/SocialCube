@@ -79,10 +79,18 @@ class PoissonProcessProxyException : public std::exception {
     }
 };
 
+class PostScaleProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PostScaleProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {
         return "End time is less than start time. Quit simulation";
     }
 };
+
 #endif
