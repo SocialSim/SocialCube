@@ -55,7 +55,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "watchEventUserDistributionProxyFile") {
         m_statProxy.setWatchEventUserDistributionProxyFile(filePath);
     } else if (fileName == "subEventTypeProbabilityProxyFile") {
-        m_statProxy.setSubEventTypeProbabilityProxyFile(filePath);
+        m_statProxy.setSubEventTypeProbabilityProxyFilePath(filePath);
     }
 }
 
@@ -130,7 +130,16 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePoissonProcessStats();
         m_statProxy.parseSubEventTypeProbability();
         buildObjects();
-    } else {
+    } else if (std::is_same<TUserAgent, CascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
+        m_statProxy.parsePostLifespanDistribution();
+        buildUsers();
+    }
+
+    else {
         cout << "Wrong agent type combination" << endl;
     }
     // Reset proxy source files

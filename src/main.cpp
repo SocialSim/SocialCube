@@ -203,6 +203,25 @@ int main(int argc, const char* argv[]) {
                     s.addUserAgent(iter.get());
                 cout << "start simulate" << endl;
                 s.simulate();
+            } else if (builderType == "CascadeModel") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<CascadeUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
+                for (auto &iter : filePaths) {
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector <std::shared_ptr<CascadeUserAgent>> agentList;
+                builder.build();
+                cout << "finish build" <<endl;
+                agentList = builder.getObjectAgentList();
+                for (auto &iter : agentList)
+                    s.addUserAgent(iter.get());
+                cout << "start simulate" << endl;
+                s.simulate();
             } else {
                 std::cout << "Unsupported model type" << std::endl;
             }
