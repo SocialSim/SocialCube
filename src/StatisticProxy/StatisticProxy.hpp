@@ -39,6 +39,9 @@ class StatisticProxy {
         std::string m_defaultPointProcessStatsProxyFile;
         std::string m_defaultPoissonProcessStatsProxyFile;
         std::string m_defaultSubEventTypeProbabilityProxyFile;
+        std::string m_defaultPostScaleProxyFile;
+        std::string m_defaultCommentProbabilityProxyFile;
+        std::string m_defaultPostLifespanDistributionProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 

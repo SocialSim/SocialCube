@@ -105,6 +105,24 @@ void StatisticProxy::parseSubEventTypeProbability() {
     }
 }
 
+void StatisticProxy::parsePostScale() {
+    DBG(LOGD(TAG, "\npostScaleProxyFile: " + m_defaultPostScaleProxyFile);)
+    m_postScaleProxy.reset(new PostScaleProxy(m_defaultPostScaleProxyFile));
+    m_postScaleProxy->parse();
+}
+
+void StatisticProxy::parseCommentProbability() {
+    DBG(LOGD(TAG, "\ncommentProbabilityProxyFile: " + m_defaultCommentProbabilityProxyFile);)
+    m_commentProbabilityProxy.reset(new CommentProbability(m_defaultCommentProbabilityProxyFile));
+    m_commentProbabilityProxy->parse();
+}
+
+void StatisticProxy::parsePostLifespanDistribution() {
+    DBG(LOGD(TAG, "\nparsePostLifespanDistributionProxyFile: " + m_defaultPostLifespanDistributionProxyFile);)
+    m_PostLifespanDistributionProxy.reset(new PostLifespanDistribution(m_defaultPostLifespanDistributionProxyFile));
+    m_PostLifespanDistributionProxy->parse();
+}
+
 void StatisticProxy::parseClassifiedUserDistributionStats() {
     for (auto& iter : m_defaultClassifiedUserDistributionProxyFiles) {
         DBG(LOGD(TAG, "\n" + iter.first + ": " + iter.second);)
