@@ -14,6 +14,10 @@ private:
 
     std::string m_eventType;
 
+    std::string m_parentID;
+
+    std::string m_rootID;
+
     time_t m_timestamp;
 
     std::string m_action;
@@ -23,6 +27,9 @@ private:
 public:
     Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType, time_t m_timestamp);
 
+    Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType,
+          const std::string& t_parentID, const std::string& t_rootID, time_t t_timestamp);
+
     ~Event();
 
     std::string getUserID() const;
@@ -30,6 +37,10 @@ public:
     std::string getObjectID() const;
 
     std::string getEventType() const;
+
+    std::string getParentID() const;
+
+    std::string getRootID() const;
 
     time_t getTimestamp() const;
 

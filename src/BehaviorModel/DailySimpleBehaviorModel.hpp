@@ -26,6 +26,7 @@ private:
 public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
+
                                                         DailyActivityLevel& t_dailyActivityLevel,
                                                         ObjectPreference& t_objectPreference,
                                                         TypeDistribution& t_typeDistribution,

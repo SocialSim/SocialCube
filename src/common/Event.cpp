@@ -20,6 +20,13 @@ Event::Event(const string& t_userID, const string& t_objectID, const string& t_e
     return;
 }
 
+Event::Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType,
+             const std::string& t_parentID, const std::string& t_rootID, time_t t_timestamp) :
+        m_userID(t_userID), m_objectID(t_objectID), m_eventType(t_eventType), m_parentID(t_parentID),
+        m_rootID(t_rootID), m_timestamp(t_timestamp) {
+    return;
+}
+
 Event::~Event() {
     return;
 }
@@ -34,6 +41,14 @@ string Event::getObjectID() const {
 
 string Event::getEventType() const {
     return m_eventType;
+}
+
+string Event::getParentID() const {
+    return m_parentID;
+}
+
+string Event::getRootID() const {
+    return m_rootID;
 }
 
 string Event::getTimestampStr() const {

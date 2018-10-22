@@ -63,18 +63,35 @@ void EventManager::_emitGithubRepoCentricEvent(){
 
 void EventManager::_emitRedditUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    string communityIDs[6] = {
+            "t5_2s3qj",
+            "t5_2zf9m",
+            "t5_2zwl2",
+            "t5_31hbr",
+            "t5_3bqj4",
+            "t5_3i6d8"};
+    string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+
     for(auto& event : m_events) {
-        m_eventFile << _generateRedditNodeId() << ", " << event->getUserID() << ", " << event->getObjectID() << ", " << event->getObjectID()
-                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
+        m_eventFile << event->getObjectID() << ", " << event->getUserID() << ", " << event->getParentID() << ", " << event->getRootID()
+                << ", " << event->getEventType() << ", " << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
     }
 }
 
 void EventManager::_emitRedditRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    string communityIDs[6] = {
+            "t5_2s3qj",
+            "t5_2zf9m",
+            "t5_2zwl2",
+            "t5_31hbr",
+            "t5_3bqj4",
+            "t5_3i6d8"};
+    string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+
     for(auto& event : m_events) {
-        m_eventFile << _generateRedditNodeId() << ", " << event->getObjectID() << ", " << event->getUserID() << ", " << event->getUserID()
-                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
-    }
+        m_eventFile << event->getUserID() << ", " << event->getObjectID() << ", " << event->getParentID() << ", " << event->getRootID()
+                << ", " << event->getEventType() << ", " << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";    }
 }
 
 string EventManager::_generateRedditNodeId() {
