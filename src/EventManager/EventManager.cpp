@@ -23,6 +23,7 @@ void EventManager::emitEventOnBufferFull() {
     }
 }
 
+
 void EventManager::emitEvent() {
     if (m_platform == "github") {
         if (m_eventOn) {

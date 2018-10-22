@@ -99,10 +99,9 @@ class StatisticProxy {
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
         void setSubEventTypeProbabilityProxyFilePath(std::string subEventTypeProbabilityProxyFilePath);
-
-        void setPostScaleFilePath();
-        void parseCommentProbabilityFilePath();
-        void parsePostLifespanDistributionFilePath();
+        void setPostScaleProxyFilePath(std::string postScaleProxyFilePath);
+        void setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath);
+        void setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 

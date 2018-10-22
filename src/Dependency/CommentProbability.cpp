@@ -11,17 +11,17 @@ CommentProbability::~CommentProbability() {
 }
 
 void CommentProbability::pushProb(std::string t_userID, double t_prob) {
-    m_comment_prob.insert(std::pair<std::string, double>(t_userID, t_prob));
+    m_comment_prob.push_back(std::pair<std::string, double>(t_userID, t_prob));
 }
 
-std::vector<std::pair<std::string, double>> getCommentProb() {
+std::vector<std::pair<std::string, double>> CommentProbability::getCommentProb() {
     return m_comment_prob;
 };
 
-void PostScale::show() {
-    cout << "userID: " << m_userID << end;
+void CommentProbability::show() {
+    cout << "userID: " << m_userID << endl;
     for(auto& iter : m_comment_prob) {
-        cout << iter[0] << ", " << iter[1] << endl;
+        cout << iter.first << ", " << iter.second << endl;
     }
     cout << endl;
 }

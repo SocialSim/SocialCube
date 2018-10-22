@@ -27,16 +27,19 @@ void CommentProbabilityProxy::parse() {
         string probabilities = tmp.substr(tmp.find(" ") + 1);
         unique_ptr<CommentProbability> commentProb(new CommentProbability(userID));
 
-        int user;
-        int prob;
+        string user;
+        double prob;
         istringstream in(probabilities);
         while (in >> user) {
             in >> prob;
-            commentProb.pushProb(user, prob);
+            commentProb->pushProb(user, prob);
         }
         m_commentProbability[userID] = move(commentProb);
     }
-    DBG(LOGD(TAG, "Comment Probability has "+stringfy(m_commentProbabilityFile.size()));)
+    for (auto& iter : m_commentProbability) {
+        iter.second->show();
+    }
+    DBG(LOGD(TAG, "Comment Probability has "+stringfy(m_commentProbability.size()));)
 }
 
 void CommentProbabilityProxy::show() {

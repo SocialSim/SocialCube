@@ -86,6 +86,20 @@ class PostScaleProxyException: public std::exception {
     }
 };
 
+class CommentProbabilityProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for CommentProbabilityProxy";
+    }
+};
+
+class PostLifespanDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PostLifespanDistributionProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {

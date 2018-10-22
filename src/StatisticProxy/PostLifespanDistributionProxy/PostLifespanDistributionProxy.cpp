@@ -22,22 +22,25 @@ PostLifespanDistributionProxy::~PostLifespanDistributionProxy() {
 
 void PostLifespanDistributionProxy::parse() {
     string tmp;
-    while (getline(m_commentProbabilityFile, tmp)) {
+    while (getline(m_postLifespanDistributionFile, tmp)) {
         string userID = tmp.substr(0, tmp.find(" "));
         string distribution = tmp.substr(tmp.find(" ") + 1);
 
         unique_ptr<PostLifespanDistribution> postLifespanDistribution(new PostLifespanDistribution(userID));
 
         int lifespan;
-        int prob;
+        double prob;
         istringstream in(distribution);
         while (in >> lifespan) {
             in >> prob;
-            postLifespanDistribution.pushProb(lifespan, prob);
+            postLifespanDistribution->pushLifespanDist(lifespan, prob);
         }
         m_postLifespanDistribution[userID] = move(postLifespanDistribution);
     }
-    DBG(LOGD(TAG, "Post Lifespan Distribution has "+stringfy(m_postLifespanDistributionFile.size()));)
+    for (auto& iter : m_postLifespanDistribution) {
+        iter.second->show();
+    }
+    DBG(LOGD(TAG, "Post Lifespan Distribution has "+stringfy(m_postLifespanDistribution.size()));)
 }
 
 void PostLifespanDistributionProxy::show() {
@@ -47,7 +50,7 @@ void PostLifespanDistributionProxy::show() {
     }
 }
 
-PostLifespanDistributionProxy& PostLifespanDistributionProxy::get(const std::string& userID) {
+PostLifespanDistribution& PostLifespanDistributionProxy::get(const std::string& userID) {
     if(m_postLifespanDistribution.find(userID) == m_postLifespanDistribution.end()) {
         throw;
     } else {

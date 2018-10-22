@@ -32,7 +32,15 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPoissonProcessStatsProxyFilePath(filePath);
     } else if (fileName == "userDistributionProxyFile") {
         m_statProxy.setUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "postScaleProxyFile") {
+        cout << "postScaleProxyFile: " << filePath << endl;
+        m_statProxy.setPostScaleProxyFilePath(filePath);
+    } else if (fileName == "commentProbabilityProxyFile") {
+        m_statProxy.setCommentProbabilityProxyFilePath(filePath);
+    } else if (fileName == "postLifespanDistributionProxyFile") {
+        m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
     }
+
     // 10 event type user distribution proxy files
     else if (fileName == "commitCommentEventUserDistributionProxyFile") {
         m_statProxy.setCommitCommentEventUserDistributionProxyFilePath(filePath);

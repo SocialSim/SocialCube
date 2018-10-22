@@ -11,17 +11,17 @@ PostLifespanDistribution::~PostLifespanDistribution() {
 }
 
 void PostLifespanDistribution::pushLifespanDist(int lifespan, double prob) {
-    m_lifespans_dists.insert(std::pair<int, double>(lifespan, prob));
+    m_lifespan_dists.push_back(std::pair<int, double>(lifespan, prob));
 }
 
-std::vector<std::pair<int, double>> getLifespanDists() {
-    return m_lifespans_dists;
+std::vector<std::pair<int, double>> PostLifespanDistribution::getLifespanDist() {
+    return m_lifespan_dists;
 };
 
-void PostScale::show() {
-    cout << "userID: " << m_userID << end;
-    for(auto& iter : m_lifespans_dists) {
-        cout << iter[0] << ", " << iter[1] << endl;
+void PostLifespanDistribution::show() {
+    cout << "userID: " << m_userID << endl;
+    for(auto& iter : m_lifespan_dists) {
+        cout << iter.first << ", " << iter.second << endl;
     }
     cout << endl;
 }

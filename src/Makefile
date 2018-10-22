@@ -108,7 +108,7 @@ IntegratedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/Integrate
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
-CascadeUserAgent.o:	./Agent/UserAgent/GithubAgent/CascadeUserAgent.cpp ./Agent/ObjectAgent/GithubAgent/CascadeUserAgent.hpp
+CascadeUserAgent.o:	./Agent/UserAgent/CascadeUserAgent.cpp ./Agent/UserAgent/CascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp

@@ -24,7 +24,7 @@ public:
 
     void pushScale(int t_number, int t_scale);
 
-    int getScale(int t_index);
+    std::vector<std::pair<int, int>> getScale();
 
     void show();
 };

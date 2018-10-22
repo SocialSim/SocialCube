@@ -14,7 +14,7 @@ private:
 
     std::string m_userID;
 
-    std::vector<std::pair<int, double>> m_lifespans_dists;
+    std::vector<std::pair<int, double>> m_lifespan_dists;
 
 public:
 

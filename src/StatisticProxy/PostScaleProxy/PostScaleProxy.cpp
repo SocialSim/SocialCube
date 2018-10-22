@@ -32,9 +32,12 @@ void PostScaleProxy::parse() {
         istringstream in(scales);
         while (in >> number) {
             in >> scale;
-            postScale.pushScale(number, scale);
+            postScale->pushScale(number, scale);
         }
         m_postScale[userID] = move(postScale);
+    }
+    for (auto& iter : m_postScale) {
+        iter.second->show();
     }
     DBG(LOGD(TAG, "Post Scale has "+stringfy(m_postScale.size()));)
 }

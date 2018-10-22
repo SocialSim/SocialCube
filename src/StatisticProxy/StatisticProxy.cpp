@@ -113,13 +113,13 @@ void StatisticProxy::parsePostScale() {
 
 void StatisticProxy::parseCommentProbability() {
     DBG(LOGD(TAG, "\ncommentProbabilityProxyFile: " + m_defaultCommentProbabilityProxyFile);)
-    m_commentProbabilityProxy.reset(new CommentProbability(m_defaultCommentProbabilityProxyFile));
+    m_commentProbabilityProxy.reset(new CommentProbabilityProxy(m_defaultCommentProbabilityProxyFile));
     m_commentProbabilityProxy->parse();
 }
 
 void StatisticProxy::parsePostLifespanDistribution() {
     DBG(LOGD(TAG, "\nparsePostLifespanDistributionProxyFile: " + m_defaultPostLifespanDistributionProxyFile);)
-    m_PostLifespanDistributionProxy.reset(new PostLifespanDistribution(m_defaultPostLifespanDistributionProxyFile));
+    m_PostLifespanDistributionProxy.reset(new PostLifespanDistributionProxy(m_defaultPostLifespanDistributionProxyFile));
     m_PostLifespanDistributionProxy->parse();
 }
 
@@ -166,6 +166,18 @@ PointProcessStat& StatisticProxy::getPointProcessStats(const std::string &repoID
 
 PoissonProcessStat& StatisticProxy::getPoissonProcessStats(const std::string &repoID) const {
     return m_poissonProcessProxy->get(repoID);
+}
+
+PostScale& StatisticProxy::getPostScale(const std::string &userID) const {
+    return m_postScaleProxy->get(userID);
+}
+
+CommentProbability& StatisticProxy::getCommentProbability(const std::string &userID) const {
+    return m_commentProbabilityProxy->get(userID);
+}
+
+PostLifespanDistribution& StatisticProxy::getPostLifespanDistribution(const std::string &userID) const {
+    return m_PostLifespanDistributionProxy->get(userID);
 }
 
 std::unordered_map<std::string, double> StatisticProxy::getSubEventTypeProbability() const {
@@ -243,10 +255,20 @@ void StatisticProxy::setSubEventTypeProbabilityProxyFilePath(std::string subEven
     m_defaultSubEventTypeProbabilityProxyFile = subEventTypeProbabilityProxyFilePath;
 }
 
+void StatisticProxy::setPostScaleProxyFilePath(std::string postScaleProxyFilePath) {
+    m_defaultPostScaleProxyFile = postScaleProxyFilePath;
+}
+void StatisticProxy::setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath) {
+    m_defaultCommentProbabilityProxyFile = commentProbabilityFilePath;
+}
+
+void StatisticProxy::setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath) {
+    m_defaultPostLifespanDistributionProxyFile = postLifespanDistributionFilePath;
+}
+
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
     return m_userIDProxy->getCommunityTag(userID);
 }
-
 
 void StatisticProxy::setCommitCommentEventUserDistributionProxyFilePath(std::string path) {
     m_defaultClassifiedUserDistributionProxyFiles["commitCommentEventUserDistributionProxyFile"] = path;
