@@ -100,6 +100,11 @@ string CascadeModel::generateCommentUser(CommentProbability& t_commentProbabilit
             return iter.first;
         }
     }
+    cout << "==========No Matching===========" << endl;
+    for (auto& iter : commentProbability) {
+        cout << iter.first << ", " << iter.second << endl;
+    }
+    cout << "commentProbability.back().first = " << commentProbability.back().first << endl;
     return commentProbability.back().first;
 }
 

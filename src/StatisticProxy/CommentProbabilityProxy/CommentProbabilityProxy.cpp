@@ -29,6 +29,7 @@ void CommentProbabilityProxy::parse() {
 
         string user;
         double prob;
+        
         istringstream in(probabilities);
         while (in >> user) {
             in >> prob;

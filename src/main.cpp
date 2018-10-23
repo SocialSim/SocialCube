@@ -221,7 +221,6 @@ int main(int argc, const char* argv[]) {
                 agentList = builder.getUserAgentList();
                 cout << "agentList size = " << agentList.size() << endl;
                 for (auto &iter : agentList) {
-                    cout << "here" << endl;
                     s.addUserAgent(iter.get());
                 }
                 cout << "start simulate" << endl;
