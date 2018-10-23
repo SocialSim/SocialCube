@@ -36,9 +36,6 @@ void CommentProbabilityProxy::parse() {
         }
         m_commentProbability[userID] = move(commentProb);
     }
-    for (auto& iter : m_commentProbability) {
-        iter.second->show();
-    }
     DBG(LOGD(TAG, "Comment Probability has "+stringfy(m_commentProbability.size()));)
 }
 

@@ -37,9 +37,6 @@ void PostLifespanDistributionProxy::parse() {
         }
         m_postLifespanDistribution[userID] = move(postLifespanDistribution);
     }
-    for (auto& iter : m_postLifespanDistribution) {
-        iter.second->show();
-    }
     DBG(LOGD(TAG, "Post Lifespan Distribution has "+stringfy(m_postLifespanDistribution.size()));)
 }
 

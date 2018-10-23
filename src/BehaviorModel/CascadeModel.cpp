@@ -97,7 +97,6 @@ string CascadeModel::generateCommentUser(CommentProbability& t_commentProbabilit
     for (auto& iter : commentProbability) {
         accum_prob += iter.second;
         if (accum_prob >= randnum) {
-            cout << "accum_prob = " << accum_prob << ", iter.second = " << iter.second << ", random = " << randnum << endl;
             return iter.first;
         }
     }
