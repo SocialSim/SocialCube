@@ -27,8 +27,8 @@ void PostScaleProxy::parse() {
         string scales = tmp.substr(tmp.find(" ") + 1);
         unique_ptr<PostScale> postScale(new PostScale(userID));
 
-        int number;
-        int scale;
+        double number;
+        double scale;
         istringstream in(scales);
         while (in >> number) {
             in >> scale;

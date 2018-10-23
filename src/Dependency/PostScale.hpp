@@ -12,7 +12,7 @@ class PostScale {
 
 private:
 
-    std::vector<std::pair<int, int>> m_scales;
+    std::vector<std::pair<double, double>> m_scales;
 
     std::string m_userID;
 
@@ -22,9 +22,9 @@ public:
 
     ~PostScale();
 
-    void pushScale(int t_number, int t_scale);
+    void pushScale(double t_number, double t_scale);
 
-    std::vector<std::pair<int, int>> getScale();
+    std::vector<std::pair<double, double>> getScale();
 
     void show();
 };

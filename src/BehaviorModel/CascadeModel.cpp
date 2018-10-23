@@ -22,7 +22,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
     int startDay = CascadeModel::convertISOtoDay(t_startTime);
     int endDay = CascadeModel::convertISOtoDay(t_endTime);
 
-    vector<pair<int, int>> scales = t_postScale.getScale();
+    vector<pair<double, double>> scales = t_postScale.getScale();
 
     if (endDay - startDay > scales.size()) {
         TimeSpanExceedException h_e;
@@ -32,9 +32,11 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
-        pair<int, int> pair = scales[i];
-        int post_number = pair.first;
-        int post_scale = pair.second;
+        pair<double, double> pair = scales[i];
+        int post_number = randomlyRoundDouble(pair.first);
+        int post_scale = randomlyRoundDouble(pair.second);
+
+        cout << "user_id: " << t_id << ", post_number: " << post_number << ", post_scale: " << post_scale << endl;
 
         for (int j = 0; j < post_number; j++) {
             int lifespan = generateLifespan(t_postLifespanDistribution);
@@ -47,8 +49,12 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
             time_t time_interval = lifespan * 24 * 60 * 60 - 1;
             for (int k = 0; k < post_scale + 1; k++) {
-                time_t eventTime = current_day_time + (time_interval / post_scale) * k;
-
+                time_t eventTime;
+                if (post_scale > 0) {
+                    eventTime = current_day_time + (time_interval / post_scale) * k;
+                } else {
+                    eventTime = current_day_time;
+                }
                 if (eventTime > t_endTime) {
                     break;
                 }
@@ -57,6 +63,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                 if (k == 0) {
                     unique_ptr<Event> event(new Event(t_id, node_id, "post", parent_node_id, root_node_id, eventTime));
                     events.push_back(move(event));
+                    cout << "post, user_id: " << t_id << endl;
                 } else {
                     CommentProbability comment_prob = m_statProxy.getCommentProbability(last_user_id);
                     current_user_id = generateCommentUser(comment_prob);
@@ -72,8 +79,18 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             }
         }
     }
-
+    cout << "user_id: " << t_id << " finish" << endl;
     return events;
+}
+
+int CascadeModel::randomlyRoundDouble(double num) {
+    double float_part = num - (int) num;
+    double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+    if (randnum <= float_part) {
+        return num - (int) num + 1;
+    } else {
+        return (int) num;
+    }
 }
 
 int CascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {

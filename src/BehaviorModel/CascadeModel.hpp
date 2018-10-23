@@ -26,6 +26,8 @@ private:
 
     static std::string generateNodeId();
 
+    static int randomlyRoundDouble(double num);
+
     static int convertISOtoDay(time_t t_currentTime);
 
 public:

@@ -10,11 +10,11 @@ PostScale::~PostScale() {
     return;
 }
 
-void PostScale::pushScale(int t_number, int t_scale) {
-    m_scales.push_back(std::pair<int, int>(t_number, t_scale));
+void PostScale::pushScale(double t_number, double t_scale) {
+    m_scales.push_back(std::pair<double, double>(t_number, t_scale));
 }
 
-std::vector<std::pair<int, int>> PostScale::getScale() {
+std::vector<std::pair<double, double>> PostScale::getScale() {
     return m_scales;
 }
 
