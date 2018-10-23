@@ -26,7 +26,6 @@ void PostScaleProxy::parse() {
         string userID = tmp.substr(0, tmp.find(" "));
         string scales = tmp.substr(tmp.find(" ") + 1);
         unique_ptr<PostScale> postScale(new PostScale(userID));
-
         double number;
         double scale;
         istringstream in(scales);

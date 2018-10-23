@@ -72,8 +72,11 @@ void EventManager::_emitRedditUserCentricEvent(){
             "t5_3i6d8"};
     for(auto& event : m_events) {
         string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
-        m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
-                << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+        /*
+         *m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
+         *        << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+         */
+        m_eventFile << _generateRedditNodeId() << "," << event->getUserID() << "," << event->getObjectID() << "," << event->getObjectID() << ",comment," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID <<  "'}\"\n";
     }
 }
 
@@ -88,8 +91,12 @@ void EventManager::_emitRedditRepoCentricEvent(){
             "t5_3i6d8"};
     for(auto& event : m_events) {
         string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
-        m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
-                << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+        /*
+         *m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
+         *        << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+         */
+    
+        m_eventFile << _generateRedditNodeId() << "," << event->getObjectID() << "," << event->getUserID() << "," << event->getUserID() << ",comment," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID <<  "'}\"\n";
     }
 }
 

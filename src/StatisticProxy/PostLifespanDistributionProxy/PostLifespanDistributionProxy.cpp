@@ -27,7 +27,6 @@ void PostLifespanDistributionProxy::parse() {
         string distribution = tmp.substr(tmp.find(" ") + 1);
 
         unique_ptr<PostLifespanDistribution> postLifespanDistribution(new PostLifespanDistribution(userID));
-
         int lifespan;
         double prob;
         istringstream in(distribution);
@@ -35,6 +34,7 @@ void PostLifespanDistributionProxy::parse() {
             in >> prob;
             postLifespanDistribution->pushLifespanDist(lifespan, prob);
         }
+        cout << endl;
         m_postLifespanDistribution[userID] = move(postLifespanDistribution);
     }
     DBG(LOGD(TAG, "Post Lifespan Distribution has "+stringfy(m_postLifespanDistribution.size()));)

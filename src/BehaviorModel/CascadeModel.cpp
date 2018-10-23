@@ -36,11 +36,13 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         int post_number = randomlyRoundDouble(pair.first);
         int post_scale = randomlyRoundDouble(pair.second);
 
-        cout << "user_id: " << t_id << ", post_number: " << post_number << ", post_scale: " << post_scale << endl;
+        /*
+         *cout << "user_id: " << t_id << ", post_number: " << post_number << ", post_scale: " << post_scale << endl;
+         */
 
         for (int j = 0; j < post_number; j++) {
             int lifespan = generateLifespan(t_postLifespanDistribution);
-
+            
             string node_id = generateNodeId();
             string root_node_id = node_id;
             string parent_node_id = root_node_id;
@@ -63,7 +65,9 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                 if (k == 0) {
                     unique_ptr<Event> event(new Event(t_id, node_id, "post", parent_node_id, root_node_id, eventTime));
                     events.push_back(move(event));
-                    cout << "post, user_id: " << t_id << endl;
+                    /*
+                     *cout << "post, user_id: " << t_id << endl;
+                     */
                 } else {
                     CommentProbability comment_prob = m_statProxy.getCommentProbability(last_user_id);
                     current_user_id = generateCommentUser(comment_prob);
@@ -79,7 +83,9 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             }
         }
     }
-    cout << "user_id: " << t_id << " finish" << endl;
+    /*
+     *cout << "user_id: " << t_id << " finish" << endl;
+     */
     return events;
 }
 
@@ -87,7 +93,7 @@ int CascadeModel::randomlyRoundDouble(double num) {
     double float_part = num - (int) num;
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     if (randnum <= float_part) {
-        return num - (int) num + 1;
+        return (int) num + 1;
     } else {
         return (int) num;
     }
@@ -95,7 +101,6 @@ int CascadeModel::randomlyRoundDouble(double num) {
 
 int CascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
     vector<pair<int, double>> lifespanDistribution = t_postLifespanDistribution.getLifespanDist();
-
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
     for (auto& iter : lifespanDistribution) {
@@ -117,11 +122,6 @@ string CascadeModel::generateCommentUser(CommentProbability& t_commentProbabilit
             return iter.first;
         }
     }
-    cout << "==========No Matching===========" << endl;
-    for (auto& iter : commentProbability) {
-        cout << iter.first << ", " << iter.second << endl;
-    }
-    cout << "commentProbability.back().first = " << commentProbability.back().first << endl;
     return commentProbability.back().first;
 }
 
