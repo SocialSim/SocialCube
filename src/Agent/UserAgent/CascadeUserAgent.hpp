@@ -8,7 +8,7 @@
 #include <cassert>
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "StatisticProxy/StatisticProxy.hpp"
-#include "BehaviorModel/DailySimpleBehaviorModel.hpp"
+#include "BehaviorModel/CascadeModel.hpp"
 #include "common/Event.hpp"
 
 class CascadeUserAgent : public UserAgent {
@@ -18,7 +18,7 @@ protected:
 
     PostScale& m_postScale;
 
-    CommentProbability& m_commentProbability;
+//    CommentProbability& m_commentProbability;
 
     PostLifespanDistribution& m_postLifespanDistribution;
 
@@ -30,6 +30,8 @@ public:
     virtual std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const override;
 
     virtual std::vector<std::unique_ptr<Event>> simulate(time_t t_currentTime, time_t t_endTime) const override;
+
+    virtual uint64_t getCommunityTag() const;
 
 };
 

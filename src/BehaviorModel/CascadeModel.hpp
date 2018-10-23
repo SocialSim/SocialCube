@@ -6,6 +6,7 @@
 #include <memory>
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
+#include "StatisticProxy/StatisticProxy.hpp"
 #include "Dependency/PostScale.hpp"
 #include "Dependency/CommentProbability.hpp"
 #include "Dependency/PostLifespanDistribution.hpp"
@@ -17,19 +18,21 @@ private:
 
     ~CascadeModel();
 
-    static int generateLifespan(const PostLifespanDistribution& t_postLifespanDistribution);
+//    StatisticProxy& m_statProxy;
 
-    static std::string generateCommentUser(const CommentProbability& t_commentProbability);
+    static int generateLifespan(PostLifespanDistribution& t_postLifespanDistribution);
+
+    static std::string generateCommentUser(CommentProbability& t_commentProbability);
 
     static std::string generateNodeId();
+
+    static int convertISOtoDay(time_t t_currentTime);
 
 public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
                                                         PostScale& t_postScale,
                                                         PostLifespanDistribution& t_postLifespanDistribution,
-                                                        CommentProbabilityProxy& t_commentProbabilityProxy,
-
                                                         time_t t_startTime,
                                                         time_t t_endTime
     );

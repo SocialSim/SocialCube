@@ -33,7 +33,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "userDistributionProxyFile") {
         m_statProxy.setUserDistributionProxyFilePath(filePath);
     } else if (fileName == "postScaleProxyFile") {
-        cout << "postScaleProxyFile: " << filePath << endl;
         m_statProxy.setPostScaleProxyFilePath(filePath);
     } else if (fileName == "commentProbabilityProxyFile") {
         m_statProxy.setCommentProbabilityProxyFilePath(filePath);

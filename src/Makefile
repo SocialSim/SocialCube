@@ -33,6 +33,7 @@ OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
+OBJS := $(OBJS) CascadeModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) DailyActivityLevel.o
 OBJS := $(OBJS) HourlyActionRate.o
@@ -127,6 +128,9 @@ IntegratedPoissonProcessModel.o:	./BehaviorModel/IntegratedPoissonProcessModel.c
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/PoissonProcessModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CascadeModel.o:	./BehaviorModel/CascadeModel.cpp ./BehaviorModel/CascadeModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/EventHourlyActionRate.hpp

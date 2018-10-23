@@ -73,8 +73,8 @@ void EventManager::_emitRedditUserCentricEvent(){
     string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
 
     for(auto& event : m_events) {
-        m_eventFile << event->getObjectID() << ", " << event->getUserID() << ", " << event->getParentID() << ", " << event->getRootID()
-                << ", " << event->getEventType() << ", " << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+        m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
+                << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
     }
 }
 
@@ -90,8 +90,9 @@ void EventManager::_emitRedditRepoCentricEvent(){
     string communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
 
     for(auto& event : m_events) {
-        m_eventFile << event->getUserID() << ", " << event->getObjectID() << ", " << event->getParentID() << ", " << event->getRootID()
-                << ", " << event->getEventType() << ", " << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";    }
+        m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
+                << "," << event->getEventType() << "," << event->getTimestampStr() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+    }
 }
 
 string EventManager::_generateRedditNodeId() {

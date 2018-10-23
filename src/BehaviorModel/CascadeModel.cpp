@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//CascadeModel::CascadeModel() : m_statProxy(StatisticProxy::getInstance()) {
 CascadeModel::CascadeModel() {
     return;
 }
@@ -10,17 +11,16 @@ CascadeModel::~CascadeModel() {
     return;
 }
 
-std::vector<unique_ptr<Event>> CascadeModel::evaluate(const std::string t_id,
+vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                                       PostScale& t_postScale,
                                                       PostLifespanDistribution& t_postLifespanDistribution,
-                                                      CommentProbabilityProxy& t_commentProbabilityProxy,
-
                                                       time_t t_startTime,
                                                       time_t t_endTime) {
+    StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
 
-    int startDay = DailySimpleBehaviorModel::convertISOtoDay(t_startTime);
-    int endDay = DailySimpleBehaviorModel::convertISOtoDay(t_endTime);
+    int startDay = CascadeModel::convertISOtoDay(t_startTime);
+    int endDay = CascadeModel::convertISOtoDay(t_endTime);
 
     vector<pair<int, int>> scales = t_postScale.getScale();
 
@@ -28,7 +28,6 @@ std::vector<unique_ptr<Event>> CascadeModel::evaluate(const std::string t_id,
         TimeSpanExceedException h_e;
         throw h_e;
     }
-
 
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
@@ -46,9 +45,9 @@ std::vector<unique_ptr<Event>> CascadeModel::evaluate(const std::string t_id,
             string current_user_id = t_id;
             string last_user_id = t_id;
 
-            time_t time_interval = current_day_time - t_startTime;
+            time_t time_interval = lifespan * 24 * 60 * 60 - 1;
             for (int k = 0; k < post_scale + 1; k++) {
-                time_t eventTime = current_day_time + (time_interval / (post_scale - 1)) * k;
+                time_t eventTime = current_day_time + (time_interval / post_scale) * k;
 
                 if (eventTime > t_endTime) {
                     break;
@@ -59,7 +58,7 @@ std::vector<unique_ptr<Event>> CascadeModel::evaluate(const std::string t_id,
                     unique_ptr<Event> event(new Event(t_id, node_id, "post", parent_node_id, root_node_id, eventTime));
                     events.push_back(move(event));
                 } else {
-                    CommentProbability comment_prob = t_commentProbabilityProxy.get(last_user_id);
+                    CommentProbability comment_prob = m_statProxy.getCommentProbability(last_user_id);
                     current_user_id = generateCommentUser(comment_prob);
 
                     node_id = generateNodeId();
@@ -77,31 +76,32 @@ std::vector<unique_ptr<Event>> CascadeModel::evaluate(const std::string t_id,
     return events;
 }
 
-int CascadeModel::generateLifespan(const PostLifespanDistribution& t_postLifespanDistribution) {
+int CascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
     vector<pair<int, double>> lifespanDistribution = t_postLifespanDistribution.getLifespanDist();
 
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
     for (auto& iter : lifespanDistribution) {
         accum_prob += iter.second;
-        if (accum_prob <= randnum) {
+        if (accum_prob >= randnum) {
             return iter.first;
         }
     }
-    return lifespanDistribution.back();
+    return lifespanDistribution.back().first;
 }
 
-string CascadeModel::generateCommentUser(const CommentProbability& t_commentProbability) {
+string CascadeModel::generateCommentUser(CommentProbability& t_commentProbability) {
     vector<std::pair<std::string, double>> commentProbability = t_commentProbability.getCommentProb();
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
     for (auto& iter : commentProbability) {
         accum_prob += iter.second;
-        if (accum_prob <= randnum) {
+        if (accum_prob >= randnum) {
+            cout << "accum_prob = " << accum_prob << ", iter.second = " << iter.second << ", random = " << randnum << endl;
             return iter.first;
         }
     }
-    return commentProbability.back();
+    return commentProbability.back().first;
 }
 
 string CascadeModel::generateNodeId() {
