@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <random>
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
 #include "StatisticProxy/StatisticProxy.hpp"
@@ -18,11 +19,7 @@ private:
 
     ~CascadeModel();
 
-//    StatisticProxy& m_statProxy;
-
     static int generateLifespan(PostLifespanDistribution& t_postLifespanDistribution);
-
-    static std::string generateCommentUser(CommentProbability& t_commentProbability);
 
     static std::string generateNodeId();
 

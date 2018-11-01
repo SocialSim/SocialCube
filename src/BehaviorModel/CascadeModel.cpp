@@ -2,7 +2,6 @@
 
 using namespace std;
 
-//CascadeModel::CascadeModel() : m_statProxy(StatisticProxy::getInstance()) {
 CascadeModel::CascadeModel() {
     return;
 }
@@ -29,6 +28,10 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         throw h_e;
     }
 
+    double q1 = 0.01;
+    double q2 = 0.5;
+    double q3 = 0.99;
+
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
@@ -36,56 +39,86 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         int post_number = randomlyRoundDouble(pair.first);
         int post_scale = randomlyRoundDouble(pair.second);
 
-        /*
-         *cout << "user_id: " << t_id << ", post_number: " << post_number << ", post_scale: " << post_scale << endl;
-         */
-
         for (int j = 0; j < post_number; j++) {
             int lifespan = generateLifespan(t_postLifespanDistribution);
-            
-            string node_id = generateNodeId();
-            string root_node_id = node_id;
-            string parent_node_id = root_node_id;
-            string current_user_id = t_id;
-            string last_user_id = t_id;
-
             time_t time_interval = lifespan * 24 * 60 * 60 - 1;
-            for (int k = 0; k < post_scale + 1; k++) {
-                time_t eventTime;
-                if (post_scale > 0) {
-                    eventTime = current_day_time + (time_interval / post_scale) * k;
-                } else {
-                    eventTime = current_day_time;
+            time_t q1_end_time = time_interval * q1;
+            time_t q2_end_time = time_interval * q2;
+            time_t q3_end_time = time_interval * q3;
+
+            string root_node_id = generateNodeId();
+            string root_user_id = t_id;
+
+            int event_counter = 1;
+            bool stop_flag = false;
+
+            // Create post event
+            unique_ptr<Event> event(new Event(root_user_id, root_node_id, "post",
+                                              root_node_id, root_node_id, current_day_time));
+            events.push_back(move(event));
+
+            vector<tuple<string, string, time_t>> current_layer =
+                    {tuple<string, string, time_t>(root_node_id, root_user_id, current_day_time)};
+            vector<tuple<string, string, time_t>> next_layer;
+
+            // Create comment events
+            while (!stop_flag) {
+                for (auto& iter : current_layer) {
+                    string parent_node_id = get<0>(iter);
+                    string parent_user_id = get<1>(iter);
+                    time_t parent_event_time = get<2>(iter);
+
+                    CommentProbability comment_prob = m_statProxy.getCommentProbability(parent_user_id);
+                    vector<std::pair<string, double>> commentProbability = comment_prob.getCommentProb();
+
+                    for (auto& iter : commentProbability) {
+                        string commenter_id = iter.first;
+                        double comment_prob = iter.second;
+
+                        double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+
+                        if (randnum < comment_prob) {
+                            string node_id = generateNodeId();
+                            time_t event_time;
+
+                            if (event_counter < post_scale * 0.25) {
+                                event_time = current_day_time + (int)(q1_end_time / (post_scale * 0.25) * event_counter);
+                            } else if (event_counter < post_scale * 0.5) {
+                                event_time = current_day_time + q1_end_time + (int)((q2_end_time - q1_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.25));
+                            } else if (event_counter < post_scale * 0.75) {
+                                event_time = current_day_time + q2_end_time + (int)((q3_end_time - q2_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.5));
+                            } else {
+                                event_time = current_day_time + q3_end_time + (int)((time_interval - q3_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.75));
+                            }
+
+                            // If time excess end time, skip the creation of this event
+                            if (event_time > t_endTime) {
+                                stop_flag = true;
+                                break;
+                            }
+
+                            unique_ptr<Event> event(new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id, event_time));
+                            events.push_back(move(event));
+
+                            next_layer.push_back(tuple<string, string, time_t>(node_id, commenter_id, event_time));
+
+                            if (++event_counter > post_scale || next_layer.size() == 0) {
+                                stop_flag = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (stop_flag) {
+                        break;
+                    }
                 }
-                if (eventTime > t_endTime) {
-                    break;
-                }
-
-                // Post
-                if (k == 0) {
-                    unique_ptr<Event> event(new Event(t_id, node_id, "post", parent_node_id, root_node_id, eventTime));
-                    events.push_back(move(event));
-                    /*
-                     *cout << "post, user_id: " << t_id << endl;
-                     */
-                } else {
-                    CommentProbability comment_prob = m_statProxy.getCommentProbability(last_user_id);
-                    current_user_id = generateCommentUser(comment_prob);
-
-                    node_id = generateNodeId();
-
-                    unique_ptr<Event> event(new Event(current_user_id, node_id, "comment", parent_node_id, root_node_id, eventTime));
-                    events.push_back(move(event));
-                }
-
-                last_user_id = current_user_id;
-                parent_node_id = node_id;
+                current_layer.clear();
+                copy(next_layer.begin(), next_layer.end(), back_inserter(current_layer));
+                next_layer.clear();
             }
         }
     }
-    /*
-     *cout << "user_id: " << t_id << " finish" << endl;
-     */
+
     return events;
 }
 
@@ -110,19 +143,6 @@ int CascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistr
         }
     }
     return lifespanDistribution.back().first;
-}
-
-string CascadeModel::generateCommentUser(CommentProbability& t_commentProbability) {
-    vector<std::pair<std::string, double>> commentProbability = t_commentProbability.getCommentProb();
-    double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-    double accum_prob = 0;
-    for (auto& iter : commentProbability) {
-        accum_prob += iter.second;
-        if (accum_prob >= randnum) {
-            return iter.first;
-        }
-    }
-    return commentProbability.back().first;
 }
 
 string CascadeModel::generateNodeId() {
