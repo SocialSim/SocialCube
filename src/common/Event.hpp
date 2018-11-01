@@ -30,6 +30,9 @@ public:
     Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType,
           const std::string& t_parentID, const std::string& t_rootID, time_t t_timestamp);
 
+    Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType,
+          const std::string& t_parentID, const std::string& t_rootID);
+
     ~Event();
 
     std::string getUserID() const;
@@ -51,6 +54,8 @@ public:
     std::string getAction() const;
 
     std::string getMerged() const;
+
+    void setTime(time_t p_time);
 
     void setAction(double p_opened, double p_closed, double p_reopened);
 

@@ -27,6 +27,13 @@ Event::Event(const std::string& t_userID, const std::string& t_objectID, const s
     return;
 }
 
+Event::Event(const std::string& t_userID, const std::string& t_objectID, const std::string& t_eventType,
+      const std::string& t_parentID, const std::string& t_rootID) :
+        m_userID(t_userID), m_objectID(t_objectID), m_eventType(t_eventType), m_parentID(t_parentID),
+        m_rootID(t_rootID) {
+    return;
+}
+
 Event::~Event() {
     return;
 }
@@ -86,6 +93,10 @@ string Event::getMerged() const {
 
 time_t Event::getTimestamp() const {
     return m_timestamp;
+}
+
+void Event::setTime(time_t p_time) {
+    m_timestamp = p_time;
 }
 
 void Event::setAction(double p_opened, double p_closed, double p_reopened) {
