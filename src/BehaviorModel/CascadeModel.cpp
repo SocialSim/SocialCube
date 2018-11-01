@@ -17,7 +17,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                                       time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
-
+    
     int startDay = CascadeModel::convertISOtoDay(t_startTime);
     int endDay = CascadeModel::convertISOtoDay(t_endTime);
 
@@ -28,9 +28,9 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         throw h_e;
     }
 
-    double q1 = 0.01;
-    double q2 = 0.5;
-    double q3 = 0.99;
+    double q1 = 0.09178669;
+    double q2 = 0.18522102;
+    double q3 = 0.32377755;
 
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
@@ -94,6 +94,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                             // If time excess end time, skip the creation of this event
                             if (event_time > t_endTime) {
                                 stop_flag = true;
+                                cout << "event_time > t_endTime" << endl;
                                 break;
                             }
 
@@ -102,8 +103,9 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
                             next_layer.push_back(tuple<string, string, time_t>(node_id, commenter_id, event_time));
 
-                            if (++event_counter > post_scale || next_layer.size() == 0) {
+                            if (++event_counter > post_scale) {
                                 stop_flag = true;
+                                cout << "++event_counter > post_scale" << endl;
                                 break;
                             }
                         }
@@ -111,6 +113,10 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                     if (stop_flag) {
                         break;
                     }
+                }
+                if (next_layer.size() == 0) {
+                    cout << "next_layer.size() == 0" << endl;
+                    break;
                 }
                 current_layer.clear();
                 copy(next_layer.begin(), next_layer.end(), back_inserter(current_layer));
