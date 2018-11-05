@@ -36,7 +36,6 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
         int post_number = randomlyRoundDouble(scales[i].first);
-//        int post_scale = randomlyRoundDouble(scales[i].second);
         int post_scale = 1000;
 
         for (int j = 0; j < post_number; j++) {
@@ -80,30 +79,9 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
                         if (randnum < comment_prob) {
                             string node_id = generateNodeId();
-//                            time_t event_time;
-
-//                            if (event_counter < post_scale * 0.25) {
-//                                event_time = current_day_time + (int)(q1_end_time / (post_scale * 0.25) * event_counter);
-//                            } else if (event_counter < post_scale * 0.5) {
-//                                event_time = current_day_time + q1_end_time + (int)((q2_end_time - q1_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.25));
-//                            } else if (event_counter < post_scale * 0.75) {
-//                                event_time = current_day_time + q2_end_time + (int)((q3_end_time - q2_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.5));
-//                            } else {
-//                                event_time = current_day_time + q3_end_time + (int)((time_interval - q3_end_time) / (post_scale * 0.25) * (event_counter - post_scale * 0.75));
-//                            }
-
-                            // If time excess end time, skip the creation of this event
-//                            if (event_time > t_endTime) {
-//                                stop_flag = true;
-//                                cout << "event_time > t_endTime" << endl;
-//                                break;
-//                            }
-
-//                            unique_ptr<Event> event(new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id, event_time));
                             unique_ptr <Event> event(
                                     new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id));
 
-//                            events.push_back(move(event));
                             post_comments.push_back(move(event));
 
                             next_layer.push_back(pair<string, string>(node_id, commenter_id));
