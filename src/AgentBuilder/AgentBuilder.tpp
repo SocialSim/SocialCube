@@ -38,7 +38,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setCommentProbabilityProxyFilePath(filePath);
     } else if (fileName == "postLifespanDistributionProxyFile") {
         m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
-    }
+    } else if (fileName == "scoreMatrixProxyFile") {
+        m_statProxy.setScoreMatrixProxyFilePath(filePath);
+    } else if (fileName == "")
 
     // 10 event type user distribution proxy files
     else if (fileName == "commitCommentEventUserDistributionProxyFile") {

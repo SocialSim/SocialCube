@@ -108,6 +108,7 @@ class StatisticProxy {
         void setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath);
         void setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath);
         void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
+        void setInactiveUserFilePath(std::string inactiveUserFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 

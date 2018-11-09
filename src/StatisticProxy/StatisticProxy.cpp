@@ -280,6 +280,10 @@ void StatisticProxy::setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFil
     m_defaultScoreMatrixFile = scoreMatrixProxyFilePath;
 }
 
+void StatisticProxy::setInactiveUserFilePath(std::string inactiveUserFilePath) {
+    m_defaultInactiveUserFile = inactiveUserFilePath;
+}
+
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
     return m_userIDProxy->getCommunityTag(userID);
 }
