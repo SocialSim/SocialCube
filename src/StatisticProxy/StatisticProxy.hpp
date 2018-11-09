@@ -24,6 +24,7 @@
 #include "StatisticProxy/PostScaleProxy/PostScaleProxy.hpp"
 #include "StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp"
 #include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
+#include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -42,6 +43,8 @@ class StatisticProxy {
         std::string m_defaultPostScaleProxyFile;
         std::string m_defaultCommentProbabilityProxyFile;
         std::string m_defaultPostLifespanDistributionProxyFile;
+        std::string m_defaultScoreMatrixFile;
+        std::string m_defaultInactiveUserFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -59,7 +62,8 @@ class StatisticProxy {
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
         std::unique_ptr<PostScaleProxy> m_postScaleProxy;
         std::unique_ptr<CommentProbabilityProxy> m_commentProbabilityProxy;
-        std::unique_ptr<PostLifespanDistributionProxy> m_PostLifespanDistributionProxy;
+        std::unique_ptr<PostLifespanDistributionProxy> m_postLifespanDistributionProxy;
+        std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -88,6 +92,7 @@ class StatisticProxy {
         void parsePostScale();
         void parseCommentProbability();
         void parsePostLifespanDistribution();
+        void parseScoreMatrix();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -102,6 +107,7 @@ class StatisticProxy {
         void setPostScaleProxyFilePath(std::string postScaleProxyFilePath);
         void setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath);
         void setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath);
+        void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -141,6 +147,8 @@ class StatisticProxy {
         CommentProbability& getCommentProbability(const std::string &userID) const;
 
         PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
+
+        ScoreMatrix& getScoreMatrix() const;
 
         std::unordered_map<std::string, double> getSubEventTypeProbability() const;
 

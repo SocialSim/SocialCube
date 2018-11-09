@@ -15,6 +15,8 @@
 #include "Agent/ObjectAgent/GithubAgent/ClassifiedPoissonProcessObjectAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
@@ -216,6 +218,28 @@ int main(int argc, const char* argv[]) {
                 }
                 filePaths.clear();
                 std::vector <std::shared_ptr<CascadeUserAgent>> agentList;
+                builder.build();
+                cout << "finish build" <<endl;
+                agentList = builder.getUserAgentList();
+                cout << "agentList size = " << agentList.size() << endl;
+                for (auto &iter : agentList) {
+                    s.addUserAgent(iter.get());
+                }
+                cout << "start simulate" << endl;
+                s.simulate();
+            } else if (builderType == "EmbeddingCascadeModel") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<EmbeddingCascadeUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
+                for (auto &iter : filePaths) {
+                    cout << iter.first << ", " << iter.second << endl;
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector <std::shared_ptr<EmbeddingCascadeUserAgent>> agentList;
                 builder.build();
                 cout << "finish build" <<endl;
                 agentList = builder.getUserAgentList();

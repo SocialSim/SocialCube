@@ -86,6 +86,13 @@ class PostScaleProxyException: public std::exception {
     }
 };
 
+class ScoreMatrixProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for ScoreMatrixProxy";
+    }
+};
+
 class CommentProbabilityProxyException: public std::exception {
     virtual const char * what () const throw ()
     {
