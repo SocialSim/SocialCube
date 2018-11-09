@@ -60,18 +60,26 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
             vector<pair<string, unique_ptr<Event>>> user_comments;
 
             for (int k = 0; k < post_scale; k++) {
-                vector<string> pre_user_list{root_user_id};
-
-                for (int l = k - LOOK_BACK; l < k; l++) {
-                    if (l < 0) {
-                        pre_user_list.push_back("userID-none");
-                    } else {
-                        pre_user_list.push_back(user_comments[l].first);
-                    }
-                }
-                string user_id = t_scoreMatrix.getOutUser(pre_user_list);
-
                 string node_id = generateNodeId();
+
+                string user_id;
+                double rand = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                if (rand < DELETED_USER) {
+                    user_id = "[Deleted]";
+                } else if (rand < UNKNOWN_USER) {
+                    user_id = "UNK_COMM";
+                } else {
+                    vector<string> pre_user_list{root_user_id};
+                    for (int l = k - LOOK_BACK; l < k; l++) {
+                        if (l < 0) {
+                            pre_user_list.push_back("userID-none");
+                        } else {
+                            pre_user_list.push_back(user_comments[l].first);
+                        }
+                    }
+                    user_id = t_scoreMatrix.getOutUser(pre_user_list);
+                }
+
                 if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < COMMENT_ROOT_PROB) {
                     unique_ptr<Event> event(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
                     user_comments.push_back(std::make_pair(user_id, move(event)));

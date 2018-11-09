@@ -29,7 +29,11 @@ private:
 
     static const int LOOK_BACK = 3;
 
-    static constexpr double COMMENT_ROOT_PROB = 0.5;
+    static constexpr double COMMENT_ROOT_PROB = 0.308;
+
+    static constexpr double UNKNOWN_USER = 0.24;
+
+    static constexpr double DELETED_USER = 0.075;
 
 public:
 
