@@ -34,6 +34,8 @@ public:
     std::vector<double> getUserScore(std::string t_id);
 
     std::string getOutUser(std::vector<std::string> t_v);
+
+    std::string randomlyGetInactiveUser();
 };
 
 #endif

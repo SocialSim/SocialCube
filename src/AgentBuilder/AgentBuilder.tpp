@@ -40,7 +40,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
     } else if (fileName == "scoreMatrixProxyFile") {
         m_statProxy.setScoreMatrixProxyFilePath(filePath);
-    } else if (fileName == "")
+    } else if (fileName == "inactiveUserProxyFile") {
+        m_statProxy.setInactiveUserFilePath(filePath);
+    }
 
     // 10 event type user distribution proxy files
     else if (fileName == "commitCommentEventUserDistributionProxyFile") {
@@ -146,8 +148,14 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseCommentProbability();
         m_statProxy.parsePostLifespanDistribution();
         buildUsers();
+    } else if (std::is_same<TUserAgent, EmbeddingCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseScoreMatrix();
+        buildUsers();
     }
-
     else {
         cout << "Wrong agent type combination" << endl;
     }
