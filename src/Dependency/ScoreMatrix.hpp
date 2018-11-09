@@ -8,7 +8,7 @@
 #include <cassert>
 #include <string>
 #include <numeric>
-
+#include <algorithm> 
 class ScoreMatrix {
 
 private:
