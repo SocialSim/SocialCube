@@ -122,6 +122,11 @@ void EventManager::start() {
     DBG(LOGP(TAG, "Event Show Status: "+stringfy(m_eventOn));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
+    if (m_platform == "github") {
+        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl; 
+    } else if (m_platform == "reddit") {
+        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+    }
 }
 
 void EventManager::end() {
