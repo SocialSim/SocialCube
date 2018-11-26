@@ -40,6 +40,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
     } else if (fileName == "scoreMatrixProxyFile") {
         m_statProxy.setScoreMatrixProxyFilePath(filePath);
+    } else if (fileName == "communityDistributionProxyFile") {
+        m_statProxy.setCommunityDistributionProxyFilePath(filePath);
     } else if (fileName == "inactiveUserProxyFile") {
         m_statProxy.setInactiveUserFilePath(filePath);
     }
@@ -141,18 +143,24 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePoissonProcessStats();
         m_statProxy.parseSubEventTypeProbability();
         buildObjects();
-    } else if (std::is_same<TUserAgent, CascadeUserAgent>::value && \
+    }
+    // Cascade Model
+    else if (std::is_same<TUserAgent, CascadeUserAgent>::value && \
     std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
         m_statProxy.parseUserID();
         m_statProxy.parsePostScale();
         m_statProxy.parseCommentProbability();
         m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
         buildUsers();
-    } else if (std::is_same<TUserAgent, EmbeddingCascadeUserAgent>::value && \
+    }
+    // Embedding Cascade Model
+    else if (std::is_same<TUserAgent, EmbeddingCascadeUserAgent>::value && \
     std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
         m_statProxy.parseUserID();
         m_statProxy.parsePostScale();
         m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
         m_statProxy.parseScoreMatrix();
         buildUsers();
     }

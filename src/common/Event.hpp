@@ -22,6 +22,8 @@ private:
 
     std::string m_action;
 
+    std::string m_communityID;
+
     bool m_merged;
 
 public:
@@ -55,9 +57,13 @@ public:
 
     std::string getMerged() const;
 
+    std::string getCommunityID() const;
+
     void setTime(time_t p_time);
 
     void setAction(double p_opened, double p_closed, double p_reopened);
+
+    void setCommunityID(std::string p_communityID);
 
     void setMerged(double p);
 

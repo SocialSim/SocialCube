@@ -61,6 +61,7 @@ OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
 OBJS := $(OBJS) PostScaleProxy.o
 OBJS := $(OBJS) CommentProbabilityProxy.o
+OBJS := $(OBJS) CommunityDistributionProxy.o
 OBJS := $(OBJS) PostLifespanDistributionProxy.o
 OBJS := $(OBJS) ScoreMatrixProxy.o
 OBJS := $(OBJS) Event.o
@@ -222,6 +223,9 @@ ScoreMatrixProxy.o:	./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.cpp ./Sta
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommentProbabilityProxy.o:	./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.cpp ./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CommunityDistributionProxy.o:	./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.cpp ./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PostLifespanDistributionProxy.o:	./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.cpp ./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp

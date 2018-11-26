@@ -95,6 +95,10 @@ time_t Event::getTimestamp() const {
     return m_timestamp;
 }
 
+string Event::getCommunityID() const {
+    return m_communityID;
+}
+
 void Event::setTime(time_t p_time) {
     m_timestamp = p_time;
 }
@@ -119,10 +123,12 @@ void Event::setMerged(double p) {
     }
 }
 
+void Event::setCommunityID(string p_communityID) {
+    m_communityID = p_communityID;
+}
+
 void Event::warpTimestamp(time_t startTime, double ratio) {
-    // cout << "startTime = " << ctime(&startTime) << ", ratio = " << ratio << ", m_timestamp = " << ctime(&m_timestamp);
     m_timestamp = (m_timestamp - startTime) * ratio + startTime;
-    // cout << ", new m_timestamp = " << ctime(&m_timestamp) << endl;
 }
 
 void Event::show() const {
@@ -135,8 +141,3 @@ ostream& operator<<(ostream& os, const Event& e)
     // os << e.getTimestampStr() << "," << e.getEventType() << "," << e.getObjectID() << "," << e.getUserID() << "\n";
     return os;  
 }
-
-//bool Event::operator< (const Event &other) const {
-//    std::cout << "operator <" << std::endl;
-//    return m_timestamp < other.getTimestamp();
-//}

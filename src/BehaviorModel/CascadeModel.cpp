@@ -13,6 +13,7 @@ CascadeModel::~CascadeModel() {
 vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                                       PostScale& t_postScale,
                                                       PostLifespanDistribution& t_postLifespanDistribution,
+                                                      unordered_map<string, double> t_communityDistribution,
                                                       time_t t_startTime,
                                                       time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
@@ -54,6 +55,20 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             // Create post event
             unique_ptr <Event> event(new Event(root_user_id, root_node_id, "post",
                                                root_node_id, root_node_id, current_day_time));
+            string community_id;
+            // Set community ID
+            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+            cout << "randnum = " << randnum << endl;
+            double sum = 0;
+            for (auto &iter : t_communityDistribution) {
+                sum += iter.second;
+                if (randnum <= sum) {
+                    community_id = iter.first;
+                    cout << "community_id = " << community_id << endl;
+                    break;
+                }
+            }
+            event->setCommunityID(community_id);
             events.push_back(move(event));
 
             vector <pair<string, string>> current_layer =
@@ -81,7 +96,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                             string node_id = generateNodeId();
                             unique_ptr <Event> event(
                                     new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id));
-
+                            event->setCommunityID(community_id);
                             post_comments.push_back(move(event));
 
                             next_layer.push_back(pair<string, string>(node_id, commenter_id));

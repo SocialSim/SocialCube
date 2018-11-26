@@ -129,6 +129,12 @@ void StatisticProxy::parseScoreMatrix() {
     m_scoreMatrixProxy->parse();
 }
 
+void StatisticProxy::parseCommunityDistribution() {
+    DBG(LOGD(TAG, "\ncommunityDistributionProxyFile: " + m_defaultCommunityDistributionFile);)
+    m_communityDistributionProxy.reset(new CommunityDistributionProxy(m_defaultCommunityDistributionFile));
+    m_communityDistributionProxy->parse();
+}
+
 void StatisticProxy::parseClassifiedUserDistributionStats() {
     for (auto& iter : m_defaultClassifiedUserDistributionProxyFiles) {
         DBG(LOGD(TAG, "\n" + iter.first + ": " + iter.second);)
@@ -185,6 +191,10 @@ CommentProbability& StatisticProxy::getCommentProbability(const std::string &use
 PostLifespanDistribution& StatisticProxy::getPostLifespanDistribution(const std::string &userID) const {
     return m_postLifespanDistributionProxy->get(userID);
 }
+
+unordered_map<string, double> StatisticProxy::getCommunityDistribution(const std::string &userID) const {
+    return m_communityDistributionProxy->get(userID);
+};
 
 ScoreMatrix& StatisticProxy::getScoreMatrix() const {
     return m_scoreMatrixProxy->get();
@@ -270,6 +280,10 @@ void StatisticProxy::setPostScaleProxyFilePath(std::string postScaleProxyFilePat
 }
 void StatisticProxy::setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath) {
     m_defaultCommentProbabilityProxyFile = commentProbabilityFilePath;
+}
+
+void StatisticProxy::setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath) {
+    m_defaultCommunityDistributionFile = communityDistributionFilePath;
 }
 
 void StatisticProxy::setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath) {

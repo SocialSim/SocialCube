@@ -13,6 +13,7 @@ EmbeddingCascadeModel::~EmbeddingCascadeModel() {
 vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                                                  PostScale& t_postScale,
                                                  PostLifespanDistribution& t_postLifespanDistribution,
+                                                 unordered_map<string, double> t_communityDistribution,
                                                  ScoreMatrix& t_scoreMatrix,
                                                  time_t t_startTime,
                                                  time_t t_endTime) {
@@ -33,7 +34,6 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
     double q2 = 0.18522102;
     double q3 = 0.32377755;
 
-//    cout << "===========t_id: " << t_id << "============" << endl;
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
@@ -53,6 +53,20 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
             // Create post event
             unique_ptr <Event> event(new Event(root_user_id, root_node_id, "post",
                                                root_node_id, root_node_id, current_day_time));
+            string community_id;
+            // Set community ID
+            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+            cout << "randnum = " << randnum << endl;
+            double sum = 0;
+            for (auto &iter : t_communityDistribution) {
+                sum += iter.second;
+                if (randnum <= sum) {
+                    community_id = iter.first;
+                    cout << "community_id = " << community_id << endl;
+                    break;
+                }
+            }
+            event->setCommunityID(community_id);
             events.push_back(move(event));
 
             vector<pair<string, unique_ptr<Event>>> user_comments;
@@ -63,13 +77,10 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                 string user_id;
                 double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
                 if (randnum < DELETED_USER) {
-//                    cout << "randnum < DELETED_USER" << endl;
                     user_id = "[Deleted]";
                 } else if (randnum < DELETED_USER + UNKNOWN_USER) {
-//                    cout << "randnum < DELETED_USER + UNKNOWN_USER" << endl;
                     user_id = t_scoreMatrix.randomlyGetInactiveUser();
                 } else {
-//                    cout << "else" << endl;
                     vector<string> pre_user_list{root_user_id};
                     for (int l = k - LOOK_BACK; l < k; l++) {
                         if (l < 0) {
@@ -78,22 +89,14 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                             pre_user_list.push_back(user_comments[l].first);
                         }
                     }
-//                    cout << "pre_user_list: " << endl;
-//                    for (auto& iter : pre_user_list) {
-//                        cout << iter << endl;
-//                    }
+
                     user_id = t_scoreMatrix.getOutUser(pre_user_list);
-//                    cout << "successfully getOutUser" << endl;
                 }
-//                cout << "user_id=" << user_id << endl;
                 if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < COMMENT_ROOT_PROB) {
-//                    cout << "parent = root" << endl;
                     unique_ptr<Event> event(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
-//                    cout << "creat new event" << endl;
+                    event->setCommunityID(community_id);
                     user_comments.push_back(std::make_pair(user_id, move(event)));
-//                    cout << "push_back event" << endl;
                 } else {
-//                    cout << "parent != root" << endl;
                     string parent_node_id;
                     if (user_comments.size() == 0) {
                         parent_node_id = root_node_id;
@@ -101,20 +104,13 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                         int randnum = rand() % user_comments.size();
                         parent_node_id = user_comments[randnum].second->getObjectID();
                     }
-//                    cout << "parent_node_id = " << parent_node_id << endl;
                     unique_ptr<Event> event(new Event(user_id, node_id, "comment", parent_node_id, root_node_id));
-//                    cout << "creat new event" << endl;
                     user_comments.push_back(std::make_pair(user_id, move(event)));
-//                    cout << "push_back event" << endl;
                 }
-//                cout << "in the end of loop" << endl;
             }
-
-//            cout << "user_comments.size() = " << user_comments.size() << endl;
 
             // Reassign event time for each comment event
             int comment_num = user_comments.size();
-//            cout << "comment_num = " << comment_num << endl;
             for (int k = 0; k < comment_num; k++) {
                 time_t event_time;
                 if (k < comment_num * 0.25) {
@@ -139,7 +135,6 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
             }
         }
     }
-//    cout << "events.size() = " << events.size() << endl;
     return events;
 }
 

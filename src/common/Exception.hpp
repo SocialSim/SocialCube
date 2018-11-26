@@ -100,6 +100,13 @@ class CommentProbabilityProxyException: public std::exception {
     }
 };
 
+class CommunityDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for CommunityDistributionProxy";
+    }
+};
+
 class PostLifespanDistributionProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

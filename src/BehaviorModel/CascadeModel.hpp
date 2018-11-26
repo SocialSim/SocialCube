@@ -32,6 +32,7 @@ public:
     static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
                                                         PostScale& t_postScale,
                                                         PostLifespanDistribution& t_postLifespanDistribution,
+                                                        std::unordered_map<std::string, double> t_communityDistribution,
                                                         time_t t_startTime,
                                                         time_t t_endTime
     );

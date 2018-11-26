@@ -20,7 +20,7 @@ protected:
 
     PostLifespanDistribution& m_postLifespanDistribution;
 
-//    ScoreMatrix& m_scoreMatrix;
+    std::unordered_map<std::string, double> m_communityDistribution;
 
 public:
     EmbeddingCascadeUserAgent(const std::string& t_id);

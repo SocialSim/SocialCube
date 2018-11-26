@@ -18,9 +18,9 @@ protected:
 
     PostScale& m_postScale;
 
-//    CommentProbability& m_commentProbability;
-
     PostLifespanDistribution& m_postLifespanDistribution;
+
+    std::unordered_map<std::string, double> m_communityDistribution;
 
 public:
     CascadeUserAgent(const std::string& t_id);
