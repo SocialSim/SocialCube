@@ -58,13 +58,11 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             string community_id;
             // Set community ID
             double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-            cout << "randnum = " << randnum << endl;
             double sum = 0;
             for (auto &iter : t_communityDistribution) {
                 sum += iter.second;
                 if (randnum <= sum) {
                     community_id = iter.first;
-                    cout << "community_id = " << community_id << endl;
                     break;
                 }
             }
@@ -102,8 +100,8 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                             next_layer.push_back(pair<string, string>(node_id, commenter_id));
 
                             if (++event_counter > post_scale) {
+                                cout << "event_counter > post_scale" << endl;
                                 stop_flag = true;
-                                cout << "++event_counter > post_scale" << endl;
                                 break;
                             }
                         }
@@ -122,7 +120,6 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             }
             // Reassign event time for each comment event
             int comment_num = post_comments.size();
-            cout << "comment_num = " << comment_num << endl;
             for (int k = 0; k < comment_num; k++) {
                 time_t event_time;
                 if (k < comment_num * 0.25) {
@@ -139,7 +136,6 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                         (k - comment_num * 0.75));
                 }
                 if (event_time > t_endTime) {
-                    cout << "event_time > t_endTime" << endl;
                     break;
                 }
                 post_comments[k]->setTime(event_time);

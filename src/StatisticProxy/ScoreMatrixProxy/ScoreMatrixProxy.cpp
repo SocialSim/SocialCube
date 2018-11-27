@@ -32,28 +32,21 @@ void ScoreMatrixProxy::parse() {
 
     std::istringstream s(tmp.substr(1));
     string user_id;
-//    cout << "Add out users" << endl;
     while (std::getline(s, user_id, ','))
     {
-//        cout << user_id << endl;
         m_scoreMatrix.addOutUser(user_id);
     }
 
-//    cout << endl;
-//    cout << "Add scores" << endl;
     while (getline(m_scoreMatrixFile, tmp)) {
         string user_id = tmp.substr(0, tmp.find(","));
         std::istringstream s(tmp.substr(tmp.find(",")+1));
         vector<double> scores;
-//        cout << "user: " << user_id << ", ";
         double f;
         while (s >> f) {
-//            cout << f << endl;
             scores.push_back(f);
             if (s.peek() == ',')
                 s.ignore();
         }
-        cout << endl;
         m_scoreMatrix.insertUserScore(make_pair(user_id, scores));
     }
 

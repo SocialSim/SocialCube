@@ -38,12 +38,6 @@ void CommunityDistributionProxy::parse() {
         }
         m_userCommunityDistributions[userID] = userCommunityDistribution;
     }
-    for (auto& iter : m_userCommunityDistributions) {
-        cout << "user_id: " << iter.first << endl;
-        for (auto& iter2 : iter.second) {
-            cout << iter2.first << " : " << iter2.second << endl;
-        }
-    }
 }
 
 void CommunityDistributionProxy::show() {

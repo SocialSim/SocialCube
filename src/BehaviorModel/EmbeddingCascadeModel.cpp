@@ -56,13 +56,11 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
             string community_id;
             // Set community ID
             double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-            cout << "randnum = " << randnum << endl;
             double sum = 0;
             for (auto &iter : t_communityDistribution) {
                 sum += iter.second;
                 if (randnum <= sum) {
                     community_id = iter.first;
-                    cout << "community_id = " << community_id << endl;
                     break;
                 }
             }
@@ -127,7 +125,6 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                                         (k - comment_num * 0.75));
                 }
                 if (event_time > t_endTime) {
-                    cout << "event_time > t_endTime" << endl;
                     break;
                 }
                 user_comments[k].second->setTime(event_time);
