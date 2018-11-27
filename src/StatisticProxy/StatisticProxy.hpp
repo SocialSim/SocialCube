@@ -26,6 +26,7 @@
 #include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
 #include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
 #include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
+#include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -44,8 +45,9 @@ class StatisticProxy {
         std::string m_defaultPostScaleProxyFile;
         std::string m_defaultCommentProbabilityProxyFile;
         std::string m_defaultPostLifespanDistributionProxyFile;
-        std::string m_defaultScoreMatrixFile;
-        std::string m_defaultCommunityDistributionFile;
+        std::string m_defaultScoreMatrixProxyFile;
+        std::string m_defaultCommunityDistributionProxyFile;
+        std::string m_defaultMiscellaneousProxyFile;
         std::string m_defaultInactiveUserFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
@@ -67,6 +69,7 @@ class StatisticProxy {
         std::unique_ptr<PostLifespanDistributionProxy> m_postLifespanDistributionProxy;
         std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
         std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
+        std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -97,6 +100,7 @@ class StatisticProxy {
         void parsePostLifespanDistribution();
         void parseScoreMatrix();
         void parseCommunityDistribution();
+        void parseMiscellaneous();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -114,6 +118,7 @@ class StatisticProxy {
         void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
         void setInactiveUserFilePath(std::string inactiveUserFilePath);
         void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
+        void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -155,6 +160,10 @@ class StatisticProxy {
         PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
 
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
+
+        std::unordered_map<std::string, double> getActionTypeDistribution() const;
+
+        double* getQuartile() const;
 
         ScoreMatrix& getScoreMatrix() const;
 

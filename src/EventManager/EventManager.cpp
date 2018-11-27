@@ -23,7 +23,6 @@ void EventManager::emitEventOnBufferFull() {
     }
 }
 
-
 void EventManager::emitEvent() {
     if (m_platform == "github") {
         if (m_eventOn) {
@@ -41,8 +40,15 @@ void EventManager::emitEvent() {
                 _emitRedditRepoCentricEvent();
             }
         }
+    } else if (m_platform == "twitter") {
+        if (m_eventOn) {
+            if (m_center == "user-centric") {
+                _emitTwitterUserCentricEvent();
+            } else if (m_center == "repo-centric") {
+                _emitTwitterRepoCentricEvent();
+            }
+        }
     }
-
 }
 
 void EventManager::_emitGithubUserCentricEvent(){
@@ -81,7 +87,6 @@ void EventManager::_emitRedditUserCentricEvent(){
         m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
                 << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
 
-//        m_eventFile << _generateRedditNodeId() << "," << event->getUserID() << "," << event->getObjectID() << "," << event->getObjectID() << ",comment," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID <<  "'}\"\n";
     }
 }
 
@@ -105,24 +110,25 @@ void EventManager::_emitRedditRepoCentricEvent(){
         m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
                  << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
 
-//        m_eventFile << _generateRedditNodeId() << "," << event->getObjectID() << "," << event->getUserID() << "," << event->getUserID() << ",comment," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID <<  "'}\"\n";
     }
 }
 
-string EventManager::_generateRedditNodeId() {
-    static const char alphanum[] =
-                    "0123456789"
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    "abcdefghijklmnopqrstuvwxyz";
+void EventManager::_emitTwitterUserCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
-    int len = 25;
-    string nodeId = "";
-
-    for (int i = 0; i < len; ++i) {
-        nodeId += alphanum[rand() % (sizeof(alphanum) - 1)];
+    for(auto& event : m_events) {
+        m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
+                    << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << ",{}\n";
     }
+}
 
-    return nodeId;
+void EventManager::_emitTwitterRepoCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+
+    for(auto& event : m_events) {
+        m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
+                    << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << ",{}\n";
+    }
 }
 
 void EventManager::start() {
@@ -135,6 +141,8 @@ void EventManager::start() {
     if (m_platform == "github") {
         m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl; 
     } else if (m_platform == "reddit") {
+        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+    } else if (m_platform == "twitter") {
         m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
     }
 }

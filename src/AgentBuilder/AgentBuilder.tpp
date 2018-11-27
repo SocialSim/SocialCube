@@ -44,6 +44,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setCommunityDistributionProxyFilePath(filePath);
     } else if (fileName == "inactiveUserProxyFile") {
         m_statProxy.setInactiveUserFilePath(filePath);
+    } else if (fileName == "miscellaneousProxyFile") {
+        cout << "fileName == \"miscellaneousProxyFile\"" << endl;
+        m_statProxy.setMiscellaneousProxyFilePath(filePath);
     }
 
     // 10 event type user distribution proxy files
@@ -136,7 +139,9 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePointProcessStats();
         m_statProxy.parseSubEventTypeProbability();
         buildObjects();
-    } else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    }
+    // IntegratedPoissonProcess Model
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, IntegratedPoissonProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parseUserDistribution();
@@ -152,6 +157,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseCommentProbability();
         m_statProxy.parsePostLifespanDistribution();
         m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseMiscellaneous();
         buildUsers();
     }
     // Embedding Cascade Model
@@ -162,6 +168,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePostLifespanDistribution();
         m_statProxy.parseCommunityDistribution();
         m_statProxy.parseScoreMatrix();
+        m_statProxy.parseMiscellaneous();
         buildUsers();
     }
     else {

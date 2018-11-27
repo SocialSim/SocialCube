@@ -125,14 +125,20 @@ void StatisticProxy::parsePostLifespanDistribution() {
 
 void StatisticProxy::parseScoreMatrix() {
     DBG(LOGD(TAG, "\nscoreMatrixProxyFile: " + m_defaultPostLifespanDistributionProxyFile);)
-    m_scoreMatrixProxy.reset(new ScoreMatrixProxy(m_defaultScoreMatrixFile, m_defaultInactiveUserFile));
+    m_scoreMatrixProxy.reset(new ScoreMatrixProxy(m_defaultScoreMatrixProxyFile, m_defaultInactiveUserFile));
     m_scoreMatrixProxy->parse();
 }
 
 void StatisticProxy::parseCommunityDistribution() {
-    DBG(LOGD(TAG, "\ncommunityDistributionProxyFile: " + m_defaultCommunityDistributionFile);)
-    m_communityDistributionProxy.reset(new CommunityDistributionProxy(m_defaultCommunityDistributionFile));
+    DBG(LOGD(TAG, "\ncommunityDistributionProxyFile: " + m_defaultCommunityDistributionProxyFile);)
+    m_communityDistributionProxy.reset(new CommunityDistributionProxy(m_defaultCommunityDistributionProxyFile));
     m_communityDistributionProxy->parse();
+}
+
+void StatisticProxy::parseMiscellaneous() {
+    DBG(LOGD(TAG, "\nmiscellaneousProxyFile: " + m_defaultMiscellaneousProxyFile);)
+    m_miscellaneousProxy.reset(new MiscellaneousProxy(m_defaultMiscellaneousProxyFile));
+    m_miscellaneousProxy->parse();
 }
 
 void StatisticProxy::parseClassifiedUserDistributionStats() {
@@ -194,7 +200,15 @@ PostLifespanDistribution& StatisticProxy::getPostLifespanDistribution(const std:
 
 unordered_map<string, double> StatisticProxy::getCommunityDistribution(const std::string &userID) const {
     return m_communityDistributionProxy->get(userID);
-};
+}
+
+unordered_map<string, double> StatisticProxy::getActionTypeDistribution() const {
+    return m_miscellaneousProxy->getActionTypeDistribution();
+}
+
+double* StatisticProxy::getQuartile() const {
+    return m_miscellaneousProxy->getQuartile();
+}
 
 ScoreMatrix& StatisticProxy::getScoreMatrix() const {
     return m_scoreMatrixProxy->get();
@@ -202,12 +216,12 @@ ScoreMatrix& StatisticProxy::getScoreMatrix() const {
 
 std::unordered_map<std::string, double> StatisticProxy::getSubEventTypeProbability() const {
     return m_subEventTypeProbability;
-};
+}
 
 UserDistribution& StatisticProxy::getClassifiedUserTypeDistribution(const std::string &event_type, const std::string &repoID) {
     auto pos = m_classifiedUserDistributionProxies.find(event_type);
     return (pos->second)->get(repoID);
-};
+}
 
 std::vector<std::string> StatisticProxy::getEventTypes() const {
     vector<string> eventTypes;
@@ -283,7 +297,12 @@ void StatisticProxy::setCommentProbabilityProxyFilePath(std::string commentProba
 }
 
 void StatisticProxy::setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath) {
-    m_defaultCommunityDistributionFile = communityDistributionFilePath;
+    m_defaultCommunityDistributionProxyFile = communityDistributionFilePath;
+}
+
+void StatisticProxy::setMiscellaneousProxyFilePath(std::string miscellaneousFilePath) {
+    cout << "in StatisticProxy::setMiscellaneousProxyFilePath, miscellaneousFilePath = " << miscellaneousFilePath << endl;
+    m_defaultMiscellaneousProxyFile = miscellaneousFilePath;
 }
 
 void StatisticProxy::setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath) {
@@ -291,7 +310,7 @@ void StatisticProxy::setPostLifespanDistributionProxyFilePath(std::string postLi
 }
 
 void StatisticProxy::setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath) {
-    m_defaultScoreMatrixFile = scoreMatrixProxyFilePath;
+    m_defaultScoreMatrixProxyFile = scoreMatrixProxyFilePath;
 }
 
 void StatisticProxy::setInactiveUserFilePath(std::string inactiveUserFilePath) {

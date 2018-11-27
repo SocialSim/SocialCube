@@ -30,9 +30,17 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
         throw h_e;
     }
 
-    double q1 = 0.09178669;
-    double q2 = 0.18522102;
-    double q3 = 0.32377755;
+    double* quartiles = m_statProxy.getQuartile();
+    double q1 = quartiles[0];
+    double q2 = quartiles[1];
+    double q3 = quartiles[2];
+
+    unordered_map<string, double> actionTypeDistribution = m_statProxy.getActionTypeDistribution();
+
+    bool is_twitter = false;
+    if (actionTypeDistribution.size() == 3) {
+        is_twitter = true;
+    }
 
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
@@ -50,9 +58,18 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
             string root_node_id = generateNodeId();
             string root_user_id = t_id;
 
+            int event_counter = 1;
+            bool stop_flag = false;
+
             // Create post event
-            unique_ptr <Event> event(new Event(root_user_id, root_node_id, "post",
-                                               root_node_id, root_node_id, current_day_time));
+            unique_ptr <Event> event;
+            if (!is_twitter) {
+                event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
+                                                    root_node_id, root_node_id, current_day_time));
+            } else {
+                event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
+                                                    root_node_id, root_node_id, current_day_time));
+            }
             string community_id;
             // Set community ID
             double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
@@ -90,8 +107,25 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
 
                     user_id = t_scoreMatrix.getOutUser(pre_user_list);
                 }
+
                 if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < COMMENT_ROOT_PROB) {
-                    unique_ptr<Event> event(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
+                    unique_ptr <Event> event;
+                    string actionType = "reply";
+                    if (is_twitter) {
+                        double randnum_actionType = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                        double sum_actionType = 0;
+                        for (auto &iter : actionTypeDistribution) {
+                            sum_actionType += iter.second;
+                            if (randnum_actionType <= sum_actionType) {
+                                actionType = iter.first;
+                                break;
+                            }
+                        }
+                        event = unique_ptr<Event>(new Event(user_id, node_id, actionType, root_node_id, root_node_id));
+                    } else {
+                        event = unique_ptr<Event>(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
+                    }
+
                     event->setCommunityID(community_id);
                     user_comments.push_back(std::make_pair(user_id, move(event)));
                 } else {
@@ -102,7 +136,24 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                         int randnum = rand() % user_comments.size();
                         parent_node_id = user_comments[randnum].second->getObjectID();
                     }
-                    unique_ptr<Event> event(new Event(user_id, node_id, "comment", parent_node_id, root_node_id));
+
+                    unique_ptr <Event> event;
+                    string actionType = "reply";
+                    if (is_twitter) {
+                        double randnum_actionType = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                        double sum_actionType = 0;
+                        for (auto &iter : actionTypeDistribution) {
+                            sum_actionType += iter.second;
+                            if (randnum_actionType <= sum_actionType) {
+                                actionType = iter.first;
+                                break;
+                            }
+                        }
+                        event = unique_ptr<Event>(new Event(user_id, node_id, actionType, root_node_id, root_node_id));
+                    } else {
+                        event = unique_ptr<Event>(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
+                    }
+                    event->setCommunityID(community_id);
                     user_comments.push_back(std::make_pair(user_id, move(event)));
                 }
             }

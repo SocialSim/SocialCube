@@ -44,7 +44,9 @@ class EventManager {
 
         void _emitRedditRepoCentricEvent();
 
-        string _generateRedditNodeId();
+        void _emitTwitterUserCentricEvent();
+
+        void _emitTwitterRepoCentricEvent();
 
         EventManager();
 

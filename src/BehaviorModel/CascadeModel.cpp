@@ -29,16 +29,24 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         throw h_e;
     }
 
-    double q1 = 0.09178669;
-    double q2 = 0.18522102;
-    double q3 = 0.32377755;
+    double* quartiles = m_statProxy.getQuartile();
+    double q1 = quartiles[0];
+    double q2 = quartiles[1];
+    double q3 = quartiles[2];
+
+    unordered_map<string, double> actionTypeDistribution = m_statProxy.getActionTypeDistribution();
+
+    bool is_twitter = false;
+    if (actionTypeDistribution.size() == 3) {
+        is_twitter = true;
+    }
 
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
         int post_number = randomlyRoundDouble(scales[i].first);
         int post_scale = 1000;
-
+//        int post_scale = randomlyRoundDouble(scales[i].second);
         for (int j = 0; j < post_number; j++) {
             int lifespan = generateLifespan(t_postLifespanDistribution);
             time_t time_interval = lifespan * 24 * 60 * 60 - 1;
@@ -53,8 +61,14 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             bool stop_flag = false;
 
             // Create post event
-            unique_ptr <Event> event(new Event(root_user_id, root_node_id, "post",
-                                               root_node_id, root_node_id, current_day_time));
+            unique_ptr <Event> event;
+            if (!is_twitter) {
+                event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
+                                                   root_node_id, root_node_id, current_day_time));
+            } else {
+                event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
+                                                   root_node_id, root_node_id, current_day_time));
+            }
             string community_id;
             // Set community ID
             double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
@@ -92,8 +106,22 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
                         if (randnum < comment_prob) {
                             string node_id = generateNodeId();
-                            unique_ptr <Event> event(
-                                    new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id));
+                            unique_ptr <Event> event;
+                            string actionType = "reply";
+                            if (is_twitter) {
+                                double randnum_actionType = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                                double sum_actionType = 0;
+                                for (auto &iter : actionTypeDistribution) {
+                                    sum_actionType += iter.second;
+                                    if (randnum_actionType <= sum_actionType) {
+                                        actionType = iter.first;
+                                        break;
+                                    }
+                                }
+                                event = unique_ptr<Event>(new Event(commenter_id, node_id, actionType, parent_node_id, root_node_id));
+                            } else {
+                                event = unique_ptr<Event>(new Event(commenter_id, node_id, "comment", parent_node_id, root_node_id));
+                            }
                             event->setCommunityID(community_id);
                             post_comments.push_back(move(event));
 

@@ -107,6 +107,13 @@ class CommunityDistributionProxyException: public std::exception {
     }
 };
 
+class MiscellaneousProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for MiscellaneousProxy";
+    }
+};
+
 class PostLifespanDistributionProxyException: public std::exception {
     virtual const char * what () const throw ()
     {
