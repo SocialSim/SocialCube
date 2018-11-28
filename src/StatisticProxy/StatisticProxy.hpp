@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <cstdlib>
 #include <memory>
+#include "common/Event.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
 #include "Dependency/PointProcessStat.hpp"
@@ -27,6 +28,7 @@
 #include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
 #include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
 #include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
+#include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -49,6 +51,7 @@ class StatisticProxy {
         std::string m_defaultCommunityDistributionProxyFile;
         std::string m_defaultMiscellaneousProxyFile;
         std::string m_defaultInactiveUserFile;
+        std::string m_defaultSeedEventsProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -70,6 +73,7 @@ class StatisticProxy {
         std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
         std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
         std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
+        std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -101,6 +105,7 @@ class StatisticProxy {
         void parseScoreMatrix();
         void parseCommunityDistribution();
         void parseMiscellaneous();
+        void parseSeedEvents();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -119,6 +124,7 @@ class StatisticProxy {
         void setInactiveUserFilePath(std::string inactiveUserFilePath);
         void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
         void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
+        void setSeedEventsFilePath(std::string seedEventsFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -160,6 +166,8 @@ class StatisticProxy {
         PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
 
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
+
+        std::vector<Event> getSeedEvents(std::string t_user_id) const;
 
         std::unordered_map<std::string, double> getActionTypeDistribution() const;
 

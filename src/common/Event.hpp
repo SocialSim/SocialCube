@@ -4,7 +4,8 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
-#include "StatisticProxy/StatisticProxy.hpp"
+#include <sstream>
+//#include "StatisticProxy/StatisticProxy.hpp"
 
 class Event {
 private:

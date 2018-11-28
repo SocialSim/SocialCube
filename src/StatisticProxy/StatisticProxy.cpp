@@ -141,6 +141,12 @@ void StatisticProxy::parseMiscellaneous() {
     m_miscellaneousProxy->parse();
 }
 
+void StatisticProxy::parseSeedEvents() {
+    DBG(LOGD(TAG, "\nseedEventsProxyFile: " + m_defaultSeedEventsProxyFile);)
+    m_seedEventsProxy.reset(new SeedEventsProxy(m_defaultSeedEventsProxyFile));
+    m_seedEventsProxy->parse();
+}
+
 void StatisticProxy::parseClassifiedUserDistributionStats() {
     for (auto& iter : m_defaultClassifiedUserDistributionProxyFiles) {
         DBG(LOGD(TAG, "\n" + iter.first + ": " + iter.second);)
@@ -212,6 +218,10 @@ double* StatisticProxy::getQuartile() const {
 
 ScoreMatrix& StatisticProxy::getScoreMatrix() const {
     return m_scoreMatrixProxy->get();
+}
+
+vector<Event> StatisticProxy::getSeedEvents(string t_user_id) const {
+    return m_seedEventsProxy->get(t_user_id);
 }
 
 std::unordered_map<std::string, double> StatisticProxy::getSubEventTypeProbability() const {
@@ -316,6 +326,11 @@ void StatisticProxy::setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFil
 void StatisticProxy::setInactiveUserFilePath(std::string inactiveUserFilePath) {
     m_defaultInactiveUserFile = inactiveUserFilePath;
 }
+
+void StatisticProxy::setSeedEventsFilePath(std::string seedEventsFilePath) {
+    m_defaultSeedEventsProxyFile = seedEventsFilePath;
+}
+
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {
     return m_userIDProxy->getCommunityTag(userID);

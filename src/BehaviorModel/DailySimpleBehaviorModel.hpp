@@ -6,6 +6,7 @@
 #include <memory>
 #include "common/Event.hpp"
 #include "common/Exception.hpp"
+#include "StatisticProxy/StatisticProxy.hpp"
 #include "Dependency/DailyActivityLevel.hpp"
 #include "Dependency/ObjectPreference.hpp"
 #include "Dependency/TypeDistribution.hpp"

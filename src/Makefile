@@ -27,6 +27,7 @@ OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) CascadeUserAgent.o
+OBJS := $(OBJS) SeedCascadeUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeModel.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
@@ -36,6 +37,7 @@ OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
 OBJS := $(OBJS) CascadeModel.o
+OBJS := $(OBJS) SeedCascadeModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) DailyActivityLevel.o
 OBJS := $(OBJS) HourlyActionRate.o
@@ -63,6 +65,7 @@ OBJS := $(OBJS) PostScaleProxy.o
 OBJS := $(OBJS) CommentProbabilityProxy.o
 OBJS := $(OBJS) CommunityDistributionProxy.o
 OBJS := $(OBJS) MiscellaneousProxy.o
+OBJS := $(OBJS) SeedEventsProxy.o
 OBJS := $(OBJS) PostLifespanDistributionProxy.o
 OBJS := $(OBJS) ScoreMatrixProxy.o
 OBJS := $(OBJS) Event.o
@@ -118,6 +121,9 @@ PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjec
 CascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/CascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+SeedCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 EmbeddingCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -140,6 +146,9 @@ PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/P
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CascadeModel.o:	./BehaviorModel/CascadeModel.cpp ./BehaviorModel/CascadeModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedCascadeModel.o:	./BehaviorModel/SeedCascadeModel.cpp ./BehaviorModel/SeedCascadeModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EmbeddingCascadeModel.o:	./BehaviorModel/EmbeddingCascadeModel.cpp ./BehaviorModel/EmbeddingCascadeModel.hpp
@@ -230,6 +239,9 @@ CommunityDistributionProxy.o:	./StatisticProxy/CommunityDistributionProxy/Commun
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 MiscellaneousProxy.o:	./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.cpp ./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedEventsProxy.o:	./StatisticProxy/SeedEventsProxy/SeedEventsProxy.cpp ./StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PostLifespanDistributionProxy.o:	./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.cpp ./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp

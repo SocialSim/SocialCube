@@ -114,6 +114,13 @@ class MiscellaneousProxyException: public std::exception {
     }
 };
 
+class SeedEventsProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for SeedEventsProxy";
+    }
+};
+
 class PostLifespanDistributionProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

@@ -8,6 +8,7 @@
 #include "Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"

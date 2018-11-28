@@ -5,18 +5,19 @@ using namespace std;
 Event::Event(const string& t_userID, const string& t_objectID, const string& t_eventType, time_t t_timestamp) :
     m_userID(t_userID), m_objectID(t_objectID), m_eventType(t_eventType), 
     m_timestamp(t_timestamp) {
-    if (m_eventType == "IssuesEvent" || m_eventType == "PullRequestEvent") {
-        StatisticProxy& statisticProxy = StatisticProxy::getInstance();
-        unordered_map<std::string, double> subEventTypeProbability = statisticProxy.getSubEventTypeProbability();
-        if (m_eventType == "IssuesEvent") {
-            setAction(subEventTypeProbability["IssuesEventOpened"], subEventTypeProbability["IssuesEventClosed"],
-            subEventTypeProbability["IssuesEventReopened"]);
-        } else {
-            setAction(subEventTypeProbability["PullRequestEventOpened"], subEventTypeProbability["PullRequestEventClosed"],
-            subEventTypeProbability["PullRequestEventReopened"]);
-            setMerged(subEventTypeProbability["PullRequestEventMerged"]);
-        }
-    }
+
+//    if (m_eventType == "IssuesEvent" || m_eventType == "PullRequestEvent") {
+//        StatisticProxy& statisticProxy = StatisticProxy::getInstance();
+//        unordered_map<std::string, double> subEventTypeProbability = statisticProxy.getSubEventTypeProbability();
+//        if (m_eventType == "IssuesEvent") {
+//            setAction(subEventTypeProbability["IssuesEventOpened"], subEventTypeProbability["IssuesEventClosed"],
+//            subEventTypeProbability["IssuesEventReopened"]);
+//        } else {
+//            setAction(subEventTypeProbability["PullRequestEventOpened"], subEventTypeProbability["PullRequestEventClosed"],
+//            subEventTypeProbability["PullRequestEventReopened"]);
+//            setMerged(subEventTypeProbability["PullRequestEventMerged"]);
+//        }
+//    }
     return;
 }
 
