@@ -45,7 +45,6 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "inactiveUserProxyFile") {
         m_statProxy.setInactiveUserFilePath(filePath);
     } else if (fileName == "miscellaneousProxyFile") {
-        cout << "fileName == \"miscellaneousProxyFile\"" << endl;
         m_statProxy.setMiscellaneousProxyFilePath(filePath);
     }
 
