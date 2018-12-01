@@ -138,6 +138,7 @@ void EventManager::start() {
     DBG(LOGP(TAG, "Event Show Status: "+stringfy(m_eventOn));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
+    cout << "Domain: " << m_domain << endl;
     if (m_platform == "github") {
         m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl; 
     } else if (m_platform == "reddit") {
@@ -177,6 +178,14 @@ void EventManager::setCenter(const std::string& center) {
 
 void EventManager::setPlatform(const std::string& platform) {
     m_platform = platform;
+}
+
+void EventManager::setScenario(const std::string& scenario) {
+    m_scenario = scenario;
+}
+
+void EventManager::setDomain(const std::string& domain) {
+    m_domain = domain;
 }
 
 void EventManager::setEventShow(bool t_eventOn) {

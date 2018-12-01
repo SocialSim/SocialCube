@@ -33,7 +33,9 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
           ("event_file", "File name for storing events", cxxopts::value<string>())
           ("proxy_config_file", "File name for proxy configuration file", cxxopts::value<string>())
           ("default_file_path", "The path for searching default proxy files", cxxopts::value<string>())
-          ("platform", "Github, Reddit or Twitter", cxxopts::value<string>())
+          ("platform", "github, reddit or twitter", cxxopts::value<string>())
+          ("domain", "crypto, cve or cyber", cxxopts::value<string>())
+          ("scenario", "Scenario 1 or 2", cxxopts::value<string>())
           ("init_file", "Read Configuration from File");
 
         try 
@@ -145,6 +147,18 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
                 simulator_platform = "github";
             }
 
+            if (result.count("domain")) {
+                simulator_domain = result["domain"].as<string>();
+            } else {
+                simulator_domain = "crypto";
+            }
+
+            if (result.count("scenario")) {
+                simulator_scenario = result["scenario"].as<string>();
+            } else {
+                simulator_scenario = "1";
+            }
+
             if (result.count("init_file")) { 
                 readFromFile = true;
             } else {
@@ -192,6 +206,14 @@ std::string ArgParser::getSimulationPlatform() {
     return simulator_platform;
 }
 
+std::string ArgParser::getSimulationDomain() {
+    return simulator_domain;
+}
+
+std::string ArgParser::getSimulationScenario() {
+    return simulator_scenario;
+}
+
 bool ArgParser::getSimulationShowProfileStatus() {
     return profile_show;
 }
@@ -199,6 +221,7 @@ bool ArgParser::getSimulationShowProfileStatus() {
 bool ArgParser::getSimulationShowEventStatus() {
     return event_show;
 }
+
 string ArgParser::getSimulationEventFileName() {
     return event_file;
 }

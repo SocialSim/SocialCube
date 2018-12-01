@@ -44,7 +44,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
     }
 
     for (Event seed : seed_events) {
-        int post_scale = 1000;
+        int post_scale = 10;
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
         time_t q1_end_time = time_interval * q1;

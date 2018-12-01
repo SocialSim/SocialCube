@@ -59,6 +59,9 @@ int main(int argc, const char* argv[]) {
             EventManager& em = EventManager::getInstance();
             em.setCenter(args.getSimulationCenter());
             em.setPlatform(args.getSimulationPlatform());
+            em.setScenario(args.getSimulationScenario());
+            em.setDomain(args.getSimulationDomain());
+
             em.setEventShow(args.getSimulationShowEventStatus());
             em.setEventFileName(args.getSimulationEventFileName());
             em.setEventBufferSize(args.getSimulationEventBufferSize());
