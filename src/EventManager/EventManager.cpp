@@ -53,9 +53,22 @@ void EventManager::emitEvent() {
 
 void EventManager::_emitGithubUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    int count = 0;
     for(auto& event : m_events) {
-        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
-                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
+//        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
+//                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
+        if (count != 0) {
+            m_eventFile << ", ";
+        } else {
+            count++;
+        }
+
+        m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
+                "\"actionType\": \"" << event->getEventType() << "\", " <<
+                "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+                "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+                "\"actionSubtype\": \"" << event->getAction() << "\", " <<
+                "\"nodeID\": \"" << event->getObjectID() << "\"}";
     }
 }
 
@@ -139,17 +152,23 @@ void EventManager::start() {
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
     cout << "Domain: " << m_domain << endl;
-    if (m_platform == "github") {
-        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl; 
-    } else if (m_platform == "reddit") {
-        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
-    } else if (m_platform == "twitter") {
-        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
-    }
+
+    m_eventFile << "{\"platform\": \"" << m_platform << "\", \"domain\": \"" << m_domain <<
+                "\", \"scenario\": \"" << m_scenario << "\", \"team\": \"uiuc\", " <<
+                "\"data\": [" << endl;
+
+//    if (m_platform == "github") {
+//        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl;
+//    } else if (m_platform == "reddit") {
+//        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+//    } else if (m_platform == "twitter") {
+//        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+//    }
 }
 
 void EventManager::end() {
     emitEvent();
+    m_eventFile << "]}" << endl;
     m_eventFile.close(); 
 
     SimulatorProfiler& sp = SimulatorProfiler::getInstance();
