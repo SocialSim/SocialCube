@@ -103,6 +103,10 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                     for (auto &iter : commentProbability) {
                         string commenter_id = iter.first;
                         double comment_prob = iter.second;
+                         
+                        if (commenter_id == "None") {
+                            continue;
+                        }
 
                         double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 
