@@ -67,7 +67,7 @@ void EventManager::_emitGithubUserCentricEvent(){
                 "\"actionType\": \"" << event->getEventType() << "\", " <<
                 "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
                 "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
-                "\"actionSubtype\": \"" << event->getAction() << "\", " <<
+                "\"actionSubType\": \"" << event->getAction() << "\", " <<
                 "\"nodeID\": \"" << event->getObjectID() << "\"}";
     }
 }
@@ -155,7 +155,7 @@ void EventManager::start() {
 
     m_eventFile << "{\"platform\": \"" << m_platform << "\", \"domain\": \"" << m_domain <<
                 "\", \"scenario\": \"" << m_scenario << "\", \"team\": \"uiuc\", " <<
-                "\"data\": [" << endl;
+                "\"data\": [";
 
 //    if (m_platform == "github") {
 //        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl;
