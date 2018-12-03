@@ -17,7 +17,6 @@
 #include "Agent/UserAgent/GithubAgent/ClusteredGithubUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
-#include "Agent/UserAgent/CascadeAgent/SpecificCascadeUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
@@ -59,6 +58,9 @@ int main(int argc, const char* argv[]) {
             EventManager& em = EventManager::getInstance();
             em.setCenter(args.getSimulationCenter());
             em.setPlatform(args.getSimulationPlatform());
+            em.setScenario(args.getSimulationScenario());
+            em.setDomain(args.getSimulationDomain());
+
             em.setEventShow(args.getSimulationShowEventStatus());
             em.setEventFileName(args.getSimulationEventFileName());
             em.setEventBufferSize(args.getSimulationEventBufferSize());

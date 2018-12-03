@@ -18,6 +18,10 @@ class EventManager {
 
         std::string m_platform;
 
+        std::string m_scenario;
+
+        std::string m_domain;
+
         std::vector<std::unique_ptr<Event>> m_events;
 
         uint64_t m_eventCount;
@@ -58,6 +62,10 @@ class EventManager {
         void setCenter(const std::string& center);
 
         void setPlatform(const std::string& platform);
+
+        void setScenario(const std::string& scenario);
+
+        void setDomain(const std::string& domain);
 
         void setEventShow(bool t_eventOn); 
 
