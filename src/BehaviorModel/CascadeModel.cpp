@@ -29,6 +29,10 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
         throw h_e;
     }
 
+
+    // q1 = 0.09854849806017656
+    // q2 = 0.19713662656811026
+    // q3 = 0.3409716976370293
     double* quartiles = m_statProxy.getQuartile();
     double q1 = quartiles[0];
     double q2 = quartiles[1];

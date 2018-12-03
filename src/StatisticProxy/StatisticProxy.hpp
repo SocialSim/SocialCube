@@ -23,7 +23,10 @@
 #include "StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp"
 #include "StatisticProxy/PostScaleProxy/PostScaleProxy.hpp"
 #include "StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp"
+#include "StatisticProxy/ResponseTypeProbabilityProxy/ResponseTypeProbabilityProxy.hpp"
 #include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
+#include "StatisticProxy/PostBreadthDistributionProxy/PostBreadthDistributionProxy.hpp"
+#include "StatisticProxy/SpecificResponseDistributionProxy/SpecificResponseDistributionProxy.hpp"
 #include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
 #include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
 #include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
@@ -44,7 +47,10 @@ class StatisticProxy {
         std::string m_defaultSubEventTypeProbabilityProxyFile;
         std::string m_defaultPostScaleProxyFile;
         std::string m_defaultCommentProbabilityProxyFile;
+        std::string m_defaultResponseTypeProbabilityProxyFile;
         std::string m_defaultPostLifespanDistributionProxyFile;
+        std::string m_defaultPostBreadthDistributionProxyFile;
+        std::string m_defaultSpecificResponseDistributionProxyFile;
         std::string m_defaultScoreMatrixProxyFile;
         std::string m_defaultCommunityDistributionProxyFile;
         std::string m_defaultMiscellaneousProxyFile;
@@ -66,7 +72,10 @@ class StatisticProxy {
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
         std::unique_ptr<PostScaleProxy> m_postScaleProxy;
         std::unique_ptr<CommentProbabilityProxy> m_commentProbabilityProxy;
+        std::unique_ptr<ResponseTypeProbabilityProxy> m_responseTypeProbabilityProxy;
         std::unique_ptr<PostLifespanDistributionProxy> m_postLifespanDistributionProxy;
+        std::unique_ptr<PostBreadthDistributionProxy> m_postBreadthDistributionProxy;
+        std::unique_ptr<SpecificResponseDistributionProxy> m_specificResponseDistributionProxy;
         std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
         std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
         std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
@@ -97,7 +106,10 @@ class StatisticProxy {
         void parseSubEventTypeProbability();
         void parsePostScale();
         void parseCommentProbability();
+        void parseResponseTypeProbability();
         void parsePostLifespanDistribution();
+        void parsePostBreadthDistribution();
+        void parseSpecificResponseDistribution();
         void parseScoreMatrix();
         void parseCommunityDistribution();
         void parseMiscellaneous();
@@ -114,7 +126,10 @@ class StatisticProxy {
         void setSubEventTypeProbabilityProxyFilePath(std::string subEventTypeProbabilityProxyFilePath);
         void setPostScaleProxyFilePath(std::string postScaleProxyFilePath);
         void setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath);
+        void setResponseTypeProbabilityProxyFilePath(std::string responseTypeProbabilityFilePath);
         void setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath);
+        void setPostBreadthDistributionProxyFilePath(std::string postBreadthDistributionFilePath);
+        void setSpecificResponseDistributionProxyFilePath(std::string specificResponseDistributionFilePath);
         void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
         void setInactiveUserFilePath(std::string inactiveUserFilePath);
         void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
@@ -157,7 +172,13 @@ class StatisticProxy {
 
         CommentProbability& getCommentProbability(const std::string &userID) const;
 
+        ResponseTypeProbability& getResponseTypeProbability(const std::string &userID) const;
+
         PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
+
+        PostBreadthDistribution& getPostBreadthDistribution(const std::string &userID) const;
+
+        SpecificResponseDistribution& getSpecificResponseDistribution(const std::string &userID) const;
 
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
 

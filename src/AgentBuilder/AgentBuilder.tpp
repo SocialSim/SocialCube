@@ -36,8 +36,14 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPostScaleProxyFilePath(filePath);
     } else if (fileName == "commentProbabilityProxyFile") {
         m_statProxy.setCommentProbabilityProxyFilePath(filePath);
+    } else if (fileName == "responseTypeProbabilityProxyFile") {
+        m_statProxy.setResponseTypeProbabilityProxyFilePath(filePath);
     } else if (fileName == "postLifespanDistributionProxyFile") {
         m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
+    } else if (fileName == "postBreadthDistributionProxyFile") {
+        m_statProxy.setPostBreadthDistributionProxyFilePath(filePath);
+    } else if (fileName == "specificResponseDistributionProxyFile") {
+        m_statProxy.setSpecificResponseDistributionProxyFilePath(filePath);
     } else if (fileName == "scoreMatrixProxyFile") {
         m_statProxy.setScoreMatrixProxyFilePath(filePath);
     } else if (fileName == "communityDistributionProxyFile") {
@@ -166,9 +172,21 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseUserID();
         m_statProxy.parsePostScale();
         m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parsePostBreadthDistribution();
         m_statProxy.parseCommunityDistribution();
-        m_statProxy.parseScoreMatrix();
-        m_statProxy.parseMiscellaneous();
+        m_statProxy.parseResponseTypeProbability();
+        buildUsers();
+    }
+    // Specific Cascade Model
+    else if (std::is_same<TUserAgent, SpecificCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parsePostBreadthDistribution();
+        m_statProxy.parseSpecificResponseDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseCommentProbability();
         buildUsers();
     }
     else {

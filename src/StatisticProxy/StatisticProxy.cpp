@@ -117,10 +117,28 @@ void StatisticProxy::parseCommentProbability() {
     m_commentProbabilityProxy->parse();
 }
 
+void StatisticProxy::parseResponseTypeProbability() {
+    DBG(LOGD(TAG, "\nresponseTypeProbabilityProxyFile: " + m_defaultResponseTypeProbabilityProxyFile);)
+    m_responseTypeProbabilityProxy.reset(new ResponseTypeProbabilityProxy(m_defaultResponseTypeProbabilityProxyFile));
+    m_responseTypeProbabilityProxy->parse();
+}
+
 void StatisticProxy::parsePostLifespanDistribution() {
     DBG(LOGD(TAG, "\nparsePostLifespanDistributionProxyFile: " + m_defaultPostLifespanDistributionProxyFile);)
     m_postLifespanDistributionProxy.reset(new PostLifespanDistributionProxy(m_defaultPostLifespanDistributionProxyFile));
     m_postLifespanDistributionProxy->parse();
+}
+
+void StatisticProxy::parsePostBreadthDistribution() {
+    DBG(LOGD(TAG, "\nparsePostBreadthDistributionProxyFile: " + m_defaultPostBreadthDistributionProxyFile);)
+    m_postBreadthDistributionProxy.reset(new PostBreadthDistributionProxy(m_defaultPostBreadthDistributionProxyFile));
+    m_postBreadthDistributionProxy->parse();
+}
+
+void StatisticProxy::parseSpecificResponseDistribution() {
+    DBG(LOGD(TAG, "\nparseSpecificResponseDistributionProxyFile: " + m_defaultSpecificResponseDistributionProxyFile);)
+    m_specificResponseDistributionProxy.reset(new SpecificResponseDistributionProxy(m_defaultSpecificResponseDistributionProxyFile));
+    m_specificResponseDistributionProxy->parse();
 }
 
 void StatisticProxy::parseScoreMatrix() {
@@ -194,8 +212,20 @@ CommentProbability& StatisticProxy::getCommentProbability(const std::string &use
     return m_commentProbabilityProxy->get(userID);
 }
 
+ResponseTypeProbability& StatisticProxy::getResponseTypeProbability(const std::string &userID) const {
+    return m_responseTypeProbabilityProxy->get(userID);
+}
+
 PostLifespanDistribution& StatisticProxy::getPostLifespanDistribution(const std::string &userID) const {
     return m_postLifespanDistributionProxy->get(userID);
+}
+
+PostBreadthDistribution& StatisticProxy::getPostBreadthDistribution(const std::string &userID) const {
+    return m_postBreadthDistributionProxy->get(userID);
+}
+
+SpecificResponseDistribution& StatisticProxy::getSpecificResponseDistribution(const std::string &userID) const {
+    return m_specificResponseDistributionProxy->get(userID);
 }
 
 unordered_map<string, double> StatisticProxy::getCommunityDistribution(const std::string &userID) const {
@@ -292,8 +322,13 @@ void StatisticProxy::setSubEventTypeProbabilityProxyFilePath(std::string subEven
 void StatisticProxy::setPostScaleProxyFilePath(std::string postScaleProxyFilePath) {
     m_defaultPostScaleProxyFile = postScaleProxyFilePath;
 }
+
 void StatisticProxy::setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath) {
     m_defaultCommentProbabilityProxyFile = commentProbabilityFilePath;
+}
+
+void StatisticProxy::setResponseTypeProbabilityProxyFilePath(std::string responseTypeProbabilityFilePath) {
+    m_defaultResponseTypeProbabilityProxyFile = responseTypeProbabilityFilePath;
 }
 
 void StatisticProxy::setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath) {
@@ -307,6 +342,14 @@ void StatisticProxy::setMiscellaneousProxyFilePath(std::string miscellaneousFile
 
 void StatisticProxy::setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath) {
     m_defaultPostLifespanDistributionProxyFile = postLifespanDistributionFilePath;
+}
+
+void StatisticProxy::setPostBreadthDistributionProxyFilePath(std::string postBreadthDistributionFilePath) {
+    m_defaultPostBreadthDistributionProxyFile = postBreadthDistributionFilePath;
+}
+
+void StatisticProxy::setSpecificResponseDistributionProxyFilePath(std::string specificResponseDistributionFilePath) {
+    m_defaultSpecificResponseDistributionProxyFile = specificResponseDistributionFilePath;
 }
 
 void StatisticProxy::setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath) {

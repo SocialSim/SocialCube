@@ -1,16 +1,16 @@
-#include "EmbeddingCascadeModel.hpp"
+#include "SpecificCascadeModel.hpp"
 
 using namespace std;
 
-EmbeddingCascadeModel::EmbeddingCascadeModel() {
+SpecificCascadeModel::SpecificCascadeModel() {
     return;
 }
 
-EmbeddingCascadeModel::~EmbeddingCascadeModel() {
+SpecificCascadeModel::~SpecificCascadeModel() {
     return;
 }
 
-vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
+vector<unique_ptr<Event>> SpecificCascadeModel::evaluate(const string t_id,
                                                       PostScale& t_postScale,
                                                       PostBreadthDistribution& t_postBreadthDistribution,
                                                       unordered_map<string, double> t_communityDistribution,
@@ -19,8 +19,8 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
     
-    int startDay = EmbeddingCascadeModel::convertISOtoDay(t_startTime);
-    int endDay = EmbeddingCascadeModel::convertISOtoDay(t_endTime);
+    int startDay = SpecificCascadeModel::convertISOtoDay(t_startTime);
+    int endDay = SpecificCascadeModel::convertISOtoDay(t_endTime);
 
     vector<pair<double, double>> scales = t_postScale.getScale();
 
@@ -32,7 +32,7 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
-        int post_number = (int)scales[i].first;
+        int post_number = (int)scales[i].second;
         int post_scale = 1000;
 
         for (int j = 0; j < post_number; j++) {
@@ -76,77 +76,45 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
                         string parent_node_id = iter.first;
                         string parent_user_id = iter.second;
 
-                        ResponseTypeProbability response_type_prob_collective = m_statProxy.getResponseTypeProbability(parent_user_id);
-                        vector <string> responseTypeProbabilityCollective = response_type_prob_collective.getResponseTypeProb();
+                        CommentProbability comment_prob = m_statProxy.getCommentProbability(parent_user_id);
+                        vector <std::pair<string, double>> commentProbability = comment_prob.getCommentProb();
 
-                        vector <string> responseIDs;
-                        vector <vector <string> > responseTypes;
-                        vector <vector <double> > responseProbabilities;
-                        int user_count = -1;
-                        int prob_count = 0;
-                        int type_count = 0;
-                        for (auto & element : responseTypeProbabilityCollective) {
-                            if (element[0] == '#') {
-                                responseIDs.push_back(element);
-                                responseProbabilities.push_back({0.0, 0.0, 0.0});
-                                responseTypes.push_back({"retweet", "reply", "quote"});
-                                user_count++;
-                                prob_count = 0;
-                                type_count = 0;
-                            } else if (element == "retweet" || element == "reply" || element == "quote") {
-                                responseTypes[user_count][prob_count] = element;
-                                type_count++;
-                            } else {
-                                double prob = stod(element);
-                                responseProbabilities[user_count][prob_count] = prob;
-                                prob_count++;
-                            }
-                        }
+                        for (auto &iter : commentProbability) {
+                            string commenter_id = iter.first;
+                            double comment_prob = iter.second;
 
-                        vector <int> indexes;
-                        indexes.reserve(responseIDs.size());
-                        for (int i = 0; i < responseIDs.size(); ++i) {
-                            indexes.push_back(i);
-                        }
-                        random_shuffle(indexes.begin(), indexes.end());
+                            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                            if (randnum < comment_prob) {                               
+                                // cout << "Scanning user " << commenter_id << endl; 
+                                PostLifespanDistribution lifespan_dist = m_statProxy.getPostLifespanDistribution(commenter_id);
+                                int lifespan = generateLifespan(lifespan_dist);
 
-                        for (int i = 0; i < indexes.size(); i++) {
-                            string commenter_id = responseIDs[indexes[i]];
-                            commenter_id.replace(0,1,"");
+                                // cout << "Lifespan " << lifespan << endl;
 
-                            // cout << commenter_id << ": ~" << responseTypes[indexes[i]][0] << "~ " << responseProbabilities[indexes[i]][0] << " ~" << responseTypes[indexes[i]][1] << "~ " << responseProbabilities[indexes[i]][1] << " ~" << responseTypes[indexes[i]][2] << "~ " << responseProbabilities[indexes[i]][2] << endl;
-                            for (int j = 0; j < responseProbabilities[indexes[i]].size(); j++) {
-                                double comment_prob = responseProbabilities[indexes[i]][j];
-                                string response_type = responseTypes[indexes[i]][j];
+                                SpecificResponseDistribution response_dist = m_statProxy.getSpecificResponseDistribution(commenter_id);
+                                string response_type = generateSpecificResponse(response_dist);
 
-                                double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-                                if (randnum < comment_prob) {                                
-                                    PostLifespanDistribution lifespan_dist = m_statProxy.getPostLifespanDistribution(commenter_id);
-                                    int lifespan = generateLifespan(lifespan_dist);
+                                // cout << "Response type " << response_type << endl;
 
-                                    int hours = rand() % 24;
-                                    int minutes = rand() % 60;
-                                    int seconds = rand() % 60;
-                                    time_t eventTime = current_day_time + (lifespan * 86400) + (hours * 60 + minutes) * 60 + seconds;
+                                int hours = rand() % 24;
+                                int minutes = rand() % 60;
+                                int seconds = rand() % 60;
+                                time_t eventTime = current_day_time + (lifespan * 86400) + (hours * 60 + minutes) * 60 + seconds;
 
-                                    string node_id = generateNodeId();
-                                    unique_ptr <Event> event;
-                                    event = unique_ptr<Event>(new Event(commenter_id, node_id, response_type, parent_node_id, root_node_id, eventTime));
-                                    event->setCommunityID(community_id);
-                                    post_comments.push_back(move(event));
+                                string node_id = generateNodeId();
+                                unique_ptr <Event> event;
+                                event = unique_ptr<Event>(new Event(commenter_id, node_id, response_type, parent_node_id, root_node_id, eventTime));
+                                event->setCommunityID(community_id);
+                                post_comments.push_back(move(event));
 
-                                    next_layer.push_back(pair<string, string>(node_id, commenter_id));
+                                next_layer.push_back(pair<string, string>(node_id, commenter_id));
 
-                                    if (++event_counter > breadth) {
-                                        // cout << event_counter << " > " << breadth << endl;
-                                        stop_flag = true;   
-                                    }
+                                if (++event_counter > breadth) {
+                                    // cout << event_counter << " > " << breadth << endl;
+                                    stop_flag = true;   
                                     break;
                                 }
-                            }
-                            if (stop_flag) {
-                                break;
-                            }
+                            }                           
                         }
                         if (stop_flag) {
                             break;
@@ -170,7 +138,7 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
     return events;
 }
 
-int EmbeddingCascadeModel::randomlyRoundDouble(double num) {
+int SpecificCascadeModel::randomlyRoundDouble(double num) {
     double float_part = num - (int) num;
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     if (randnum <= float_part) {
@@ -180,7 +148,7 @@ int EmbeddingCascadeModel::randomlyRoundDouble(double num) {
     }
 }
 
-int EmbeddingCascadeModel::generateBreadth(PostBreadthDistribution& t_postBreadthDistribution) {
+int SpecificCascadeModel::generateBreadth(PostBreadthDistribution& t_postBreadthDistribution) {
     vector<pair<int, double>> breadthDistribution = t_postBreadthDistribution.getBreadthDist();
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
@@ -193,7 +161,7 @@ int EmbeddingCascadeModel::generateBreadth(PostBreadthDistribution& t_postBreadt
     return breadthDistribution.back().first;
 }
 
-int EmbeddingCascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
+int SpecificCascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
     vector<pair<int, double>> lifespanDistribution = t_postLifespanDistribution.getLifespanDist();
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
@@ -206,7 +174,20 @@ int EmbeddingCascadeModel::generateLifespan(PostLifespanDistribution& t_postLife
     return lifespanDistribution.back().first;
 }
 
-string EmbeddingCascadeModel::chooseResponseType(vector <string> &responseTypes, vector <double> &responseProbabilities) {
+string SpecificCascadeModel::generateSpecificResponse(SpecificResponseDistribution& t_specificResponseDistribution) {
+    vector<pair<string, double>> responseDistribution = t_specificResponseDistribution.getResponseDist();
+    double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+    double accum_prob = 0;
+    for (auto& iter : responseDistribution) {
+        accum_prob += iter.second;
+        if (accum_prob >= randnum) {
+            return iter.first;
+        }
+    }
+    return responseDistribution.back().first;
+}
+
+string SpecificCascadeModel::chooseResponseType(vector <string> &responseTypes, vector <double> &responseProbabilities) {
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double accum_prob = 0;
     int count = 0;
@@ -220,7 +201,7 @@ string EmbeddingCascadeModel::chooseResponseType(vector <string> &responseTypes,
     return responseTypes[0];
 }
 
-string EmbeddingCascadeModel::generateNodeId() {
+string SpecificCascadeModel::generateNodeId() {
     static const char alphanum[] =
             "0123456789"
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -236,25 +217,25 @@ string EmbeddingCascadeModel::generateNodeId() {
     return nodeId;
 }
 
-int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
+int SpecificCascadeModel::convertISOtoDay(time_t t_currentTime) {
     return int(t_currentTime / (24 * 60 * 60));
 }
 
-// NOTE: Below is the EmbeddingCascadeModel version that does not have any layers for parent-child simulations.
+// NOTE: Below is the SpecificCascadeModel version that does not have any layers for parent-child simulations.
 // NOTE: However, this version takes an extremely long time to load and may be stuck in some kind of loop. Requires further investiagation.
-// #include "EmbeddingCascadeModel.hpp"
+// #include "SpecificCascadeModel.hpp"
 
 // using namespace std;
 
-// EmbeddingCascadeModel::EmbeddingCascadeModel() {
+// SpecificCascadeModel::SpecificCascadeModel() {
 //     return;
 // }
 
-// EmbeddingCascadeModel::~EmbeddingCascadeModel() {
+// SpecificCascadeModel::~SpecificCascadeModel() {
 //     return;
 // }
 
-// vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
+// vector<unique_ptr<Event>> SpecificCascadeModel::evaluate(const string t_id,
 //                                                       PostScale& t_postScale,
 //                                                       PostBreadthDistribution& t_postBreadthDistribution,
 //                                                       unordered_map<string, double> t_communityDistribution,
@@ -263,8 +244,8 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
 //     vector<unique_ptr<Event>> events;
     
-//     int startDay = EmbeddingCascadeModel::convertISOtoDay(t_startTime);
-//     int endDay = EmbeddingCascadeModel::convertISOtoDay(t_endTime);
+//     int startDay = SpecificCascadeModel::convertISOtoDay(t_startTime);
+//     int endDay = SpecificCascadeModel::convertISOtoDay(t_endTime);
 
 //     vector<pair<double, double>> scales = t_postScale.getScale();
 
@@ -401,7 +382,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return events;
 // }
 
-// int EmbeddingCascadeModel::randomlyRoundDouble(double num) {
+// int SpecificCascadeModel::randomlyRoundDouble(double num) {
 //     double float_part = num - (int) num;
 //     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 //     if (randnum <= float_part) {
@@ -411,7 +392,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     }
 // }
 
-// int EmbeddingCascadeModel::generateBreadth(PostBreadthDistribution& t_postBreadthDistribution) {
+// int SpecificCascadeModel::generateBreadth(PostBreadthDistribution& t_postBreadthDistribution) {
 //     vector<pair<int, double>> breadthDistribution = t_postBreadthDistribution.getBreadthDist();
 //     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 //     double accum_prob = 0;
@@ -424,7 +405,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return breadthDistribution.back().first;
 // }
 
-// int EmbeddingCascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
+// int SpecificCascadeModel::generateLifespan(PostLifespanDistribution& t_postLifespanDistribution) {
 //     vector<pair<int, double>> lifespanDistribution = t_postLifespanDistribution.getLifespanDist();
 //     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 //     double accum_prob = 0;
@@ -437,7 +418,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return lifespanDistribution.back().first;
 // }
 
-// string EmbeddingCascadeModel::chooseResponseType(vector <string> &responseTypes, vector <double> &responseProbabilities) {
+// string SpecificCascadeModel::chooseResponseType(vector <string> &responseTypes, vector <double> &responseProbabilities) {
 //     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 //     double accum_prob = 0;
 //     int count = 0;
@@ -451,7 +432,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return responseTypes[0];
 // }
 
-// string EmbeddingCascadeModel::generateNodeId() {
+// string SpecificCascadeModel::generateNodeId() {
 //     static const char alphanum[] =
 //             "0123456789"
 //                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -467,7 +448,7 @@ int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return nodeId;
 // }
 
-// int EmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
+// int SpecificCascadeModel::convertISOtoDay(time_t t_currentTime) {
 //     return int(t_currentTime / (24 * 60 * 60));
 // }
 

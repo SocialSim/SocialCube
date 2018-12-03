@@ -1,5 +1,5 @@
-#ifndef __EMBEDDING_CASCADE_MODEL__
-#define __EMBEDDING_CASCADE_MODEL__
+#ifndef __SPECIFIC_CASCADE_MODEL__
+#define __SPECIFIC_CASCADE_MODEL__
 
 #include <vector>
 #include <iostream>
@@ -12,17 +12,20 @@
 #include "Dependency/PostScale.hpp"
 #include "Dependency/ResponseTypeProbability.hpp"
 #include "Dependency/PostBreadthDistribution.hpp"
+#include "Dependency/SpecificResponseDistribution.hpp"
 
-class EmbeddingCascadeModel {
+class SpecificCascadeModel {
 private:
 
-    EmbeddingCascadeModel();
+    SpecificCascadeModel();
 
-    ~EmbeddingCascadeModel();
+    ~SpecificCascadeModel();
 
     static int generateBreadth(PostBreadthDistribution& t_postBreadthDistribution);
 
     static int generateLifespan(PostLifespanDistribution& t_postLifespanDistribution);
+
+    static std::string generateSpecificResponse(SpecificResponseDistribution& t_specificResponseDistribution);
 
     static std::string chooseResponseType(std::vector <std::string> &responseTypes, std::vector <double> &responseProbabilities);
 

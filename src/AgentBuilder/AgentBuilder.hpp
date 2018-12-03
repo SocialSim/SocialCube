@@ -9,6 +9,7 @@
 #include "Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/SpecificCascadeUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"

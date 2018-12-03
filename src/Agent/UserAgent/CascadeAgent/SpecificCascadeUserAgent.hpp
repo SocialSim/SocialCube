@@ -1,5 +1,5 @@
-#ifndef __EMBEDDING_CASCADE_USER_AGENT__
-#define __EMBEDDING_CASCADE_USER_AGENT__
+#ifndef __SPECIFIC_CASCADE_USER_AGENT__
+#define __SPECIFIC_CASCADE_USER_AGENT__
 
 #include <vector>
 #include <string>
@@ -8,10 +8,10 @@
 #include <cassert>
 #include "Agent/UserAgent/UserAgent.hpp"
 #include "StatisticProxy/StatisticProxy.hpp"
-#include "BehaviorModel/EmbeddingCascadeModel.hpp"
+#include "BehaviorModel/SpecificCascadeModel.hpp"
 #include "common/Event.hpp"
 
-class EmbeddingCascadeUserAgent : public UserAgent {
+class SpecificCascadeUserAgent : public UserAgent {
 protected:
 
     const StatisticProxy& m_statProxy;
@@ -23,9 +23,9 @@ protected:
     std::unordered_map<std::string, double> m_communityDistribution;
 
 public:
-    EmbeddingCascadeUserAgent(const std::string& t_id);
+    SpecificCascadeUserAgent(const std::string& t_id);
 
-    virtual ~EmbeddingCascadeUserAgent();
+    virtual ~SpecificCascadeUserAgent();
 
     virtual std::vector<std::unique_ptr<Event>> step(time_t t_currentTime, time_t t_unitTime) const override;
 

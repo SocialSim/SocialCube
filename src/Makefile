@@ -28,7 +28,9 @@ OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) CascadeUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeUserAgent.o
+OBJS := $(OBJS) SpecificCascadeUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeModel.o
+OBJS := $(OBJS) SpecificCascadeModel.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
 OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
@@ -47,7 +49,10 @@ OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) PostScale.o
 OBJS := $(OBJS) CommentProbability.o
+OBJS := $(OBJS) ResponseTypeProbability.o
 OBJS := $(OBJS) PostLifespanDistribution.o
+OBJS := $(OBJS) PostBreadthDistribution.o
+OBJS := $(OBJS) SpecificResponseDistribution.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) DailyActivityLevelProxy.o
@@ -61,9 +66,12 @@ OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
 OBJS := $(OBJS) PostScaleProxy.o
 OBJS := $(OBJS) CommentProbabilityProxy.o
+OBJS := $(OBJS) ResponseTypeProbabilityProxy.o
 OBJS := $(OBJS) CommunityDistributionProxy.o
 OBJS := $(OBJS) MiscellaneousProxy.o
 OBJS := $(OBJS) PostLifespanDistributionProxy.o
+OBJS := $(OBJS) PostBreadthDistributionProxy.o
+OBJS := $(OBJS) SpecificResponseDistributionProxy.o
 OBJS := $(OBJS) ScoreMatrixProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) EventManager.o
@@ -121,6 +129,9 @@ CascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/CascadeUserAgent.cpp ./Agent/
 EmbeddingCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+SpecificCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/SpecificCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/SpecificCascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -143,6 +154,9 @@ CascadeModel.o:	./BehaviorModel/CascadeModel.cpp ./BehaviorModel/CascadeModel.hp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EmbeddingCascadeModel.o:	./BehaviorModel/EmbeddingCascadeModel.cpp ./BehaviorModel/EmbeddingCascadeModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SpecificCascadeModel.o:	./BehaviorModel/SpecificCascadeModel.cpp ./BehaviorModel/SpecificCascadeModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/EventHourlyActionRate.hpp
@@ -178,7 +192,16 @@ PostScale.o:	./Dependency/PostScale.cpp ./Dependency/PostScale.hpp
 CommentProbability.o:	./Dependency/CommentProbability.cpp ./Dependency/CommentProbability.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+ResponseTypeProbability.o:	./Dependency/ResponseTypeProbability.cpp ./Dependency/ResponseTypeProbability.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 PostLifespanDistribution.o: ./Dependency/PostLifespanDistribution.cpp ./Dependency/PostLifespanDistribution.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostBreadthDistribution.o: ./Dependency/PostBreadthDistribution.cpp ./Dependency/PostBreadthDistribution.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SpecificResponseDistribution.o: ./Dependency/SpecificResponseDistribution.cpp ./Dependency/SpecificResponseDistribution.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ScoreMatrix.o:	./Dependency/ScoreMatrix.cpp ./Dependency/ScoreMatrix.hpp
@@ -226,6 +249,9 @@ ScoreMatrixProxy.o:	./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.cpp ./Sta
 CommentProbabilityProxy.o:	./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.cpp ./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+ResponseTypeProbabilityProxy.o:	./StatisticProxy/ResponseTypeProbabilityProxy/ResponseTypeProbabilityProxy.cpp ./StatisticProxy/ResponseTypeProbabilityProxy/ResponseTypeProbabilityProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 CommunityDistributionProxy.o:	./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.cpp ./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -233,6 +259,12 @@ MiscellaneousProxy.o:	./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.cpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PostLifespanDistributionProxy.o:	./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.cpp ./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostBreadthDistributionProxy.o:	./StatisticProxy/PostBreadthDistributionProxy/PostBreadthDistributionProxy.cpp ./StatisticProxy/PostBreadthDistributionProxy/PostBreadthDistributionProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SpecificResponseDistributionProxy.o:	./StatisticProxy/SpecificResponseDistributionProxy/SpecificResponseDistributionProxy.cpp ./StatisticProxy/SpecificResponseDistributionProxy/SpecificResponseDistributionProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Event.o:	./common/Event.cpp ./common/Event.hpp

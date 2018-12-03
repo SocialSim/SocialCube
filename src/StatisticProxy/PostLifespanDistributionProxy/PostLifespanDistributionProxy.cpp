@@ -48,6 +48,7 @@ void PostLifespanDistributionProxy::show() {
 
 PostLifespanDistribution& PostLifespanDistributionProxy::get(const std::string& userID) {
     if(m_postLifespanDistribution.find(userID) == m_postLifespanDistribution.end()) {
+        cout << "No lifespan distribution found for user " << userID << endl;
         throw;
     } else {
         assert(m_postLifespanDistribution.find(userID) != m_postLifespanDistribution.end());

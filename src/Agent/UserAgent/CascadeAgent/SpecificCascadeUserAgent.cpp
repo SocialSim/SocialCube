@@ -1,8 +1,8 @@
-#include "EmbeddingCascadeUserAgent.hpp"
+#include "SpecificCascadeUserAgent.hpp"
 
 using namespace std;
 
-EmbeddingCascadeUserAgent::EmbeddingCascadeUserAgent(const string& t_id) : UserAgent(t_id),
+SpecificCascadeUserAgent::SpecificCascadeUserAgent(const string& t_id) : UserAgent(t_id),
                                                          m_statProxy(StatisticProxy::getInstance()),
                                                          m_postScale(m_statProxy.getPostScale(m_id)),
                                                          m_postBreadthDistribution(m_statProxy.getPostBreadthDistribution(m_id)),
@@ -12,20 +12,20 @@ EmbeddingCascadeUserAgent::EmbeddingCascadeUserAgent(const string& t_id) : UserA
     return;
 }
 
-EmbeddingCascadeUserAgent::~EmbeddingCascadeUserAgent() {
+SpecificCascadeUserAgent::~SpecificCascadeUserAgent() {
     return;
 }
 
-vector<unique_ptr<Event>> EmbeddingCascadeUserAgent::step(time_t t_currentTime, time_t t_unitTime) const {
+vector<unique_ptr<Event>> SpecificCascadeUserAgent::step(time_t t_currentTime, time_t t_unitTime) const {
     throw;
 }
 
-vector<unique_ptr<Event>> EmbeddingCascadeUserAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
+vector<unique_ptr<Event>> SpecificCascadeUserAgent::simulate(time_t t_currentTime, time_t t_endTime) const {
 
-    vector<unique_ptr<Event>> events = EmbeddingCascadeModel::evaluate(m_id, m_postScale, m_postBreadthDistribution,
+    vector<unique_ptr<Event>> events = SpecificCascadeModel::evaluate(m_id, m_postScale, m_postBreadthDistribution,
                                                               m_communityDistribution, t_currentTime, t_endTime);
     return events;
 }
 
-uint64_t EmbeddingCascadeUserAgent::getCommunityTag() const {
+uint64_t SpecificCascadeUserAgent::getCommunityTag() const {
 }
