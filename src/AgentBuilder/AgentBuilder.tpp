@@ -192,6 +192,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePostLifespanDistribution();
         m_statProxy.parseCommunityDistribution();
         m_statProxy.parseScoreMatrix();
+        m_statProxy.parseSeedEvents();
         m_statProxy.parseMiscellaneous();
         buildUsers();
     }

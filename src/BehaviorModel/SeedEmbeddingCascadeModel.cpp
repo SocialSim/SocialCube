@@ -19,7 +19,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                                                  time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
-
+    
     vector<Event> seed_events = m_statProxy.getSeedEvents(t_id);
 
     int startDay = SeedEmbeddingCascadeModel::convertISOtoDay(t_startTime);
@@ -44,6 +44,8 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
         time_t current_day_time = seed.getTimestamp();
         int index = (current_day_time - t_startTime) / (24 * 60 * 60);
         int post_scale = randomlyRoundDouble(scales[index].second);
+        
+        
 
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;

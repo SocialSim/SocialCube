@@ -47,6 +47,7 @@ void SeedEventsProxy::parse() {
         }
         seed_events[user_id].push_back(event);
     }
+    cout << "SeedEvents number = " << seed_events.size() << endl;
 }
 
 void SeedEventsProxy::show() {
