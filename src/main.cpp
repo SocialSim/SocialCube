@@ -275,6 +275,28 @@ int main(int argc, const char* argv[]) {
                 }
                 cout << "start simulate" << endl;
                 s.simulate();
+            } else if (builderType == "SeedEmbeddingCascadeModel") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<SeedEmbeddingCascadeUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
+                for (auto &iter : filePaths) {
+                    cout << iter.first << ", " << iter.second << endl;
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector <std::shared_ptr<SeedEmbeddingCascadeUserAgent>> agentList;
+                builder.build();
+                cout << "finish build" <<endl;
+                agentList = builder.getUserAgentList();
+                cout << "agentList size = " << agentList.size() << endl;
+                for (auto &iter : agentList) {
+                    s.addUserAgent(iter.get());
+                }
+                cout << "start simulate" << endl;
+                s.simulate();
             } else {
                 std::cout << "Unsupported model type" << std::endl;
             }

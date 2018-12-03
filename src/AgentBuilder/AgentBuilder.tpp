@@ -184,6 +184,17 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseMiscellaneous();
         buildUsers();
     }
+    // SeedEmbedding Cascade Model
+    else if (std::is_same<TUserAgent, SeedEmbeddingCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseScoreMatrix();
+        m_statProxy.parseMiscellaneous();
+        buildUsers();
+    }
     else {
         cout << "Wrong agent type combination" << endl;
     }
