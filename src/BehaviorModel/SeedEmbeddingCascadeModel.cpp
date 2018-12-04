@@ -33,6 +33,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
     double q3 = quartiles[2];
 
     unordered_map<string, double> actionTypeDistribution = m_statProxy.getActionTypeDistribution();
+    unordered_map<string, double> embeddingParams = m_statProxy.getEmbeddingParams();
 
     bool is_twitter = false;
     if (actionTypeDistribution.size() == 3) {
@@ -44,8 +45,6 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
         time_t current_day_time = seed.getTimestamp();
         int index = (current_day_time - t_startTime) / (24 * 60 * 60);
         int post_scale = randomlyRoundDouble(scales[index].second);
-        
-        
 
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
@@ -82,9 +81,9 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
 
             string user_id;
             double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-            if (randnum < DELETED_USER) {
+            if (randnum < embeddingParams["ratio_del"]) {
                 user_id = "[Deleted]";
-            } else if (randnum < DELETED_USER + UNKNOWN_USER) {
+            } else if (randnum < embeddingParams["ratio_del"] + embeddingParams["ratio_unk"]) {
                 user_id = t_scoreMatrix.randomlyGetInactiveUser();
             } else {
                 vector<string> pre_user_list{root_user_id};
@@ -99,7 +98,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                 user_id = t_scoreMatrix.getOutUser(pre_user_list);
             }
 
-            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < COMMENT_ROOT_PROB) {
+            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"]) {
                 unique_ptr <Event> event;
                 string actionType = "reply";
                 if (is_twitter) {
