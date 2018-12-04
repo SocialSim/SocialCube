@@ -32,7 +32,7 @@ vector<unique_ptr<Event>> SpecificCascadeModel::evaluate(const string t_id,
     for (int i = 0; i <= endDay - startDay; i++) {
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
-        int post_number = (int)scales[i].second;
+        int post_number = (int)scales[i].first;
         int post_scale = 1000;
 
         for (int j = 0; j < post_number; j++) {
