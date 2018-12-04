@@ -20,6 +20,8 @@ private:
 
     double m_quartile[3];
 
+    std::unordered_map<std::string, double> m_embeddingParams;
+
     std::ifstream m_miscellaneousStatisticFile;
 
 public:
@@ -34,6 +36,8 @@ public:
     std::unordered_map<std::string, double> getActionTypeDistribution();
 
     double* getQuartile();
+
+    std::unordered_map<std::string, double> getEmbeddingParams();
 };
 
 #endif

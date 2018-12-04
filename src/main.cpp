@@ -289,6 +289,7 @@ int main(int argc, const char* argv[]) {
                 filePaths.clear();
                 std::vector <std::shared_ptr<SeedEmbeddingCascadeUserAgent>> agentList;
                 builder.build();
+
                 cout << "finish build" <<endl;
                 agentList = builder.getUserAgentList();
                 cout << "agentList size = " << agentList.size() << endl;

@@ -216,6 +216,10 @@ double* StatisticProxy::getQuartile() const {
     return m_miscellaneousProxy->getQuartile();
 }
 
+unordered_map<string, double> StatisticProxy::getEmbeddingParams() const {
+    return m_miscellaneousProxy->getEmbeddingParams();
+};
+
 ScoreMatrix& StatisticProxy::getScoreMatrix() const {
     return m_scoreMatrixProxy->get();
 }

@@ -173,6 +173,8 @@ class StatisticProxy {
 
         double* getQuartile() const;
 
+        std::unordered_map<std::string, double> getEmbeddingParams() const;
+
         ScoreMatrix& getScoreMatrix() const;
 
         std::unordered_map<std::string, double> getSubEventTypeProbability() const;

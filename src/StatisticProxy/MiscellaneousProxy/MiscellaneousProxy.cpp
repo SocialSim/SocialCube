@@ -43,6 +43,16 @@ void MiscellaneousProxy::parse() {
                     }
                 } else if (name == "ActionTypeDistribution") {
                     m_actionTypeDistribution[key] = stof(value);
+                } else if (name == "EmbeddingParams") {
+                    if (key == "ratio_unk") {
+                        m_embeddingParams["ratio_unk"] = stod(value);
+                    } else if (key == "ratio_del") {
+                        m_embeddingParams["ratio_del"] = stod(value);
+                    } else if (key == "ratio_root") {
+                        m_embeddingParams["ratio_root"] = stod(value);
+                    } else if (key == "top_k") {
+                        m_embeddingParams["top_k"] = stod(value);
+                    }
                 }
             } else {
                 cout << "Format Error!" << endl;
@@ -62,3 +72,7 @@ unordered_map<string, double> MiscellaneousProxy::getActionTypeDistribution() {
 double* MiscellaneousProxy::getQuartile() {
     return m_quartile;
 }
+
+unordered_map<string, double> MiscellaneousProxy::getEmbeddingParams() {
+    return m_embeddingParams;
+};
