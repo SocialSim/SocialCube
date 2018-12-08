@@ -117,12 +117,48 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                 event->setCommunityID(community_id);
                 user_comments.push_back(std::make_pair(user_id, move(event)));
             } else {
+                CommentProbability comment_prob = m_statProxy.getCommentProbability(user_id);
+                vector <std::pair<string, double>> commentProbability = comment_prob.getCommentProb();
                 string parent_node_id;
+
                 if (user_comments.size() == 0) {
                     parent_node_id = root_node_id;
+                }
+
+                // NodeId : score
+                unordered_map<string, double> parent_candidates;
+
+                // Get the intersection between former commenters and predictable parent users
+                for (auto &c_p : commentProbability) {
+                    for (auto &u_c : user_comments) {
+                        if (c_p.first == u_c.first) {
+                            parent_candidates.insert(std::make_pair(u_c.second->getObjectID(), c_p.second));
+                        }
+                    }
+                }
+
+                if (parent_candidates.size() == 0) {
+                    if (user_comments.size() == 0) {
+                        parent_node_id = root_node_id;
+                    } else {
+                        int randnum = rand() % user_comments.size();
+                        parent_node_id = user_comments[randnum].second->getObjectID();
+                    }
+                } else if (parent_candidates.count("[root]")) {
+                    parent_node_id = root_node_id;
                 } else {
-                    int randnum = rand() % user_comments.size();
-                    parent_node_id = user_comments[randnum].second->getObjectID();
+                    double sum = 0;
+                    for (auto &iter : parent_candidates) {
+                        sum += iter.second;
+                    }
+                    double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+                    double randnum_sum = 0;
+                    for (auto &iter : parent_candidates) {
+                        randnum_sum += iter.second / sum;
+                        if (randnum <= randnum_sum) {
+                            parent_node_id = iter.first;
+                        }
+                    }
                 }
 
                 unique_ptr <Event> event;
@@ -137,9 +173,9 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                             break;
                         }
                     }
-                    event = unique_ptr<Event>(new Event(user_id, node_id, actionType, root_node_id, root_node_id));
+                    event = unique_ptr<Event>(new Event(user_id, node_id, actionType, parent_node_id, root_node_id));
                 } else {
-                    event = unique_ptr<Event>(new Event(user_id, node_id, "comment", root_node_id, root_node_id));
+                    event = unique_ptr<Event>(new Event(user_id, node_id, "comment", parent_node_id, root_node_id));
                 }
                 event->setCommunityID(community_id);
                 user_comments.push_back(std::make_pair(user_id, move(event)));

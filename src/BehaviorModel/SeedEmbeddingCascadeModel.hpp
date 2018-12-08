@@ -29,12 +29,6 @@ private:
 
     static const int LOOK_BACK = 3;
 
-    static constexpr double COMMENT_ROOT_PROB = 0.308;
-
-    static constexpr double UNKNOWN_USER = 0.24;
-
-    static constexpr double DELETED_USER = 0.075;
-
 public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
