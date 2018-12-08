@@ -27,6 +27,8 @@ private:
 
     static int convertISOtoDay(time_t t_currentTime);
 
+    static double generateGaussianRandom();
+
     static const int LOOK_BACK = 3;
 
 public:

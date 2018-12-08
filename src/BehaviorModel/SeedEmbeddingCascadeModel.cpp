@@ -199,6 +199,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                              (int) ((time_interval - q3_end_time) / (comment_num * 0.25) *
                                     (k - comment_num * 0.75));
             }
+            event_time += generateGaussianRandom();
             if (event_time > t_endTime) {
                 break;
             }
@@ -253,3 +254,9 @@ int SeedEmbeddingCascadeModel::convertISOtoDay(time_t t_currentTime) {
     return int(t_currentTime / (24 * 60 * 60));
 }
 
+double SeedEmbeddingCascadeModel::generateGaussianRandom() {
+    // gaussian random number generator
+    std::default_random_engine generator;
+    std::normal_distribution<double> distribution(0, 10.0);
+    return distribution(generator);
+}

@@ -27,6 +27,8 @@ private:
 
     static int convertISOtoDay(time_t t_currentTime);
 
+    static double generateGaussianRandom();
+
 public:
 
     static std::vector<std::unique_ptr<Event>> evaluate(const std::string t_id,
