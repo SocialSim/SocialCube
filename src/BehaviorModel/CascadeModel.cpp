@@ -70,7 +70,6 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             unique_ptr <Event> event;
 
             vector<double> postHourDistribution = m_statProxy.getPostHourDistribution();
-
             time_t post_time = current_day_time;
 
             double randnum_postHour = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
