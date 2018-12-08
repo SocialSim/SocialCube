@@ -3,12 +3,15 @@
 
 #include <unordered_map>
 #include <vector>
+#include <queue>
 #include <cstdint>
 #include <iostream>
 #include <cassert>
 #include <string>
 #include <numeric>
-#include <algorithm> 
+#include <algorithm>
+#include <random>
+
 class ScoreMatrix {
 
 private:
@@ -18,6 +21,8 @@ private:
     std::vector<std::string> m_out_users;
 
     std::vector<std::string> m_inactive_users;
+
+    int m_top_k;
 
 public:
 
@@ -35,7 +40,13 @@ public:
 
     std::string getOutUser(std::vector<std::string> t_v);
 
+    void setTopK(int t_top_k);
+
+    int getTopK();
+
     std::string randomlyGetInactiveUser();
+
+    std::vector<int> getTopKIndex(std::vector<double> t_sum);
 };
 
 #endif

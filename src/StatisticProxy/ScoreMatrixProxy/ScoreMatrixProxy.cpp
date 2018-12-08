@@ -28,10 +28,15 @@ void ScoreMatrixProxy::parse() {
     m_scoreMatrix = ScoreMatrix();
 
     string tmp;
-    getline(m_scoreMatrixFile, tmp);
 
+    // Set top-k
+    getline(m_scoreMatrixFile, tmp);
+    m_scoreMatrix.setTopK(stod(tmp));
+
+    getline(m_scoreMatrixFile, tmp);
     std::istringstream s(tmp.substr(1));
     string user_id;
+
     while (std::getline(s, user_id, ','))
     {
         m_scoreMatrix.addOutUser(user_id);

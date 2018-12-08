@@ -178,6 +178,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
     std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
         m_statProxy.parseUserID();
         m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
         m_statProxy.parsePostLifespanDistribution();
         m_statProxy.parseCommunityDistribution();
         m_statProxy.parseScoreMatrix();
