@@ -73,11 +73,11 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
             time_t post_time = current_day_time;
 
-            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
-            double sum_randnum = 0;
+            double randnum_postHour = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+            double sum_postHour = 0;
             for (int i = 0; i < postHourDistribution.size(); i++) {
-                sum_randnum += iter;
-                if (randnum <= sum_randnum) {
+                sum_postHour += postHourDistribution[i];
+                if (randnum_postHour <= sum_postHour) {
                     double noise = distribution(generator);
                     post_time = post_time + i * 60 * 60 + noise;
                 }
