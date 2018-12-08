@@ -53,7 +53,10 @@ void MiscellaneousProxy::parse() {
                     } else if (key == "top_k") {
                         m_embeddingParams["top_k"] = stod(value);
                     }
+                } else if (name == "PostHourDistribution") {
+                    m_postHourDistribution.push_back(stod(value));
                 }
+
             } else {
                 cout << "Format Error!" << endl;
             }
@@ -76,3 +79,8 @@ double* MiscellaneousProxy::getQuartile() {
 unordered_map<string, double> MiscellaneousProxy::getEmbeddingParams() {
     return m_embeddingParams;
 };
+
+vector<double> MiscellaneousProxy::getPostHourDistribution() {
+    return m_postHourDistribution;
+}
+

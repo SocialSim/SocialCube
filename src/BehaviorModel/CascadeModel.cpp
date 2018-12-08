@@ -18,7 +18,11 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                                       time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
-    
+
+    // gaussian random number generator
+    std::default_random_engine generator;
+    std::normal_distribution<double> distribution(0, 10.0);
+
     int startDay = CascadeModel::convertISOtoDay(t_startTime);
     int endDay = CascadeModel::convertISOtoDay(t_endTime);
 
@@ -64,12 +68,27 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
             // Create post event
             unique_ptr <Event> event;
+
+            vector<double> postHourDistribution = m_statProxy.getPostHourDistribution();
+
+            time_t post_time = current_day_time;
+
+            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+            double sum_randnum = 0;
+            for (int i = 0; i < postHourDistribution.size(); i++) {
+                sum_randnum += iter;
+                if (randnum <= sum_randnum) {
+                    double noise = distribution(generator);
+                    post_time = post_time + i * 60 * 60 + noise;
+                }
+            }
+
             if (!is_twitter) {
                 event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
-                                                   root_node_id, root_node_id, current_day_time));
+                                                   root_node_id, root_node_id, post_time));
             } else {
                 event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
-                                                   root_node_id, root_node_id, current_day_time));
+                                                   root_node_id, root_node_id, post_time));
             }
             string community_id;
             // Set community ID
@@ -161,15 +180,15 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
             for (int k = 0; k < comment_num; k++) {
                 time_t event_time;
                 if (k < comment_num * 0.25) {
-                    event_time = current_day_time + (int) (q1_end_time / (comment_num * 0.25) * k);
+                    event_time = post_time + (int) (q1_end_time / (comment_num * 0.25) * k);
                 } else if (k < comment_num * 0.5) {
-                    event_time = current_day_time + q1_end_time +
+                    event_time = post_time + q1_end_time +
                                  (int) ((q2_end_time - q1_end_time) / (comment_num * 0.25) * (k - comment_num * 0.25));
                 } else if (k < comment_num * 0.75) {
-                    event_time = current_day_time + q2_end_time +
+                    event_time = post_time + q2_end_time +
                                  (int) ((q3_end_time - q2_end_time) / (comment_num * 0.25) * (k - comment_num * 0.5));
                 } else {
-                    event_time = current_day_time + q3_end_time +
+                    event_time = post_time + q3_end_time +
                                  (int) ((time_interval - q3_end_time) / (comment_num * 0.25) *
                                         (k - comment_num * 0.75));
                 }

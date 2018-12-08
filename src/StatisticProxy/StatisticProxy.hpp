@@ -175,6 +175,8 @@ class StatisticProxy {
 
         std::unordered_map<std::string, double> getEmbeddingParams() const;
 
+        std::vector<double> getPostHourDistribution() const;
+
         ScoreMatrix& getScoreMatrix() const;
 
         std::unordered_map<std::string, double> getSubEventTypeProbability() const;

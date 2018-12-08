@@ -41,7 +41,6 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
     }
 
     for (Event seed : seed_events) {
-//        time_t current_day_time = t_startTime + i * 24 * 60 * 60;
         time_t current_day_time = seed.getTimestamp();
         int index = (current_day_time - t_startTime) / (24 * 60 * 60);
         int post_scale = randomlyRoundDouble(scales[index].second);
@@ -61,7 +60,6 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
         // Create post event
         unique_ptr <Event> event;
         if (!is_twitter) {
-            root_node_id = "t3_" + root_node_id;
             event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
                                                 root_node_id, root_node_id, current_day_time));
         } else {

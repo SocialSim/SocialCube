@@ -22,6 +22,8 @@ private:
 
     std::unordered_map<std::string, double> m_embeddingParams;
 
+    std::vector<double> m_postHourDistribution;
+
     std::ifstream m_miscellaneousStatisticFile;
 
 public:
@@ -38,6 +40,8 @@ public:
     double* getQuartile();
 
     std::unordered_map<std::string, double> getEmbeddingParams();
+
+    std::vector<double> getPostHourDistribution();
 };
 
 #endif

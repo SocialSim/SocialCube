@@ -220,6 +220,10 @@ unordered_map<string, double> StatisticProxy::getEmbeddingParams() const {
     return m_miscellaneousProxy->getEmbeddingParams();
 };
 
+vector<double> StatisticProxy::getPostHourDistribution() const {
+    return m_miscellaneousProxy->getPostHourDistribution();
+}
+
 ScoreMatrix& StatisticProxy::getScoreMatrix() const {
     return m_scoreMatrixProxy->get();
 }
