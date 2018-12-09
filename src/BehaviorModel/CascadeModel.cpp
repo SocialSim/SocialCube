@@ -46,9 +46,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
 
         int post_number = randomlyRoundDouble(scales[i].first);
         int post_scale = 1000;
-        if (is_twitter) {
-            post_scale = randomlyRoundDouble(scales[i].second);
-        }
+
         for (int j = 0; j < post_number; j++) {
             int lifespan = generateLifespan(t_postLifespanDistribution);
             time_t time_interval = lifespan * 24 * 60 * 60 - 1;
