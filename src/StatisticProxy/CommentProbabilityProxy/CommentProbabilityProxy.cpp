@@ -37,10 +37,6 @@ void CommentProbabilityProxy::parse() {
         }
         m_commentProbability[userID] = move(commentProb);
     }
-    cout << "CommentProbabilityProxy::parse" << endl;
-    for (auto &iter : m_commentProbability) {
-        cout << iter.first << endl;
-    }
 
     DBG(LOGD(TAG, "Comment Probability has "+stringfy(m_commentProbability.size()));)
 }

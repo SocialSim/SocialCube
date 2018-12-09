@@ -62,7 +62,6 @@ void MiscellaneousProxy::parse() {
             }
         }
     }
-    cout << "==========Finish Miscellaneous Parsing===========" << endl;
 }
 
 void MiscellaneousProxy::show() {
