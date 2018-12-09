@@ -14,7 +14,7 @@
 class EventManager {
     private:
         // Private member variables
-        std::string m_center;
+        std::string m_center = "user-centric";
 
         std::string m_platform;
 
