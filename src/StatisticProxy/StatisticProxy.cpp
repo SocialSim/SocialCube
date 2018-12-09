@@ -124,7 +124,7 @@ void StatisticProxy::parsePostLifespanDistribution() {
 }
 
 void StatisticProxy::parseScoreMatrix() {
-    DBG(LOGD(TAG, "\nscoreMatrixProxyFile: " + m_defaultPostLifespanDistributionProxyFile);)
+    DBG(LOGD(TAG, "\nscoreMatrixProxyFile: " + m_defaultScoreMatrixProxyFile);)
     m_scoreMatrixProxy.reset(new ScoreMatrixProxy(m_defaultScoreMatrixProxyFile, m_defaultInactiveUserFile));
     m_scoreMatrixProxy->parse();
 }
