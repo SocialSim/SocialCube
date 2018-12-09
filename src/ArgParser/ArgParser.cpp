@@ -97,7 +97,7 @@ void ArgParser::initSocialCubeArgFromCLI(int argc, const char* argv[]) {
             if (result.count("event_buffer")) { 
                 event_buffer = result["event_buffer"].as<uint64_t>();
             } else {
-                event_buffer = 1<<20;
+                event_buffer = 1<<50;
             }
 
             if (result.count("show_profile")) { 
