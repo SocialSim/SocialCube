@@ -44,7 +44,9 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
         time_t current_day_time = seed.getTimestamp();
         int index = (current_day_time - t_startTime) / (24 * 60 * 60);
         int post_scale = randomlyRoundDouble(scales[index].second);
-
+        if (post_scale > 1000) {
+            post_scale = 1000;
+        }
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
         time_t q1_end_time = time_interval * q1;

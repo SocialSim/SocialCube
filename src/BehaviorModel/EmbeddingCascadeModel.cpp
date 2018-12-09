@@ -48,6 +48,9 @@ vector<unique_ptr<Event>> EmbeddingCascadeModel::evaluate(const string t_id,
         time_t current_day_time = t_startTime + i * 24 * 60 * 60;
 
         int post_number = randomlyRoundDouble(scales[i].first);
+        if (post_number > 1000) {
+            post_number = 1000;
+        }
         int post_scale = randomlyRoundDouble(scales[i].second);
 
         for (int j = 0; j < post_number; j++) {

@@ -16,6 +16,7 @@ vector<unique_ptr<Event>> CascadeModel::evaluate(const string t_id,
                                                       unordered_map<string, double> t_communityDistribution,
                                                       time_t t_startTime,
                                                       time_t t_endTime) {
+    cout << t_id << endl;
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
     vector<unique_ptr<Event>> events;
 
