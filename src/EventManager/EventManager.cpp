@@ -53,14 +53,13 @@ void EventManager::emitEvent() {
 
 void EventManager::_emitGithubUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
-    int count = 0;
     for(auto& event : m_events) {
 //        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
 //                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
@@ -74,12 +73,11 @@ void EventManager::_emitGithubUserCentricEvent(){
 
 void EventManager::_emitGithubRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
-    int count = 0;
     for(auto& event : m_events) {
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
@@ -101,12 +99,11 @@ void EventManager::_emitRedditUserCentricEvent(){
             "t5_3bqj4",
             "t5_3i6d8"};
 
-    int count = 0;
     for(auto& event : m_events) {
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         string communityID;
@@ -150,12 +147,11 @@ void EventManager::_emitRedditRepoCentricEvent(){
             "t5_3bqj4",
             "t5_3i6d8"};
 
-    int count = 0;
     for(auto& event : m_events) {
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         string communityID;
@@ -179,12 +175,11 @@ void EventManager::_emitRedditRepoCentricEvent(){
 void EventManager::_emitTwitterUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
-    int count = 0;
     for(auto& event : m_events) {
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
@@ -205,12 +200,11 @@ void EventManager::_emitTwitterUserCentricEvent(){
 void EventManager::_emitTwitterRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
-    int count = 0;
     for(auto& event : m_events) {
-        if (count != 0) {
+        if (!m_firstLine) {
             m_eventFile << ", ";
         } else {
-            count++;
+            m_firstLine = false;
         }
 
         m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<

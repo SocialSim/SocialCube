@@ -34,6 +34,8 @@ class EventManager {
 
         bool m_eventOn;
 
+        bool m_firstLine = true;
+
         // Private member functions
 
         void emitEventOnBufferFull();
