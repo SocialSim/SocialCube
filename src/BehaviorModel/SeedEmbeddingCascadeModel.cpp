@@ -62,6 +62,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
         // Create post event
         unique_ptr <Event> event;
         if (!is_twitter) {
+//                root_node_id =  "t3_" + root_node_id;
             event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
                                                 root_node_id, root_node_id, current_day_time));
         } else {
@@ -177,6 +178,7 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
                     }
                     event = unique_ptr<Event>(new Event(user_id, node_id, actionType, parent_node_id, root_node_id));
                 } else {
+                    node_id = "t1_" + node_id;
                     event = unique_ptr<Event>(new Event(user_id, node_id, "comment", parent_node_id, root_node_id));
                 }
                 event->setCommunityID(community_id);
