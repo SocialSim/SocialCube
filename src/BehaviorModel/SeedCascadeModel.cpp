@@ -61,7 +61,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
         // Create post event
         unique_ptr <Event> event;
         if (!is_twitter) {
-            root_node_id = "t3_" + root_node_id;
+//            root_node_id = "t3_" + root_node_id;
             event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
                                                 root_node_id, root_node_id, current_day_time));
         } else {
