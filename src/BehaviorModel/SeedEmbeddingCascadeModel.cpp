@@ -42,7 +42,9 @@ vector<unique_ptr<Event>> SeedEmbeddingCascadeModel::evaluate(const string t_id,
 
     for (Event seed : seed_events) {
         time_t current_day_time = seed.getTimestamp();
+	cout << "current_day_time = " << current_day_time << ", t_startTime = " << t_startTime << endl;
         int index = (current_day_time - t_startTime) / (24 * 60 * 60);
+	cout << "index = " << index << ", post_scale.size() = " << scales.size() << ", post_scale = " << scales[index].second << endl;
         int post_scale = randomlyRoundDouble(scales[index].second);
         if (post_scale > 1000) {
             post_scale = 1000;

@@ -45,6 +45,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
 
     for (Event seed : seed_events) {
         int post_scale = 1000;
+	// int post_scale = randomlyRoundDouble(scales[i].second);
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
         time_t q1_end_time = time_interval * q1;
@@ -69,7 +70,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
                                                 root_node_id, root_node_id, current_day_time));
         }
         string community_id = seed.getCommunityID();
-
+	cout << "in cascademodel, community_id = " << community_id << endl;
         event->setCommunityID(community_id);
         events.push_back(move(event));
 
