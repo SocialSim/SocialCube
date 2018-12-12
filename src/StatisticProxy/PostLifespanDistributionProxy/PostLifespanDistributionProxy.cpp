@@ -48,7 +48,7 @@ void PostLifespanDistributionProxy::show() {
 
 PostLifespanDistribution& PostLifespanDistributionProxy::get(const std::string& userID) {
     if(m_postLifespanDistribution.find(userID) == m_postLifespanDistribution.end()) {
-        throw;
+        return *(m_postLifespanDistribution["[global]"]);
     } else {
         assert(m_postLifespanDistribution.find(userID) != m_postLifespanDistribution.end());
         return *(m_postLifespanDistribution[userID]);

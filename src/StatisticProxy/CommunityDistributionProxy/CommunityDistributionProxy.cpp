@@ -45,5 +45,10 @@ void CommunityDistributionProxy::show() {
 }
 
 unordered_map<string, double> CommunityDistributionProxy::get(const std::string& userID) {
-    return m_userCommunityDistributions[userID];
+    if(m_userCommunityDistributions.find(userID) == m_userCommunityDistributions.end()) {
+        return m_userCommunityDistributions[userID];
+    } else {
+        assert(m_userCommunityDistributions.find(userID) != m_userCommunityDistributions.end());
+        return m_userCommunityDistributions[userID];
+    }
 }

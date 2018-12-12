@@ -50,7 +50,7 @@ void CommentProbabilityProxy::show() {
 
 CommentProbability& CommentProbabilityProxy::get(const std::string& userID) {
     if(m_commentProbability.find(userID) == m_commentProbability.end()) {
-        throw;
+        return *(m_commentProbability["[global]"]);
     } else {
         assert(m_commentProbability.find(userID) != m_commentProbability.end());
         return *(m_commentProbability[userID]);
