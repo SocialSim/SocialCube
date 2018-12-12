@@ -3,27 +3,27 @@ import datetime
 from termcolor import colored
 import json
 
-PROXY_FILE_DIR = "../final_challenge_stats/"
+PROXY_FILE_DIR = "/data/final_challenge_stats/"
 PROXY_FILE_CONFIG_DIR = "./proxy_files_final_challenge/"
 RESULTS_DIR = "./results_final_challenge/"
 LOG_DIR = "./log/"
 
 # Change date range here:
-GITHUB_START_DATE = "2017-07-15T00:00:00Z"
-GITHUB_END_DATE = "2017-07-31T00:00:00Z"
+GITHUB_START_DATE = "2017-12-01T00:00:00Z"
+GITHUB_END_DATE = "2017-12-14T00:00:00Z"
 
-REDDIT_START_DATE = "2017-08-01T00:00:00Z"
-REDDIT_END_DATE = "2017-08-14T00:00:00Z"
+REDDIT_START_DATE = "2017-12-15T00:00:00Z"
+REDDIT_END_DATE = "2017-12-31T00:00:00Z"
 
-TWITTER_START_DATE = "2017-08-15T00:00:00Z"
-TWITTER_END_DATE = "2017-08-31T00:00:00Z"
+TWITTER_START_DATE = "2017-01-01T00:00:00Z"
+TWITTER_END_DATE = "2017-01-15T00:00:00Z"
 
 # Knobs
 RUN_SCENARIO_1 = True
 RUN_SCENARIO_2 = False
 
-RUN_GITHUB = True
-RUN_REDDIT = False
+RUN_GITHUB = False
+RUN_REDDIT = True
 RUN_TWITTER = False
 
 RUN_CRYPTO = True
@@ -34,7 +34,6 @@ scenarios = next(os.walk(PROXY_FILE_DIR))[1]
 
 def generateCommand(proxy_config_file, scenario, platform, domain):
     model_name = proxy_config_file[proxy_config_file.find("_"):proxy_config_file.rfind(".")]
-    
     start_time = "" 
     end_time = ""
     if platform == "github":
@@ -110,7 +109,7 @@ for s in scenarios:
                 simulatorBehaviorModel = m.split("_")[-1]
                 
                 now = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-                proxy_config_file = "ProxyFilePaths_" + predictionModel + "_" + s + "_" + p + "_" + d + "_" + now + ".config"  
+                proxy_config_file = "ProxyFilePaths_" + predictionModel + "_" + simulatorBehaviorModel + "_" + s + "_" + p + "_" + d + "_" + now + ".config"  
                 # Generate proxy config files
                 if simulatorBehaviorModel.lower() == "simpledaily":
                     with open(PROXY_FILE_CONFIG_DIR + proxy_config_file, "w") as file:
