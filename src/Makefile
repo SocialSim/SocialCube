@@ -26,20 +26,32 @@ OBJS := $(OBJS) ClassifiedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPointProcessObjectAgent.o
 OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
+OBJS := $(OBJS) CascadeUserAgent.o
+OBJS := $(OBJS) SeedCascadeUserAgent.o
+OBJS := $(OBJS) EmbeddingCascadeUserAgent.o
+OBJS := $(OBJS) SeedEmbeddingCascadeUserAgent.o
+OBJS := $(OBJS) EmbeddingCascadeModel.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
 OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
 OBJS := $(OBJS) IntegratedPoissonProcessModel.o
 OBJS := $(OBJS) PoissonProcessModel.o
+OBJS := $(OBJS) CascadeModel.o
+OBJS := $(OBJS) SeedCascadeModel.o
+OBJS := $(OBJS) SeedEmbeddingCascadeModel.o
 OBJS := $(OBJS) EventHourlyActionRate.o
 OBJS := $(OBJS) DailyActivityLevel.o
 OBJS := $(OBJS) HourlyActionRate.o
 OBJS := $(OBJS) ObjectPreference.o
 OBJS := $(OBJS) TypeDistribution.o
 OBJS := $(OBJS) UserDistribution.o
+OBJS := $(OBJS) ScoreMatrix.o
 OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
+OBJS := $(OBJS) PostScale.o
+OBJS := $(OBJS) CommentProbability.o
+OBJS := $(OBJS) PostLifespanDistribution.o
 OBJS := $(OBJS) StatisticProxy.o
 OBJS := $(OBJS) HourlyActionRateProxy.o
 OBJS := $(OBJS) DailyActivityLevelProxy.o
@@ -51,6 +63,13 @@ OBJS := $(OBJS) PoissonProcessProxy.o
 OBJS := $(OBJS) ObjectIDProxy.o
 OBJS := $(OBJS) UserIDProxy.o
 OBJS := $(OBJS) ClusteredUserIDProxy.o
+OBJS := $(OBJS) PostScaleProxy.o
+OBJS := $(OBJS) CommentProbabilityProxy.o
+OBJS := $(OBJS) CommunityDistributionProxy.o
+OBJS := $(OBJS) MiscellaneousProxy.o
+OBJS := $(OBJS) SeedEventsProxy.o
+OBJS := $(OBJS) PostLifespanDistributionProxy.o
+OBJS := $(OBJS) ScoreMatrixProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) EventManager.o
 OBJS := $(OBJS) DependentEventLogger.o
@@ -101,6 +120,18 @@ IntegratedPoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/Integrate
 PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.cpp ./Agent/ObjectAgent/GithubAgent/PoissonProcessObjectAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+CascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/CascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedEmbeddingCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/SeedEmbeddingCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/SeedEmbeddingCascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+EmbeddingCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -117,6 +148,18 @@ IntegratedPoissonProcessModel.o:	./BehaviorModel/IntegratedPoissonProcessModel.c
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessModel.o:	./BehaviorModel/PoissonProcessModel.cpp ./BehaviorModel/PoissonProcessModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CascadeModel.o:	./BehaviorModel/CascadeModel.cpp ./BehaviorModel/CascadeModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedCascadeModel.o:	./BehaviorModel/SeedCascadeModel.cpp ./BehaviorModel/SeedCascadeModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedEmbeddingCascadeModel.o:	./BehaviorModel/SeedEmbeddingCascadeModel.cpp ./BehaviorModel/SeedEmbeddingCascadeModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+EmbeddingCascadeModel.o:	./BehaviorModel/EmbeddingCascadeModel.cpp ./BehaviorModel/EmbeddingCascadeModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 EventHourlyActionRate.o:	./Dependency/EventHourlyActionRate.cpp ./Dependency/EventHourlyActionRate.hpp
@@ -144,6 +187,18 @@ PointProcessStat.o:	./Dependency/PointProcessStat.cpp ./Dependency/PointProcessS
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessStat.o:	./Dependency/PoissonProcessStat.cpp ./Dependency/PoissonProcessStat.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostScale.o:	./Dependency/PostScale.cpp ./Dependency/PostScale.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CommentProbability.o:	./Dependency/CommentProbability.cpp ./Dependency/CommentProbability.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostLifespanDistribution.o: ./Dependency/PostLifespanDistribution.cpp ./Dependency/PostLifespanDistribution.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ScoreMatrix.o:	./Dependency/ScoreMatrix.cpp ./Dependency/ScoreMatrix.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 StatisticProxy.o:	./StatisticProxy/StatisticProxy.cpp ./StatisticProxy/StatisticProxy.hpp
@@ -177,6 +232,27 @@ PointProcessProxy.o:	./StatisticProxy/PointProcessProxy/PointProcessProxy.cpp ./
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PoissonProcessProxy.o:	./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.cpp ./StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostScaleProxy.o:	./StatisticProxy/PostScaleProxy/PostScaleProxy.cpp ./StatisticProxy/PostScaleProxy/PostScaleProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+ScoreMatrixProxy.o:	./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.cpp ./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CommentProbabilityProxy.o:	./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.cpp ./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CommunityDistributionProxy.o:	./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.cpp ./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+MiscellaneousProxy.o:	./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.cpp ./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedEventsProxy.o:	./StatisticProxy/SeedEventsProxy/SeedEventsProxy.cpp ./StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostLifespanDistributionProxy.o:	./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.cpp ./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 Event.o:	./common/Event.cpp ./common/Event.hpp

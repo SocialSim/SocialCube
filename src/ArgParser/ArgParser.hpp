@@ -23,6 +23,10 @@ class ArgParser {
 
         std::string simulator_platform;
 
+        std::string simulator_scenario;
+
+        std::string simulator_domain;
+
         bool profile_show;
 
         bool event_show;
@@ -68,6 +72,10 @@ class ArgParser {
         std::string getSimulationCenter();
 
         std::string getSimulationPlatform();
+
+        std::string getSimulationScenario();
+
+        std::string getSimulationDomain();
 
         bool getSimulationShowProfileStatus();
 

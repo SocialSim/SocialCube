@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <cstdlib>
 #include <memory>
+#include "common/Event.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
 #include "Dependency/PointProcessStat.hpp"
@@ -21,6 +22,13 @@
 #include "StatisticProxy/PointProcessProxy/PointProcessProxy.hpp"
 #include "StatisticProxy/PoissonProcessProxy/PoissonProcessProxy.hpp"
 #include "StatisticProxy/UserDistributionProxy/UserDistributionProxy.hpp"
+#include "StatisticProxy/PostScaleProxy/PostScaleProxy.hpp"
+#include "StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp"
+#include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
+#include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
+#include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
+#include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
+#include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -36,6 +44,14 @@ class StatisticProxy {
         std::string m_defaultPointProcessStatsProxyFile;
         std::string m_defaultPoissonProcessStatsProxyFile;
         std::string m_defaultSubEventTypeProbabilityProxyFile;
+        std::string m_defaultPostScaleProxyFile;
+        std::string m_defaultCommentProbabilityProxyFile;
+        std::string m_defaultPostLifespanDistributionProxyFile;
+        std::string m_defaultScoreMatrixProxyFile;
+        std::string m_defaultCommunityDistributionProxyFile;
+        std::string m_defaultMiscellaneousProxyFile;
+        std::string m_defaultInactiveUserFile;
+        std::string m_defaultSeedEventsProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -51,6 +67,13 @@ class StatisticProxy {
         std::unique_ptr<UserDistributionProxy> m_userDistributionProxy;
         std::unique_ptr<PointProcessProxy> m_pointProcessProxy;
         std::unique_ptr<PoissonProcessProxy> m_poissonProcessProxy;
+        std::unique_ptr<PostScaleProxy> m_postScaleProxy;
+        std::unique_ptr<CommentProbabilityProxy> m_commentProbabilityProxy;
+        std::unique_ptr<PostLifespanDistributionProxy> m_postLifespanDistributionProxy;
+        std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
+        std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
+        std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
+        std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -76,6 +99,13 @@ class StatisticProxy {
         void parsePoissonProcessStats();
         void parseClassifiedUserDistributionStats();
         void parseSubEventTypeProbability();
+        void parsePostScale();
+        void parseCommentProbability();
+        void parsePostLifespanDistribution();
+        void parseScoreMatrix();
+        void parseCommunityDistribution();
+        void parseMiscellaneous();
+        void parseSeedEvents();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -86,7 +116,15 @@ class StatisticProxy {
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
         void setPoissonProcessStatsProxyFilePath(std::string poissonProcessProxyFilePath);
-        void setSubEventTypeProbabilityProxyFile(std::string subEventTypeProbabilityProxyFilePath);
+        void setSubEventTypeProbabilityProxyFilePath(std::string subEventTypeProbabilityProxyFilePath);
+        void setPostScaleProxyFilePath(std::string postScaleProxyFilePath);
+        void setCommentProbabilityProxyFilePath(std::string commentProbabilityFilePath);
+        void setPostLifespanDistributionProxyFilePath(std::string postLifespanDistributionFilePath);
+        void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
+        void setInactiveUserFilePath(std::string inactiveUserFilePath);
+        void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
+        void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
+        void setSeedEventsFilePath(std::string seedEventsFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -120,6 +158,26 @@ class StatisticProxy {
         PointProcessStat& getPointProcessStats(const std::string &repoID) const;
 
         PoissonProcessStat& getPoissonProcessStats(const std::string &repoID) const;
+
+        PostScale& getPostScale(const std::string &userID) const;
+
+        CommentProbability& getCommentProbability(const std::string &userID) const;
+
+        PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
+
+        std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
+
+        std::vector<Event> getSeedEvents(std::string t_user_id) const;
+
+        std::unordered_map<std::string, double> getActionTypeDistribution() const;
+
+        double* getQuartile() const;
+
+        std::unordered_map<std::string, double> getEmbeddingParams() const;
+
+        std::vector<double> getPostHourDistribution() const;
+
+        ScoreMatrix& getScoreMatrix() const;
 
         std::unordered_map<std::string, double> getSubEventTypeProbability() const;
 

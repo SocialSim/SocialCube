@@ -79,10 +79,60 @@ class PoissonProcessProxyException : public std::exception {
     }
 };
 
+class PostScaleProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PostScaleProxy";
+    }
+};
+
+class ScoreMatrixProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for ScoreMatrixProxy";
+    }
+};
+
+class CommentProbabilityProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for CommentProbabilityProxy";
+    }
+};
+
+class CommunityDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for CommunityDistributionProxy";
+    }
+};
+
+class MiscellaneousProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for MiscellaneousProxy";
+    }
+};
+
+class SeedEventsProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for SeedEventsProxy";
+    }
+};
+
+class PostLifespanDistributionProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for PostLifespanDistributionProxy";
+    }
+};
+
 class EndTimeLessThanStartTime: public std::exception {
     virtual const char * what () const throw ()
     {
         return "End time is less than start time. Quit simulation";
     }
 };
+
 #endif

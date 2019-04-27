@@ -49,6 +49,20 @@ std::vector<unique_ptr<Event>> DailySimpleBehaviorModel::evaluate(const string t
 
             time_t eventTime = currentTime + (hours * 60 + minutes) * 60 + seconds;
             unique_ptr<Event> event(new Event(userID, objectID, actionType, eventTime));
+
+            if (actionType == "IssuesEvent" || actionType == "PullRequestEvent") {
+                StatisticProxy& statisticProxy = StatisticProxy::getInstance();
+                unordered_map<std::string, double> subEventTypeProbability = statisticProxy.getSubEventTypeProbability();
+                if (actionType == "IssuesEvent") {
+                    event->setAction(subEventTypeProbability["IssuesEventOpened"], subEventTypeProbability["IssuesEventClosed"],
+                                     subEventTypeProbability["IssuesEventReopened"]);
+                } else {
+                    event->setAction(subEventTypeProbability["PullRequestEventOpened"], subEventTypeProbability["PullRequestEventClosed"],
+                                     subEventTypeProbability["PullRequestEventReopened"]);
+                    event->setMerged(subEventTypeProbability["PullRequestEventMerged"]);
+                }
+            }
+
             // event->show();
             events.push_back(move(event));
         }

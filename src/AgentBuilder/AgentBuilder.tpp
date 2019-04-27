@@ -32,7 +32,24 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setPoissonProcessStatsProxyFilePath(filePath);
     } else if (fileName == "userDistributionProxyFile") {
         m_statProxy.setUserDistributionProxyFilePath(filePath);
+    } else if (fileName == "postScaleProxyFile") {
+        m_statProxy.setPostScaleProxyFilePath(filePath);
+    } else if (fileName == "commentProbabilityProxyFile") {
+        m_statProxy.setCommentProbabilityProxyFilePath(filePath);
+    } else if (fileName == "postLifespanDistributionProxyFile") {
+        m_statProxy.setPostLifespanDistributionProxyFilePath(filePath);
+    } else if (fileName == "scoreMatrixProxyFile") {
+        m_statProxy.setScoreMatrixProxyFilePath(filePath);
+    } else if (fileName == "communityDistributionProxyFile") {
+        m_statProxy.setCommunityDistributionProxyFilePath(filePath);
+    } else if (fileName == "inactiveUserProxyFile") {
+        m_statProxy.setInactiveUserFilePath(filePath);
+    } else if (fileName == "miscellaneousProxyFile") {
+        m_statProxy.setMiscellaneousProxyFilePath(filePath);
+    } else if (fileName == "seedEventsProxyFile") {
+        m_statProxy.setSeedEventsFilePath(filePath);
     }
+
     // 10 event type user distribution proxy files
     else if (fileName == "commitCommentEventUserDistributionProxyFile") {
         m_statProxy.setCommitCommentEventUserDistributionProxyFilePath(filePath);
@@ -55,7 +72,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
     } else if (fileName == "watchEventUserDistributionProxyFile") {
         m_statProxy.setWatchEventUserDistributionProxyFile(filePath);
     } else if (fileName == "subEventTypeProbabilityProxyFile") {
-        m_statProxy.setSubEventTypeProbabilityProxyFile(filePath);
+        m_statProxy.setSubEventTypeProbabilityProxyFilePath(filePath);
     }
 }
 
@@ -123,14 +140,65 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parsePointProcessStats();
         m_statProxy.parseSubEventTypeProbability();
         buildObjects();
-    } else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
+    }
+    // IntegratedPoissonProcess Model
+    else if (std::is_same<TUserAgent, SimpleGithubUserAgent>::value && \
     std::is_same<TObjectAgent, IntegratedPoissonProcessObjectAgent>::value) {
         m_statProxy.parseObjectID();
         m_statProxy.parseUserDistribution();
         m_statProxy.parsePoissonProcessStats();
         m_statProxy.parseSubEventTypeProbability();
         buildObjects();
-    } else {
+    }
+    // Cascade Model
+    else if (std::is_same<TUserAgent, CascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseMiscellaneous();
+        buildUsers();
+    }
+    // SeedCascade Model
+    else if (std::is_same<TUserAgent, SeedCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseMiscellaneous();
+        m_statProxy.parseSeedEvents();
+        buildUsers();
+    }
+    // Embedding Cascade Model
+    else if (std::is_same<TUserAgent, EmbeddingCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseScoreMatrix();
+        m_statProxy.parseMiscellaneous();
+        buildUsers();
+    }
+    // SeedEmbedding Cascade Model
+    else if (std::is_same<TUserAgent, SeedEmbeddingCascadeUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseUserID();
+        m_statProxy.parsePostScale();
+        m_statProxy.parseCommentProbability();
+        m_statProxy.parsePostLifespanDistribution();
+        m_statProxy.parseCommunityDistribution();
+        m_statProxy.parseScoreMatrix();
+        m_statProxy.parseSeedEvents();
+        m_statProxy.parseMiscellaneous();
+        buildUsers();
+    }
+    else {
         cout << "Wrong agent type combination" << endl;
     }
     // Reset proxy source files

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include "common/Event.hpp"
+#include "StatisticProxy/StatisticProxy.hpp"
 #include "Dependency/HourlyActionRate.hpp"
 #include "Dependency/ObjectPreference.hpp"
 #include "Dependency/TypeDistribution.hpp"

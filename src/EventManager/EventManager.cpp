@@ -4,7 +4,7 @@ using namespace std;
 
 DBG(static const string tag="EventManager";)
 
-EventManager::EventManager() : m_eventCount(0), m_bufferSize(1<<19),
+EventManager::EventManager() : m_eventCount(0), m_bufferSize(10000),
     m_eventFile(""), m_eventOn(false) {
     return;    
 }
@@ -40,56 +40,186 @@ void EventManager::emitEvent() {
                 _emitRedditRepoCentricEvent();
             }
         }
+    } else if (m_platform == "twitter") {
+        if (m_eventOn) {
+            if (m_center == "user-centric") {
+                _emitTwitterUserCentricEvent();
+            } else if (m_center == "repo-centric") {
+                _emitTwitterRepoCentricEvent();
+            }
+        }
     }
-
 }
 
 void EventManager::_emitGithubUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
-                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
+//        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
+//                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
+
+        m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
+                "\"actionType\": \"" << event->getEventType() << "\", " <<
+                "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+                "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+                "\"actionSubType\": \"" << event->getAction() << "\", " <<
+                "\"nodeID\": \"" << event->getObjectID() << "\"}";
     }
 }
 
 void EventManager::_emitGithubRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
     for(auto& event : m_events) {
-        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getObjectID() << "," <<
-                 event->getUserID() << "," << event->getAction() << "," << event->getMerged() << "\n";
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
+
+        m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getObjectID() << "\", " <<
+                    "\"actionSubType\": \"" << event->getAction() << "\", " <<
+                    "\"nodeID\": \"" << event->getUserID() << "\"}";
     }
 }
 
 void EventManager::_emitRedditUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    string communityIDs[6] = {
+            "t5_2s3qj",
+            "t5_2zf9m",
+            "t5_2zwl2",
+            "t5_31hbr",
+            "t5_3bqj4",
+            "t5_3i6d8"};
+
     for(auto& event : m_events) {
-        m_eventFile << _generateRedditNodeId() << ", " << event->getUserID() << ", " << event->getObjectID() << ", " << event->getObjectID()
-                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
+
+        string communityID;
+        if (event->getCommunityID() != "") {
+            communityID = event->getCommunityID();
+        } else {
+            communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+        }
+
+        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+                    "\"communityID\": \"" << communityID << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+                    "\"keywords\": [], " <<
+                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
     }
+//
+//    for(auto& event : m_events) {
+//        string communityID;
+//        if (event->getCommunityID() != "") {
+//            communityID = event->getCommunityID();
+//        } else {
+//            communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+//        }
+//
+//        m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
+//                << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << "," << "\"{'keywords':[], 'communityID': '" + communityID + "'}\"\n";
+//
+//    }
 }
 
 void EventManager::_emitRedditRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+    string communityIDs[6] = {
+            "t5_2s3qj",
+            "t5_2zf9m",
+            "t5_2zwl2",
+            "t5_31hbr",
+            "t5_3bqj4",
+            "t5_3i6d8"};
+
     for(auto& event : m_events) {
-        m_eventFile << _generateRedditNodeId() << ", " << event->getObjectID() << ", " << event->getUserID() << ", " << event->getUserID()
-                    << ", comment, " << event->getTimestampStrInSeconds() << "," << "\n";
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
+
+        string communityID;
+        if (event->getCommunityID() != "") {
+            communityID = event->getCommunityID();
+        } else {
+            communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+        }
+
+        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+                    "\"communityID\": \"" << communityID << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+                    "\"keywords\": [], " <<
+                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getObjectID() << "\", " <<
+                    "\"nodeID\": \"" << event->getUserID() << "\"}";
     }
 }
 
-string EventManager::_generateRedditNodeId() {
-    static const char alphanum[] =
-                    "0123456789"
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    "abcdefghijklmnopqrstuvwxyz";
+void EventManager::_emitTwitterUserCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
-    int len = 25;
-    string nodeId = "";
+    for(auto& event : m_events) {
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
 
-    for (int i = 0; i < len; ++i) {
-        nodeId += alphanum[rand() % (sizeof(alphanum) - 1)];
+        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
     }
+//    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+//
+//    for(auto& event : m_events) {
+//        m_eventFile << event->getObjectID() << "," << event->getUserID() << "," << event->getParentID() << "," << event->getRootID()
+//                    << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << ",{}\n";
+//    }
+}
 
-    return nodeId;
+void EventManager::_emitTwitterRepoCentricEvent(){
+    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+
+    for(auto& event : m_events) {
+        if (!m_firstLine) {
+            m_eventFile << ", ";
+        } else {
+            m_firstLine = false;
+        }
+
+        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getObjectID() << "\", " <<
+                    "\"nodeID\": \"" << event->getUserID() << "\"}";
+    }
+//    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
+//
+//    for(auto& event : m_events) {
+//        m_eventFile << event->getUserID() << "," << event->getObjectID() << "," << event->getParentID() << "," << event->getRootID()
+//                    << "," << event->getEventType() << "," << event->getTimestampStrInSeconds() << ",{}\n";
+//    }
 }
 
 void EventManager::start() {
@@ -99,10 +229,24 @@ void EventManager::start() {
     DBG(LOGP(TAG, "Event Show Status: "+stringfy(m_eventOn));)
     DBG(LOGP(TAG, "*************************** Simulator Configuration ***************************\n\n", false);)
     m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
+    cout << "Domain: " << m_domain << endl;
+
+    m_eventFile << "{\"platform\": \"" << m_platform << "\", \"domain\": \"" << m_domain <<
+                "\", \"scenario\": \"" << m_scenario << "\", \"team\": \"uiuc\", " <<
+                "\"data\": [";
+
+//    if (m_platform == "github") {
+//        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl;
+//    } else if (m_platform == "reddit") {
+//        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+//    } else if (m_platform == "twitter") {
+//        m_eventFile << "nodeID,nodeUserID,parentID,rootID,actionType,nodeTime,nodeAttributes" << endl;
+//    }
 }
 
 void EventManager::end() {
     emitEvent();
+    m_eventFile << "]}" << endl;
     m_eventFile.close(); 
 
     SimulatorProfiler& sp = SimulatorProfiler::getInstance();
@@ -131,6 +275,14 @@ void EventManager::setCenter(const std::string& center) {
 
 void EventManager::setPlatform(const std::string& platform) {
     m_platform = platform;
+}
+
+void EventManager::setScenario(const std::string& scenario) {
+    m_scenario = scenario;
+}
+
+void EventManager::setDomain(const std::string& domain) {
+    m_domain = domain;
 }
 
 void EventManager::setEventShow(bool t_eventOn) {

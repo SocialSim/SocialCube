@@ -47,7 +47,7 @@ void CommunityManager::eventBasedSimulate(time_t t_startTime, time_t t_endTime) 
     m_endTime = t_endTime;
 
     // EventManager& em = EventManager::getInstance();
-
+    cout << "in eventBasedSimulate" << endl;
     vector<unique_ptr<Event>> events;
 
     for(auto& community: m_community) {

@@ -14,9 +14,13 @@
 class EventManager {
     private:
         // Private member variables
-        std::string m_center;
+        std::string m_center = "user-centric";
 
         std::string m_platform;
+
+        std::string m_scenario;
+
+        std::string m_domain;
 
         std::vector<std::unique_ptr<Event>> m_events;
 
@@ -29,6 +33,8 @@ class EventManager {
         std::ofstream m_eventFile; 
 
         bool m_eventOn;
+
+        bool m_firstLine = true;
 
         // Private member functions
 
@@ -44,7 +50,9 @@ class EventManager {
 
         void _emitRedditRepoCentricEvent();
 
-        string _generateRedditNodeId();
+        void _emitTwitterUserCentricEvent();
+
+        void _emitTwitterRepoCentricEvent();
 
         EventManager();
 
@@ -56,6 +64,10 @@ class EventManager {
         void setCenter(const std::string& center);
 
         void setPlatform(const std::string& platform);
+
+        void setScenario(const std::string& scenario);
+
+        void setDomain(const std::string& domain);
 
         void setEventShow(bool t_eventOn); 
 

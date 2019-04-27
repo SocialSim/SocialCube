@@ -1,0 +1,102 @@
+[32mStatisticProxy-43-parseObjectID:                    
+objectIDProxyFile: ../statistics/classified_poisson/poisson_ids.txt[0m
+[32mObjectIDProxy-28-parse:                             Object ID has 3[0m
+[32mStatisticProxy-85-parsePoissonProcessStats:         
+poissonProcessStatsProxyFile: ../statistics/classified_poisson/poisson_stats.txt[0m
+[32mPoissonProcessProxy-55-parse:                       Poisson Process Stat has 3[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+watchEventUserDistributionProxyFile: ../statistics/classified_poisson/WatchEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+pullRequestReviewCommentEventUserDistributionProxyFile: ../statistics/classified_poisson/PullRequestReviewCommentEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+issueEventUserDistributionProxyFile: ../statistics/classified_point/IssuesEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+pushEventUserDistributionProxyFile: ../statistics/classified_poisson/PushEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+issueCommentEventUserDistributionProxyFile: ../statistics/classified_poisson/IssuesEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+forkEventUserDistributionProxyFile: ../statistics/classified_poisson/ForkEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+pullRequestEventUserDistributionProxyFile: ../statistics/classified_poisson/PullRequestEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+createEventUserDistributionProxyFile: ../statistics/classified_poisson/CreateEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+deleteEventUserDistributionProxyFile: ../statistics/classified_poisson/DeleteEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+[32mStatisticProxy-92-parseClassifiedUserDistributionStats:                                               
+commitCommentEventUserDistributionProxyFile: ../statistics/classified_poisson/CommitCommentEvent_repo_ids_count.csv[0m
+[32mUserDistributionProxy-76-parse:                     Total repo number = 4[0m
+objectID = user1
+in constructor
+objectID = user2
+in constructor
+objectID = user3
+in constructor
+[34m
+
+*************************** Event Based Simulator Configuration ***************************[0m
+[34mEventBasedSimulator-17-printConfig:                 Simulation Start Time: 1498867200[0m
+[34mEventBasedSimulator-18-printConfig:                 Simulation End Time: 1501286399[0m
+[34mEventBasedSimulator-19-printConfig:                 Simulation Unit Time: 3600[0m
+[34m*************************** Event Based Simulator Configuration ***************************
+
+[0m
+[34m
+
+*************************** Event Manager Configuration ***************************[0m
+[34mEventManager-41-start:                              Event Buffer Size: 1048576[0m
+[34mEventManager-42-start:                              Event Storage: classified_events[0m
+[34mEventManager-43-start:                              Event Show Status: 1[0m
+[34m*************************** Simulator Configuration ***************************
+
+[0m
+[32mCommunityManager-44-eventBasedSimulate:             Total 2 detected[0m
+tmp_mu:
+6.61376e-05
+tmp_typeList:
+CreateEvent
+Finish simulating user2
+tmp_mu:
+0.000132275
+tmp_typeList:
+CreateEvent
+tmp_mu:
+6.61376e-05
+tmp_typeList:
+PushEvent
+tmp_mu:
+3.30688e-05
+tmp_typeList:
+WatchEvent
+Finish simulating user3
+tmp_mu:
+3.30688e-05
+tmp_typeList:
+CreateEvent
+tmp_mu:
+3.30688e-05
+tmp_typeList:
+IssueCommentEvent
+tmp_mu:
+3.30688e-05
+tmp_typeList:
+IssuesEvent
+Finish simulating user1
+[32mEventManager-33-_emitEvent:                         Store 25 Events[0m
+[32mSimulatorProfiler-43-setEventCount:                 Set Event Count 25[0m
+[34m
+
+*************************** Simulation Profile ***************************[0m
+[34mSimulatorProfiler-33-showProfile:                   Simulation Total Time 0.000760 s[0m
+[34mSimulatorProfiler-34-showProfile:                   Simulation Total Events 25[0m
+[34m*************************** Simulation Profile ***************************
+
+[0m

@@ -33,7 +33,22 @@ std::vector<unique_ptr<Event>> SimpleBehaviorModel::evaluate(
             string userID = t_objectPreference.getUserID();
             string objectID = SimpleBehaviorModel::chooseTarget(t_objectPreference);
             string actionType = SimpleBehaviorModel::chooseAction(t_typeDistribution);
+
             unique_ptr<Event> event(new Event(userID, objectID, actionType, t_currentTime));
+
+            if (actionType == "IssuesEvent" || actionType == "PullRequestEvent") {
+                StatisticProxy& statisticProxy = StatisticProxy::getInstance();
+                unordered_map<std::string, double> subEventTypeProbability = statisticProxy.getSubEventTypeProbability();
+                if (actionType == "IssuesEvent") {
+                    event->setAction(subEventTypeProbability["IssuesEventOpened"], subEventTypeProbability["IssuesEventClosed"],
+                              subEventTypeProbability["IssuesEventReopened"]);
+                } else {
+                    event->setAction(subEventTypeProbability["PullRequestEventOpened"], subEventTypeProbability["PullRequestEventClosed"],
+                              subEventTypeProbability["PullRequestEventReopened"]);
+                    event->setMerged(subEventTypeProbability["PullRequestEventMerged"]);
+                }
+            }
+
             events.push_back(move(event));
         }
         dailyActivityLevel -= 1.0;
