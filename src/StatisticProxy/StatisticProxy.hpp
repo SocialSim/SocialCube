@@ -29,6 +29,7 @@
 #include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
 #include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
 #include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
+#include "StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -52,6 +53,7 @@ class StatisticProxy {
         std::string m_defaultMiscellaneousProxyFile;
         std::string m_defaultInactiveUserFile;
         std::string m_defaultSeedEventsProxyFile;
+        std::string m_defaultSeedInfoIDProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -74,6 +76,7 @@ class StatisticProxy {
         std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
         std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
         std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
+        std::unique_ptr<SeedInfoIDProxy> m_seedInfoIDProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -106,6 +109,7 @@ class StatisticProxy {
         void parseCommunityDistribution();
         void parseMiscellaneous();
         void parseSeedEvents();
+        void parseSeedInfoID();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -125,6 +129,7 @@ class StatisticProxy {
         void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
         void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
         void setSeedEventsFilePath(std::string seedEventsFilePath);
+        void setSeedInfoIDFilePath(std::string seedInfoIDFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -168,6 +173,8 @@ class StatisticProxy {
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
 
         std::vector<Event> getSeedEvents(std::string t_user_id) const;
+
+        std::vector<string> getSeedInfoID() const;
 
         std::unordered_map<std::string, double> getActionTypeDistribution() const;
 

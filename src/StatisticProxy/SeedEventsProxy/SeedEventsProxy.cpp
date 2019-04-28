@@ -40,12 +40,12 @@ void SeedEventsProxy::parse() {
         in >> node_id;
         in >> community_id;
         in >> post_time;
-	cout << "user_id= " << user_id << ", community_id = " << community_id << ", post_time = " << post_time << endl;
+	    cout << "user_id= " << user_id << ", community_id = " << community_id << ", post_time = " << post_time << endl;
         Event event(user_id, node_id, "post", node_id, node_id, post_time);
         if (!seed_events.count(user_id)) {
             seed_events.insert(std::make_pair(user_id, vector<Event>()));
         }
-	event.setCommunityID(community_id);
+	    event.setCommunityID(community_id);
         seed_events[user_id].push_back(event);
     }
 }

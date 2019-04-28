@@ -68,6 +68,7 @@ OBJS := $(OBJS) CommentProbabilityProxy.o
 OBJS := $(OBJS) CommunityDistributionProxy.o
 OBJS := $(OBJS) MiscellaneousProxy.o
 OBJS := $(OBJS) SeedEventsProxy.o
+OBJS := $(OBJS) SeedInfoIDProxy.o
 OBJS := $(OBJS) PostLifespanDistributionProxy.o
 OBJS := $(OBJS) ScoreMatrixProxy.o
 OBJS := $(OBJS) Event.o
@@ -250,6 +251,9 @@ MiscellaneousProxy.o:	./StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.cpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SeedEventsProxy.o:	./StatisticProxy/SeedEventsProxy/SeedEventsProxy.cpp ./StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedInfoIDProxy.o:	./StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.cpp ./StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PostLifespanDistributionProxy.o:	./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.cpp ./StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp

@@ -45,7 +45,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
 
     for (Event seed : seed_events) {
         int post_scale = 1000;
-	// int post_scale = randomlyRoundDouble(scales[i].second);
+	    // int post_scale = randomlyRoundDouble(scales[i].second);
         int lifespan = generateLifespan(t_postLifespanDistribution);
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
         time_t q1_end_time = time_interval * q1;
@@ -62,7 +62,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
         // Create post event
         unique_ptr <Event> event;
         if (!is_twitter) {
-//            root_node_id = "t3_" + root_node_id;
+            // root_node_id = "t3_" + root_node_id;
             event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
                                                 root_node_id, root_node_id, current_day_time));
         } else {
