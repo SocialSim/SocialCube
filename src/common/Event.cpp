@@ -100,6 +100,10 @@ string Event::getCommunityID() const {
     return m_communityID;
 }
 
+string Event::getInfoID() const {
+    return m_infoID;
+}
+
 void Event::setTime(time_t p_time) {
     m_timestamp = p_time;
 }
@@ -126,6 +130,10 @@ void Event::setMerged(double p) {
 
 void Event::setCommunityID(string p_communityID) {
     m_communityID = p_communityID;
+}
+
+void Event::setInfoID(std::string p_infoID) {
+    m_infoID = p_infoID;
 }
 
 void Event::warpTimestamp(time_t startTime, double ratio) {

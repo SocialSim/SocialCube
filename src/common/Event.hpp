@@ -25,6 +25,8 @@ private:
 
     std::string m_communityID;
 
+    std::string m_infoID;
+
     bool m_merged;
 
 public:
@@ -60,6 +62,8 @@ public:
 
     std::string getCommunityID() const;
 
+    std::string getInfoID() const;
+
     void setTime(time_t p_time);
 
     void setAction(double p_opened, double p_closed, double p_reopened);
@@ -67,6 +71,8 @@ public:
     void setCommunityID(std::string p_communityID);
 
     void setMerged(double p);
+
+    void setInfoID(std::string p_infoID);
 
     void warpTimestamp(time_t startTime, double ratio);
 
