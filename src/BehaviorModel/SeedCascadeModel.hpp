@@ -27,6 +27,8 @@ private:
 
     static int convertISOtoDay(time_t t_currentTime);
 
+    static int convertISOtoHour(time_t t_currentTime);
+
     static double generateGaussianRandom();
 
 public:

@@ -49,6 +49,18 @@ void StatisticProxy::parseObjectPreference() {
     m_objectPreferenceProxy->parse();
 }
 
+void StatisticProxy::parseUserPreference() {
+    DBG(LOGD(TAG, "\nuserPreferenceProxyFile: " + m_defaultUserPreferenceProxyFile);)
+    m_userPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultUserPreferenceProxyFile));
+    m_userPreferenceProxy->parse();
+}
+
+void StatisticProxy::parseRepoPreference() {
+    DBG(LOGD(TAG, "\nrepoPreferenceProxyFile: " + m_defaultRepoPreferenceProxyFile);)
+    m_repoPreferenceProxy.reset(new ObjectPreferenceProxy(m_defaultRepoPreferenceProxyFile));
+    m_repoPreferenceProxy->parse();
+}
+
 void StatisticProxy::parseHourlyActionRate() {
     DBG(LOGD(TAG, "\nhourlyActionRateProxyFile: " + m_defaultHourlyActionRateProxyFile);)
     m_hourlyActionRateProxy.reset(new HourlyActionRateProxy(m_defaultHourlyActionRateProxyFile));
@@ -182,6 +194,14 @@ ObjectPreference& StatisticProxy::getUserObjectPreference(const string &userID) 
     return m_objectPreferenceProxy->get(userID);
 }
 
+ObjectPreference& StatisticProxy::getUserPreference(const string &userID) const {
+    return m_userPreferenceProxy->get(userID);
+}
+
+ObjectPreference& StatisticProxy::getRepoPreference(const string &userID) const {
+    return m_repoPreferenceProxy->get(userID);
+}
+
 TypeDistribution& StatisticProxy::getUserTypeDistribution(const std::string &userID) const {
     return m_typeDistributionProxy->get(userID);
 }
@@ -295,6 +315,14 @@ void StatisticProxy::setDailyActivityLevelProxyFilePath(std::string dailyActivit
 
 void StatisticProxy::setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath) {
     m_defaultObjectPreferenceProxyFile = objectPreferenceProxyFilePath;
+}
+
+void StatisticProxy::setUserPreferenceProxyFilePath(std::string userPreferenceProxyFilePath) {
+    m_defaultUserPreferenceProxyFile = userPreferenceProxyFilePath;
+}
+
+void StatisticProxy::setRepoPreferenceProxyFilePath(std::string repoPreferenceProxyFilePath) {
+    m_defaultRepoPreferenceProxyFile = repoPreferenceProxyFilePath;
 }
 
 void StatisticProxy::setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath) {

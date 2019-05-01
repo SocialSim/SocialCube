@@ -15,6 +15,7 @@ OBJS := Simulator.o
 OBJS := $(OBJS) CacheAwareSimulator.o
 OBJS := $(OBJS) EventBasedSimulator.o
 OBJS := $(OBJS) SimpleGithubUserAgent.o
+OBJS := $(OBJS) SeedGithubUserAgent.o
 OBJS := $(OBJS) DailySimpleGithubUserAgent.o
 OBJS := $(OBJS) ClusteredGithubUserAgent.o 
 OBJS := $(OBJS) Community.o 
@@ -32,6 +33,7 @@ OBJS := $(OBJS) EmbeddingCascadeUserAgent.o
 OBJS := $(OBJS) SeedEmbeddingCascadeUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeModel.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
+OBJS := $(OBJS) SeedHourlySimpleBehaviorModel.o
 OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
@@ -97,6 +99,9 @@ EventBasedSimulator.o:	./Simulator/EventBasedSimulator.cpp ./Simulator/EventBase
 SimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+SeedGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/SeedGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/SeedGithubUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 DailySimpleGithubUserAgent.o:	./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.cpp ./Agent/UserAgent/GithubAgent/DailySimpleGithubUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -134,6 +139,9 @@ EmbeddingCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/EmbeddingCascadeUser
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SimpleBehaviorModel.o:	./BehaviorModel/SimpleBehaviorModel.cpp ./BehaviorModel/SimpleBehaviorModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+SeedHourlySimpleBehaviorModel.o:	./BehaviorModel/SeedHourlySimpleBehaviorModel.cpp ./BehaviorModel/SeedHourlySimpleBehaviorModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 DailySimpleBehaviorModel.o:	./BehaviorModel/DailySimpleBehaviorModel.cpp ./BehaviorModel/DailySimpleBehaviorModel.hpp

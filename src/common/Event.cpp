@@ -136,6 +136,11 @@ void Event::setInfoID(std::string p_infoID) {
     m_infoID = p_infoID;
 }
 
+void Event::setPlatform(std::string p_platform) {
+    m_platform = p_platform;
+}
+
+
 void Event::warpTimestamp(time_t startTime, double ratio) {
     m_timestamp = (m_timestamp - startTime) * ratio + startTime;
 }

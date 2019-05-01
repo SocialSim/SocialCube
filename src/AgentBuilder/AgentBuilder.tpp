@@ -24,6 +24,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setDailyActivityLevelProxyFilePath(filePath);
     } else if (fileName == "objectPreferenceProxyFile") {
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
+    } else if (fileName == "userPreferenceProxyFile") {
+        m_statProxy.setUserPreferenceProxyFilePath(filePath);
+    } else if (fileName == "setRepoPreferenceProxyFile") {
+        m_statProxy.setRepoPreferenceProxyFilePath(filePath);
     } else if (fileName == "typeDistributionProxyFile") {
         m_statProxy.setTypeDistributionProxyFilePath(filePath);
     } else if (fileName == "pointProcessStatsProxyFile") {
@@ -48,6 +52,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setMiscellaneousProxyFilePath(filePath);
     } else if (fileName == "seedEventsProxyFile") {
         m_statProxy.setSeedEventsFilePath(filePath);
+    } else if (fileName == "setSeedInfoIDFile") {
+        m_statProxy.setSeedInfoIDFilePath(filePath);
     }
 
     // 10 event type user distribution proxy files
@@ -198,6 +204,16 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseMiscellaneous();
         buildUsers();
     }
+    // SeedHourlySimpleBehavior Model
+    else if (std::is_same<TUserAgent, SeedGithubUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseSeedInfoID();
+        m_statProxy.parseDailyActivityLevel();
+        m_statProxy.parseUserPreference();
+        m_statProxy.parseRepoPreference();
+        m_statProxy.parseTypeDistribution();
+        buildInfoIDUsers();
+    }
     else {
         cout << "Wrong agent type combination" << endl;
     }
@@ -233,4 +249,15 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
         m_objectAgents.push_back(move(agent));
     }
 }
+
+template<class TUserAgent, class TObjectAgent>
+void AgentBuilder<TUserAgent, TObjectAgent>::buildInfoIDUsers() {
+    const std::vector<std::string>& infoIDs = m_statProxy.getSeedInfoID();
+
+    for(auto& infoID : infoIDs) {
+        std::shared_ptr<TUserAgent> agent(new TUserAgent(infoID));
+        m_userAgents.push_back(move(agent));
+    }
+}
+
 

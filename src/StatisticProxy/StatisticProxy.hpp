@@ -38,6 +38,10 @@ class StatisticProxy {
         std::string m_defaultUserIDProxyFile;
         std::string m_defaultObjectIDProxyFile;
         std::string m_defaultObjectPreferenceProxyFile;
+
+        std::string m_defaultUserPreferenceProxyFile;
+        std::string m_defaultRepoPreferenceProxyFile;
+
         std::string m_defaultHourlyActionRateProxyFile;
         std::string m_defaultDailyActivityLevelProxyFile;
         std::string m_defaultTypeDistributionProxyFile;
@@ -63,6 +67,10 @@ class StatisticProxy {
         std::unique_ptr<UserIDProxy> m_userIDProxy;
         std::unique_ptr<ObjectIDProxy> m_objectIDProxy;
         std::unique_ptr<ObjectPreferenceProxy> m_objectPreferenceProxy;
+
+        std::unique_ptr<ObjectPreferenceProxy> m_userPreferenceProxy;
+        std::unique_ptr<ObjectPreferenceProxy> m_repoPreferenceProxy;
+
         std::unique_ptr<HourlyActionRateProxy> m_hourlyActionRateProxy;
         std::unique_ptr<DailyActivityLevelProxy> m_dailyActivityLevelProxy;
         std::unique_ptr<TypeDistributionProxy> m_typeDistributionProxy;
@@ -94,6 +102,10 @@ class StatisticProxy {
         void parseUserID();
         void parseObjectID();
         void parseObjectPreference();
+
+        void parseUserPreference();
+        void parseRepoPreference();
+
         void parseHourlyActionRate();
         void parseDailyActivityLevel();
         void parseTypeDistribution();
@@ -116,6 +128,10 @@ class StatisticProxy {
         void setHourlyActionRateProxyFilePath(std::string hourlyActionRateProxyFilePath);
         void setDailyActivityLevelProxyFilePath(std::string activityLevelProxyFilePath);
         void setObjectPreferenceProxyFilePath(std::string objectPreferenceProxyFilePath);
+
+        void setUserPreferenceProxyFilePath(std::string userPreferenceProxyFilePath);
+        void setRepoPreferenceProxyFilePath(std::string repoPreferenceProxyFilePath);
+
         void setTypeDistributionProxyFilePath(std::string typeDistributionProxyFilePath);
         void setUserDistributionProxyFilePath(std::string userDistributionProxyFilePath);
         void setPointProcessStatsProxyFilePath(std::string pointProcessProxyFilePath);
@@ -154,7 +170,11 @@ class StatisticProxy {
 
         DailyActivityLevel& getDailyActivityLevel(const string &userID) const;
 
-        ObjectPreference& getUserObjectPreference(const std::string &userID) const; 
+        ObjectPreference& getUserObjectPreference(const std::string &userID) const;
+
+        ObjectPreference& getUserPreference(const std::string &repoID) const;
+
+        ObjectPreference& getRepoPreference(const std::string &userID) const;
 
         TypeDistribution& getUserTypeDistribution(const std::string &userID) const; 
 

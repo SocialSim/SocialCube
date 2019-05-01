@@ -27,6 +27,8 @@ private:
 
     std::string m_infoID;
 
+    std::string m_platform;
+
     bool m_merged;
 
 public:
@@ -73,6 +75,8 @@ public:
     void setMerged(double p);
 
     void setInfoID(std::string p_infoID);
+
+    void setPlatform(std::string p_platform);
 
     void warpTimestamp(time_t startTime, double ratio);
 

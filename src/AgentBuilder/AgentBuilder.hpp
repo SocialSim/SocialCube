@@ -11,6 +11,7 @@
 #include "Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/SeedEmbeddingCascadeUserAgent.hpp"
+#include "Agent/UserAgent/GithubAgent/SeedGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPoissonProcessObjectAgent.hpp"
@@ -33,6 +34,8 @@ private:
     void buildUsers();
 
     void buildObjects();
+
+    void buildInfoIDUsers();
 
 public:
 

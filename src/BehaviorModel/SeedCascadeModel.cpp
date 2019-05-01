@@ -21,6 +21,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
 
     vector<Event> seed_events = m_statProxy.getSeedEvents(t_id);
 
+    // Change to hour
     int startDay = SeedCascadeModel::convertISOtoDay(t_startTime);
     int endDay = SeedCascadeModel::convertISOtoDay(t_endTime);
 
@@ -38,15 +39,22 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
 
     unordered_map<string, double> actionTypeDistribution = m_statProxy.getActionTypeDistribution();
 
+    // Don't need is_twitter
     bool is_twitter = false;
     if (actionTypeDistribution.size() == 3) {
         is_twitter = true;
     }
 
     for (Event seed : seed_events) {
+
+        // Use real post_scale
         int post_scale = 1000;
 	    // int post_scale = randomlyRoundDouble(scales[i].second);
+
+
+        // the unit of lifespan would be hour instead of day
         int lifespan = generateLifespan(t_postLifespanDistribution);
+
         time_t time_interval = lifespan * 24 * 60 * 60 - 1;
         time_t q1_end_time = time_interval * q1;
         time_t q2_end_time = time_interval * q2;
@@ -61,6 +69,8 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
 
         // Create post event
         unique_ptr <Event> event;
+
+        // Dont use is_twitter, set the 'platform' and 'information_id' fields of Event
         if (!is_twitter) {
             // root_node_id = "t3_" + root_node_id;
             event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
@@ -70,7 +80,7 @@ vector<unique_ptr<Event>> SeedCascadeModel::evaluate(const string t_id,
                                                 root_node_id, root_node_id, current_day_time));
         }
         string community_id = seed.getCommunityID();
-	cout << "in cascademodel, community_id = " << community_id << endl;
+	    cout << "in cascademodel, community_id = " << community_id << endl;
         event->setCommunityID(community_id);
         events.push_back(move(event));
 
@@ -208,6 +218,10 @@ string SeedCascadeModel::generateNodeId() {
 
 int SeedCascadeModel::convertISOtoDay(time_t t_currentTime) {
     return int(t_currentTime / (24 * 60 * 60));
+}
+
+int SeedCascadeModel::convertISOtoHour(time_t t_currentTime) {
+    return int(t_currentTime / (60 * 60));
 }
 
 double SeedCascadeModel::generateGaussianRandom() {
