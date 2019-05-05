@@ -30,7 +30,9 @@ void ObjectPreferenceProxy::parse() {
         for(int i = 0; i < stoi(preferenceCount); ++i) {
             getline(m_objectPreferenceStatisticsFile, tmp);
             string objectID = tmp.substr(0, tmp.find(" "));
+            cout << "stod start" << endl;
             double preference = stod(tmp.substr(tmp.find(" ") + 1));
+            cout << "stod end" << endl;
             aggrPreference += preference;
             objectPreference->set(objectID, aggrPreference);
         }

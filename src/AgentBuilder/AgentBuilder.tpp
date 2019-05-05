@@ -26,7 +26,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setObjectPreferenceProxyFilePath(filePath);
     } else if (fileName == "userPreferenceProxyFile") {
         m_statProxy.setUserPreferenceProxyFilePath(filePath);
-    } else if (fileName == "setRepoPreferenceProxyFile") {
+    } else if (fileName == "repoPreferenceProxyFile") {
         m_statProxy.setRepoPreferenceProxyFilePath(filePath);
     } else if (fileName == "typeDistributionProxyFile") {
         m_statProxy.setTypeDistributionProxyFilePath(filePath);
@@ -52,7 +52,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setMiscellaneousProxyFilePath(filePath);
     } else if (fileName == "seedEventsProxyFile") {
         m_statProxy.setSeedEventsFilePath(filePath);
-    } else if (fileName == "setSeedInfoIDFile") {
+    } else if (fileName == "seedInfoIDProxyFile") {
         m_statProxy.setSeedInfoIDFilePath(filePath);
     }
 

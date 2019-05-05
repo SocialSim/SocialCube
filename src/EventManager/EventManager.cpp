@@ -56,18 +56,24 @@ void EventManager::_emitGithubUserCentricEvent(){
     for(auto& event : m_events) {
 //        m_eventFile << event->getTimestampStr() << "," << event->getEventType() << "," << event->getUserID() << "," <<
 //                  event->getObjectID() << "," << event->getAction() << "," << event->getMerged() << "\n";
-        if (!m_firstLine) {
-            m_eventFile << ", ";
-        } else {
-            m_firstLine = false;
-        }
+//        if (!m_firstLine) {
+//            m_eventFile << ", ";
+//        } else {
+//            m_firstLine = false;
+//        }
 
-        m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
-                "\"actionType\": \"" << event->getEventType() << "\", " <<
-                "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
-                "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
-                "\"actionSubType\": \"" << event->getAction() << "\", " <<
-                "\"nodeID\": \"" << event->getObjectID() << "\"}";
+//        m_eventFile << "{\"status\": \"" << event->getMerged() << "\", " <<
+//                "\"actionType\": \"" << event->getEventType() << "\", " <<
+//                "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+//                "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+//                "\"actionSubType\": \"" << event->getAction() << "\", " <<
+//                "\"nodeID\": \"" << event->getObjectID() << "\"}";
+        m_eventFile << "{\"nodeID\": \"" << event->getObjectID() << "\", " <<
+                    "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+                    "\"informationID\": \"" << event->getInfoID() << "\", " <<
+                    "\"platform\": \"github\"}\n";
     }
 }
 
