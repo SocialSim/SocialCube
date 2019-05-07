@@ -52,6 +52,8 @@ OBJS := $(OBJS) ScoreMatrix.o
 OBJS := $(OBJS) PointProcessStat.o
 OBJS := $(OBJS) PoissonProcessStat.o
 OBJS := $(OBJS) PostScale.o
+OBJS := $(OBJS) PostInfo.o
+OBJS := $(OBJS) CascadeSequence.o
 OBJS := $(OBJS) CommentProbability.o
 OBJS := $(OBJS) PostLifespanDistribution.o
 OBJS := $(OBJS) StatisticProxy.o
@@ -199,6 +201,12 @@ PoissonProcessStat.o:	./Dependency/PoissonProcessStat.cpp ./Dependency/PoissonPr
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 PostScale.o:	./Dependency/PostScale.cpp ./Dependency/PostScale.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+PostInfo.o:	./Dependency/PostInfo.cpp ./Dependency/PostInfo.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CascadeSequence.o:	./Dependency/CascadeSequence.cpp ./Dependency/CascadeSequence.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommentProbability.o:	./Dependency/CommentProbability.cpp ./Dependency/CommentProbability.hpp
