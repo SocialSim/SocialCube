@@ -75,6 +75,7 @@ OBJS := $(OBJS) SeedEventsProxy.o
 OBJS := $(OBJS) SeedInfoIDProxy.o
 OBJS := $(OBJS) PostLifespanDistributionProxy.o
 OBJS := $(OBJS) ScoreMatrixProxy.o
+OBJS := $(OBJS) CascadeSequenceProxy.o
 OBJS := $(OBJS) Event.o
 OBJS := $(OBJS) EventManager.o
 OBJS := $(OBJS) DependentEventLogger.o
@@ -255,6 +256,9 @@ PostScaleProxy.o:	./StatisticProxy/PostScaleProxy/PostScaleProxy.cpp ./Statistic
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 ScoreMatrixProxy.o:	./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.cpp ./StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+CascadeSequenceProxy.o:	./StatisticProxy/CascadeSequenceProxy/CascadeSequenceProxy.cpp ./StatisticProxy/CascadeSequenceProxy/CascadeSequenceProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommentProbabilityProxy.o:	./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.cpp ./StatisticProxy/CommentProbabilityProxy/CommentProbabilityProxy.hpp
