@@ -268,6 +268,10 @@ vector<string> StatisticProxy::getSeedInfoID() const {
     return m_seedInfoIDProxy->get();
 }
 
+bool StatisticProxy::checkInfoID(string t_infoID) const {
+    return m_cascadeSequenceProxy->checkInfoID(t_infoID);
+}
+
 CascadeSequence& StatisticProxy::getCascadeSequence(string t_infoID) const {
     return m_cascadeSequenceProxy->getCascadeSequence(t_infoID);
 }

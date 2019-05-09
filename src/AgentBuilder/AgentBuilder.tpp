@@ -257,6 +257,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildUsers() {
 template<class TUserAgent, class TObjectAgent>
 void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
     const std::vector<std::string>& objectIDs = m_statProxy.getObjectIDs();
+
     for(auto& objectID : objectIDs) {
         std::shared_ptr<TObjectAgent> agent(new TObjectAgent(objectID));
         m_objectAgents.push_back(move(agent));
@@ -268,8 +269,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildInfoIDUsers() {
     const std::vector<std::string>& infoIDs = m_statProxy.getSeedInfoID();
 
     for(auto& infoID : infoIDs) {
-        std::shared_ptr<TUserAgent> agent(new TUserAgent(infoID));
-        m_userAgents.push_back(move(agent));
+        if (m_statProxy.checkInfoID(infoID)) {
+            std::shared_ptr<TUserAgent> agent(new TUserAgent(infoID));
+            m_userAgents.push_back(move(agent));
+        }
     }
 }
 

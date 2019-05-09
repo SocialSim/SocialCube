@@ -64,6 +64,14 @@ void CascadeSequenceProxy::show() {
     }
 }
 
+bool CascadeSequenceProxy::checkInfoID(std::string info_id) {
+    if (m_cascadeSequences.find(info_id) != m_cascadeSequences.end()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 CascadeSequence& CascadeSequenceProxy::getCascadeSequence(std::string infoId) {
     return m_cascadeSequences.find(infoId)->second;
 }

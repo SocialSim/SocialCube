@@ -36,6 +36,8 @@ public:
 
     time_t parseTime(std::string& str_time);
 
+    bool checkInfoID(std::string info_id);
+
     CascadeSequence& getCascadeSequence(std::string info_id);
 
 };
