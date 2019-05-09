@@ -250,9 +250,9 @@ void EventManager::start() {
     m_eventFile.open(m_eventFileName.c_str(), std::ofstream::app);
     cout << "Domain: " << m_domain << endl;
 
-    m_eventFile << "{\"platform\": \"" << m_platform << "\", \"domain\": \"" << m_domain <<
-                "\", \"scenario\": \"" << m_scenario << "\", \"team\": \"uiuc\", " <<
-                "\"data\": [";
+//    m_eventFile << "{\"platform\": \"" << m_platform << "\", \"domain\": \"" << m_domain <<
+//                "\", \"scenario\": \"" << m_scenario << "\", \"team\": \"uiuc\", " <<
+//                "\"data\": [";
 
 //    if (m_platform == "github") {
 //        m_eventFile << "nodeTime,actionType,nodeUserID,nodeID,actionSubType,status" << endl;
@@ -265,8 +265,7 @@ void EventManager::start() {
 
 void EventManager::end() {
     emitEvent();
-    m_eventFile << "]}" << endl;
-    m_eventFile.close(); 
+    m_eventFile.close();
 
     SimulatorProfiler& sp = SimulatorProfiler::getInstance();
     sp.setEventCount(m_eventCount);
