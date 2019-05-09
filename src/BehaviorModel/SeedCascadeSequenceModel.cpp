@@ -36,24 +36,25 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
         string root_node_id = p.getPostId();
         string root_user_id = p.getUserId();
         time_t root_timestamp = p.getPostTimestamp();
-        vector<pair<string, time_t>> comments = p.getCommentSequence();
 
-        cout << "post_id: " << root_node_id << ", user_id: " << root_user_id << ", comment number: " << comments.size() << endl;
+        if (root_timestamp >= t_startTime && root_timestamp <= t_endTime) {
+            unique_ptr<Event> post_event;
+            if (!is_twitter) {
+                post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
+                                                         root_node_id, root_node_id, root_timestamp));
+            } else {
+                post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
+                                                         root_node_id, root_node_id, root_timestamp));
+            }
 
-        unique_ptr<Event> post_event;
-        if (!is_twitter) {
-            post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
-                                                                       root_node_id, root_node_id, root_timestamp));
-        } else {
-            post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
-                                                                       root_node_id, root_node_id, root_timestamp));
+            // Randomly generate community
+            post_event->setCommunityID("random_community");
+            post_event->setInfoID(t_infoId);
+
+            events.push_back(move(post_event));
         }
 
-        // Randomly generate community
-        post_event->setCommunityID("random_community");
-        post_event->setInfoID(t_infoId);
-
-        events.push_back(move(post_event));
+        vector<pair<string, time_t>> comments = p.getCommentSequence();
 
         vector<pair<string, unique_ptr<Event>>> user_comments;
 
