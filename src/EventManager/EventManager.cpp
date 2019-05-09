@@ -97,37 +97,50 @@ void EventManager::_emitGithubRepoCentricEvent(){
 
 void EventManager::_emitRedditUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
-    string communityIDs[6] = {
-            "t5_2s3qj",
-            "t5_2zf9m",
-            "t5_2zwl2",
-            "t5_31hbr",
-            "t5_3bqj4",
-            "t5_3i6d8"};
 
     for(auto& event : m_events) {
-        if (!m_firstLine) {
-            m_eventFile << ", ";
-        } else {
-            m_firstLine = false;
-        }
-
-        string communityID;
-        if (event->getCommunityID() != "") {
-            communityID = event->getCommunityID();
-        } else {
-            communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
-        }
-
-        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
-                    "\"communityID\": \"" << communityID << "\", " <<
-                    "\"actionType\": \"" << event->getEventType() << "\", " <<
-                    "\"parentID\": \"" << event->getParentID() << "\", " <<
-                    "\"keywords\": [], " <<
-                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+        m_eventFile << "{\"nodeID\": \"" << event->getObjectID() << "\", " <<
                     "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
-                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
+                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+                    "\"rootID\": \"" << event->getRootID() << "\", " <<
+                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
+                    "\"communityID\": \"" << event->getCommunityID() << "\", " <<
+                    "\"informationID\": \"" << event->getInfoID() << "\", " <<
+                    "\"platform\": \"reddit\"}\n";
     }
+
+//    string communityIDs[6] = {
+//            "t5_2s3qj",
+//            "t5_2zf9m",
+//            "t5_2zwl2",
+//            "t5_31hbr",
+//            "t5_3bqj4",
+//            "t5_3i6d8"};
+//
+//    for(auto& event : m_events) {
+//        if (!m_firstLine) {
+//            m_eventFile << ", ";
+//        } else {
+//            m_firstLine = false;
+//        }
+//
+//        string communityID;
+//        if (event->getCommunityID() != "") {
+//            communityID = event->getCommunityID();
+//        } else {
+//            communityID = communityIDs[rand() % (int)(sizeof(communityIDs)/sizeof(communityIDs[0]) - 1)];
+//        }
+//
+//        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+//                    "\"communityID\": \"" << communityID << "\", " <<
+//                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+//                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+//                    "\"keywords\": [], " <<
+//                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+//                    "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+//                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
+//    }
 //
 //    for(auto& event : m_events) {
 //        string communityID;

@@ -33,7 +33,7 @@ public:
 
     void setScoreMatrix(ScoreMatrix t_scoreMatrix);
 
-    std::unordered_map<std::string, PostInfo> getPosts();
+    std::vector<PostInfo> getPosts();
 
     ScoreMatrix& getScoreMatrix();
 

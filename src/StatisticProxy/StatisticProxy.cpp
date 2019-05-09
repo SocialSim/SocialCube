@@ -165,6 +165,12 @@ void StatisticProxy::parseSeedInfoID() {
     m_seedInfoIDProxy->parse();
 }
 
+void StatisticProxy::parseCascadeSequence() {
+    DBG(LOGD(TAG, "\ncascadeSequence: " + m_defaultCascadeSequenceProxyFile);)
+    m_cascadeSequenceProxy.reset(new CascadeSequenceProxy(m_defaultCascadeSequenceProxyFile));
+    m_cascadeSequenceProxy->parse();
+}
+
 void StatisticProxy::parseClassifiedUserDistributionStats() {
     for (auto& iter : m_defaultClassifiedUserDistributionProxyFiles) {
         DBG(LOGD(TAG, "\n" + iter.first + ": " + iter.second);)
@@ -260,6 +266,10 @@ vector<Event> StatisticProxy::getSeedEvents(string t_user_id) const {
 
 vector<string> StatisticProxy::getSeedInfoID() const {
     return m_seedInfoIDProxy->get();
+}
+
+CascadeSequence& StatisticProxy::getCascadeSequence(string t_infoID) const {
+    return m_cascadeSequenceProxy->getCascadeSequence(t_infoID);
 }
 
 std::unordered_map<std::string, double> StatisticProxy::getSubEventTypeProbability() const {
@@ -379,6 +389,10 @@ void StatisticProxy::setSeedEventsFilePath(std::string seedEventsFilePath) {
 
 void StatisticProxy::setSeedInfoIDFilePath(std::string seedInfoIDFilePath) {
     m_defaultSeedInfoIDProxyFile = seedInfoIDFilePath;
+}
+
+void StatisticProxy::setCascadeSequenceProxyFilePath(std::string cascadeSequenceProxyFilePath) {
+    m_defaultCascadeSequenceProxyFile = cascadeSequenceProxyFilePath;
 }
 
 uint64_t StatisticProxy::getUserCommunityTag(const std::string &userID) const {

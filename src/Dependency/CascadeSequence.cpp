@@ -28,8 +28,13 @@ void CascadeSequence::setScoreMatrix(ScoreMatrix t_scoreMatrix) {
     m_scoreMatrix = t_scoreMatrix;
 }
 
-unordered_map<string, PostInfo> CascadeSequence::getPosts() {
-    return m_posts;
+vector<PostInfo> CascadeSequence::getPosts() {
+    vector<PostInfo> posts;
+    for(unordered_map<string, PostInfo>::iterator it = m_posts.begin(); it != m_posts.end(); ++it) {
+        posts.push_back(it->second);
+    }
+
+    return posts;
 }
 
 ScoreMatrix& CascadeSequence::getScoreMatrix() {

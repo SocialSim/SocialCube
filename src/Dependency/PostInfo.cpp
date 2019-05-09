@@ -22,6 +22,10 @@ void PostInfo::pushCommentAfterPost(string t_commentType, time_t t_timestamp) {
     m_commentSequence.push_back(std::make_pair(t_commentType, t_timestamp));
 }
 
+string PostInfo::getPostId() {
+    return m_postId;
+}
+
 string PostInfo::getUserId() {
     return m_userId;
 }

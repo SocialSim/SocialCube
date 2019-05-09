@@ -12,6 +12,7 @@
 #include "Dependency/PointProcessStat.hpp"
 #include "Dependency/DailyActivityLevel.hpp"
 #include "Dependency/PoissonProcessStat.hpp"
+#include "Dependency/CascadeSequence.hpp"
 #include "StatisticProxy/UserIDProxy/UserIDProxy.hpp"
 #include "StatisticProxy/UserIDProxy/ClusteredUserIDProxy.hpp"
 #include "StatisticProxy/ObjectIDProxy/ObjectIDProxy.hpp"
@@ -30,6 +31,7 @@
 #include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
 #include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
 #include "StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.hpp"
+#include "StatisticProxy/CascadeSequenceProxy/CascadeSequenceProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -58,6 +60,7 @@ class StatisticProxy {
         std::string m_defaultInactiveUserFile;
         std::string m_defaultSeedEventsProxyFile;
         std::string m_defaultSeedInfoIDProxyFile;
+        std::string m_defaultCascadeSequenceProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -85,6 +88,7 @@ class StatisticProxy {
         std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
         std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
         std::unique_ptr<SeedInfoIDProxy> m_seedInfoIDProxy;
+        std::unique_ptr<CascadeSequenceProxy> m_cascadeSequenceProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -122,6 +126,7 @@ class StatisticProxy {
         void parseMiscellaneous();
         void parseSeedEvents();
         void parseSeedInfoID();
+        void parseCascadeSequence();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -146,6 +151,7 @@ class StatisticProxy {
         void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
         void setSeedEventsFilePath(std::string seedEventsFilePath);
         void setSeedInfoIDFilePath(std::string seedInfoIDFilePath);
+        void setCascadeSequenceProxyFilePath(std::string cascadeSequenceProxyFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -193,6 +199,8 @@ class StatisticProxy {
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
 
         std::vector<Event> getSeedEvents(std::string t_user_id) const;
+
+        CascadeSequence& getCascadeSequence(std::string t_infoID) const;
 
         std::vector<string> getSeedInfoID() const;
 

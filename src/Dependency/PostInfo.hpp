@@ -30,6 +30,8 @@ public:
 
     void pushCommentAfterPost(std::string t_commentType, time_t t_timestamp);
 
+    std::string getPostId();
+
     std::string getUserId();
 
     time_t getPostTimestamp();

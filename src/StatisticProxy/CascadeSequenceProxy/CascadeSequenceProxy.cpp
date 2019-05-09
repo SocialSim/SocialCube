@@ -32,17 +32,19 @@ void CascadeSequenceProxy::parse() {
         string infoId;
         s >> infoId;
 
-        if (infoIds.find(infoId) == infoIds.end()) {
-            m_cascadeSequences.insert(make_pair(infoId, CascadeSequence(infoId)));
-        }
-
-        CascadeSequence cs = m_cascadeSequences.find(infoId)->second;
-
         string userId;
         s >> userId;
 
         string str_timestamp;
         s >> str_timestamp;
+
+        if (infoIds.find(infoId) == infoIds.end()) {
+            m_cascadeSequences.insert(make_pair(infoId, CascadeSequence(infoId)));
+        }
+
+        CascadeSequence& cs = m_cascadeSequences.find(infoId)->second;
+        cs.pushPost(postId, userId, parseTime(str_timestamp));
+        cout << "PushPost, infoId: " << infoId << ", postId: " << postId << ", userId: " << userId << ", timestamp: " << str_timestamp << endl;
 
         string action_type;
 
