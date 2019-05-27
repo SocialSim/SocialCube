@@ -19,9 +19,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
     unordered_map<string, double> embeddingParams = m_statProxy.getEmbeddingParams();
     vector<unique_ptr<Event>> events;
 
-    // Dumb is_twitter
-    bool is_twitter = false;
-
     // Use seed posts instead
     CascadeSequence cascade_sequence = m_statProxy.getCascadeSequence(t_infoId);
     vector<PostInfo> posts = m_statProxy.getCascadeSequence(t_infoId).getPosts();
@@ -39,13 +36,9 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
 
         if (root_timestamp >= t_startTime && root_timestamp <= t_endTime) {
             unique_ptr<Event> post_event;
-            if (!is_twitter) {
-                post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
-                                                         root_node_id, root_node_id, root_timestamp));
-            } else {
-                post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "tweet",
-                                                         root_node_id, root_node_id, root_timestamp));
-            }
+            // post in Twitter is called "tweet". EventManager will do the conversion
+            post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
+                                                     root_node_id, root_node_id, root_timestamp));
 
             // Randomly generate community
             post_event->setCommunityID("random_community");

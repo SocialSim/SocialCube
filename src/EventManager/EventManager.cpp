@@ -187,7 +187,7 @@ void EventManager::_emitRedditRepoCentricEvent(){
                     "\"keywords\": [], " <<
                     "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
                     "\"nodeUserID\": \"" << event->getObjectID() << "\", " <<
-                    "\"nodeID\": \"" << event->getUserID() << "\"}";
+                    "\"nodeID\": \"" << event->getUserID() << "\"}\n";
     }
 }
 
@@ -195,19 +195,36 @@ void EventManager::_emitTwitterUserCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
     for(auto& event : m_events) {
-        if (!m_firstLine) {
-            m_eventFile << ", ";
-        } else {
-            m_firstLine = false;
+        string eventType = event->getEventType();
+
+        if (eventType.compare("post") ==  0) {
+            eventType = "tweet";
         }
 
         m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
-                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"actionType\": \"" << eventType << "\", " <<
                     "\"parentID\": \"" << event->getParentID() << "\", " <<
-                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
                     "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
-                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
+                    "\"informationID\": \"" << event->getInfoID() << "\", " <<
+                    "\"platform\": \"twitter\", " <<
+                    "\"nodeID\": \"" << event->getObjectID() << "\"}\n";
     }
+
+//    for(auto& event : m_events) {
+//        if (!m_firstLine) {
+//            m_eventFile << ", ";
+//        } else {
+//            m_firstLine = false;
+//        }
+//
+//        m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
+//                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+//                    "\"parentID\": \"" << event->getParentID() << "\", " <<
+//                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+//                    "\"nodeUserID\": \"" << event->getUserID() << "\", " <<
+//                    "\"nodeID\": \"" << event->getObjectID() << "\"}";
+//    }
 //    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 //
 //    for(auto& event : m_events) {
@@ -220,18 +237,20 @@ void EventManager::_emitTwitterRepoCentricEvent(){
     DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 
     for(auto& event : m_events) {
-        if (!m_firstLine) {
-            m_eventFile << ", ";
-        } else {
-            m_firstLine = false;
+        string eventType = event->getEventType();
+
+        if (eventType.compare("post") ==  0) {
+            eventType = "tweet";
         }
 
         m_eventFile << "{\"rootID\": \"" << event->getRootID() << "\", " <<
-                    "\"actionType\": \"" << event->getEventType() << "\", " <<
+                    "\"actionType\": \"" << eventType << "\", " <<
                     "\"parentID\": \"" << event->getParentID() << "\", " <<
-                    "\"nodeTime\": \"" << event->getTimestampStrInSeconds() << "\", " <<
+                    "\"nodeTime\": \"" << event->getTimestampStr() << "\", " <<
                     "\"nodeUserID\": \"" << event->getObjectID() << "\", " <<
-                    "\"nodeID\": \"" << event->getUserID() << "\"}";
+                    "\"informationID\": \"" << event->getInfoID() << "\", " <<
+                    "\"platform\": \"twitter\", " <<
+                    "\"nodeID\": \"" << event->getUserID() << "\"}\n";
     }
 //    DBG(LOGD(TAG, "Store " + stringfy(m_events.size()) + " Events");)
 //

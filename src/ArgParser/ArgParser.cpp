@@ -242,7 +242,7 @@ void ArgParser::parseTime(const std::string& str_time, time_t& simulator_time) {
     std::tm t = {};
     std::istringstream ss(str_time);
 
-    if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+    if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S1"))
     {
         simulator_time = std::mktime(&t);
     } else {

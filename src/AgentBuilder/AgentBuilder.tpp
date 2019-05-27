@@ -214,7 +214,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseUserPreference();
         m_statProxy.parseRepoPreference();
         m_statProxy.parseTypeDistribution();
-        buildInfoIDUsers();
+        buildInfoIDUsersWithDailyActivityLevel();
     }
     // SeedCascadeSequenceBehavior Model
     else if (std::is_same<TUserAgent, SeedCascadeSequenceUserAgent>::value && \
@@ -224,8 +224,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseCommentProbability();
         m_statProxy.parseScoreMatrix();
         m_statProxy.parseMiscellaneous();
-        buildInfoIDUsers();
-        cout << "Finish building infoIds" << endl;
+        buildInfoIDUsersWithCascadeSequence();
     }
     else {
         cout << "Wrong agent type combination" << endl;
@@ -265,11 +264,23 @@ void AgentBuilder<TUserAgent, TObjectAgent>::buildObjects() {
 }
 
 template<class TUserAgent, class TObjectAgent>
-void AgentBuilder<TUserAgent, TObjectAgent>::buildInfoIDUsers() {
+void AgentBuilder<TUserAgent, TObjectAgent>::buildInfoIDUsersWithDailyActivityLevel() {
     const std::vector<std::string>& infoIDs = m_statProxy.getSeedInfoID();
 
     for(auto& infoID : infoIDs) {
-        if (m_statProxy.checkInfoID(infoID)) {
+        if (m_statProxy.checkInfoIDInDailyActivityLevel(infoID)) {
+            std::shared_ptr<TUserAgent> agent(new TUserAgent(infoID));
+            m_userAgents.push_back(move(agent));
+        }
+    }
+}
+
+template<class TUserAgent, class TObjectAgent>
+void AgentBuilder<TUserAgent, TObjectAgent>::buildInfoIDUsersWithCascadeSequence() {
+    const std::vector<std::string>& infoIDs = m_statProxy.getSeedInfoID();
+
+    for(auto& infoID : infoIDs) {
+        if (m_statProxy.checkInfoIDInCascadeSequence(infoID)) {
             std::shared_ptr<TUserAgent> agent(new TUserAgent(infoID));
             m_userAgents.push_back(move(agent));
         }

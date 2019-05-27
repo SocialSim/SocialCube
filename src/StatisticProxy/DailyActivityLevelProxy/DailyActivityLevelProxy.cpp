@@ -49,6 +49,16 @@ void DailyActivityLevelProxy::show() {
     }
 }
 
+bool DailyActivityLevelProxy::checkInfoID(string m_infoID) {
+    if (m_dailyActivityLevels.find(m_infoID) != m_dailyActivityLevels.end()) {
+        cout << m_infoID << " is in dailyActivityLevelProxy" << endl;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 DailyActivityLevel& DailyActivityLevelProxy::get(const std::string& userID) {
     if(m_dailyActivityLevels.find(userID) == m_dailyActivityLevels.end()) {
         return *(m_dailyActivityLevels["-1"]);

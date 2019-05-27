@@ -200,7 +200,9 @@ class StatisticProxy {
 
         std::vector<Event> getSeedEvents(std::string t_user_id) const;
 
-        bool checkInfoID(string t_infoID) const;
+        bool checkInfoIDInCascadeSequence(std::string t_infoID) const;
+
+        bool checkInfoIDInDailyActivityLevel(std::string t_infoID) const;
 
         CascadeSequence& getCascadeSequence(std::string t_infoID) const;
 

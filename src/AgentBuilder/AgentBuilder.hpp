@@ -36,7 +36,9 @@ private:
 
     void buildObjects();
 
-    void buildInfoIDUsers();
+    void buildInfoIDUsersWithDailyActivityLevel();
+
+    void buildInfoIDUsersWithCascadeSequence();
 
 public:
 

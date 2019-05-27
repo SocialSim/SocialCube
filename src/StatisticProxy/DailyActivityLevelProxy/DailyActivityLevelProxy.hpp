@@ -30,6 +30,8 @@ public:
 
     virtual void show();
 
+    bool checkInfoID(std::string m_infoID);
+
     DailyActivityLevel& get(const std::string& userID);
 
 };

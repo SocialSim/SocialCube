@@ -31,23 +31,23 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
     }
 
     for (int i = 0; i <= endHour - startHour; i++) {
-        string repoID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getRepoPreference(t_id));
+        for (int j = 0; j < hourlyActivityLevel.getActivityLevel(i); j++) {
+            string repoID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getRepoPreference(t_id));
+            string userID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getUserPreference(repoID));
+            string actionType = SeedHourlySimpleBehaviorModel::chooseAction(m_statProxy.getUserTypeDistribution(userID));
 
-        string userID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getUserPreference(repoID));
+            int minutes = rand() % 60;
+            int seconds = rand() % 60;
 
-        string actionType = SeedHourlySimpleBehaviorModel::chooseAction(m_statProxy.getUserTypeDistribution(userID));
+            time_t eventTime = currentTime + minutes * 60 + seconds;
 
-        int minutes = rand() % 60;
-        int seconds = rand() % 60;
+            unique_ptr<Event> event(new Event(userID, repoID, actionType, eventTime));
+            event->setPlatform("github");
+            event->setInfoID(t_id);
 
-        time_t eventTime = currentTime + minutes * 60 + seconds;
-
-        unique_ptr<Event> event(new Event(userID, repoID, actionType, eventTime));
-        event->setPlatform("github");
-        event->setInfoID(t_id);
-
-        // event->show();
-        events.push_back(move(event));
+            // event->show();
+            events.push_back(move(event));
+        }
     }
 
     return events;
