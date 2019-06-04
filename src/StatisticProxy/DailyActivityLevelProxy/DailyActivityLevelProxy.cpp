@@ -31,7 +31,7 @@ void DailyActivityLevelProxy::parse() {
         m_dailyActivityLevels.insert(std::pair<string, unique_ptr<DailyActivityLevel>>(userID,
                 unique_ptr<DailyActivityLevel>(new DailyActivityLevel(userID))));
 
-        string str_activityLevels = tmp.substr(tmp.find(","));
+        string str_activityLevels = tmp.substr(tmp.find(",")+1);
         stringstream ss(str_activityLevels);
         string item;
         /*
