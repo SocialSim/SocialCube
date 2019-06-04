@@ -34,7 +34,17 @@ void DailyActivityLevelProxy::parse() {
         string str_activityLevels = tmp.substr(tmp.find(" "));
         stringstream ss(str_activityLevels);
         string item;
-        while (ss >> item) {
+        /*
+          *while (ss >> item) {
+          *    cout << "item: " << item << endl;
+          *    m_dailyActivityLevels[userID]->addActivityLevel(stod(item));
+          *    if (ss.peek() == ',') {
+          *        ss.ignore();
+          *    }
+          *}
+          */
+        while (ss.good()) {
+            getline(ss, item, ',');
             m_dailyActivityLevels[userID]->addActivityLevel(stod(item));
         }
     }
@@ -51,7 +61,7 @@ void DailyActivityLevelProxy::show() {
 
 bool DailyActivityLevelProxy::checkInfoID(string m_infoID) {
     if (m_dailyActivityLevels.find(m_infoID) != m_dailyActivityLevels.end()) {
-        cout << m_infoID << " is in dailyActivityLevelProxy" << endl;
+        // cout << m_infoID << " is in dailyActivityLevelProxy" << endl;
         return true;
     } else {
         return false;

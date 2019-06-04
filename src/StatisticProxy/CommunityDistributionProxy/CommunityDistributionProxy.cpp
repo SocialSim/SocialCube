@@ -52,3 +52,4 @@ unordered_map<string, double> CommunityDistributionProxy::get(const std::string&
         return m_userCommunityDistributions[userID];
     }
 }
+

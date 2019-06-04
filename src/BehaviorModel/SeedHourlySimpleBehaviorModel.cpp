@@ -15,7 +15,6 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
                                                                   time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
 
-
     vector<unique_ptr<Event>> events;
 
     time_t currentTime = t_startTime;
@@ -34,7 +33,7 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
         for (int j = 0; j < hourlyActivityLevel.getActivityLevel(i); j++) {
             string repoID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getRepoPreference(t_id));
             string userID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getUserPreference(repoID));
-            string actionType = SeedHourlySimpleBehaviorModel::chooseAction(m_statProxy.getUserTypeDistribution(userID));
+            string actionType = SeedHourlySimpleBehaviorModel::chooseAction(m_statProxy.getUserTypeDistribution(repoID));
 
             int minutes = rand() % 60;
             int seconds = rand() % 60;

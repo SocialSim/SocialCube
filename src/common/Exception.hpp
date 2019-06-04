@@ -114,6 +114,20 @@ class CommunityDistributionProxyException: public std::exception {
     }
 };
 
+class InfoIDToUserProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for InfoIDToUserProxy";
+    }
+};
+
+class TopologyProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for TopologyProxy";
+    }
+};
+
 class MiscellaneousProxyException: public std::exception {
     virtual const char * what () const throw ()
     {

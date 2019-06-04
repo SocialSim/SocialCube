@@ -23,6 +23,9 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
     CascadeSequence cascade_sequence = m_statProxy.getCascadeSequence(t_infoId);
     vector<PostInfo> posts = m_statProxy.getCascadeSequence(t_infoId).getPosts();
 
+    // Get community distribution
+    unordered_map<string, double> communityDistribution = m_statProxy.getCommunityDistribution(t_infoId);
+
     cout << "start creating posts, post number = " << posts.size() << endl;
 
     //vector<PostInfo> posts;
@@ -40,8 +43,20 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
             post_event = unique_ptr<Event>(new Event(root_user_id, root_node_id, "post",
                                                      root_node_id, root_node_id, root_timestamp));
 
-            // Randomly generate community
-            post_event->setCommunityID("random_community");
+            // Select community id
+            string community_id;
+
+            double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+            double sum = 0;
+            for (auto &iter : communityDistribution) {
+                sum += iter.second;
+                if (randnum <= sum) {
+                    community_id = iter.first;
+                    break;
+                }
+            }
+
+            post_event->setCommunityID(community_id);
             post_event->setInfoID(t_infoId);
 
             events.push_back(move(post_event));
