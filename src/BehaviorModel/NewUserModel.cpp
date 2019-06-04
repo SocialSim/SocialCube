@@ -80,6 +80,9 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             time_t timestamp = c.second;
             string parent_node_id;
 
+            if (timestamp >= t_startTime && timestamp <= t_endTime) {
+                continue;
+            }
 
             if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"]) {
                 user_id = m_statProxy.getUserByInfoID(t_infoId);
