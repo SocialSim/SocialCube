@@ -43,8 +43,14 @@ void DailyActivityLevelProxy::parse() {
           *    }
           *}
           */
+        /*
+         *cout << "str_activityLevels: " << str_activityLevels << endl;
+         */
         while (ss.good()) {
             getline(ss, item, ',');
+            /*
+             *cout << "item: " << item << endl;
+             */
             m_dailyActivityLevels[userID]->addActivityLevel(stod(item));
         }
     }

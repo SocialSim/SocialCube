@@ -30,6 +30,7 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
     }
 
     for (int i = 0; i <= endHour - startHour; i++) {
+        cout << "hour = " << i << ", ActivityLevel = " << hourlyActivityLevel.getActivityLevel(i) << endl;
         for (int j = 0; j < hourlyActivityLevel.getActivityLevel(i); j++) {
             string repoID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getRepoPreference(t_id));
             string userID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getUserPreference(repoID));
@@ -38,7 +39,7 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
             int minutes = rand() % 60;
             int seconds = rand() % 60;
 
-            time_t eventTime = currentTime + minutes * 60 + seconds;
+            time_t eventTime = currentTime + (i * 60 + minutes) * 60 + seconds;
 
             unique_ptr<Event> event(new Event(userID, repoID, actionType, eventTime));
             event->setPlatform("github");
