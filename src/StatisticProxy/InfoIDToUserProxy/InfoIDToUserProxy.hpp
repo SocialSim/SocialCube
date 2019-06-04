@@ -31,6 +31,8 @@ public:
 
     std::unordered_map<std::string, double> get(const std::string& infoID);
 
+    std::string getUserByInfoID(const std::string& infoID);
+
 };
 
 #endif

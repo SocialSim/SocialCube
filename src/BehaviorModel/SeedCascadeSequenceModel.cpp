@@ -32,7 +32,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
 
     // Create post/tweet event
     for (PostInfo p : posts) {
-        cout << "in the posts loop" << endl;
         string root_node_id = p.getPostId();
         string root_user_id = p.getUserId();
         time_t root_timestamp = p.getPostTimestamp();
@@ -68,7 +67,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
 
         // Generate each comment/reply
         for (pair<string, time_t> c : comments) {
-            cout << "in the comments loop" << endl;
             // Generate user_id
             string user_id;
             // Current comment number
@@ -92,8 +90,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
                 user_id = t_scoreMatrix.getOutUser(pre_user_list);
             }
 
-            cout << "Finish generating user_id" << endl;
-
             // Generate parent_id
             unique_ptr <Event> event;
             string node_id = generateNodeId();
@@ -103,7 +99,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
 
             if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"]) {
                 // parent_id = root_node_id
-                cout << "randnum < ratio_root" << endl;
                 event = unique_ptr<Event>(new Event(user_id, node_id, action_type, root_node_id, root_node_id));
 
                 event->setCommunityID("random_community");
@@ -112,10 +107,8 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
                 user_comments.push_back(std::make_pair(user_id, move(event)));
             } else {
                 // parent_id != root_node_id
-                cout << "user_id: " << user_id << endl;
                 CommentProbability comment_prob = m_statProxy.getCommentProbability(user_id);
                 vector <std::pair<string, double>> commentProbability = comment_prob.getCommentProb();
-                cout << "commentProbability size = " << commentProbability.size() << endl;
 //
 //                if (user_comments.size() == 0) {
 //                    parent_node_id = root_node_id;
@@ -136,14 +129,11 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
                 if (parent_candidates.size() == 0) {
                     if (user_comments.size() == 0) {
                         parent_node_id = root_node_id;
-                        cout << "parent_node_id = root_node_id, user_comments.size() == 0" << endl;
                     } else {
                         int randnum = rand() % user_comments.size();
                         parent_node_id = user_comments[randnum].second->getObjectID();
-                        cout << "parent_node_id = user_comments[randnum].second->getObjectID();" << endl;
                     }
                 } else if (parent_candidates.count("[root]")) {
-                    cout << "parent_candidates.count(\"[root]\")" << endl;
                     parent_node_id = root_node_id;
                 } else {
                     double sum = 0;
@@ -155,7 +145,6 @@ vector<unique_ptr<Event>> SeedCascadeSequenceModel::evaluate(const std::string t
                     for (auto &iter : parent_candidates) {
                         randnum_sum += iter.second / sum;
                         if (randnum <= randnum_sum) {
-                            cout << "choose one from parent_candidates" << endl;
                             parent_node_id = iter.first;
                         }
                     }

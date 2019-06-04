@@ -28,6 +28,8 @@
 #include "StatisticProxy/PostLifespanDistributionProxy/PostLifespanDistributionProxy.hpp"
 #include "StatisticProxy/ScoreMatrixProxy/ScoreMatrixProxy.hpp"
 #include "StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp"
+#include "StatisticProxy/InfoIDToUserProxy/InfoIDToUserProxy.hpp"
+#include "StatisticProxy/TopologyProxy/TopologyProxy.hpp"
 #include "StatisticProxy/MiscellaneousProxy/MiscellaneousProxy.hpp"
 #include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
 #include "StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.hpp"
@@ -56,6 +58,8 @@ class StatisticProxy {
         std::string m_defaultPostLifespanDistributionProxyFile;
         std::string m_defaultScoreMatrixProxyFile;
         std::string m_defaultCommunityDistributionProxyFile;
+        std::string m_defaultInfoIDToUserProxyFile;
+        std::string m_defaultTopologyProxyFile;
         std::string m_defaultMiscellaneousProxyFile;
         std::string m_defaultInactiveUserFile;
         std::string m_defaultSeedEventsProxyFile;
@@ -85,6 +89,8 @@ class StatisticProxy {
         std::unique_ptr<PostLifespanDistributionProxy> m_postLifespanDistributionProxy;
         std::unique_ptr<ScoreMatrixProxy> m_scoreMatrixProxy;
         std::unique_ptr<CommunityDistributionProxy> m_communityDistributionProxy;
+        std::unique_ptr<InfoIDToUserProxy> m_infoIDToUserProxy;
+        std::unique_ptr<TopologyProxy> m_topologyProxy;
         std::unique_ptr<MiscellaneousProxy> m_miscellaneousProxy;
         std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
         std::unique_ptr<SeedInfoIDProxy> m_seedInfoIDProxy;
@@ -123,6 +129,8 @@ class StatisticProxy {
         void parsePostLifespanDistribution();
         void parseScoreMatrix();
         void parseCommunityDistribution();
+        void parseInfoIDToUser();
+        void parseTopology();
         void parseMiscellaneous();
         void parseSeedEvents();
         void parseSeedInfoID();
@@ -148,6 +156,8 @@ class StatisticProxy {
         void setScoreMatrixProxyFilePath(std::string scoreMatrixProxyFilePath);
         void setInactiveUserFilePath(std::string inactiveUserFilePath);
         void setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath);
+        void setTopologyProxyFilePath(std::string topologyFilePath);
+        void setInfoIDToUserProxyFilePath(std::string infoIDToUserFilePath);
         void setMiscellaneousProxyFilePath(std::string miscellaneousFilePath);
         void setSeedEventsFilePath(std::string seedEventsFilePath);
         void setSeedInfoIDFilePath(std::string seedInfoIDFilePath);
@@ -197,6 +207,10 @@ class StatisticProxy {
         PostLifespanDistribution& getPostLifespanDistribution(const std::string &userID) const;
 
         std::unordered_map<std::string, double> getCommunityDistribution(const std::string &userID) const;
+
+        std::string getUserByInfoID(const std::string& infoID) const;
+
+        std::string getUserByTopology(const std::string& userID) const;
 
         std::vector<Event> getSeedEvents(std::string t_user_id) const;
 

@@ -12,6 +12,7 @@
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/SeedEmbeddingCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/SeedCascadeSequenceUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/NewUserAgent.hpp"
 #include "Agent/UserAgent/GithubAgent/SeedGithubUserAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/SimpleGithubObjectAgent.hpp"
 #include "Agent/ObjectAgent/GithubAgent/IntegratedPointProcessObjectAgent.hpp"

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <cassert>
 #include <cstdlib>
+
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
 #include "Log/Log.hpp"
@@ -30,6 +31,8 @@ public:
     virtual void show();
 
     std::unordered_map<std::string, double> get(const std::string& userID);
+
+    std::string getUserByTopology(const std::string& userID);
 
 };
 

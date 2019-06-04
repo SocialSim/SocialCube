@@ -24,18 +24,24 @@ CommunityDistributionProxy::~CommunityDistributionProxy() {
 void CommunityDistributionProxy::parse() {
     string tmp;
     while (getline(m_communityDistributionStatisticFile, tmp)) {
-        string userID = tmp.substr(0, tmp.find(" "));
-        string probabilities = tmp.substr(tmp.find(" ") + 1);
+        string userID = tmp.substr(0, tmp.find(","));
+        string probabilities = tmp.substr(tmp.find(",") + 1);
         unordered_map<string, double> userCommunityDistribution;
 
         string community_id;
         string prob;
 
         istringstream in(probabilities);
-        while (in >> community_id) {
-            in >> prob;
+//        while (in >> community_id) {
+//            in >> prob;
+//            userCommunityDistribution.insert(std::make_pair<string, double>((string)community_id, stod(prob)));
+//        }
+        while (in.good()) {
+            getline(in, community_id, ',');
+            getline(in, prob, ',');
             userCommunityDistribution.insert(std::make_pair<string, double>((string)community_id, stod(prob)));
         }
+
         m_userCommunityDistributions[userID] = userCommunityDistribution;
     }
 }

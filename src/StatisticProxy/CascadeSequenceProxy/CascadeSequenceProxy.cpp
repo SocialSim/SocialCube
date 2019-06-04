@@ -44,7 +44,6 @@ void CascadeSequenceProxy::parse() {
 
         CascadeSequence& cs = m_cascadeSequences.find(infoId)->second;
         cs.pushPost(postId, userId, parseTime(str_timestamp));
-        cout << "PushPost, infoId: " << infoId << ", postId: " << postId << ", userId: " << userId << ", timestamp: " << str_timestamp << endl;
 
         string action_type;
 

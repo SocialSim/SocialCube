@@ -56,6 +56,10 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setSeedInfoIDFilePath(filePath);
     } else if (fileName == "cascadeSequenceProxyFile") {
         m_statProxy.setCascadeSequenceProxyFilePath(filePath);
+    } else if (fileName == "infoIDToUserProxyFile") {
+        m_statProxy.setInfoIDToUserProxyFilePath(filePath);
+    } else if (fileName == "topologyProxyFile") {
+        m_statProxy.setTopologyProxyFilePath(filePath);
     }
 
     // 10 event type user distribution proxy files
@@ -223,6 +227,17 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseCascadeSequence();
         m_statProxy.parseCommentProbability();
         m_statProxy.parseScoreMatrix();
+        m_statProxy.parseMiscellaneous();
+        buildInfoIDUsersWithCascadeSequence();
+    }
+    // NewUser Model
+    else if (std::is_same<TUserAgent, NewUserAgent>::value && \
+    std::is_same<TObjectAgent, SimpleGithubObjectAgent>::value) {
+        m_statProxy.parseSeedInfoID();
+        m_statProxy.parseCascadeSequence();
+        m_statProxy.parseInfoIDToUser();
+        m_statProxy.parseTopology();
+        m_statProxy.parseCommunityDistribution();
         m_statProxy.parseMiscellaneous();
         buildInfoIDUsersWithCascadeSequence();
     }

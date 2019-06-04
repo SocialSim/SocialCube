@@ -33,6 +33,7 @@ void MiscellaneousProxy::parse() {
             if (pos != std::string::npos) {
                 string key = line.substr(0, pos);
                 string value = line.substr(pos + delimiter.length(), line.length());
+                cout << "key = " << key <<  ", value = " << value << endl;
                 if (name == "Quartile") {
                     if (key == "first") {
                         m_quartile[0] = stod(value);
@@ -50,6 +51,7 @@ void MiscellaneousProxy::parse() {
                         m_embeddingParams["ratio_del"] = stod(value);
                     } else if (key == "ratio_root") {
                         m_embeddingParams["ratio_root"] = stod(value);
+                        cout << "ratio_root = " << m_embeddingParams["ratio_root"] << endl;
                     } else if (key == "top_k") {
                         m_embeddingParams["top_k"] = stod(value);
                     }

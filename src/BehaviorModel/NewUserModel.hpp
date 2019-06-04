@@ -18,11 +18,7 @@ private:
 
     ~NewUserModel();
 
-    static std::string chooseTarget(const ObjectPreference& t_objectPreference);
-
-    static std::string chooseAction(const TypeDistribution& t_typeDistribution);
-
-    static int convertISOtoHour(time_t t_currentTime);
+    static std::string generateNodeId();
 
 public:
 

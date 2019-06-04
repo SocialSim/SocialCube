@@ -29,6 +29,7 @@ OBJS := $(OBJS) IntegratedPoissonProcessObjectAgent.o
 OBJS := $(OBJS) PoissonProcessObjectAgent.o
 OBJS := $(OBJS) CascadeUserAgent.o
 OBJS := $(OBJS) SeedCascadeUserAgent.o
+OBJS := $(OBJS) NewUserAgent.o
 OBJS := $(OBJS) EmbeddingCascadeUserAgent.o
 OBJS := $(OBJS) SeedEmbeddingCascadeUserAgent.o
 OBJS := $(OBJS) SeedCascadeSequenceUserAgent.o
@@ -36,6 +37,7 @@ OBJS := $(OBJS) EmbeddingCascadeModel.o
 OBJS := $(OBJS) SimpleBehaviorModel.o
 OBJS := $(OBJS) SeedHourlySimpleBehaviorModel.o
 OBJS := $(OBJS) SeedCascadeSequenceModel.o
+OBJS := $(OBJS) NewUserModel.o
 OBJS := $(OBJS) DailySimpleBehaviorModel.o
 OBJS := $(OBJS) PointProcessModel.o
 OBJS := $(OBJS) IntegratedPointProcessModel.o
@@ -136,6 +138,9 @@ PoissonProcessObjectAgent.o:	./Agent/ObjectAgent/GithubAgent/PoissonProcessObjec
 CascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/CascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/CascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
+NewUserAgent.o:	./Agent/UserAgent/CascadeAgent/NewUserAgent.cpp ./Agent/UserAgent/CascadeAgent/NewUserAgent.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
 SeedCascadeUserAgent.o:	./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.cpp ./Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
@@ -155,6 +160,9 @@ SeedHourlySimpleBehaviorModel.o:	./BehaviorModel/SeedHourlySimpleBehaviorModel.c
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 SeedCascadeSequenceModel.o:	./BehaviorModel/SeedCascadeSequenceModel.cpp ./BehaviorModel/SeedCascadeSequenceModel.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+NewUserModel.o:	./BehaviorModel/NewUserModel.cpp ./BehaviorModel/NewUserModel.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 DailySimpleBehaviorModel.o:	./BehaviorModel/DailySimpleBehaviorModel.cpp ./BehaviorModel/DailySimpleBehaviorModel.hpp

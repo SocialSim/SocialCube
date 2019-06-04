@@ -22,21 +22,45 @@ InfoIDToUserProxy::~InfoIDToUserProxy() {
 }
 
 void InfoIDToUserProxy::parse() {
+//    string tmp;
+//    while (getline(m_infoIDToUserStatisticFile, tmp)) {
+//        string infoID = tmp.substr(0, tmp.find(","));
+//        string probabilities = tmp.substr(tmp.find(",") + 1);
+//        unordered_map<string, double> infoIDToUserDistribution;
+//
+//        string user_id;
+//        string prob;
+//
+//        istringstream in(probabilities);
+//
+////        while (in >> user_id) {
+////            in >> prob;
+////            infoIDToUserDistribution.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
+////        }
+//
+//        while (in.good()) {
+//            getline(in, user_id, ',');
+//            getline(in, prob, ',');
+//            infoIDToUserDistribution.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
+//        }
+//
+//        m_infoIDToUser[infoID] = infoIDToUserDistribution;
+//    }
     string tmp;
     while (getline(m_infoIDToUserStatisticFile, tmp)) {
-        string infoID = tmp.substr(0, tmp.find(" "));
-        string probabilities = tmp.substr(tmp.find(" ") + 1);
+        string infoID = tmp.substr(0, tmp.find(","));
+        string preferenceCount = tmp.substr(tmp.find(",") + 1);
         unordered_map<string, double> infoIDToUserDistribution;
 
-        string user_id;
-        string prob;
-
-        istringstream in(probabilities);
-        while (in >> user_id) {
-            in >> prob;
+        for(int i = 0; i < stoi(preferenceCount); ++i) {
+            getline(m_infoIDToUserStatisticFile, tmp);
+            string user_id = tmp.substr(0, tmp.find(","));
+            string prob = tmp.substr(tmp.find(",") + 1);
             infoIDToUserDistribution.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
         }
-        m_infoIDToUser[infoID] = infoIDToUserDistribution;
+
+        if(stoi(preferenceCount) != 0)
+            m_infoIDToUser[infoID] = infoIDToUserDistribution;
     }
 }
 
@@ -46,5 +70,20 @@ void InfoIDToUserProxy::show() {
 
 unordered_map<string, double> InfoIDToUserProxy::get(const std::string& infoID) {
     return m_infoIDToUser[infoID];
+}
+
+string InfoIDToUserProxy::getUserByInfoID(const std::string &infoID) {
+    string selected_user;
+
+    double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+    double sum = 0;
+    for (auto &iter : m_infoIDToUser[infoID]) {
+        sum += iter.second;
+        if (randnum <= sum) {
+            selected_user = iter.first;
+            break;
+        }
+    }
+    return selected_user;
 }
 

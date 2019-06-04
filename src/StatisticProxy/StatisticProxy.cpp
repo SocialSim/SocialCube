@@ -147,6 +147,18 @@ void StatisticProxy::parseCommunityDistribution() {
     m_communityDistributionProxy->parse();
 }
 
+void StatisticProxy::parseInfoIDToUser() {
+    DBG(LOGD(TAG, "\ninfoIDToUserProxyFile: " + m_defaultInfoIDToUserProxyFile);)
+    m_infoIDToUserProxy.reset(new InfoIDToUserProxy(m_defaultInfoIDToUserProxyFile));
+    m_infoIDToUserProxy->parse();
+}
+
+void StatisticProxy::parseTopology() {
+    DBG(LOGD(TAG, "\ntopologyProxyFile: " + m_defaultTopologyProxyFile);)
+    m_topologyProxy.reset(new TopologyProxy(m_defaultTopologyProxyFile));
+    m_topologyProxy->parse();
+}
+
 void StatisticProxy::parseMiscellaneous() {
     DBG(LOGD(TAG, "\nmiscellaneousProxyFile: " + m_defaultMiscellaneousProxyFile);)
     m_miscellaneousProxy.reset(new MiscellaneousProxy(m_defaultMiscellaneousProxyFile));
@@ -238,6 +250,14 @@ PostLifespanDistribution& StatisticProxy::getPostLifespanDistribution(const std:
 
 unordered_map<string, double> StatisticProxy::getCommunityDistribution(const std::string &userID) const {
     return m_communityDistributionProxy->get(userID);
+}
+
+string StatisticProxy::getUserByInfoID(const std::string& infoID) const {
+    return m_infoIDToUserProxy->getUserByInfoID(infoID);
+}
+
+string StatisticProxy::getUserByTopology(const std::string &userID) const {
+    return m_topologyProxy->getUserByTopology(userID);
 }
 
 unordered_map<string, double> StatisticProxy::getActionTypeDistribution() const {
@@ -372,6 +392,14 @@ void StatisticProxy::setCommentProbabilityProxyFilePath(std::string commentProba
 
 void StatisticProxy::setCommunityDistributionProxyFilePath(std::string communityDistributionFilePath) {
     m_defaultCommunityDistributionProxyFile = communityDistributionFilePath;
+}
+
+void StatisticProxy::setInfoIDToUserProxyFilePath(std::string infoIDToUserFilePath) {
+    m_defaultInfoIDToUserProxyFile = infoIDToUserFilePath;
+}
+
+void StatisticProxy::setTopologyProxyFilePath(std::string topologyFilePath) {
+    m_defaultTopologyProxyFile = topologyFilePath;
 }
 
 void StatisticProxy::setMiscellaneousProxyFilePath(std::string miscellaneousFilePath) {

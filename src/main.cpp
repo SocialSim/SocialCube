@@ -19,6 +19,7 @@
 #include "Agent/UserAgent/CascadeAgent/SeedCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/EmbeddingCascadeUserAgent.hpp"
 #include "Agent/UserAgent/CascadeAgent/SeedCascadeSequenceUserAgent.hpp"
+#include "Agent/UserAgent/CascadeAgent/NewUserAgent.hpp"
 #include "ArgParser/ArgParser.hpp"
 
 int main(int argc, const char* argv[]) {
@@ -345,7 +346,32 @@ int main(int argc, const char* argv[]) {
                 }
                 cout << "start simulate" << endl;
                 s.simulate();
-            } else {
+            } else if (builderType == "NewUserModel") {
+                EventBasedSimulator s;
+                s.setStartTime(args.getSimulationStartTime());
+                s.setEndTime(args.getSimulationEndTime());
+                s.setUnitTime(args.getSimulationUnitTime());
+
+                AgentBuilder<NewUserAgent, SimpleGithubObjectAgent> builder(args.getDefaultFilePath());
+                for (auto &iter : filePaths) {
+                    cout << iter.first << ", " << iter.second << endl;
+                    builder.setFilePath(iter.first, iter.second);
+                }
+                filePaths.clear();
+                std::vector <std::shared_ptr<NewUserAgent>> agentList;
+                builder.build();
+
+                cout << "finish build" <<endl;
+                agentList = builder.getUserAgentList();
+                cout << "agentList size = " << agentList.size() << endl;
+                for (auto &iter : agentList) {
+                    s.addUserAgent(iter.get());
+                }
+                cout << "start simulate" << endl;
+                s.simulate();
+            }
+
+            else {
                 std::cout << "Unsupported model type" << std::endl;
             }
         }
