@@ -80,7 +80,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             time_t timestamp = c.second;
             string parent_node_id;
 
-            if (timestamp >= t_startTime && timestamp <= t_endTime) {
+            if (timestamp <= t_startTime && timestamp >= t_endTime) {
                 continue;
             }
 
