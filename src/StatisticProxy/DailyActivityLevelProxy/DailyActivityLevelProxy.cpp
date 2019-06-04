@@ -24,14 +24,14 @@ DailyActivityLevelProxy::~DailyActivityLevelProxy() {
 void DailyActivityLevelProxy::parse() {
     string tmp;
     while (getline(m_dailyActivityLevelStatisticFile, tmp)) {
-        string userID = tmp.substr(0, tmp.find(" "));
+        string userID = tmp.substr(0, tmp.find(","));
 
         // m_dailyActivityLevels[userID] = new DailyActivityLevel(userID);
 
         m_dailyActivityLevels.insert(std::pair<string, unique_ptr<DailyActivityLevel>>(userID,
                 unique_ptr<DailyActivityLevel>(new DailyActivityLevel(userID))));
 
-        string str_activityLevels = tmp.substr(tmp.find(" "));
+        string str_activityLevels = tmp.substr(tmp.find(","));
         stringstream ss(str_activityLevels);
         string item;
         /*
