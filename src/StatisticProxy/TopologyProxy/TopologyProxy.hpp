@@ -34,6 +34,8 @@ public:
 
     std::string getUserByTopology(const std::string& userID);
 
+    int getNumberOfFollowersByTopology(const std::string& userID);
+
 };
 
 #endif

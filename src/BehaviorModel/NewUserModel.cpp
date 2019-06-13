@@ -18,7 +18,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
     // Use embeddingParams ratio_root
     unordered_map<string, double> embeddingParams = m_statProxy.getEmbeddingParams();
 
-    cout << "root_ratio: " << embeddingParams["ratio_root"] << endl;
+    cout << "ratio_root: " << embeddingParams["ratio_root"] << endl;
 
     vector<unique_ptr<Event>> events;
 
@@ -29,12 +29,12 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
     // Get community distribution
     unordered_map<string, double> communityDistribution = m_statProxy.getCommunityDistribution(t_infoId);
 
-
     //vector<PostInfo> posts;
 
     // Create post/tweet event
     for (PostInfo p : posts) {
         string root_node_id = p.getPostId();
+        //// root_user_id is determined by infoIDtoUserProxyFile.txt
         string root_user_id = m_statProxy.getUserByInfoID(t_infoId);
         time_t root_timestamp = p.getPostTimestamp();
 
@@ -65,10 +65,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
 
         vector<pair<string, time_t>> comments = p.getCommentSequence();
 
-        vector<pair<string, unique_ptr<Event>>> user_comments;
-
-        vector<string> previous_users;
-        previous_users.push_back(root_user_id);
+        unordered_map<string, string> user_comments;
 
         // Generate each comment/reply
         for (pair<string, time_t> c : comments) {
@@ -84,15 +81,31 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
                 continue;
             }
 
-            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"]) {
-                user_id = m_statProxy.getUserByInfoID(t_infoId);
-                event = unique_ptr<Event>(new Event(user_id, node_id, action_type, root_node_id, root_node_id));
-                event->setTime(timestamp);
+            //// Determine parent_id
+            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"] ||
+                    user_comments.size() == 0) {
+                parent_node_id = root_node_id;
             } else {
-                string last_user = previous_users.back();
-                user_id = m_statProxy.getUserByTopology(last_user);
-                event = unique_ptr<Event>(new Event(user_id, node_id, action_type, last_user, root_node_id));
-                event->setTime(timestamp);
+                int sum_of_followers = 0;
+                for (const auto &comment : user_comments) {
+                    sum_of_followers += m_statProxy.getNumberOfFollowersByTopology(comment.first);
+                }
+                int roll = rand() % sum_of_followers;
+                int sum = 0;
+                for (const auto &comment : user_comments) {
+                    sum += m_statProxy.getNumberOfFollowersByTopology(comment.first);
+                    if (sum >= roll) {
+                        parent_node_id = comment.second;
+                        break;
+                    }
+                }
+            }
+
+            //// Determine user_id
+            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_infoIDToUser"]) {
+                user_id = m_statProxy.getUserByInfoID(t_infoId);
+            } else {
+                user_id = m_statProxy.getUserByTopology(parent_node_id);
             }
 
             // Select community id
@@ -108,12 +121,14 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
                 }
             }
 
+            // Generate this comment event
+            event = unique_ptr<Event>(new Event(user_id, node_id, action_type, parent_node_id, root_node_id));
+            event->setTime(timestamp);
             event->setCommunityID(community_id);
             event->setInfoID(t_infoId);
 
             events.push_back(move(event));
-            previous_users.push_back(user_id);
-
+            user_comments[user_id] = node_id;
         }
     }
 

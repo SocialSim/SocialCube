@@ -212,6 +212,8 @@ class StatisticProxy {
 
         std::string getUserByTopology(const std::string& userID) const;
 
+        int getNumberOfFollowersByTopology(const std::string& userID) const;
+
         std::vector<Event> getSeedEvents(std::string t_user_id) const;
 
         bool checkInfoIDInCascadeSequence(std::string t_infoID) const;

@@ -54,6 +54,8 @@ void MiscellaneousProxy::parse() {
                         cout << "ratio_root = " << m_embeddingParams["ratio_root"] << endl;
                     } else if (key == "top_k") {
                         m_embeddingParams["top_k"] = stod(value);
+                    } else if (key == "ratio_infoIDToUser") {
+                        m_embeddingParams["ratio_infoIDToUser"] = stod(value);
                     }
                 } else if (name == "PostHourDistribution") {
                     m_postHourDistribution.push_back(stod(value));

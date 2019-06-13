@@ -71,6 +71,11 @@ unordered_map<string, double> TopologyProxy::get(const std::string& userID) {
     return m_userCommentProbs[userID];
 }
 
+int TopologyProxy::getNumberOfFollowersByTopology(const std::string& userID) {
+    return m_userCommentProbs[userID].size();
+}
+
+
 string TopologyProxy::getUserByTopology(const std::string &userID) {
     string selected_user;
 

@@ -260,6 +260,10 @@ string StatisticProxy::getUserByTopology(const std::string &userID) const {
     return m_topologyProxy->getUserByTopology(userID);
 }
 
+int StatisticProxy::getNumberOfFollowersByTopology(const std::string& userID) const {
+    return m_topologyProxy->getNumberOfFollowersByTopology(userID);
+}
+
 unordered_map<string, double> StatisticProxy::getActionTypeDistribution() const {
     return m_miscellaneousProxy->getActionTypeDistribution();
 }
