@@ -23,14 +23,14 @@ ObjectPreferenceProxy::~ObjectPreferenceProxy() {
 void ObjectPreferenceProxy::parse() {
     string tmp;
     while (getline(m_objectPreferenceStatisticsFile, tmp)) {
-        string userID = tmp.substr(0, tmp.find(" "));
-        string preferenceCount = tmp.substr(tmp.find(" ") + 1);
+        string userID = tmp.substr(0, tmp.find(","));
+        string preferenceCount = tmp.substr(tmp.find(",") + 1);
         unique_ptr<ObjectPreference> objectPreference(new ObjectPreference(userID));
         double aggrPreference = 0.0;
         for(int i = 0; i < stoi(preferenceCount); ++i) {
             getline(m_objectPreferenceStatisticsFile, tmp);
-            string objectID = tmp.substr(0, tmp.find(" "));
-            double preference = stod(tmp.substr(tmp.find(" ") + 1));
+            string objectID = tmp.substr(0, tmp.find(","));
+            double preference = stod(tmp.substr(tmp.find(",") + 1));
             aggrPreference += preference;
             objectPreference->set(objectID, aggrPreference);
         }

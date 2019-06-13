@@ -23,16 +23,24 @@ TypeDistributionProxy::~TypeDistributionProxy() {
 void TypeDistributionProxy::parse() {
     string tmp;
     while (getline(m_typeDistributionFile, tmp)) {
-        string userID = tmp.substr(0, tmp.find(" "));
-        string distribution = tmp.substr(tmp.find(" ") + 1);
+        string userID = tmp.substr(0, tmp.find(","));
+        string distribution = tmp.substr(tmp.find(",") + 1);
         unique_ptr<TypeDistribution> typeDistribution(new TypeDistribution(userID));
 
-        istringstream in(distribution);
-        for(size_t j = 0; j < TypeDistribution::getActionCount(); ++j) {
-            double dist;
-            in >> dist;
-            typeDistribution->pushDist(dist);
+//        istringstream in(distribution);
+//        for(size_t j = 0; j < TypeDistribution::getActionCount(); ++j) {
+//            double dist;
+//            in >> dist;
+//            typeDistribution->pushDist(dist);
+//        }
+        stringstream ss(distribution);
+        string item;
+
+        while (ss.good()) {
+            getline(ss, item, ',');
+            typeDistribution->pushDist(stod(item));
         }
+
         m_typeDistribution[userID] = move(typeDistribution);
     }
     DBG(LOGD(TAG, "Type Distribution Rate has "+stringfy(m_typeDistribution.size()));)
