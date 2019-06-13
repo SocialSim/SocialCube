@@ -44,7 +44,7 @@ void MiscellaneousProxy::parse() {
                     }
                 } else if (name == "ActionTypeDistribution") {
                     m_actionTypeDistribution[key] = stof(value);
-                } else if (name == "EmbeddingParams") {
+                } else if (name == "CascadeParams") {
                     if (key == "ratio_unk") {
                         m_embeddingParams["ratio_unk"] = stod(value);
                     } else if (key == "ratio_del") {
