@@ -24,19 +24,19 @@ void CascadeSequenceProxy::parse() {
     string tmp;
     set<string> infoIds;
     while (getline(m_cascadeSequenceFile, tmp)) {
-        std::istringstream s(tmp);
+        istringstream in(tmp);
 
         string postId;
-        s >> postId;
+        getline(in, postId, ',');
 
         string infoId;
-        s >> infoId;
+        getline(in, infoId, ',');
 
         string userId;
-        s >> userId;
+        getline(in, userId, ',');
 
         string str_timestamp;
-        s >> str_timestamp;
+        getline(in, str_timestamp, ',');
 
         if (infoIds.find(infoId) == infoIds.end()) {
             m_cascadeSequences.insert(make_pair(infoId, CascadeSequence(infoId)));
@@ -47,8 +47,9 @@ void CascadeSequenceProxy::parse() {
 
         string action_type;
 
-        while (s >> action_type) {
-            s >> str_timestamp;
+        while (in.good()) {
+            getline(in, action_type, ',');
+            getline(in, str_timestamp, ',');
             cs.pushCommentAfterPost(postId, action_type, parseTime(str_timestamp));
         }
     }
