@@ -14,11 +14,11 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
                                                              time_t t_startTime,
                                                              time_t t_endTime) {
     StatisticProxy& m_statProxy = StatisticProxy::getInstance();
+        
+    cout << "t_infoId = " << t_infoId << endl;
 
     // Use embeddingParams ratio_root
     unordered_map<string, double> embeddingParams = m_statProxy.getEmbeddingParams();
-
-    cout << "ratio_root: " << embeddingParams["ratio_root"] << endl;
 
     vector<unique_ptr<Event>> events;
 
@@ -76,6 +76,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             string action_type = c.first;
             time_t timestamp = c.second;
             string parent_node_id;
+            string parent_user_id;
 
             if (timestamp <= t_startTime || timestamp >= t_endTime) {
                 continue;
@@ -85,6 +86,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_root"] ||
                     user_comments.size() == 0) {
                 parent_node_id = root_node_id;
+                parent_user_id = root_user_id;
             } else {
                 int sum_of_followers = 0;
                 for (const auto &comment : user_comments) {
@@ -96,6 +98,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
                     sum += m_statProxy.getNumberOfFollowersByTopology(comment.first);
                     if (sum >= roll) {
                         parent_node_id = comment.second;
+                        parent_user_id = comment.first;
                         break;
                     }
                 }
@@ -104,8 +107,10 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             //// Determine user_id
             if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_infoIDToUser"]) {
                 user_id = m_statProxy.getUserByInfoID(t_infoId);
+                cout << "m_statProxy.getUserByInfoID: " << user_id << endl;
             } else {
-                user_id = m_statProxy.getUserByTopology(parent_node_id);
+                user_id = m_statProxy.getUserByTopology(parent_user_id);
+                cout << "m_statProxy.getUserByTopology: " << user_id << ", parent_user_id: " << parent_user_id << endl;
             }
 
             // Select community id
@@ -123,6 +128,7 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
 
             // Generate this comment event
             event = unique_ptr<Event>(new Event(user_id, node_id, action_type, parent_node_id, root_node_id));
+            cout << user_id << ", " << node_id << ", " << action_type << ", " << parent_node_id << ", " << root_node_id << endl;
             event->setTime(timestamp);
             event->setCommunityID(community_id);
             event->setInfoID(t_infoId);

@@ -30,8 +30,12 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
     }
 
     for (int i = 0; i <= endHour - startHour; i++) {
-        cout << "hour = " << i << ", ActivityLevel = " << hourlyActivityLevel.getActivityLevel(i) << endl;
+        if (t_id.compare("CVE-2016-2216") == 0) {
+            cout << hourlyActivityLevel.getActivityLevel(i) << ",";
+        }
+
         for (int j = 0; j < hourlyActivityLevel.getActivityLevel(i); j++) {
+                       
             string repoID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getRepoPreference(t_id));
             string userID = SeedHourlySimpleBehaviorModel::chooseTarget(m_statProxy.getUserPreference(repoID));
             string actionType = SeedHourlySimpleBehaviorModel::chooseAction(m_statProxy.getUserTypeDistribution(repoID));
@@ -49,6 +53,8 @@ std::vector<unique_ptr<Event>> SeedHourlySimpleBehaviorModel::evaluate(const str
             events.push_back(move(event));
         }
     }
+    
+    cout << t_id << "," << events.size() << endl;
 
     return events;
 }

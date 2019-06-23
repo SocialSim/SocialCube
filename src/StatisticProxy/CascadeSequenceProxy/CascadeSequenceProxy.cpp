@@ -37,6 +37,7 @@ void CascadeSequenceProxy::parse() {
 
         string str_timestamp;
         getline(in, str_timestamp, ',');
+        cout << postId << ", " << infoId << ", " << userId << ", " << str_timestamp << endl;
 
         if (infoIds.find(infoId) == infoIds.end()) {
             m_cascadeSequences.insert(make_pair(infoId, CascadeSequence(infoId)));
@@ -50,6 +51,7 @@ void CascadeSequenceProxy::parse() {
         while (in.good()) {
             getline(in, action_type, ',');
             getline(in, str_timestamp, ',');
+            cout << action_type << ", " << str_timestamp << endl;
             cs.pushCommentAfterPost(postId, action_type, parseTime(str_timestamp));
         }
     }
