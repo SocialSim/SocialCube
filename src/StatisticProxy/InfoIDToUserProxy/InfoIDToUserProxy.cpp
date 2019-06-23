@@ -22,30 +22,6 @@ InfoIDToUserProxy::~InfoIDToUserProxy() {
 }
 
 void InfoIDToUserProxy::parse() {
-//    string tmp;
-//    while (getline(m_infoIDToUserStatisticFile, tmp)) {
-//        string infoID = tmp.substr(0, tmp.find(","));
-//        string probabilities = tmp.substr(tmp.find(",") + 1);
-//        unordered_map<string, double> infoIDToUserDistribution;
-//
-//        string user_id;
-//        string prob;
-//
-//        istringstream in(probabilities);
-//
-////        while (in >> user_id) {
-////            in >> prob;
-////            infoIDToUserDistribution.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
-////        }
-//
-//        while (in.good()) {
-//            getline(in, user_id, ',');
-//            getline(in, prob, ',');
-//            infoIDToUserDistribution.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
-//        }
-//
-//        m_infoIDToUser[infoID] = infoIDToUserDistribution;
-//    }
     string tmp;
     while (getline(m_infoIDToUserStatisticFile, tmp)) {
         string infoID = tmp.substr(0, tmp.find(","));

@@ -9,7 +9,6 @@
 #include <fstream>
 #include <cassert>
 #include <cstdlib>
-
 #include "StatisticProxy/ProxyModule.hpp"
 #include "common/Exception.hpp"
 #include "Log/Log.hpp"

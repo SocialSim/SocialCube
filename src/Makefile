@@ -74,6 +74,7 @@ OBJS := $(OBJS) ClusteredUserIDProxy.o
 OBJS := $(OBJS) PostScaleProxy.o
 OBJS := $(OBJS) CommentProbabilityProxy.o
 OBJS := $(OBJS) CommunityDistributionProxy.o
+OBJS := $(OBJS) UserEventNumberProxy.o
 OBJS := $(OBJS) InfoIDToUserProxy.o
 OBJS := $(OBJS) TopologyProxy.o
 OBJS := $(OBJS) MiscellaneousProxy.o
@@ -283,6 +284,9 @@ CommentProbabilityProxy.o:	./StatisticProxy/CommentProbabilityProxy/CommentProba
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 CommunityDistributionProxy.o:	./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.cpp ./StatisticProxy/CommunityDistributionProxy/CommunityDistributionProxy.hpp
+	$(CXX) -c $(CXX_FLAGS) $< -o $@
+
+UserEventNumberProxy.o:	./StatisticProxy/UserEventNumberProxy/UserEventNumberProxy.cpp ./StatisticProxy/UserEventNumberProxy/UserEventNumberProxy.hpp
 	$(CXX) -c $(CXX_FLAGS) $< -o $@
 
 InfoIDToUserProxy.o:	./StatisticProxy/InfoIDToUserProxy/InfoIDToUserProxy.cpp ./StatisticProxy/InfoIDToUserProxy/InfoIDToUserProxy.hpp

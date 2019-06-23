@@ -105,13 +105,14 @@ vector<unique_ptr<Event>> NewUserModel::evaluate(const std::string t_infoId,
             }
 
             //// Determine user_id
-            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_infoIDToUser"]) {
-                user_id = m_statProxy.getUserByInfoID(t_infoId);
-                cout << "m_statProxy.getUserByInfoID: " << user_id << endl;
-            } else {
-                user_id = m_statProxy.getUserByTopology(parent_user_id);
-                cout << "m_statProxy.getUserByTopology: " << user_id << ", parent_user_id: " << parent_user_id << endl;
-            }
+//            if (static_cast <double> (rand()) / static_cast <double> (RAND_MAX) < embeddingParams["ratio_infoIDToUser"]) {
+//                user_id = m_statProxy.getUserByInfoID(t_infoId);
+//                cout << "m_statProxy.getUserByInfoID: " << user_id << endl;
+//            } else {
+//                user_id = m_statProxy.getUserByTopology(parent_user_id);
+//                cout << "m_statProxy.getUserByTopology: " << user_id << ", parent_user_id: " << parent_user_id << endl;
+//            }
+            user_id = m_statProxy.getUserByTopology(parent_user_id, t_infoId);
 
             // Select community id
             string community_id;

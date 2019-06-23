@@ -60,6 +60,8 @@ void AgentBuilder<TUserAgent, TObjectAgent>::setFilePath(const std::string fileN
         m_statProxy.setInfoIDToUserProxyFilePath(filePath);
     } else if (fileName == "topologyProxyFile") {
         m_statProxy.setTopologyProxyFilePath(filePath);
+    } else if (fileName == "userEventNumberProxyFile") {
+        m_statProxy.setUserEventNumberProxyFilePath(filePath);
     }
 
     // 10 event type user distribution proxy files
@@ -237,6 +239,7 @@ void AgentBuilder<TUserAgent, TObjectAgent>::build() {
         m_statProxy.parseCascadeSequence();
         m_statProxy.parseInfoIDToUser();
         m_statProxy.parseTopology();
+        m_statProxy.parseUserEventNumber();
         m_statProxy.parseCommunityDistribution();
         m_statProxy.parseMiscellaneous();
         buildInfoIDUsersWithCascadeSequence();

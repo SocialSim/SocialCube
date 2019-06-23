@@ -34,6 +34,7 @@
 #include "StatisticProxy/SeedEventsProxy/SeedEventsProxy.hpp"
 #include "StatisticProxy/SeedInfoIDProxy/SeedInfoIDProxy.hpp"
 #include "StatisticProxy/CascadeSequenceProxy/CascadeSequenceProxy.hpp"
+#include "StatisticProxy/UserEventNumberProxy/UserEventNumberProxy.hpp"
 
 class StatisticProxy {
     private:
@@ -65,6 +66,7 @@ class StatisticProxy {
         std::string m_defaultSeedEventsProxyFile;
         std::string m_defaultSeedInfoIDProxyFile;
         std::string m_defaultCascadeSequenceProxyFile;
+        std::string m_defaultUserEventNumberProxyFile;
 
         std::unordered_map<std::string, std::string> m_defaultClassifiedUserDistributionProxyFiles;
 
@@ -95,6 +97,7 @@ class StatisticProxy {
         std::unique_ptr<SeedEventsProxy> m_seedEventsProxy;
         std::unique_ptr<SeedInfoIDProxy> m_seedInfoIDProxy;
         std::unique_ptr<CascadeSequenceProxy> m_cascadeSequenceProxy;
+        std::unique_ptr<UserEventNumberProxy> m_userEventNumberProxy;
 
         std::unordered_map<std::string, std::unique_ptr<UserDistributionProxy>> m_classifiedUserDistributionProxies;
 
@@ -135,6 +138,7 @@ class StatisticProxy {
         void parseSeedEvents();
         void parseSeedInfoID();
         void parseCascadeSequence();
+        void parseUserEventNumber();
 
         void setUserIDProxyFilePath(std::string userIDProxyFilePath);
         void setObjectIDProxyFilePath(std::string objectIDProxyFilePath);
@@ -162,6 +166,7 @@ class StatisticProxy {
         void setSeedEventsFilePath(std::string seedEventsFilePath);
         void setSeedInfoIDFilePath(std::string seedInfoIDFilePath);
         void setCascadeSequenceProxyFilePath(std::string cascadeSequenceProxyFilePath);
+        void setUserEventNumberProxyFilePath(std::string userEventNumberProxyFilePath);
 
         void setClassifiedUserDistributionProxyFiles(std::string eventType, std::string path);
 
@@ -210,7 +215,7 @@ class StatisticProxy {
 
         std::string getUserByInfoID(const std::string& infoID) const;
 
-        std::string getUserByTopology(const std::string& userID) const;
+        std::string getUserByTopology(const std::string& userID, const std::string& infoID) const;
 
         int getNumberOfFollowersByTopology(const std::string& userID) const;
 

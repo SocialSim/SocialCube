@@ -159,6 +159,12 @@ void StatisticProxy::parseTopology() {
     m_topologyProxy->parse();
 }
 
+void StatisticProxy::parseUserEventNumber() {
+    DBG(LOGD(TAG, "\nuserEventNumberProxyFile: " + m_defaultUserEventNumberProxyFile);)
+    m_userEventNumberProxy.reset(new UserEventNumberProxy(m_defaultUserEventNumberProxyFile));
+    m_userEventNumberProxy->parse();
+}
+
 void StatisticProxy::parseMiscellaneous() {
     DBG(LOGD(TAG, "\nmiscellaneousProxyFile: " + m_defaultMiscellaneousProxyFile);)
     m_miscellaneousProxy.reset(new MiscellaneousProxy(m_defaultMiscellaneousProxyFile));
@@ -253,11 +259,71 @@ unordered_map<string, double> StatisticProxy::getCommunityDistribution(const std
 }
 
 string StatisticProxy::getUserByInfoID(const std::string& infoID) const {
-    return m_infoIDToUserProxy->getUserByInfoID(infoID);
+    unordered_map<string, double> info_id_to_users = m_infoIDToUserProxy->get(infoID);
+
+    string selected_user;
+    vector<string> candidates;
+    double candidate_probs = 0;
+    for (auto &iter : info_id_to_users) {
+        if (m_userEventNumberProxy->getEventNumber(iter.first) > 0) {
+            candidates.push_back(iter.first);
+            candidate_probs += iter.second;
+        }
+    }
+
+    if (candidates.size() == 0) {
+        return m_userEventNumberProxy->randomlyChooseUser();
+    } else {
+        double randnum = static_cast <double> (rand()) / candidate_probs;
+
+        double sum = 0;
+        for (auto &iter : info_id_to_users) {
+            if (find(candidates.begin(), candidates.end(), iter.first) != candidates.end()) {
+                sum += iter.second;
+            }
+            if (randnum <= sum) {
+                selected_user = iter.first;
+                m_userEventNumberProxy->chooseThisUser(selected_user);
+                return selected_user;
+            }
+        }
+
+        return m_userEventNumberProxy->randomlyChooseUser();
+    }
 }
 
-string StatisticProxy::getUserByTopology(const std::string &userID) const {
-    return m_topologyProxy->getUserByTopology(userID);
+string StatisticProxy::getUserByTopology(const std::string &userID, const std::string &infoID) const {
+    unordered_map<string, double> topology = m_topologyProxy->get(userID);
+
+    string selected_user;
+    vector<string> candidates;
+    double candidate_probs = 0;
+    for (auto &iter : topology) {
+        if (m_userEventNumberProxy->getEventNumber(iter.first) > 0) {
+            candidates.push_back(iter.first);
+            candidate_probs += iter.second;
+        }
+    }
+
+    if (candidates.size() == 0) {
+        return getUserByInfoID(infoID);
+    } else {
+        double randnum = static_cast <double> (rand()) / candidate_probs;
+
+        double sum = 0;
+        for (auto &iter : topology) {
+            if (find(candidates.begin(), candidates.end(), iter.first) != candidates.end()) {
+                sum += iter.second;
+            }
+            if (randnum <= sum) {
+                selected_user = iter.first;
+                m_userEventNumberProxy->chooseThisUser(selected_user);
+                return selected_user;
+            }
+        }
+
+        return m_userEventNumberProxy->randomlyChooseUser();
+    }
 }
 
 int StatisticProxy::getNumberOfFollowersByTopology(const std::string& userID) const {
@@ -404,6 +470,10 @@ void StatisticProxy::setInfoIDToUserProxyFilePath(std::string infoIDToUserFilePa
 
 void StatisticProxy::setTopologyProxyFilePath(std::string topologyFilePath) {
     m_defaultTopologyProxyFile = topologyFilePath;
+}
+
+void StatisticProxy::setUserEventNumberProxyFilePath(std::string userEventNumberProxyFilePath) {
+    m_defaultUserEventNumberProxyFile = userEventNumberProxyFilePath;
 }
 
 void StatisticProxy::setMiscellaneousProxyFilePath(std::string miscellaneousFilePath) {

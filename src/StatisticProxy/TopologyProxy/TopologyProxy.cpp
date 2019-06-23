@@ -22,29 +22,6 @@ TopologyProxy::~TopologyProxy() {
 }
 
 void TopologyProxy::parse() {
-//    string tmp;
-//    while (getline(m_topologyStatisticFile, tmp)) {
-//        string userID = tmp.substr(0, tmp.find(","));
-//        string probabilities = tmp.substr(tmp.find(",") + 1);
-//        unordered_map<string, double> userCommentProbs;
-//
-//        string user_id;
-//        string prob;
-//
-//        istringstream in(probabilities);
-////        while (in >> user_id) {
-////            in >> prob;
-////            userCommentProbs.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
-////        }
-//
-//        while (in.good()) {
-//            getline(in, user_id, ',');
-//            getline(in, prob, ',');
-//            userCommentProbs.insert(std::make_pair<string, double>((string)user_id, stod(prob)));
-//        }
-//
-//        m_userCommentProbs[userID] = userCommentProbs;
-//    }
     string tmp;
     while (getline(m_topologyStatisticFile, tmp)) {
         string userID = tmp.substr(0, tmp.find(","));
@@ -82,6 +59,7 @@ string TopologyProxy::getUserByTopology(const std::string &userID) {
     double randnum = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
     double sum = 0;
     for (auto &iter : m_userCommentProbs[userID]) {
+
         sum += iter.second;
         if (randnum <= sum) {
             selected_user = iter.first;

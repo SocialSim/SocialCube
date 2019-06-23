@@ -65,6 +65,13 @@ class UserDistributionProxyException: public std::exception {
     }
 };
 
+class UserEventNumberProxyException: public std::exception {
+    virtual const char * what () const throw ()
+    {
+        return "Error in opening statistic file for UserEventNumberProxy";
+    }
+};
+
 class PointProcessProxyException : public std::exception {
     virtual const char * what () const throw ()
     {
